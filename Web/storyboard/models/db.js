@@ -12,7 +12,7 @@ var mysql = db.createConnection({
     database:'storyboard'
 });
 
-
+//test
 mysql.connect(function(err) {
     if (err) {
         console.error('mysql connection error');

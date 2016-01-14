@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title><%= title %></title>
+</head>
+<body>
+<form name="user" method="post" action="/getpost/user">
+    <b>Add Users</b><p>
+        id <input type="text" name="user_id"/>
+        <br>
+        name <input type="text" name="name"/>
+        <br>
+        password <input type="password" name="password"/>
+        <br>
+        email <input type="text" name="email"/>
+        <br>
+        <button type="submit" >Submit</button>
+</form>
+
+<form name="app" method="post" action="/getpost/app">
+    <b>Add App</b><p>
+        app_num <input type="text" name="app_num"/>
+        <br>
+        app_name <input type="text" name="app_name"/>
+        <br>
+        total_time <input type="text" name="total_time"/>
+        <br>
+        user_id <input type="text" name="user_id"/>
+        <br>
+        <button type="submit" >Submit</button>
+</form>
+</body>
+</html>

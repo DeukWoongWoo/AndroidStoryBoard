@@ -41,7 +41,6 @@ router.post('/app/activity/object',function(req, res){
 
 router.post('/app/activity/object/use',function(req, res){
     db.addObjectUse(req);
-    db.addObjectFrequency(req);
     res.send('success');
 });
 

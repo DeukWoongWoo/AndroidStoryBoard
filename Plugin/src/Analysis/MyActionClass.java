@@ -25,7 +25,7 @@ public class MyActionClass extends AnAction {
         String intellijPath = "/src";
 
 //        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(new InstanceItem.Builder().anActionEvent(e).path(intellijPath).build());
+//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(new InstanceItem.Builder().anActionEvent(e).path(intellijPath).build());
 //        projectAnalysis.execute(Constant.PROJECT_JAVA_PATH, Constant.JAVA_PATTERN);
 
 //        PsiClass psiClass = getPsiClassFromContext(e);
@@ -39,14 +39,20 @@ public class MyActionClass extends AnAction {
 //        String xmlPattern = ".xml";
 //        findDirectoryPath1(e, intellijPath, xmlPattern);
 
-//        projectAnalysis(e, intellijPath);
+        projectAnalysis(e, intellijPath);
 
     }
 
     private void projectAnalysis(AnActionEvent e,String path){
         System.out.println("findDirectory Children Length : " + findDirectory(e, path).getChildren().length );
-        System.out.println("findDirectory Children toString : " + findDirectory(e, path).getChildren().toString());
-//        System.out.println("findDirectory Children toString : " + findDirectory(e, path).);
+        System.out.println(findDirectory(e,path).getSubdirectories().length);
+        for(PsiDirectory psiDirectory : findDirectory(e, path).getSubdirectories()){
+            System.out.println("SubDirectory Name : "+psiDirectory.getName());
+        }
+//        for(PsiElement psi : findDirectory(e, path).getChildren()){
+//            System.out.println("Element Name : "+psi.toString());
+//        }
+
 
 //        PsiFile psiFile[] = findDirectory(e, path).getFiles();
 //        System.out.println("Directory File Length : " + psiFile.length);

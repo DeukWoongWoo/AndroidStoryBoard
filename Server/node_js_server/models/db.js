@@ -8,7 +8,6 @@ var mysql = db.createConnection({
     database:'storyboard'
 });
 
-
 mysql.connect(function(err) {
     if (err) {
         console.error('mysql connection error');
@@ -41,6 +40,37 @@ mysql.addApp = function(param){
     mysql.query('insert into app_info set ?', app, throwError);
 }
 
+mysql.addActivity = function(param){
+    var activity = {
+        activity_num:param.body.activity_num,
+        activity_name:param.body.activity_name,
+        total_time:param.body.total_time,
+        app_num:param.body.app_num
+    };
+
+    mysql.query('insert into activity_info set ?', activity, throwError);
+}
+
+mysql.addObject = function(param){
+    var object = {
+        object_num:param.body.object_num,
+        object_name:param.body.object_name,
+        frequency:param.body.frequency,
+        activity_num:param.body.activity_num
+    };
+
+    mysql.query('insert into object_info set ?', object, throwError);
+}
+
+mysql.addError = function(param){
+    var error = {
+        error_num:param.body.error_num,
+        frequency:param.body.frequency,
+        object_num:param.body.object_num
+    };
+    mysql.query('insert into error_use_info set ?', error, throwError);
+}
+
 mysql.addAppUse = function(param){
     var appUse = {
         app_use_num:param.body.app_use_num,
@@ -71,17 +101,6 @@ mysql.addAppUse = function(param){
 mysql.updateAppTotalTime = function(num, start, end){
     var time = NumOfDate(end) - NumOfDate(start) ;
     mysql.query('update app_info set total_time=total_time + ' + time + ' where app_num like ' + num, throwError);
-}
-
-mysql.addActivity = function(param){
-    var activity = {
-        activity_num:param.body.activity_num,
-        activity_name:param.body.activity_name,
-        total_time:param.body.total_time,
-        app_num:param.body.app_num
-    };
-
-    mysql.query('insert into activity_info set ?', activity, throwError);
 }
 
 mysql.addActivityUse = function(param){
@@ -118,17 +137,6 @@ mysql.updateActivityTotalTime = function(num, start, end){
     mysql.query('update activity_info set total_time=total_time + ' + time + ' where activity_num like ' + num, throwError);
 }
 
-mysql.addObject = function(param){
-    var object = {
-        object_num:param.body.object_num,
-        object_name:param.body.object_name,
-        frequency:param.body.frequency,
-        activity_num:param.body.activity_num
-    };
-
-    mysql.query('insert into object_info set ?', object, throwError);
-}
-
 mysql.addObjectUse = function(param){
     var objectUse = {
         object_use_num:param.body.object_use_num,
@@ -162,15 +170,6 @@ mysql.addObjectUse = function(param){
 
 mysql.updateObjectFrequency  = function(object_num){
     mysql.query('update object_info set frequency=frequency+1 where object_num like ' + object_num, throwError);
-}
-
-mysql.addError = function(param){
-    var error = {
-        error_num:param.body.error_num,
-        frequency:param.body.frequency,
-        object_num:param.body.object_num
-    };
-    mysql.query('insert into error_use_info set ?', error, throwError);
 }
 
 mysql.addErrorUse = function(param){

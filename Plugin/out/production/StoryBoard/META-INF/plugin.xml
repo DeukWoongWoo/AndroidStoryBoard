@@ -32,6 +32,10 @@
     <action id="MyPlugin.MyActionTest" class="Analysis.MyActionClass" text="My_Item" description="test">
       <add-to-group group-id="ToolsMenu" anchor="last"/>
     </action>
+    <action id="XmlParsing" class="Xml.GenerateAction" text="Xml_Parsing_Test" description="Test">
+      <add-to-group group-id="GenerateGroup" anchor="last"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="BACK_SPACE"/>
+    </action>
   </actions>
 
 </idea-plugin>

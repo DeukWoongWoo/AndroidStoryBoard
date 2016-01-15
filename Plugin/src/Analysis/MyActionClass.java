@@ -18,13 +18,12 @@ import java.util.regex.Pattern;
  * Created by woong on 2015-12-22.
  */
 public class MyActionClass extends AnAction {
-
+    private String intellijPath = "/src";
     @Override
     public void actionPerformed(AnActionEvent e) {
         // TODO: insert action logic here
-        String intellijPath = "/src";
-
         ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
+        projectAnalysis.execute(intellijPath, Constant.XML_PATTERN);
 //        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(new InstanceItem.Builder().anActionEvent(e).path(intellijPath).build());
 //        ProjectAnalysis projectAnalysis1 = ProjectAnalysis.getInstance(null,null);
 //        projectAnalysis.execute(Constant.PROJECT_JAVA_PATH, Constant.JAVA_PATTERN);
@@ -40,15 +39,18 @@ public class MyActionClass extends AnAction {
 //        String xmlPattern = ".xml";
 //        findDirectoryPath1(e, intellijPath, xmlPattern);
 
-        projectAnalysis(e, intellijPath);
+//        projectAnalysis(e, intellijPath);
 
     }
 
     private void projectAnalysis(AnActionEvent e,String path){
-        System.out.println("findDirectory Children Length : " + findDirectory(e, path).getChildren().length );
-        System.out.println(findDirectory(e,path).getSubdirectories().length);
+        PsiDirectory[] psiDirectories = findDirectory(e,path).getSubdirectories();
+        System.out.println("Current Path : "+path);
+        System.out.println("psiDirectories Length : "+psiDirectories.length);
+
         for(PsiDirectory psiDirectory : findDirectory(e, path).getSubdirectories()){
             System.out.println("SubDirectory Name : "+psiDirectory.getName());
+            projectAnalysis(e,intellijPath+"/"+psiDirectory.getName());
         }
 //        for(PsiElement psi : findDirectory(e, path).getChildren()){
 //            System.out.println("Element Name : "+psi.toString());

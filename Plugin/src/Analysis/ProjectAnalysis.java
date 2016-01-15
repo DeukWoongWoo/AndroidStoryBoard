@@ -31,15 +31,38 @@ public class ProjectAnalysis {
     public ProjectAnalysis(AnActionEvent e,String path){
         this.project = e.getProject();
         baseDir = project.getBaseDir();
-        execute(path,Constant.XML_PATTERN);
+
+        PsiDirectory psiDirectory = currentDirectory(path);
+        findFiles(Constant.XML_PATTERN, psiDirectory);
     }
 
     public void execute(String path, String pattern) {
-        PsiFile[] psiFiles = findDirectory(path).getFiles();
-        checkFileType(psiFiles, pattern);
+        System.out.println("Current Path : "+path);
+        PsiDirectory psiDirectory = currentDirectory(path);
+
+        findFiles(pattern, psiDirectory);
+
+        findDirectories(path, psiDirectory, pattern);
     }
 
-    private PsiDirectory findDirectory(String path) {
+    private void findFiles(String pattern, PsiDirectory psiDirectory) {
+        PsiFile[] psiFiles = psiDirectory.getFiles();
+
+        if(psiFiles.length != 0)
+            checkFileType(psiFiles, pattern);
+    }
+
+    private void findDirectories(String path, PsiDirectory psiDirectory, String pattern) {
+        PsiDirectory[] psiDirectories = psiDirectory.getSubdirectories();
+
+        if(psiDirectories.length != 0){
+            for(PsiDirectory subDirectory : psiDirectories){
+                this.execute(path+"/"+subDirectory.getName(), pattern);
+            }
+        }
+    }
+
+    private PsiDirectory currentDirectory(String path) {
         VirtualFile virtualPathFile = baseDir.findFileByRelativePath(path);
         return PsiManager.getInstance(project).findDirectory(virtualPathFile);
     }

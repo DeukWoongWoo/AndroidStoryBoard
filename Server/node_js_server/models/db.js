@@ -1,6 +1,5 @@
 var db = require('mysql');
 
-
 var mysql = db.createConnection({
     host    :'localhost',
     port : 3306,
@@ -43,22 +42,36 @@ mysql.addApp = function(param){
 }
 
 mysql.addAppUse = function(param){
-
     var appUse = {
         app_use_num:param.body.app_use_num,
         during_time_start:param.body.during_time_start,
         during_time_end:param.body.during_time_end,
-        app_num:param.body.app_num
+        app_num:null,
     };
 
-    mysql.query('insert into app_use_info set ?', appUse, throwError);
-
-    mysql.updateTotalTime(appUse.activity_num, appUse.during_time_start, appUse.during_time_end);
+    /**
+     *  app_use_info에 사용 정보를 기록하고
+     *  app_info에 total_time을 갱신
+     */
+    mysql.query('SELECT app_info.app_num FROM user_info '
+        + 'INNER JOIN app_info ON user_info.user_id = app_info.user_id '
+        + 'AND app_info.user_id = \''+ param.body.user_id + '\'',
+        function (error, result, fields) {
+        if (error) {
+            console.error('쿼리 문장에 오류가 있습니다.');
+            console.error(error);
+        } else {
+            appUse.app_num = result[0].app_num;
+            mysql.query('insert into app_use_info set ?', appUse, throwError);
+            mysql.updateAppTotalTime(appUse.app_num, appUse.during_time_start, appUse.during_time_end);
+            //찾은 app_num에 사용시간을 더한다.
+        }
+    });
 }
 
-mysql.updateTotalTime = function(num, start, end){
+mysql.updateAppTotalTime = function(num, start, end){
     var time = NumOfDate(end) - NumOfDate(start) ;
-    mysql.query('update activity_info set total_time=total_time + ' + time + ' where activity_num like ' + num, throwError);
+    mysql.query('update app_info set total_time=total_time + ' + time + ' where app_num like ' + num, throwError);
 }
 
 mysql.addActivity = function(param){
@@ -77,11 +90,40 @@ mysql.addActivityUse = function(param){
         activity_use_num:param.body.activity_use_num,
         during_time_start:param.body.during_time_start,
         during_time_end:param.body.during_time_end,
-        activity_num:param.body.activity_num
+        activity_num:null
     };
-    mysql.query('insert into activity_use_info set ?', activityUse, throwError);
 
-    mysql.updateTotalTime(activityUse.activity_num, activityUse.during_time_start, activityUse.during_time_end);
+    /**
+     *  activity_use_info에 사용 정보를 기록하고
+     *  activity_info에 total_time을 갱신
+     */
+    mysql.query('SELECT * FROM user_info '
+        + 'INNER JOIN app_info ON user_info.user_id = app_info.user_id '
+        + 'AND user_info.user_id = \'' + param.body.user_id + '\' '
+        + 'INNER JOIN activity_info ON app_info.app_num = activity_info.app_num '
+        + 'AND activity_info.activity_name = \'' + param.body.activity_name + '\'',
+
+        function (error, result, fields) {
+        if (error) {
+            console.error('쿼리 문장에 오류가 있습니다.');
+            console.error(error);
+        } else {
+            console.log(result);
+            console.log(result[0]);
+            activityUse.activity_num = result[0].activity_num;
+            mysql.query('insert into app_use_info set ?', activityUse, throwError);
+            mysql.updateActivityTotalTime(activityUse.activity_num, activityUse.during_time_start, activityUse.during_time_end);
+            //찾은 activity_num에 사용시간을 더한다.
+        }
+    });
+
+    //mysql.query('insert into activity_use_info set ?', activityUse, throwError);
+    //mysql.updateActivityTotalTime(activityUse.activity_num, activityUse.during_time_start, activityUse.during_time_end);
+}
+
+mysql.updateActivityTotalTime = function(num, start, end){
+    var time = NumOfDate(end) - NumOfDate(start) ;
+    mysql.query('update activity_info set total_time=total_time + ' + time + ' where activity_num like ' + num, throwError);
 }
 
 mysql.addObject = function(param){
@@ -148,7 +190,9 @@ var throwError = function (error, result, fields) {
 
 var NumOfDate = function(date){
 
+
     var piece = date.split(" ");
+    console.log('piece : ' + piece );
 
     var standardYears = 1990 * 60 * 60 * 30 * 12;
     var years = piece[0].split("-")[0] * 60 * 60 * 30 * 12 - standardYears;

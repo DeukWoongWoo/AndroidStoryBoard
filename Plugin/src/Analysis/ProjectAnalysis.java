@@ -1,5 +1,6 @@
 package Analysis;
 
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiDirectory;
@@ -18,35 +19,20 @@ public class ProjectAnalysis {
     private Project project;
     private VirtualFile baseDir;
 
-    public static ProjectAnalysis getInstance(InstanceItem item){
-        if(projectAnalysis == null) {
-            synchronized (ProjectAnalysis.class) {
-                if (projectAnalysis == null) projectAnalysis = new ProjectAnalysis(item);
-            }
-        }
-        return projectAnalysis;
-    }
-
-    /*public static ProjectAnalysis getInstance(AnActionEvent e,String path){
+    public static ProjectAnalysis getInstance(AnActionEvent e, String path){
         if(projectAnalysis == null) {
             synchronized (ProjectAnalysis.class) {
                 if (projectAnalysis == null) projectAnalysis = new ProjectAnalysis(e, path);
             }
         }
         return projectAnalysis;
-    }*/
-
-    public ProjectAnalysis(InstanceItem item){
-        this.project = item.getAnActionEvent().getProject();
-        baseDir = project.getBaseDir();
-        execute(item.getPath(), Constant.XML_PATTERN);
     }
 
-    /*public ProjectAnalysis(AnActionEvent e,String path){
+    public ProjectAnalysis(AnActionEvent e,String path){
         this.project = e.getProject();
         baseDir = project.getBaseDir();
         execute(path,Constant.XML_PATTERN);
-    }*/
+    }
 
     public void execute(String path, String pattern) {
         PsiFile[] psiFiles = findDirectory(path).getFiles();

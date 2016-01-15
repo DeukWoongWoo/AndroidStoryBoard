@@ -24,8 +24,9 @@ public class MyActionClass extends AnAction {
         // TODO: insert action logic here
         String intellijPath = "/src";
 
-//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
 //        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(new InstanceItem.Builder().anActionEvent(e).path(intellijPath).build());
+//        ProjectAnalysis projectAnalysis1 = ProjectAnalysis.getInstance(null,null);
 //        projectAnalysis.execute(Constant.PROJECT_JAVA_PATH, Constant.JAVA_PATTERN);
 
 //        PsiClass psiClass = getPsiClassFromContext(e);

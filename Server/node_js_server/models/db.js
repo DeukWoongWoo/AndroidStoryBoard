@@ -111,14 +111,11 @@ mysql.addActivityUse = function(param){
             console.log(result);
             console.log(result[0]);
             activityUse.activity_num = result[0].activity_num;
-            mysql.query('insert into app_use_info set ?', activityUse, throwError);
+            mysql.query('insert into activity_use_info set ?', activityUse, throwError);
             mysql.updateActivityTotalTime(activityUse.activity_num, activityUse.during_time_start, activityUse.during_time_end);
             //찾은 activity_num에 사용시간을 더한다.
         }
     });
-
-    //mysql.query('insert into activity_use_info set ?', activityUse, throwError);
-    //mysql.updateActivityTotalTime(activityUse.activity_num, activityUse.during_time_start, activityUse.during_time_end);
 }
 
 mysql.updateActivityTotalTime = function(num, start, end){

@@ -1,6 +1,6 @@
 <idea-plugin version="2">
-  <id>com.your.company.unique.plugin.id</id>
-  <name>Plugin display name here</name>
+  <id>com.samsung.storyboard</id>
+  <name>StoryBoard</name>
   <version>1.0</version>
   <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
 
@@ -29,7 +29,9 @@
   </extensions>
 
   <actions>
-    <!-- Add your actions here -->
+    <action id="MyPlugin.MyActionTest" class="Analysis.MyActionClass" text="My_Item" description="test">
+      <add-to-group group-id="ToolsMenu" anchor="last"/>
+    </action>
   </actions>
 
 </idea-plugin>

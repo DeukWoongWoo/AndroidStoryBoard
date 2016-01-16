@@ -117,6 +117,7 @@ mysql.addActivityUse = function(param){
 }
 
 
+
 mysql.addObjectUse = function(param){
     var objectUse = {
         object_use_num:param.body.object_use_num,
@@ -125,10 +126,10 @@ mysql.addObjectUse = function(param){
         object_num:null
     };
 
-    /**
-     *  object_use_info에 사용 정보를 기록하고
-     *  object_info에 frequency을 갱신
-     */
+    recordUseAndUpdateFrequency('object', param, objectUse);
+}
+
+function recordUseAndUpdateFrequency(type, param, dataUse) {
     mysql.query('SELECT object_info.object_num FROM user_info '
         + 'INNER JOIN app_info ON user_info.user_id = app_info.user_id '
         + 'AND user_info.user_id = ' + '\'' + param.body.user_id + '\' '
@@ -140,15 +141,15 @@ mysql.addObjectUse = function(param){
             if (error) {
                 console.error(error);
             } else {
-                objectUse.object_num = result[0].object_num;
-                mysql.query('insert into object_use_info set ?', objectUse, throwError);
-                mysql.updateObjectFrequency(result[0].object_num);
+                dataUse.object_num = result[0].object_num;
+                mysql.query('insert into ' + type + '_use_info set ?', dataUse, throwError);
+                mysql.updateFrequency(type, result[0].object_num);
             }
         });
 }
 
-mysql.updateObjectFrequency  = function(object_num){
-    mysql.query('update object_info set frequency=frequency+1 where object_num like ' + object_num, throwError);
+mysql.updateFrequency  = function(type, object_num){
+    mysql.query('update object_info set ' + type + '_frequency=' + type + '_frequency+1 where object_num like ' + object_num, throwError);
 }
 
 mysql.addErrorUse = function(param){
@@ -158,30 +159,7 @@ mysql.addErrorUse = function(param){
         object_num:null
     };
 
-    /**
-     *  object_use_info에 사용 정보를 기록하고
-     *  object_info에 frequency을 갱신
-     */
-    mysql.query('SELECT object_info.object_num FROM user_info '
-        + 'INNER JOIN app_info ON user_info.user_id = app_info.user_id '
-        + 'AND user_info.user_id = ' + '\'' + param.body.user_id + '\' '
-        + 'INNER JOIN activity_info ON app_info.app_num = activity_info.app_num '
-        + 'AND activity_info.activity_name = \'' + param.body.activity_name + '\' '
-        + 'INNER JOIN object_info ON object_info.activity_num = activity_info.activity_num '
-        + 'AND object_info.object_name = \'' + param.body.object_name + '\''
-        , function (error, result, fields) {
-            if (error) {
-                console.error(error);
-            } else {
-                errorUse.object_num = result[0].object_num;
-                mysql.query('insert into error_use_info set ?', errorUse, throwError);
-                mysql.updateErrorFrequency(result[0].object_num);
-            }
-        });
-}
-
-mysql.updateErrorFrequency  = function(object_num){
-    mysql.query('update object_info set error_frequency=error_frequency+1 where object_num like ' + object_num, throwError);
+    recordUseAndUpdateFrequency('error', param, errorUse);
 }
 
 var throwError = function (error, result, fields) {

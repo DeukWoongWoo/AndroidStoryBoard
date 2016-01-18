@@ -1,9 +1,7 @@
 var express = require('express');
-var session = ('express-session');
 var router = express.Router();
 var db = require('./../models/db');
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
     //res.send('respond with a resource2');
     res.render('getpost', { title: 'getpost'});
@@ -51,65 +49,3 @@ router.post('/app/activity/object/error/use',function(req, res){
 
 
 module.exports = router;
-
-//
-//var mysql = require('mysql');
-//
-//var connection = mysql.createConnection({
-//    host    :'localhost',
-//    port : 3306,
-//    user : 'root',
-//    password : '1234',
-//    database:'storyboard'
-//});
-//
-//connection.connect(function(err) {
-//    if (err) {
-//        console.error('mysql connection error');
-//        console.error(err);
-//        throw err;
-//    }
-//});
-//
-///* GET home page. */
-//router.get('/', function(req, res, next) {
-//    //res.send('respond with a resource2');
-//    res.render('mydb', { title: 'mydb'});
-//});
-//
-//
-////insert uesr_info
-//router.post('/user',function(req, res){
-//    var user = {'user_id':req.body.user_id,
-//        'name':req.body.name,
-//        'password':req.body.password,
-//        'email':req.body.email};
-//
-//    var query = connection.query('insert into user_info set ?', user, function(err,result){
-//        if (err) {
-//            console.error(err);
-//            throw err;
-//        }
-//        console.log(query);
-//        res.render('mydb', { title: 'success'});
-//    });
-//});
-//
-////insert app_use_info
-//router.post('/app/use',function(req, res){
-//
-//    var user = {'user_id':req.body.user_id,
-//        'name':req.body.name,
-//        'password':req.body.password,
-//        'email':req.body.email};
-//
-//    var query = connection.query('insert into user_info set ?', user, function(err,result){
-//        if (err) {
-//            console.error(err);
-//            throw err;
-//        }
-//        console.log(query);
-//        res.send(200,'success');
-//    });
-//});
-

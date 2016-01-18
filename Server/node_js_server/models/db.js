@@ -26,6 +26,7 @@ mysql.addUser = function(param){
 
     insertData('user', user);
 }
+
 mysql.addApp = function(param){
     var app = {
         app_num:param.body.app_num,
@@ -66,7 +67,7 @@ mysql.addAppUse = function(param){
         app_use_num:param.body.app_use_num,
         during_time_start:param.body.during_time_start,
         during_time_end:param.body.during_time_end,
-        app_num:null,
+        app_num:null
     };
 
     /**
@@ -190,7 +191,6 @@ function NumOfDate(date){
 
 function throwError(error, result, fields) {
     if (error) {
-        //console.error('쿼리 문장에 오류가 있습니다.');
         console.error(error);
     } else {
     }

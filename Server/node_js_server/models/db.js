@@ -23,9 +23,9 @@ mysql.addUser = function(param){
         password:param.body.password,
         email:param.body.email
     };
-    mysql.query('insert into user_info set ?', user, throwError);
-}
 
+    insertData('user', user);
+}
 mysql.addApp = function(param){
     var app = {
         app_num:param.body.app_num,
@@ -34,7 +34,7 @@ mysql.addApp = function(param){
         user_id:param.body.user_id
     };
 
-    mysql.query('insert into app_info set ?', app, throwError);
+    insertData('app', app);
 }
 
 mysql.addActivity = function(param){
@@ -45,18 +45,20 @@ mysql.addActivity = function(param){
         app_num:param.body.app_num
     };
 
-    mysql.query('insert into activity_info set ?', activity, throwError);
+    insertData('activity', activity);
 }
 
 mysql.addObject = function(param){
     var object = {
         object_num:param.body.object_num,
         object_name:param.body.object_name,
-        frequency:param.body.frequency,
+        object_frequency:param.body.object_frequency,
+        error_frequency:param.body.error_frequency,
+        image_num:param.body.image_num,
         activity_num:param.body.activity_num
     };
 
-    mysql.query('insert into object_info set ?', object, throwError);
+    insertData('object', object);
 }
 
 mysql.addAppUse = function(param){
@@ -80,12 +82,9 @@ mysql.addAppUse = function(param){
         } else {
             appUse.app_num = result[0].app_num;
             mysql.query('insert into app_use_info set ?', appUse, throwError);
-            mysql.updateTotalTime('app', appUse.app_num, appUse.during_time_start, appUse.during_time_end);
+            updateTotalTime('app', appUse.app_num, appUse.during_time_start, appUse.during_time_end);
         }
     });
-}
-mysql.updateTotalTime = function(type, num, start, end){
-    mysql.query('update ' + type + '_info set total_time=total_time + ' + calDuringTime(start, end) + ' where app_num like ' + num, throwError);
 }
 
 mysql.addActivityUse = function(param){
@@ -111,12 +110,10 @@ mysql.addActivityUse = function(param){
         } else {
             activityUse.activity_num = result[0].activity_num;
             mysql.query('insert into activity_use_info set ?', activityUse, throwError);
-            mysql.updateTotalTime('activity', activityUse.activity_num, activityUse.during_time_start, activityUse.during_time_end);
+            updateTotalTime('activity', activityUse.activity_num, activityUse.during_time_start, activityUse.during_time_end);
         }
     });
 }
-
-
 
 mysql.addObjectUse = function(param){
     var objectUse = {
@@ -127,6 +124,20 @@ mysql.addObjectUse = function(param){
     };
 
     recordUseAndUpdateFrequency('object', param, objectUse);
+}
+
+mysql.addErrorUse = function(param){
+    var errorUse = {
+        error_use_num:param.body.error_use_num,
+        occur_time:param.body.occur_time,
+        object_num:null
+    };
+
+    recordUseAndUpdateFrequency('error', param, errorUse);
+}
+
+function insertData(stringOfData, data) {
+    mysql.query('insert into ' + stringOfData + '_info set ?', data, throwError);
 }
 
 function recordUseAndUpdateFrequency(type, param, dataUse) {
@@ -143,39 +154,25 @@ function recordUseAndUpdateFrequency(type, param, dataUse) {
             } else {
                 dataUse.object_num = result[0].object_num;
                 mysql.query('insert into ' + type + '_use_info set ?', dataUse, throwError);
-                mysql.updateFrequency(type, result[0].object_num);
+                updateFrequency(type, result[0].object_num);
             }
         });
 }
 
-mysql.updateFrequency  = function(type, object_num){
+function updateTotalTime(type, num, start, end){
+    mysql.query('update ' + type + '_info set total_time=total_time + ' + calDuringTime(start, end) + ' where app_num like ' + num, throwError);
+}
+
+function updateFrequency(type, object_num){
     mysql.query('update object_info set ' + type + '_frequency=' + type + '_frequency+1 where object_num like ' + object_num, throwError);
 }
 
-mysql.addErrorUse = function(param){
-    var errorUse = {
-        error_use_num:param.body.error_use_num,
-        occur_time:param.body.occur_time,
-        object_num:null
-    };
-
-    recordUseAndUpdateFrequency('error', param, errorUse);
-}
-
-var throwError = function (error, result, fields) {
-    if (error) {
-        //console.error('쿼리 문장에 오류가 있습니다.');
-        console.error(error);
-    } else {
-    }
-}
-
-var calDuringTime = function(start, end){
+function calDuringTime(start, end){
     var time = NumOfDate(end) - NumOfDate(start);
     return time;
 }
 
-var NumOfDate = function(date){
+function NumOfDate(date){
     /**
      *  날짜, 시간에 문자열을 숫자로 표현된 값으로 반환
      */
@@ -189,6 +186,14 @@ var NumOfDate = function(date){
     var seconds = piece[1].split(":")[2] * 1;
 
     return years + month + days + hours + minutes + seconds ;
+}
+
+function throwError(error, result, fields) {
+    if (error) {
+        //console.error('쿼리 문장에 오류가 있습니다.');
+        console.error(error);
+    } else {
+    }
 }
 
 module.exports = mysql;

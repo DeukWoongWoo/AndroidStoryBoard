@@ -43,7 +43,7 @@ mysql.checkIdFromDb = function(param, callback){
             } else if (result[0] == null) {
                     callback(null);
             }else
-                callback(true);
+                callback('exist');
         });
 }
 

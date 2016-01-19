@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>Android Storyboard</title>
+</head>
+
+<body>
+
+<div>
+    <form name="login" method="post" action="/login">
+        <b>Login</b>
+        <br>
+        <input type="text" name="user_id" placeholder="id"/>
+        <br>
+        <input type="password" name="password" placeholder="password"/>
+        <br>
+        <button type="submit" >Login</button>
+    </form>
+    <%= login_result%>
+
+    <form name="join" method="get" action="/join">
+        <button type="submit" >Join</button>
+    </form>
+</div>
+
+</body>
+</html>

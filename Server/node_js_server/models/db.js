@@ -16,37 +16,41 @@ mysql.connect(function(err) {
     }
 });
 
-mysql.signin = function(param, callback){
-    mysql.query('SELECT user_info.password FROM user_info '
-        + 'where user_info.user_id = \''+ param.body.user_id + '\''
-        , function (error, result) {
-            if (error) {
-                console.error(error);
-            } else if(result[0] == null){
-                callback(null, 'can not find user id');
-            }else{
-                if(result[0].password == param.body.password){
-                    callback(param.body.user_id, 'id and password are correct');
-                }else{
-                    callback(null, 'password is incorrect');
-                }
-            }
-        });
-}
-
-mysql.checkIdFromDb = function(param, callback){
+mysql.getUserId = function(param, callback){
     mysql.query('SELECT user_info.user_id FROM user_info '
         + 'where user_info.user_id = \''+ param.body.user_id + '\''
         , function (error, result) {
             if (error) {
                 console.error(error);
-            } else if (result[0] == null) {
-                    callback(null);
-            }else
-                callback('exist');
+            }else if(result[0])
+                callback(result[0].user_id);
+            else
+                callback(null);
         });
 }
 
+mysql.confirmPassword = function(param, callback){
+    mysql.query('SELECT user_info.password FROM user_info '
+        + 'where user_info.user_id = \''+ param.body.user_id + '\''
+        , function (error, result) {
+            if (error) {
+                console.error(error);
+            } else{
+                callback(param.body.password == result[0].password);
+            }
+        });
+}
+
+mysql.updateUser = function(param){
+    var user = {
+        user_id:param.body.user_id,
+        name:param.body.name,
+        password:param.body.password,
+        email:param.body.email
+    };
+
+    updateData('user', user);
+}
 
 mysql.addUser = function(param){
     var user = {
@@ -167,6 +171,10 @@ mysql.addErrorUse = function(param){
     };
 
     recordUseAndUpdateFrequency('error', param, errorUse);
+}
+
+function updateData (stringOfData, data) {
+    mysql.query('update ' + stringOfData + '_info set ?' + ' where user_id=\'' + data.user_id + '\'', data, throwError);
 }
 
 function insertData(stringOfData, data) {

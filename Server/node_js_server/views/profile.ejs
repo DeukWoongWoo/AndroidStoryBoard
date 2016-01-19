@@ -1,14 +1,16 @@
 <html>
 <head>
-    <title>Sign</title>
+    <title>Android Storyboard</title>
 </head>
 
 <body>
+
 <div>
-    <form name="signup" method="post" action="/sign/up">
-        <b>Sign Up</b>
+    <form name="profile" method="post" action="/profile">
+        <b>Profile Update</b>
         <br>
-        <input type="text" name="user_id" placeholder="id"/>
+        <%= user_id%>
+        <!--<input type="text" name="user_id" placeholder="user_id"/>-->
         <br>
         <input type="text" name="name" placeholder="name"/>
         <br>
@@ -18,9 +20,13 @@
         <br>
         <input type="text" name="email" placeholder="email"/>
         <br>
-        <button type="submit" >Submit</button>
+        <button type="submit" >Update</button>
     </form>
-    <%= signup_result%>
+    <%= update_result%>
+
+    <form name="home" method="get" action="/">
+        <button type="submit" >Home</button>
+    </form>
 </div>
 
 

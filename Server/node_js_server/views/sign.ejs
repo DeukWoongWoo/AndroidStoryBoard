@@ -1,24 +1,40 @@
 <html>
 <head>
-    <title>Signin</title>
+    <title>Sign</title>
 </head>
+
 <body>
-<form name="signin" method="post" action="/sign/in">
-    <b>Login</b><p>
-        id <input type="text" name="user_id"/>
+
+<div>
+    <form name="signin" method="post" action="/sign/in">
+        <b>Sign In</b>
         <br>
-        password <input type="password" name="password"/>
+        <input type="text" name="user_id" placeholder="id"/>
+        <br>
+        <input type="password" name="password" placeholder="password"/>
         <br>
         <button type="submit" >Submit</button>
-</form>
+    </form>
+</div>
 
-<form name="signup" method="get" action="/sign/up">
-    <button type="submit" >Signup</button>
-</form>
+<div>
+    <form name="signup" method="post" action="/sign/up">
+        <b>Sign Up</b>
+        <br>
+        <input type="text" name="user_id" placeholder="id"/>
+        <br>
+        <input type="text" name="name" placeholder="name"/>
+        <br>
+        <input type="password" name="password" placeholder="password"/>
+        <br>
+        <input type="password" name="confirm_password" placeholder="confirm password"/>
+        <br>
+        <input type="text" name="email" placeholder="email"/>
+        <br>
+        <button type="submit" >Submit</button>
+    </form>
+</div>
 
-<form name="signout" method="get" action="/sign/out">
-    <button type="submit" >Signout</button>
-</form>
 
 </body>
 </html>

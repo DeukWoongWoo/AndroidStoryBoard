@@ -16,37 +16,41 @@ mysql.connect(function(err) {
     }
 });
 
-mysql.login = function(param, callback){
-    mysql.query('SELECT user_info.password FROM user_info '
-        + 'where user_info.user_id = \''+ param.body.user_id + '\''
-        , function (error, result) {
-            if (error) {
-                console.error(error);
-            } else if(result[0] == null){
-                callback(null, '아이디를 잘못입력하였습니다');
-            }else{
-                if(result[0].password == param.body.password){
-                    callback(param.body.user_id, '로그인 성공');
-                }else{
-                    callback(null, '비밀번호가 틀렸습니다');
-                }
-            }
-        });
-}
-
-mysql.checkIdFromDb = function(param, callback){
+mysql.getUserId = function(param, callback){
     mysql.query('SELECT user_info.user_id FROM user_info '
         + 'where user_info.user_id = \''+ param.body.user_id + '\''
         , function (error, result) {
             if (error) {
                 console.error(error);
-            } else if (result[0] == null) {
-                    callback(null);
-            }else
-                callback('exist');
+            }else if(result[0])
+                callback(result[0].user_id);
+            else
+                callback(null);
         });
 }
 
+mysql.confirmPassword = function(param, callback){
+    mysql.query('SELECT user_info.password FROM user_info '
+        + 'where user_info.user_id = \''+ param.body.user_id + '\''
+        , function (error, result) {
+            if (error) {
+                console.error(error);
+            } else{
+                callback(param.body.password == result[0].password);
+            }
+        });
+}
+
+mysql.updateUser = function(param){
+    var user = {
+        user_id:param.body.user_id,
+        name:param.body.name,
+        password:param.body.password,
+        email:param.body.email
+    };
+
+    updateData('user', user);
+}
 
 mysql.addUser = function(param){
     var user = {
@@ -167,6 +171,10 @@ mysql.addErrorUse = function(param){
     };
 
     recordUseAndUpdateFrequency('error', param, errorUse);
+}
+
+function updateData (stringOfData, data) {
+    mysql.query('update ' + stringOfData + '_info set ?' + ' where user_id=\'' + data.user_id + '\'', data, throwError);
 }
 
 function insertData(stringOfData, data) {

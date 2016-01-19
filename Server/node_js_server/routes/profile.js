@@ -3,26 +3,30 @@ var router = express.Router();
 var db = require('../models/db');
 
 router.get('/', function(req, res, next){
+    console.log('session : ' + req.session);
+    console.log('session.user_id : ' + req.session.user_id);
     if (req.session.user_id == undefined)
-        res.render('join', {join_result : ''});
+        res.redirect('/login');
     else
-        res.redirect('/');
+        res.render('profile', {user_id : req.session.user_id, update_result : ''});
+
 });
 
 router.post('/', function(req, res) {
-    join(req, res);
+    updateProfile(req, res);
 });
 
-function join(req, res){
+function updateProfile(req, res){
+    req.body.user_id = req.session.user_id;
     if(isInputWrong(req)){
-        res.render('join', {join_result : '입력을 확인해주세요'});
+        res.render('profile', {user_id : req.session.user_id, update_result : '입력을 확인해주세요'});
     }else{
         db.getUserId(req, function(user_id){
             if(user_id){
-                res.render('join', {join_result : '이미 아이디가 있습니다'});
+                db.updateUser(req);
+                res.render('profile', {user_id : req.session.user_id, update_result : '수정 되었습니다'});
             }else{
-                db.addUser(req);
-                res.render('join', {join_result : '가입 되었습니다'});
+                res.redirect('/');
             }
         });
     }
@@ -35,7 +39,7 @@ function isInputWrong(param){
         return true;
 
     function id() {
-        return param.body.user_id != '';
+        return param.body.user_id != '' || param.body.user_id != undefined;
     }
     function name(){
         return param.body.name != '';

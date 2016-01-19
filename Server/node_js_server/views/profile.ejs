@@ -6,10 +6,11 @@
 <body>
 
 <div>
-    <form name="join" method="post" action="/join">
-        <b>Join</b>
+    <form name="profile" method="post" action="/profile">
+        <b>Profile Update</b>
         <br>
-        <input type="text" name="user_id" placeholder="id"/>
+        <%= user_id%>
+        <!--<input type="text" name="user_id" placeholder="user_id"/>-->
         <br>
         <input type="text" name="name" placeholder="name"/>
         <br>
@@ -19,11 +20,12 @@
         <br>
         <input type="text" name="email" placeholder="email"/>
         <br>
-        <button type="submit" >Join</button>
+        <button type="submit" >Update</button>
     </form>
-    <%= join_result%>
-    <form name="login" method="get" action="/login">
-        <button type="submit" >Login</button>
+    <%= update_result%>
+
+    <form name="home" method="get" action="/">
+        <button type="submit" >Home</button>
     </form>
 </div>
 

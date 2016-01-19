@@ -6,20 +6,30 @@ router.get('/', function(req, res, next){
     if (req.session.user_id == undefined)
         res.render('login', {login_result:'', signup_result : ''});
     else
-        res.redirect('/home');
+        res.redirect('/');
 });
 
 router.post('/',function(req, res){
-    db.login(req, function(user_id, message) {
-        if (user_id == null) {
-            res.render('login', {login_result:message});
-        }
-        else {
-            req.session.user_id = user_id;
-            res.redirect('/home');
-            console.log('user come : ' + user_id);
+    login(req, res);
+});
+
+function login(req, res){
+    db.getUserId(req, function(user_id){
+        if(user_id == null){
+            res.render('login', {login_result : '아이디가 없습니다'});
+        }else{
+            db.confirmPassword(req, function(success){
+                if(success) {
+                    req.session.user_id = user_id;
+                    res.redirect('/');
+                    console.log('user come : ' + user_id);
+                }
+                else{
+                    res.render('login', {login_result : '비밀번호가 틀렸습니다'});
+                }
+            });
         }
     });
-});
+}
 
 module.exports = router;

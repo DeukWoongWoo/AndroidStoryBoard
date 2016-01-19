@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
+    console.log('session : ' + req.session.user_id);
     if (req.session.user_id == undefined)
         res.redirect('/login');
     else
@@ -10,7 +11,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/logout', function(req, res, next) {
     req.session.destroy(function(err) {
-        res.redirect('/home');
+        res.redirect('/');
     });
 });
 

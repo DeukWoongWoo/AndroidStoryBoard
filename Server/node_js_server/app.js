@@ -11,7 +11,6 @@ var home = require('./routes/home');
 var getpost = require('./routes/getpost');
 var sign = require('./routes/sign');
 
-
 var app = express();
 
 // view engine setup
@@ -36,8 +35,6 @@ app.use('/', routes);
 app.use('/getpost', getpost);
 app.use('/sign', sign);
 app.use('/home', home);
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

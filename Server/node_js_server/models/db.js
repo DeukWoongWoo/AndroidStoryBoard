@@ -16,19 +16,19 @@ mysql.connect(function(err) {
     }
 });
 
-mysql.signin = function(param, callback){
+mysql.login = function(param, callback){
     mysql.query('SELECT user_info.password FROM user_info '
         + 'where user_info.user_id = \''+ param.body.user_id + '\''
         , function (error, result) {
             if (error) {
                 console.error(error);
             } else if(result[0] == null){
-                callback(null, 'can not find user id');
+                callback(null, '아이디를 잘못입력하였습니다');
             }else{
                 if(result[0].password == param.body.password){
-                    callback(param.body.user_id, 'id and password are correct');
+                    callback(param.body.user_id, '로그인 성공');
                 }else{
-                    callback(null, 'password is incorrect');
+                    callback(null, '비밀번호가 틀렸습니다');
                 }
             }
         });

@@ -3,7 +3,6 @@ var router = express.Router();
 var db = require('./../models/db');
 
 router.get('/', function(req, res, next) {
-    //res.send('respond with a resource2');
     res.render('getpost', { title: 'getpost'});
 });
 

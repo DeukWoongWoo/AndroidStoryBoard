@@ -1,27 +1,28 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../models/sign');
+var db = require('../models/db');
+var ejs = require('ejs');
 
 router.get('/', function(req, res, next){
-    if (isSignin(req)){
-        res.redirect('/home');
-    } else {
+    if (req.session.user_id == undefined)
         res.render('sign');
-    }
+    else
+        res.redirect('/home');
 });
 
 router.post('/in',function(req, res){
     db.signin(req, function(result, message) {
         if (result == null) {
-            res.send(message);
+            res.render('sign');
+            //res.render('sign', {title : 'a'});
+            //res.send(message);
         }
         else {
             req.session.user_id = result;
             res.redirect('/home');
+            console.log('user come : ' + result);
         }
-        console.log(message);
     });
-
 });
 
 router.get('/out', function(req, res, next) {
@@ -30,18 +31,31 @@ router.get('/out', function(req, res, next) {
     });
 });
 
-router.get('/up', function(req, res, next) {
-    /**
-     *  회원가입 구현해야함.
-     */
+router.post('/up', function(req, res, next) {
+    checkInput(req, function(){
+        db.checkIdFromDb(req, function(error){
+            if(error){
+                console.log('exist');
+            }else
+                db.addUser(req);
+        });
+    });
 });
 
-function isSignin(param){
-    var user_id = param.session.user_id;
-    if(user_id == '' || user_id == undefined)
-        return false;
-    else
-        return true;
+function checkInput(param, callback){
+    if(id() && password() && confirmPassword()) {
+        callback();
+    }
+
+    function id() {
+        return param.body.user_id != '';
+    }
+    function password() {
+        return param.body.password != '';
+    }
+    function confirmPassword() {
+        return param.body.password == param.body.confirm_password;
+    }
 }
 
 module.exports = router;

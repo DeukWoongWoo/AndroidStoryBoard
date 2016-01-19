@@ -16,6 +16,38 @@ mysql.connect(function(err) {
     }
 });
 
+mysql.signin = function(param, callback){
+    mysql.query('SELECT user_info.password FROM user_info '
+        + 'where user_info.user_id = \''+ param.body.user_id + '\''
+        , function (error, result) {
+            if (error) {
+                console.error(error);
+            } else if(result[0] == null){
+                callback(null, 'can not find user id');
+            }else{
+                if(result[0].password == param.body.password){
+                    callback(param.body.user_id, 'id and password are correct');
+                }else{
+                    callback(null, 'password is incorrect');
+                }
+            }
+        });
+}
+
+mysql.checkIdFromDb = function(param, callback){
+    mysql.query('SELECT user_info.user_id FROM user_info '
+        + 'where user_info.user_id = \''+ param.body.user_id + '\''
+        , function (error, result) {
+            if (error) {
+                console.error(error);
+            } else if (result[0] == null) {
+                    callback(null);
+            }else
+                callback(true);
+        });
+}
+
+
 mysql.addUser = function(param){
     var user = {
         user_id:param.body.user_id,

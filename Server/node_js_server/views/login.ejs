@@ -5,9 +5,14 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Candal' rel='stylesheet' type='text/css'>
+
     <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
     <style>
 
@@ -22,28 +27,31 @@
 </head>
 
 <body>
-<header>
-    <!---->
-</header>
+<div class="navigation">
+    <div class="container">
+        <div class="left">
+            <a href="/" class="main-logo">AndroidStoryBoard</a>
+        </div>
+        <div class="right">
+            <a class="btn btn-info" href="/join">Join</a>
+        </div>
+    </div>
+</div>
 
 <div class="container">
-    <h1>Login</h1>
+    <div class="container-center">
+        <h1>Login</h1>
+        <div class="center-block" id="login">
+            <form method="post" action="/login">
+                <input type="text" class="form-control" name="user_id" placeholder="id"/>
+                <input type="password" class="form-control" name="password" placeholder="password"/>
+                <button type="submit" class="btn btn-info">Login</button>
+            </form>
 
-    <div class="center-block" id="login">
-        <form method="post" action="/login">
-            <input type="text" class="form-control" name="user_id" placeholder="id"/>
-            <input type="password" class="form-control" name="password" placeholder="password"/>
-            <button type="submit" class="btn btn-info">Login</button>
-        </form>
-
-    </div>
-
-    <div class="warring-message">
-        <%= login_result %>
-    </div>
-
-    <div class="center-block" id="to-join">
-        <a href="/join" class="btn btn-info">Join</a>
+        </div>
+        <div class="warring-message">
+            <%= login_result %>
+        </div>
     </div>
 </div>
 <footer>

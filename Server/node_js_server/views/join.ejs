@@ -5,9 +5,14 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Candal' rel='stylesheet' type='text/css'>
+
     <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
 </head>
 
@@ -15,27 +20,35 @@
 <header>
     <!---->
 </header>
+<div class="navigation">
+    <div class="container">
+        <div class="left">
+            <a href="/" class="main-logo">AndroidStoryBoard</a>
+        </div>
+        <div class="right">
+            <a class="btn btn-info" href="/login">Login</a>
+        </div>
+    </div>
+</div>
 
 <div class="container">
-    <h1>Join</h1>
-    <div class="center-block" id="join">
-        <form name="join" method="post" action="/join">
-            <input class="form-control" type="text" name="user_id" placeholder="id"/>
-            <input class="form-control" type="text" name="name" placeholder="name"/>
-            <input class="form-control" type="password" name="password" placeholder="password"/>
-            <input class="form-control" type="password" name="confirm_password" placeholder="confirm password"/>
-            <input class="form-control" type="email" name="email" placeholder="email"/>
-            <button class="btn btn-info" type="submit">Join</button>
-        </form>
-    </div>
+    <div class="container-center">
+        <h1>Join</h1>
+        <div class="center-block" id="join">
+            <form name="join" method="post" action="/join">
+                <input class="form-control" type="text" name="user_id" placeholder="id"/>
+                <input class="form-control" type="text" name="name" placeholder="name"/>
+                <input class="form-control" type="password" name="password" placeholder="password"/>
+                <input class="form-control" type="password" name="confirm_password" placeholder="confirm password"/>
+                <input class="form-control" type="email" name="email" placeholder="email"/>
+                <button class="btn btn-info" type="submit">Join</button>
+            </form>
+        </div>
 
-    <div class="warring-message">
-        <%= join_result %>
+        <div class="warring-message">
+            <%= join_result %>
+        </div>
     </div>
-    <div class="center-block">
-        <a class="btn btn-info" href="/login">Login</a>
-    </div>
-
 
 </div>
 

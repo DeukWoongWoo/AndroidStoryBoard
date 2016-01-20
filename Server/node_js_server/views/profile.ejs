@@ -1,0 +1,34 @@
+<html>
+<head>
+    <title>Android Storyboard</title>
+</head>
+
+<body>
+
+<div>
+    <form name="profile" method="post" action="/profile">
+        <b>Profile Update</b>
+        <br>
+        <%= user_id%>
+        <!--<input type="text" name="user_id" placeholder="user_id"/>-->
+        <br>
+        <input type="text" name="name" placeholder="name"/>
+        <br>
+        <input type="password" name="password" placeholder="password"/>
+        <br>
+        <input type="password" name="confirm_password" placeholder="confirm password"/>
+        <br>
+        <input type="text" name="email" placeholder="email"/>
+        <br>
+        <button type="submit" >Update</button>
+    </form>
+    <%= update_result%>
+
+    <form name="home" method="get" action="/">
+        <button type="submit" >Home</button>
+    </form>
+</div>
+
+
+</body>
+</html>

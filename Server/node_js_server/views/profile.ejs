@@ -1,34 +1,44 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Android Storyboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
 </head>
 
 <body>
+<header>
+    <!---->
+</header>
 
-<div>
-    <form name="profile" method="post" action="/profile">
-        <b>Profile Update</b>
-        <br>
-        <%= user_id%>
-        <!--<input type="text" name="user_id" placeholder="user_id"/>-->
-        <br>
-        <input type="text" name="name" placeholder="name"/>
-        <br>
-        <input type="password" name="password" placeholder="password"/>
-        <br>
-        <input type="password" name="confirm_password" placeholder="confirm password"/>
-        <br>
-        <input type="text" name="email" placeholder="email"/>
-        <br>
-        <button type="submit" >Update</button>
-    </form>
-    <%= update_result%>
+<div class="container">
+    <h1>Profile Update</h1>
+    <div class="center-block" id="profile">
+        <form name="profile" method="post" action="/profile">
+            <p class="form-control-static"><%= user_id %></p>
+            <input class="form-control" type="text" name="name" placeholder="name"/>
+            <input class="form-control" type="password" name="password" placeholder="password"/>
+            <input class="form-control" type="password" name="confirm_password" placeholder="confirm password"/>
+            <input class="form-control" type="text" name="email" placeholder="email"/>
+            <button class="btn btn-info" type="submit">Update</button>
+        </form>
+    </div>
+    <div class="warring-message">
+        <%= update_result %>
+    </div>
+    <div class="center-block">
+        <a class="btn btn-info" href="/">Home</a>
+    </div>
 
-    <form name="home" method="get" action="/">
-        <button type="submit" >Home</button>
-    </form>
 </div>
 
 
+<footer>
+    <!---->
+</footer>
 </body>
 </html>

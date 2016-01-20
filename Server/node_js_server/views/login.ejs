@@ -1,26 +1,53 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Android Storyboard</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
+    <style>
+
+    </style>
+    <script>
+        $(document).ready(function () {
+            $(".btn").click(function () {
+                $(".alert").css("visibility", "hidden");
+            });
+        });
+    </script>
 </head>
 
 <body>
+<header>
+    <!---->
+</header>
 
-<div>
-    <form name="login" method="post" action="/login">
-        <b>Login</b>
-        <br>
-        <input type="text" name="user_id" placeholder="id"/>
-        <br>
-        <input type="password" name="password" placeholder="password"/>
-        <br>
-        <button type="submit" >Login</button>
-    </form>
-    <%= login_result%>
+<div class="container">
+    <h1>Login</h1>
 
-    <form name="join" method="get" action="/join">
-        <button type="submit" >Join</button>
-    </form>
+    <div class="center-block" id="login">
+        <form method="post" action="/login">
+            <input type="text" class="form-control" name="user_id" placeholder="id"/>
+            <input type="password" class="form-control" name="password" placeholder="password"/>
+            <button type="submit" class="btn btn-info">Login</button>
+        </form>
+
+    </div>
+
+    <div class="warring-message">
+        <%= login_result %>
+    </div>
+
+    <div class="center-block" id="to-join">
+        <a href="/join" class="btn btn-info">Join</a>
+    </div>
 </div>
-
+<footer>
+    <!---->
+</footer>
 </body>
 </html>

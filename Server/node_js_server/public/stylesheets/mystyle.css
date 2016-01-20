@@ -1,0 +1,19 @@
+.container {
+    text-align: center;
+}
+
+.center-block {
+    width: 300px;
+    border: darkgray solid 1px;
+    padding: 10px;
+}
+
+.center-block input, button, a {
+    width: 96%;
+    margin: 2%;
+}
+
+.warring-message {
+    color : indianred;
+    height: 50px;
+}

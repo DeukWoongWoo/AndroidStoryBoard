@@ -1,26 +1,175 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.StoryBoard.mainViewFactory">
-  <grid id="27dc6" binding="mainContent" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="fullContent" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="532" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <vspacer id="90923">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
-      <component id="cc364" class="javax.swing.JButton" binding="button1" default-binding="true">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
+      <grid id="f7a2b" binding="toobarPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+        <constraints border-constraint="North"/>
         <properties>
-          <text value="Button"/>
+          <background color="-14803681"/>
+          <enabled value="false"/>
+          <foreground color="-14803681"/>
         </properties>
-      </component>
+        <border type="none"/>
+        <children>
+          <toolbar id="a1836" binding="maintoolbar">
+            <constraints/>
+            <properties>
+              <background color="-197377"/>
+              <floatable value="false"/>
+              <foreground color="-14803681"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="9b4" class="javax.swing.JButton" binding="open_b">
+                <constraints/>
+                <properties>
+                  <background color="-14803681"/>
+                  <enabled value="true"/>
+                  <foreground color="-197377"/>
+                  <hideActionText value="true"/>
+                  <horizontalTextPosition value="2"/>
+                  <icon value="icon/folder.png"/>
+                  <text value=""/>
+                  <verticalAlignment value="0"/>
+                  <verticalTextPosition value="0"/>
+                </properties>
+              </component>
+              <component id="3dd3" class="javax.swing.JButton" binding="save_b">
+                <constraints/>
+                <properties>
+                  <background color="-14803681"/>
+                  <enabled value="true"/>
+                  <foreground color="-197377"/>
+                  <hideActionText value="false"/>
+                  <horizontalAlignment value="2"/>
+                  <horizontalTextPosition value="2"/>
+                  <icon value="icon/arrow-down-1.png"/>
+                  <text value=""/>
+                  <verticalAlignment value="0"/>
+                  <verticalTextPosition value="0"/>
+                </properties>
+              </component>
+              <component id="d7dae" class="javax.swing.JButton" binding="refresh_b">
+                <constraints/>
+                <properties>
+                  <background color="-14803681"/>
+                  <enabled value="true"/>
+                  <foreground color="-197377"/>
+                  <hideActionText value="false"/>
+                  <horizontalAlignment value="10"/>
+                  <horizontalTextPosition value="2"/>
+                  <icon value="icon/refresh.png"/>
+                  <text value=""/>
+                  <verticalAlignment value="0"/>
+                  <verticalTextPosition value="0"/>
+                </properties>
+              </component>
+            </children>
+          </toolbar>
+          <toolbar id="2ed3b" binding="commandtoolbar">
+            <constraints/>
+            <properties>
+              <floatable value="false"/>
+              <orientation value="0"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="4c486" class="javax.swing.JButton" binding="redo_b">
+                <constraints/>
+                <properties>
+                  <background color="-14803681"/>
+                  <foreground color="-197377"/>
+                  <hideActionText value="false"/>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="2"/>
+                  <icon value="icon/arrow-left-2.png"/>
+                  <text value=""/>
+                  <verticalAlignment value="0"/>
+                </properties>
+              </component>
+              <component id="a8457" class="javax.swing.JButton" binding="undo_b">
+                <constraints/>
+                <properties>
+                  <background color="-14803681"/>
+                  <foreground color="-197377"/>
+                  <hideActionText value="false"/>
+                  <icon value="icon/arrow-right-2.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </toolbar>
+        </children>
+      </grid>
+      <grid id="c5f47" binding="mainContent" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties>
+          <background color="-14803681"/>
+          <foreground color="-1"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="2f9ca" binding="leftContent" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="West"/>
+            <properties>
+              <background color="-16777216"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <nested-form id="43995" form-file="GUI/StoryBoard/UI/palette.form">
+                <constraints border-constraint="Center"/>
+              </nested-form>
+            </children>
+          </grid>
+          <grid id="75c98" binding="rightContent" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="East"/>
+            <properties>
+              <background color="-16777216"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <nested-form id="73747" form-file="GUI/StoryBoard/UI/commandTree.form">
+                <constraints border-constraint="Center"/>
+              </nested-form>
+            </children>
+          </grid>
+          <grid id="93d6" binding="topContent" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints border-constraint="North"/>
+            <properties>
+              <background color="-11199967"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="5aae6" binding="bottomContent" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints border-constraint="South"/>
+            <properties>
+              <background color="-15787967"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="908f5" binding="centerContent" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <foreground color="-1"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <nested-form id="1b9b4" form-file="GUI/StoryBoard/UI/storyboard.form">
+                <constraints border-constraint="Center"/>
+              </nested-form>
+            </children>
+          </grid>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>

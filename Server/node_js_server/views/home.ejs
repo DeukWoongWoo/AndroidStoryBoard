@@ -1,18 +1,85 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Android Storyboard</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Candal' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
+
+    <script>
+        var main = function () {
+            /* Push the body and the nav over by 285px over */
+            $('.fa-bars').click(function () {
+                $('.sidebar').animate({
+                    left: "0px"
+                }, 200);
+
+                $('.test').animate({
+                    left: "300px"
+                }, 200);
+            });
+
+            /* Then push them back */
+            $('.fa-times').click(function () {
+                $('.sidebar').animate({
+                    left: "-300px"
+                }, 200);
+
+                $('.test').animate({
+                    left: "0px"
+                }, 200);
+            });
+        };
+        $(document).ready(main);
+    </script>
 </head>
 <body>
 
-<form name="logout" method="get" action="/logout">
-    <button type="submit" >Logout</button>
-</form>
+<div class="navigation">
+    <div class="container">
+        <div class="left">
+            <a href="/" class="main-logo">AndroidStoryBoard</a>
+        </div>
 
-<form name="profile" method="get" action="/profile">
-    <button type="submit" >Profile</button>
-</form>
+        <div class="right">
+            <b> <%= user_id %> </b>
+            <a class="btn btn-info" href="/profile">Profile</a>
+            <a class="btn btn-info" href="/logout">Logout</a>
+        </div>
+    </div>
+</div>
 
-user_id : <%= user_id %>
+<div class="content" style="border:black solid">
+    <div class="row" style="border : black solid;">
+        <div class="sidebar left" style="background: #5cb85c;">
+            <div class="left">
+                <i class="fa fa-times"></i>
+            </div>
+        </div>
+
+
+        <div class="test" style=" background: #f0ad4e; width:80%;">
+            <div class="left">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div>
+                right
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

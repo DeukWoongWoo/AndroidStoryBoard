@@ -9,6 +9,7 @@ public class storyboard {
     private JPanel storyBoard;
     private JPanel mainContent;
     private JPanel buttonGroup;
-    private JButton button1;
-    private JButton button2;
+    private JButton plus_b;
+    private JButton link_b;
+    private JButton remove_b;
 }

@@ -2,8 +2,12 @@ html, body {
     height: 100%;
 }
 
-.container{
-    width: 100%;
+.navigation{
+    height: 5%;
+}
+
+.content, .sidebar, .menu, .content-body, .main-body {
+    height: 95%;
 }
 .container-center {
     text-align: center;
@@ -33,16 +37,17 @@ html, body {
     float: right;
 }
 
-.center{
-
-}
-
 .main-logo {
     font-family: 'Candal', sans-serif;
     font-size: 25px;
+    color:black;
 }
 
-.fa-bars{
+a:hover{
+    text-decoration : none;
+}
+
+.fa{
     font-size: 30px;
 }
 
@@ -50,9 +55,48 @@ html, body {
     left : -300px;
     position: fixed;
     width: 300px;
+    overflow:auto;
 }
 
-.test{
+.menu{
+    height:95%;
+}
+
+.menu ul {
+    border-top: 1px solid #636366;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    border-bottom: 1px solid #636366;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 45px;
+    padding-bottom: 3px;
+    padding-left: 20px;
+    padding-top: 3px;
+}
+
+.menu a {
+    color: #fff;
+    font-size: 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.content-body {
     left : 0px;
     position: fixed;
+    width:100%;
+    overflow:auto;
+}
+
+.graph{
+    width : 700px;
+    height : 300px;
+    background: #d9534f;
+    margin-left : 20%;
+    margin-top : 10px;
+    margin-bottom : 10px;
 }

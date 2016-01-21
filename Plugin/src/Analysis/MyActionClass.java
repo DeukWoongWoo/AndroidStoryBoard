@@ -1,18 +1,11 @@
 package Analysis;
 
-import Analysis.Database.StoryBoardDAO;
+import Analysis.Database.*;
+import Analysis.Database.DtatTransferObject.DTO;
+import Analysis.Database.DtatTransferObject.JavaDTO;
+import Analysis.Database.DtatTransferObject.ManifestDTO;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlFile;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
@@ -23,17 +16,23 @@ public class MyActionClass extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         // TODO: insert action logic here
-//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
 //        projectAnalysis.execute(intellijPath, Constant.XML_PATTERN);
 
-        StoryBoardDAO storyBoardDAO = new StoryBoardDAO();
-        storyBoardDAO.onUpdate("test");
+//        ActivityDAO storyBoardDAO = new ActivityDAO();
+//        ManifestDAO manifestDAO = new ManifestDAO();
+//
+//        storyBoardDAO.onInsert("test");
+//        manifestDAO.onInsert("test");
+
+//        DAOManager daoManager = DAOManager.getInstance();
+//        daoManager.useDAO(Constant.MANIFEST);
+//        daoManager.insert(new DTO(new ManifestDTO(1,"test","test")));
 
 //        ProjectAnalysis projectAnalysis1 = ProjectAnalysis.getInstance(null,null);
 //        projectAnalysis.execute(Constant.PROJECT_JAVA_PATH, Constant.JAVA_PATTERN);
 
 //        PluginTest test = new PluginTest(e);
-
     }
 
 }

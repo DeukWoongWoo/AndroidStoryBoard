@@ -6,7 +6,7 @@ import java.sql.*;
 /**
  * Created by woong on 2016-01-18.
  */
-public abstract class SQLiteOpenHelper {
+public class SQLiteOpenHelper {
 
     static{
         try{
@@ -72,11 +72,5 @@ public abstract class SQLiteOpenHelper {
             e.printStackTrace();
         }
     }
-
-    public abstract void onInsert(String query);
-
-    public abstract void onUpdate(String query);
-
-    public abstract void onSelect(String query);
 }
 

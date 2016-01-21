@@ -4,7 +4,7 @@ var db = require('../models/db');
 
 router.get('/', function(req, res, next){
     if (req.session.user_id == undefined)
-        res.render('login', {login_result:'', signup_result : ''});
+        res.render('login', {login_result:' '});
     else
         res.redirect('/');
 });

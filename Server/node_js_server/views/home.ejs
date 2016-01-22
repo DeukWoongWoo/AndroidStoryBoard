@@ -34,6 +34,10 @@
                 $('.content-body').animate({
                     left: "300px"
                 }, 200);
+
+                $('.fa-bars').css(
+                    "visibility", "hidden"
+                );
             });
 
             $('.fa-times').click(function () {
@@ -44,6 +48,10 @@
                 $('.content-body').animate({
                     left: "0px"
                 }, 200);
+
+                $('.fa-bars').css(
+                        "visibility", ""
+                );
             });
 
             $('.main-body').click(function () {
@@ -54,6 +62,10 @@
                 $('.content-body').animate({
                     left: "0px"
                 }, 200);
+
+                $('.fa-bars').css(
+                        "visibility", ""
+                );
             });
         };
 
@@ -63,6 +75,7 @@
 <body>
 
 <div class="navigation">
+    <div class="container">
         <div class="left">
             <a href="/" class="main-logo">AndroidStoryBoard</a>
         </div>
@@ -72,19 +85,19 @@
             <a class="btn btn-info" href="/profile">Profile</a>
             <a class="btn btn-info" href="/logout">Logout</a>
         </div>
-
+    </div>
 </div>
 
 <div class="content">
-    <div class="sidebar left" style="background: #5cb85c;">
+    <div class="sidebar left">
         <div id="menu-close"><i class="fa fa-times"></i></div>
 
         <div class="container-center">
-            <button class="btn btn-default ">Register App</button>
+            <button class="btn btn-danger">Register App</button>
         </div>
 
         <div class="menu">
-            <b>App List</b>
+            <b style="font-size:30px;">App List</b>
             <ul>
                 <li><a href="#test1">test App</a></li>
                 <li><a href="#">test App</a></li>
@@ -102,7 +115,7 @@
                 <li><a href="#">test App</a></li>
                 <li><a href="#">test App</a></li>
 
-                <li><a class="btn btn-danger">test App</a></li>
+                <li><a class="btn btn-danger">end</a></li>
             </ul>
         </div>
     </div>

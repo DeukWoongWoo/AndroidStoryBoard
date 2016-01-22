@@ -1,12 +1,11 @@
 html, body {
     height: 100%;
+    overflow:hidden;
 }
 
-.navigation{
-    height: 5%;
-}
 
-.content, .sidebar, .menu, .content-body, .main-body {
+
+.content, .sidebar, .content-body, .main-body {
     height: 95%;
 }
 .container-center {
@@ -56,21 +55,31 @@ a:hover{
     position: fixed;
     width: 300px;
     overflow:auto;
+    background: #dcdcdc;
+    height:80%;
 }
 
 .menu{
-    height:95%;
+    height:80%;
+}
+
+.menu b {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 45px;
+    padding-bottom: 3px;
+    padding-left: 20px;
+    padding-top: 3px;
 }
 
 .menu ul {
-    border-top: 1px solid #636366;
+    border-top: 1px solid #b4b4b4;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
 .menu li {
-    border-bottom: 1px solid #636366;
+    border-bottom: 1px solid #b4b4b4;
     font-family: 'Open Sans', sans-serif;
     line-height: 45px;
     padding-bottom: 3px;
@@ -79,10 +88,11 @@ a:hover{
 }
 
 .menu a {
-    color: #fff;
+    color: #6e6e6e;
     font-size: 15px;
     text-decoration: none;
     text-transform: uppercase;
+    font-weight:bold;
 }
 
 .content-body {
@@ -93,10 +103,17 @@ a:hover{
 }
 
 .graph{
-    width : 700px;
-    height : 300px;
-    background: #d9534f;
+    width : 60%;
+    height : 40%;
+
+    background: #8FBC8F;
     margin-left : 20%;
     margin-top : 10px;
     margin-bottom : 10px;
+}
+
+.navigation{
+    height: 5%;
+    min-height: 70px;
+    /*position: fixed;*/
 }

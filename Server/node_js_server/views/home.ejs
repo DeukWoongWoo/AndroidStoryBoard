@@ -19,28 +19,56 @@
 
     <script>
         var main = function () {
-            /* Push the body and the nav over by 285px over */
+
+            $('.fa').mouseover(function () {
+                $(this).css("color", "gray");
+            }).mouseout(function () {
+                $(this).css("color", "");
+            });
+
             $('.fa-bars').click(function () {
                 $('.sidebar').animate({
                     left: "0px"
                 }, 200);
 
-                $('.test').animate({
+                $('.content-body').animate({
                     left: "300px"
                 }, 200);
+
+                $('.fa-bars').css(
+                    "visibility", "hidden"
+                );
             });
 
-            /* Then push them back */
             $('.fa-times').click(function () {
                 $('.sidebar').animate({
                     left: "-300px"
                 }, 200);
 
-                $('.test').animate({
+                $('.content-body').animate({
                     left: "0px"
                 }, 200);
+
+                $('.fa-bars').css(
+                        "visibility", ""
+                );
+            });
+
+            $('.main-body').click(function () {
+                $('.sidebar').animate({
+                    left: "-300px"
+                }, 200);
+
+                $('.content-body').animate({
+                    left: "0px"
+                }, 200);
+
+                $('.fa-bars').css(
+                        "visibility", ""
+                );
             });
         };
+
         $(document).ready(main);
     </script>
 </head>
@@ -60,22 +88,46 @@
     </div>
 </div>
 
-<div class="content" style="border:black solid">
-    <div class="row" style="border : black solid;">
-        <div class="sidebar left" style="background: #5cb85c;">
-            <div class="left">
-                <i class="fa fa-times"></i>
-            </div>
+<div class="content">
+    <div class="sidebar left">
+        <div id="menu-close"><i class="fa fa-times"></i></div>
+
+        <div class="container-center">
+            <button class="btn btn-danger">Register App</button>
         </div>
 
+        <div class="menu">
+            <b style="font-size:30px;">App List</b>
+            <ul>
+                <li><a href="#test1">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
 
-        <div class="test" style=" background: #f0ad4e; width:80%;">
-            <div class="left">
-                <i class="fa fa-bars"></i>
-            </div>
-            <div>
-                right
-            </div>
+                <li><a class="btn btn-danger">end</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content-body">
+        <div id="menu-button left"><i class="fa fa-bars"></i></div>
+
+        <div class="main-body container-center">
+            <div class="graph"></div>
+            <div class="graph"></div>
+            <div class="graph"></div>
+            <div class="graph" id="test1"></div>
         </div>
     </div>
 </div>

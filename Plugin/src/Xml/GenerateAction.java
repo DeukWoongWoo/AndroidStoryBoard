@@ -14,15 +14,25 @@ import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlFile;
+import org.jdom.*;
+import org.jdom.input.SAXBuilder;
+import org.jdom.input.SAXHandler;
 import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +53,7 @@ public class GenerateAction extends AnAction {
 
         Project project = e.getProject();
         String projectName = project.getName();
-        Messages.showInfoMessage("TestParsing","TestParsing");
+        //Messages.showInfoMessage("TestParsing","TestParsing");
 
         try{
 
@@ -61,31 +71,75 @@ public class GenerateAction extends AnAction {
             }
             */
 
-            String Filepath="C:/Users/cho/Desktop/android_project/MyApplication4/app/src/main/res/layout/content_main.xml";
+            String Filepath="C:/Users/cho/AndroidStudioProjects/Test_Activity/app/src/main/res/layout/content_main.xml";
 
             File ff = new File(Filepath);
 
-            /*
+/*
+            SAXParserFactory pF=SAXParserFactory.newInstance();
+            SAXParser pa = pF.newSAXParser();
+            SAXHandler handler = new SAXHandler();
+  */
+
+/*
             VirtualFile virtualFile = LocalFileSystem.getInstance().findFileByIoFile(ff);
             Messages.showInfoMessage("Success1","Success1");
             PsiFile psiff = PsiManager.getInstance(project).findFile(virtualFile);
             Messages.showInfoMessage("Success2","Success2");
 
             XmlFile xf = (XmlFile) psiff;
+            Messages.showInfoMessage("Success3","Success3");
 
             if(xf == null)
                 Messages.showInfoMessage("Xml null","Xml null");
-            */
+*/
+
+            XmlPullParserFactory xppf = XmlPullParserFactory.newInstance();
+            xppf.setNamespaceAware(true);
+            XmlPullParser xpp = xppf.newPullParser();
+
+            FileInputStream fis = new FileInputStream(ff);
+            xpp.setInput(fis,null);
+
+
+            int type = xpp.getEventType();
+            while(type != XmlPullParser.END_DOCUMENT){
+                Messages.showInfoMessage("Type : " + type+" " ,"Type");
+                if(type == XmlPullParser.START_TAG) {
+                    Messages.showInfoMessage("Start Tag : " + xpp.getName() + ", num: "+xpp.getAttributeCount(), "Start Tag");
+                    String str="";
+                    for(int i=0; i<xpp.getAttributeCount();i++)
+                    {
+                        str +=xpp.getAttributeName(i)+ " : "+xpp.getAttributeValue(i) +"\n";
+                    }
+                    Messages.showInfoMessage(str+" ","Attribute");
+
+                }
+                //else if(type != XmlPullParser.TEXT)
+                    //Messages.showInfoMessage("TEXT : "+ xpp.getName()+" ","Text ");
+                else  if(type == XmlPullParser.END_TAG)
+                    Messages.showInfoMessage("End Tag :" + xpp.getName()+" ","End Tag");
+                type = xpp.nextTag();
+
+            }
+
+
+
+/*
             DocumentBuilderFactory f= DocumentBuilderFactory.newInstance();
             DocumentBuilder parser = f.newDocumentBuilder();
+
+
             Document  XmlDoc= parser.parse(ff);
             Element root = XmlDoc.getDocumentElement();
+
             int level=1;
 
+
+
             XmlDoc.getDocumentElement().normalize();
+
             NodeList nList = XmlDoc.getElementsByTagName("*");
-
-
             Messages.showInfoMessage(nList.getLength()+" ","nList Length");
 
 
@@ -108,6 +162,8 @@ public class GenerateAction extends AnAction {
                 }
             }
             Messages.showInfoMessage(nList.getLength()+" ","new nList Length");
+
+            */
 /*
             NodeList nodeList = root.getChildNodes();
             printNode(nodeList,level);
@@ -122,11 +178,12 @@ public class GenerateAction extends AnAction {
             bt.setAttributeNode(asd);
             staff.appendChild(bt);
 */
+            /*
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(XmlDoc);
             StreamResult result = new StreamResult(new File(Filepath));
-            transformer.transform(source,result);
+            transformer.transform(source,result);*/
 
         }catch(Exception e2){
 
@@ -140,8 +197,6 @@ public class GenerateAction extends AnAction {
             sourceRootsList.append(file.getUrl()).append("\n");
 
         }
-
-
         PsiClass psiClass=getPsiClassFromContext(e);
         GenerateDialog dlg=new GenerateDialog(psiClass );
         dlg.show();
@@ -152,6 +207,13 @@ public class GenerateAction extends AnAction {
 
     }
 
+/*
+    public class saveTag{
+        private List
+
+    }
+
+*/
     public static void listAllAttributes(Element element)
     {
         //Messages.showInfoMessage("TagName : "+ element.getNodeName(),"TagName");

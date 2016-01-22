@@ -1,5 +1,8 @@
 package Analysis;
 
+import Analysis.Parser.JavaParser;
+import Analysis.Parser.Parser;
+import Analysis.Parser.XmlParser;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;

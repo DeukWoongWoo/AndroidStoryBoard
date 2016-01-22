@@ -1,14 +1,124 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Android Storyboard</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Candal' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
+
+    <script>
+        var main = function () {
+
+            $('.fa').mouseover(function () {
+                $(this).css("color", "gray");
+            }).mouseout(function () {
+                $(this).css("color", "");
+            });
+
+            $('.fa-bars').click(function () {
+                $('.sidebar').animate({
+                    left: "0px"
+                }, 200);
+
+                $('.content-body').animate({
+                    left: "300px"
+                }, 200);
+            });
+
+            $('.fa-times').click(function () {
+                $('.sidebar').animate({
+                    left: "-300px"
+                }, 200);
+
+                $('.content-body').animate({
+                    left: "0px"
+                }, 200);
+            });
+
+            $('.main-body').click(function () {
+                $('.sidebar').animate({
+                    left: "-300px"
+                }, 200);
+
+                $('.content-body').animate({
+                    left: "0px"
+                }, 200);
+            });
+        };
+
+        $(document).ready(main);
+    </script>
 </head>
 <body>
 
-<form name="signout" method="get" action="/sign/out">
-    <button type="submit" >Signout</button>
-</form>
+<div class="navigation">
+        <div class="left">
+            <a href="/" class="main-logo">AndroidStoryBoard</a>
+        </div>
 
-user_id : <%= user_id %>
+        <div class="right">
+            <b> <%= user_id %> </b>
+            <a class="btn btn-info" href="/profile">Profile</a>
+            <a class="btn btn-info" href="/logout">Logout</a>
+        </div>
+
+</div>
+
+<div class="content">
+    <div class="sidebar left" style="background: #5cb85c;">
+        <div id="menu-close"><i class="fa fa-times"></i></div>
+
+        <div class="container-center">
+            <button class="btn btn-default ">Register App</button>
+        </div>
+
+        <div class="menu">
+            <b>App List</b>
+            <ul>
+                <li><a href="#test1">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+                <li><a href="#">test App</a></li>
+
+                <li><a class="btn btn-danger">test App</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content-body">
+        <div id="menu-button left"><i class="fa fa-bars"></i></div>
+
+        <div class="main-body container-center">
+            <div class="graph"></div>
+            <div class="graph"></div>
+            <div class="graph"></div>
+            <div class="graph" id="test1"></div>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

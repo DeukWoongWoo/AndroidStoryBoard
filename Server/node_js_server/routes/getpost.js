@@ -46,5 +46,4 @@ router.post('/app/activity/object/error/use',function(req, res){
     res.send('success');
 });
 
-
 module.exports = router;

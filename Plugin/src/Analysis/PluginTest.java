@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by woong on 2015-12-22.
  */
-public class PluginTest extends JFrame {
+public class PluginTest extends JFrame implements ActionListener {
     private CollectionListModel<PsiField> myFields;
 
     private JPanel panel1;
@@ -38,12 +38,12 @@ public class PluginTest extends JFrame {
 
         label.setText(str);
 
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showConfirmDialog(PluginTest.this,"Click Button!!!");
-            }
-        });
+        System.out.println("getUIClassID : "+button1.getUIClassID());
+        System.out.println("getDisplayedMnemonicIndex : "+button1.getDisplayedMnemonicIndex());
+        System.out.println("getComponentCount : "+button1.getComponentCount());
+        System.out.println("getMnemonic : "+button1.getMnemonic());
+
+        button1.addActionListener(this);
  ;
         setVisible(true);
     }
@@ -64,13 +64,19 @@ public class PluginTest extends JFrame {
             list1.setCellRenderer(new DefaultPsiElementCellRenderer());
         }
 
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showConfirmDialog(PluginTest.this,"Click Button!!!");
-            }
-        });
+        button1.addActionListener(this);
 
         setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("getActionCommand : "+e.getActionCommand());
+        System.out.println("Click GetId : "+e.getID());
+        System.out.println("getModifiers : "+e.getModifiers());
+        System.out.println("getSource : "+e.getSource());
+        if(e.getSource() == button1){
+            System.out.println("Here!!!");
+        }
     }
 }

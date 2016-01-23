@@ -15,4 +15,13 @@ router.get('/logout', function(req, res, next) {
     });
 });
 
+router.post('/registerapp', function(req, res, next){
+    /**
+     * TODO:파일 이름 길이 검사()
+     * TODO:파일이름 중복검사 ()
+     * TODO:파일 업로드 유무 검사()
+     */
+    res.redirect('/');
+});
+
 module.exports = router;

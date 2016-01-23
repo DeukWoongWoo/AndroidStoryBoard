@@ -14,6 +14,12 @@ router.post('/', function(req, res) {
 });
 
 function join(req, res){
+    /**
+     * TODO:아이디 길이 검사()
+     * TODO:이름 길이 검사()
+     * TODO:패스워드 길이 검사()
+     * TODO:이메일 길이 검사()
+     */
     if(isInputWrong(req)){
         res.render('join', {join_result : '입력을 확인해주세요'});
     }else{

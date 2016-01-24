@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+var multiparty = require('connect-multiparty');
+
 //var routes = require('./routes/home');
 var home = require('./routes/home');
 var getpost = require('./routes/getpost');
@@ -24,6 +26,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(multiparty());
 
 app.use(session({
   secret: 'keyboard cat',

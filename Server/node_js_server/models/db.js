@@ -16,6 +16,21 @@ mysql.connect(function(err) {
     }
 });
 
+mysql.getAppList = function(param, callback){
+
+    mysql.query('SELECT app_info.app_name FROM user_info '
+        + 'INNER JOIN app_info ON user_info.user_id = app_info.user_id '
+        + 'AND app_info.user_id = \''+ param.session.user_id + '\''
+        , function (error, result, fields) {
+            if (error) {
+                console.error(error);
+                callback(null);
+            } else {
+                callback(result);
+            }
+        });
+}
+
 mysql.getUserId = function(param, callback){
     mysql.query('SELECT user_info.user_id FROM user_info '
         + 'where user_info.user_id = \''+ param.body.user_id + '\''

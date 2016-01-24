@@ -3,8 +3,6 @@ var router = express.Router();
 var db = require('../models/db');
 
 router.get('/', function(req, res, next){
-    console.log('session : ' + req.session);
-    console.log('session.user_id : ' + req.session.user_id);
     if (req.session.user_id == undefined)
         res.redirect('/login');
     else

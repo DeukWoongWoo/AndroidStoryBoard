@@ -116,36 +116,25 @@
                 <input type="file" id="storyboard" multiple>
                 <p class="help-block">스토리보드 파일을 올리세요.</p>
                 <div class="container-center">
-                    <button type="submit" class="btn btn-success" id="register-app-confirm">Confirm</button>
+                    <button type="submit" class="btn btn-primary" id="register-app-confirm">Confirm</button>
                     <button type="button" class="btn btn-warning" id="register-app-close">Close</button>
                 </div>
             </form>
         </div>
+
         <div class="menu">
             <b style="font-size:30px;">App List</b>
             <ul>
-                <li><a href="#test1">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-
+                <% app.forEach(function (app) { %>
+                <li><a class="btn btn-success" href="#"><%= app.app_name %></a></li>
+                <% })%>
                 <li><a class="btn btn-danger">end</a></li>
             </ul>
         </div>
     </div>
 
     <div class="content-body">
+
         <div id="menu-button left"><i class="fa fa-bars"></i></div>
 
         <div class="main-body container-center">

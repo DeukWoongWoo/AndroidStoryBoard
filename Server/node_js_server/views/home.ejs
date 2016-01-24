@@ -18,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
 
     <script>
+
+
         var main = function () {
 
             $('.fa').mouseover(function () {
@@ -36,7 +38,7 @@
                 }, 200);
 
                 $('.fa-bars').css(
-                    "visibility", "hidden"
+                        "visibility", "hidden"
                 );
             });
 
@@ -67,10 +69,21 @@
                         "visibility", ""
                 );
             });
+
+            $('#register-app').click(function () {
+                $('.register-app-form').css("display", "");
+                $('#register-app').css("display", "none");
+            });
+
+            $('#register-app-close').click(function () {
+                $('.register-app-form').css("display", "none");
+                $('#register-app').css("display", "");
+            });
         };
 
         $(document).ready(main);
     </script>
+
 </head>
 <body>
 
@@ -93,9 +106,21 @@
         <div id="menu-close"><i class="fa fa-times"></i></div>
 
         <div class="container-center">
-            <button class="btn btn-danger">Register App</button>
+            <button class="btn btn-danger" id="register-app">Register App</button>
         </div>
 
+        <div class="register-app-form" style="display: none;">
+            <form method="post" action="/registerapp">
+                <input type="text" class="form-control" name="app_name" placeholder="App Name"/>
+                <label for="exampleInputFile">파일 업로드</label>
+                <input type="file" id="storyboard" multiple>
+                <p class="help-block">스토리보드 파일을 올리세요.</p>
+                <div class="container-center">
+                    <button type="submit" class="btn btn-success" id="register-app-confirm">Confirm</button>
+                    <button type="button" class="btn btn-warning" id="register-app-close">Close</button>
+                </div>
+            </form>
+        </div>
         <div class="menu">
             <b style="font-size:30px;">App List</b>
             <ul>
@@ -131,7 +156,5 @@
         </div>
     </div>
 </div>
-
-
 </body>
 </html>

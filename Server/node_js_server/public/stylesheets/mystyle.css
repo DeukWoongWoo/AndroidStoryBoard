@@ -3,8 +3,6 @@ html, body {
     overflow:hidden;
 }
 
-
-
 .content, .sidebar, .content-body, .main-body {
     height: 95%;
 }
@@ -38,7 +36,7 @@ html, body {
 
 .main-logo {
     font-family: 'Candal', sans-serif;
-    font-size: 25px;
+    font-size: 20px;
     color:black;
 }
 
@@ -60,7 +58,7 @@ a:hover{
 }
 
 .menu{
-    height:80%;
+    /*height:80%;*/
 }
 
 .menu b {
@@ -91,7 +89,7 @@ a:hover{
     color: #6e6e6e;
     font-size: 15px;
     text-decoration: none;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     font-weight:bold;
 }
 

@@ -90,33 +90,41 @@ mysql.addApp = function(param){
 
 mysql.addActivity = function(param){
     var activity = {
-        activity_num:param.body.activity_num,
+        //activity_num:param.body.activity_num,
         activity_name:param.body.activity_name,
-        total_time:param.body.total_time,
+        total_time:0,
         app_num:param.body.app_num
     };
+    /**
+     * TODO:user_id에 따라서 app_num을 찾아서 넣어줘야함
+     * TODO:user_id 마다 activity의 이름이 중복이 안되도록 구현
+     */
 
     insertData('activity', activity);
 }
 
 mysql.addObject = function(param){
     var object = {
-        object_num:param.body.object_num,
+        //object_num:param.body.object_num,
         object_name:param.body.object_name,
-        object_frequency:param.body.object_frequency,
-        error_frequency:param.body.error_frequency,
+        object_frequency:0,
+        error_frequency:0,
         image_num:param.body.image_num,
         activity_num:param.body.activity_num
     };
-
+    /**
+     * TODO:오프젝트의 위치, 크기, 텍스트, 컬러 설정해줘야함
+     * TODO:user_id에 따라서 activity_num, image_num을 찾아서 넣어줘야함
+     */
     insertData('object', object);
 }
 
 mysql.addAppUse = function(param){
     var appUse = {
-        app_use_num:param.body.app_use_num,
+        //app_use_num:param.body.app_use_num,
         during_time_start:param.body.during_time_start,
         during_time_end:param.body.during_time_end,
+        //app_name:param.body.app_name,
         app_num:null
     };
 
@@ -126,7 +134,8 @@ mysql.addAppUse = function(param){
      */
     mysql.query('SELECT app_info.app_num FROM user_info '
         + 'INNER JOIN app_info ON user_info.user_id = app_info.user_id '
-        + 'AND app_info.user_id = \''+ param.body.user_id + '\''
+        + 'AND app_info.user_id = \''+ param.body.user_id + '\' '
+        + 'AND app_info.app_name = \''+ param.body.app_name + '\''
         , function (error, result, fields) {
         if (error) {
             console.error(error);
@@ -135,12 +144,13 @@ mysql.addAppUse = function(param){
             mysql.query('insert into app_use_info set ?', appUse, throwError);
             updateTotalTime('app', appUse.app_num, appUse.during_time_start, appUse.during_time_end);
         }
+
     });
 }
 
 mysql.addActivityUse = function(param){
     var activityUse = {
-        activity_use_num:param.body.activity_use_num,
+        //activity_use_num:param.body.activity_use_num,
         during_time_start:param.body.during_time_start,
         during_time_end:param.body.during_time_end,
         activity_num:null
@@ -154,11 +164,11 @@ mysql.addActivityUse = function(param){
         + 'INNER JOIN app_info ON user_info.user_id = app_info.user_id '
         + 'AND user_info.user_id = \'' + param.body.user_id + '\' '
         + 'INNER JOIN activity_info ON app_info.app_num = activity_info.app_num '
-        + 'AND activity_info.activity_name = \'' + param.body.activity_name + '\''
+        + 'AND activity_info.activity_name = \'' + param.body.activity_name + '\' '
+        + 'AND app_info.app_name = \'' + param.body.app_name + '\''
         , function (error, result, fields) {
-        if (error) {
-            console.error(error);
-        } else {
+        if (error) console.error(error);
+        else {
             activityUse.activity_num = result[0].activity_num;
             mysql.query('insert into activity_use_info set ?', activityUse, throwError);
             updateTotalTime('activity', activityUse.activity_num, activityUse.during_time_start, activityUse.during_time_end);
@@ -168,7 +178,7 @@ mysql.addActivityUse = function(param){
 
 mysql.addObjectUse = function(param){
     var objectUse = {
-        object_use_num:param.body.object_use_num,
+        //object_use_num:param.body.object_use_num,
         occur_time:param.body.occur_time,
         event_type:param.body.event_type,
         object_num:null
@@ -179,7 +189,7 @@ mysql.addObjectUse = function(param){
 
 mysql.addErrorUse = function(param){
     var errorUse = {
-        error_use_num:param.body.error_use_num,
+        //error_use_num:param.body.error_use_num,
         occur_time:param.body.occur_time,
         object_num:null
     };
@@ -199,6 +209,7 @@ function recordUseAndUpdateFrequency(type, param, dataUse) {
     mysql.query('SELECT object_info.object_num FROM user_info '
         + 'INNER JOIN app_info ON user_info.user_id = app_info.user_id '
         + 'AND user_info.user_id = ' + '\'' + param.body.user_id + '\' '
+        + 'AND app_info.app_name = ' + '\'' + param.body.app_name + '\' '
         + 'INNER JOIN activity_info ON app_info.app_num = activity_info.app_num '
         + 'AND activity_info.activity_name = \'' + param.body.activity_name + '\' '
         + 'INNER JOIN object_info ON object_info.activity_num = activity_info.activity_num '
@@ -206,7 +217,7 @@ function recordUseAndUpdateFrequency(type, param, dataUse) {
         , function (error, result, fields) {
             if (error) {
                 console.error(error);
-            } else {
+            } else {//TODO:result가 없을 때 예외처리
                 dataUse.object_num = result[0].object_num;
                 mysql.query('insert into ' + type + '_use_info set ?', dataUse, throwError);
                 updateFrequency(type, result[0].object_num);
@@ -215,7 +226,8 @@ function recordUseAndUpdateFrequency(type, param, dataUse) {
 }
 
 function updateTotalTime(type, num, start, end){
-    mysql.query('update ' + type + '_info set total_time=total_time + ' + calDuringTime(start, end) + ' where app_num like ' + num, throwError);
+    //console.log('debug : ' + 'update ' + type + '_info set total_time=total_time + ' + calDuringTime(start, end) + ' where app_num like ' + num);
+    mysql.query('update ' + type + '_info set total_time=total_time + ' + calDuringTime(start, end) + ' where ' + type + '_num like ' + num, throwError);
 }
 
 function updateFrequency(type, object_num){

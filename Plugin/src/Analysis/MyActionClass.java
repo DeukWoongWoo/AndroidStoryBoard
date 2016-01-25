@@ -1,6 +1,7 @@
 package Analysis;
 
 import Analysis.Database.*;
+import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Database.DtatTransferObject.DTO;
 import Analysis.Database.DtatTransferObject.JavaDTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
@@ -16,16 +17,13 @@ public class MyActionClass extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         // TODO: insert action logic here
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
-//        projectAnalysis.execute(intellijPath, Constant.XML_PATTERN);
+//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
+//        projectAnalysis.execute(intellijPath+"/Activity", Constant.JAVA_PATTERN);
 
-//        ActivityDAO storyBoardDAO = new ActivityDAO();
-//        ManifestDAO manifestDAO = new ManifestDAO();
-//
-//        storyBoardDAO.onInsert("test");
-//        manifestDAO.onInsert("test");
+        DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.select(1);
 
-//        DAOManager daoManager = DAOManager.getInstance();
+//        DatabaseManager daoManager = DatabaseManager.getInstance();
 //        daoManager.useDAO(Constant.MANIFEST);
 //        daoManager.insert(new DTO(new ManifestDTO(1,"test","test")));
 

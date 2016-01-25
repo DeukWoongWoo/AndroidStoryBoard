@@ -32,17 +32,13 @@ public class XmlParser implements Parser {
                 String str = subTag.findSubTags("intent-filter")[0].findSubTags("action")[0].getAttributeValue("android:name");
                 System.out.println("action name : "+str);
             }
-            System.out.println("getStartOffsetInParent : " + subTag.getStartOffsetInParent());
-            System.out.println("getTextRange().getLength() : "+subTag.getTextRange().getLength());
-            System.out.println("getTextRange().getStartOffset()() : "+subTag.getTextRange().getStartOffset());
-            System.out.println("getTextRange().getEndOffset()() : "+subTag.getTextRange().getEndOffset());
             FileDocumentManager fdm = FileDocumentManager.getInstance();
             Document doc = fdm.getCachedDocument(xmlFile.getVirtualFile());
             int startLine = doc.getLineNumber(subTag.getTextRange().getStartOffset());
             int endLine = doc.getLineNumber(subTag.getTextRange().getEndOffset());
+            int totalLine = endLine - startLine;
             System.out.println("Start getLineNumber : "+ (startLine+1));
-            System.out.println("total : "+(endLine - startLine));
-            System.out.println("col : "+(subTag.getTextRange().getStartOffset() - doc.getLineStartOffset(startLine)));
+            System.out.println("total : "+totalLine);
         }
     }
 

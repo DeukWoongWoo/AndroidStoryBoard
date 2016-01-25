@@ -6,12 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+var multiparty = require('connect-multiparty');
+
 //var routes = require('./routes/home');
 var home = require('./routes/home');
 var getpost = require('./routes/getpost');
-var login = require('./routes/login');
-var join = require('./routes/join');
-var profile = require('./routes/profile');
+var users = require('./routes/users');
 
 var app = express();
 
@@ -27,6 +27,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(multiparty());
+
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
@@ -36,9 +38,8 @@ app.use(session({
 //app.use('/', routes);
 app.use('/getpost', getpost);
 app.use('/', home);
-app.use('/join', join);
-app.use('/login', login);
-app.use('/profile', profile);
+app.use('/', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

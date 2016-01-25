@@ -36,7 +36,7 @@
                 }, 200);
 
                 $('.fa-bars').css(
-                    "visibility", "hidden"
+                        "visibility", "hidden"
                 );
             });
 
@@ -67,10 +67,21 @@
                         "visibility", ""
                 );
             });
+
+            $('#register-app').click(function () {
+                $('.register-app-form').css("display", "");
+                $('#register-app').css("display", "none");
+            });
+
+            $('#register-app-close').click(function () {
+                $('.register-app-form').css("display", "none");
+                $('#register-app').css("display", "");
+            });
         };
 
         $(document).ready(main);
     </script>
+
 </head>
 <body>
 
@@ -93,34 +104,35 @@
         <div id="menu-close"><i class="fa fa-times"></i></div>
 
         <div class="container-center">
-            <button class="btn btn-danger">Register App</button>
+            <button class="btn btn-danger" id="register-app">Register App</button>
+        </div>
+
+        <div class="register-app-form" style="display: none;">
+            <form method="post" action="/registerapp" enctype="multipart/form-data">
+                <input type="text" class="form-control" name="app_name" placeholder="App Name"/>
+                <label for="exampleInputFile">파일 업로드</label>
+                <input type="file" name="storyboard">
+                <p class="help-block">스토리보드 파일을 올리세요.</p>
+                <div class="container-center">
+                    <button type="submit" class="btn btn-primary" id="register-app-confirm">Confirm</button>
+                    <button type="button" class="btn btn-warning" id="register-app-close">Close</button>
+                </div>
+
+            </form>
         </div>
 
         <div class="menu">
             <b style="font-size:30px;">App List</b>
             <ul>
-                <li><a href="#test1">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-                <li><a href="#">test App</a></li>
-
-                <li><a class="btn btn-danger">end</a></li>
+                <% app.forEach(function (app) { %>
+                <li><a class="btn btn-success" href="#"><%= app.app_name %></a></li>
+                <% })%>
             </ul>
         </div>
     </div>
 
     <div class="content-body">
+
         <div id="menu-button left"><i class="fa fa-bars"></i></div>
 
         <div class="main-body container-center">
@@ -131,7 +143,5 @@
         </div>
     </div>
 </div>
-
-
 </body>
 </html>

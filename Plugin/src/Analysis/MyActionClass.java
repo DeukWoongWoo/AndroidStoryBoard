@@ -1,9 +1,6 @@
 package Analysis;
 
-import Analysis.Database.*;
 import Analysis.Database.DatabaseManager.DatabaseManager;
-import Analysis.Database.DtatTransferObject.DTO;
-import Analysis.Database.DtatTransferObject.JavaDTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -20,8 +17,12 @@ public class MyActionClass extends AnAction {
 //        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
 //        projectAnalysis.execute(intellijPath+"/Activity", Constant.JAVA_PATTERN);
 
+        ManifestDTO manifestDTO = new ManifestDTO();
+//        manifestDTO.setPackageName("storyboard");
+//        manifestDTO.setTheme("none");
+
         DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.select(1);
+        databaseManager.selectPortion(Constant.MANIFEST, manifestDTO);
 
 //        DatabaseManager daoManager = DatabaseManager.getInstance();
 //        daoManager.useDAO(Constant.MANIFEST);

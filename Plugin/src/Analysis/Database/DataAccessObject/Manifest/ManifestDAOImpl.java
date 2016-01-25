@@ -4,6 +4,11 @@ import Analysis.Database.DataAccessObject.Activity.ActivityDAO;
 import Analysis.Database.DataAccessObject.Activity.ActivityDAOImpl;
 import Analysis.Database.SQLiteOpenHelper;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Created by woong on 2016-01-21.
  */
@@ -34,13 +39,35 @@ public class ManifestDAOImpl extends SQLiteOpenHelper implements ManifestDAO {
     }
 
     @Override
-    public void selectAll() {
-
+    public void selectAll(String query) {
+        PreparedStatement prep = null;
+        Connection connection = getConnection();
+        ResultSet rows = null;
+        try {
+            prep = connection.prepareStatement(query);
+            rows = prep.executeQuery();
+            while(rows.next()){
+                System.out.println("num : " + rows.getString(1) + " / package : " + rows.getString(2) + " / theme : " + rows.getString(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void selectManifest() {
-
+    public void selectManifest(String query) {
+        PreparedStatement prep = null;
+        Connection connection = getConnection();
+        ResultSet rows = null;
+        try {
+            prep = connection.prepareStatement(query);
+            rows = prep.executeQuery();
+            while(rows.next()){
+                System.out.println("num : " + rows.getString(1) + " / package : " + rows.getString(2) + " / theme : " + rows.getString(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     @Override
     public void selectActivity() {

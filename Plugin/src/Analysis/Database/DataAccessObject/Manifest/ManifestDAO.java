@@ -7,7 +7,7 @@ public interface ManifestDAO {
     public int insertManifest();
     public void insertActivity();
 
-    public void selectAll();
-    public void selectManifest();
+    public void selectAll(String query);
+    public void selectManifest(String query);
     public void selectActivity();
 }

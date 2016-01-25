@@ -8,23 +8,13 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlFile;
 import org.w3c.dom.*;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
-
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -146,7 +136,8 @@ public class GenerateAction extends AnAction {
         }
 
         PsiClass psiClass=getPsiClassFromContext(e);
-        GenerateDialog dlg=new GenerateDialog(psiClass );
+
+        GenerateDialog dlg  = new GenerateDialog(psiClass);
         dlg.show();
         if(dlg.isOK()){
             generateComparable(psiClass, dlg.getFields());
@@ -154,6 +145,7 @@ public class GenerateAction extends AnAction {
 
 
     }
+
 
 /*
     public void findMargin(ComponentManager componentManager){
@@ -280,7 +272,7 @@ public class GenerateAction extends AnAction {
 
 
 
-
+/*
 
     public static int changeDpToInt(String value){
         int dp=0;
@@ -288,7 +280,7 @@ public class GenerateAction extends AnAction {
         for(int i=0;val[i]!='d';i++)
             dp =dp*10+ val[i]-'0';
         return dp;
-    }
+    }*/
 /*
     private int checkLayoutMargin(String value) {
         for(int i=0;i<layout_Margin.length;i++){

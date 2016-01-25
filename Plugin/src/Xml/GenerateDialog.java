@@ -7,7 +7,6 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
 import com.intellij.ui.CollectionListModel;
 import com.intellij.ui.ToolbarDecorator;
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.util.List;
@@ -35,7 +34,7 @@ public class GenerateDialog extends DialogWrapper {
         init();
     }
 
-    @Nullable
+
     @Override
     protected JComponent createCenterPanel() {
         return myComponent;

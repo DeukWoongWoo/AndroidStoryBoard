@@ -9,5 +9,6 @@ public interface ManifestDAO {
 
     public void selectAll(String query);
     public void selectManifest(String query);
+    public void selectManifest();
     public void selectActivity();
 }

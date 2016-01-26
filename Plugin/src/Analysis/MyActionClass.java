@@ -1,7 +1,12 @@
 package Analysis;
 
+import Analysis.Constant.ConstantEtc;
+import Analysis.Constant.TableName;
+import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
+import Analysis.Database.DataAccessObject.Manifest.ManifestDAOImpl;
 import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
+import Analysis.Main.ProjectAnalysis;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 
@@ -14,22 +19,30 @@ public class MyActionClass extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         // TODO: insert action logic here
-//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
-//        projectAnalysis.execute(intellijPath+"/Activity", Constant.JAVA_PATTERN);
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
+//        projectAnalysis.execute(intellijPath+"/Activity", ConstantEtc.JAVA_PATTERN);
+        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);
 
         ManifestDTO manifestDTO = new ManifestDTO();
 //        manifestDTO.setPackageName("storyboard");
 //        manifestDTO.setTheme("none");
+        ManifestDAO testDao = new ManifestDAOImpl();
 
         DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.selectPortion(Constant.MANIFEST, manifestDTO);
+        databaseManager.selectPortion(TableName.MANIFEST, manifestDTO);
+
+        databaseManager.selectToManifest(table->table.selectManifest(manifestDTO.selectPortionQuery()));
+
+        databaseManager.selectToManifest(table->table.selectManifest());
+
+        databaseManager.selectToJava(table->table.selectJava());
 
 //        DatabaseManager daoManager = DatabaseManager.getInstance();
-//        daoManager.useDAO(Constant.MANIFEST);
+//        daoManager.useDAO(TableName.MANIFEST);
 //        daoManager.insert(new DTO(new ManifestDTO(1,"test","test")));
 
 //        ProjectAnalysis projectAnalysis1 = ProjectAnalysis.getInstance(null,null);
-//        projectAnalysis.execute(Constant.PROJECT_JAVA_PATH, Constant.JAVA_PATTERN);
+//        projectAnalysis.execute(ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
 
 //        PluginTest test = new PluginTest(e);
     }

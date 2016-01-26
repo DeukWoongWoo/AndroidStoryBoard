@@ -1,7 +1,8 @@
-package Analysis;
+package Analysis.Main;
 
+import Analysis.Constant.ConstantEtc;
 import Analysis.Parser.JavaParser;
-import Analysis.Parser.Parser;
+import Analysis.Parser.FileParser;
 import Analysis.Parser.XmlParser;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
@@ -36,7 +37,7 @@ public class ProjectAnalysis {
         baseDir = project.getBaseDir();
 
         PsiDirectory psiDirectory = currentDirectory(path);
-        findFiles(Constant.XML_PATTERN, psiDirectory);
+        findFiles(ConstantEtc.XML_PATTERN, psiDirectory);
     }
 
     public void execute(String path, String pattern) {
@@ -77,12 +78,12 @@ public class ProjectAnalysis {
 
             if(matcher.find()){
                 System.out.println("matcherFind..." + patternStr);
-                if(patternStr.equals(Constant.XML_PATTERN)) codeParsing(new XmlParser(psiFiles[i]));
+                if(patternStr.equals(ConstantEtc.XML_PATTERN)) codeParsing(new XmlParser(psiFiles[i]));
                 else codeParsing(new JavaParser(psiFiles[i]));
             }
         }
     }
-    private void codeParsing(Parser parser) {
+    private void codeParsing(FileParser parser) {
         System.out.println("codeParsing!!!!");
         parser.parsing();
     }

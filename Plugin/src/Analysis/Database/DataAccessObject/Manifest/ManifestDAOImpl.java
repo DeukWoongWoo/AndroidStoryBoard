@@ -2,6 +2,7 @@ package Analysis.Database.DataAccessObject.Manifest;
 
 import Analysis.Database.DataAccessObject.Activity.ActivityDAO;
 import Analysis.Database.DataAccessObject.Activity.ActivityDAOImpl;
+import Analysis.Database.QueryBuilder.QueryBuilder;
 import Analysis.Database.SQLiteOpenHelper;
 
 import java.sql.Connection;
@@ -69,6 +70,23 @@ public class ManifestDAOImpl extends SQLiteOpenHelper implements ManifestDAO {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void selectManifest() {
+        PreparedStatement prep = null;
+        Connection connection = getConnection();
+        ResultSet rows = null;
+        try {
+            prep = connection.prepareStatement(QueryBuilder.selectAll().from("Manifest").build());
+            rows = prep.executeQuery();
+            while(rows.next()){
+                System.out.println("num : " + rows.getString(1) + " / package : " + rows.getString(2) + " / theme : " + rows.getString(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void selectActivity() {
 

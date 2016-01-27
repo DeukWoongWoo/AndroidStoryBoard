@@ -6,8 +6,12 @@ import Analysis.Database.DataAccessObject.Java.JavaDAOImpl;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAOImpl;
 import Analysis.Database.DtatTransferObject.DTO;
+import Analysis.Database.DtatTransferObject.ManifestDTO;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Created by woong on 2016-01-24.
@@ -16,73 +20,24 @@ public class DatabaseManager implements DBManager{
     private final ManifestDAO manifestDAO = new ManifestDAOImpl();
     private final JavaDAO javaDAO = new JavaDAOImpl();
 
-    @Override
-    public void selectAll(int key, DTO dto) {
-        switch (key){
-            case TableName.MANIFEST:
-                manifestDAO.selectAll(dto.selectPortionQuery());
-                break;
-            case TableName.JAVA:
-                javaDAO.selectAll();
-                break;
-        }
-    }
+//    @Override
+//    public void useToManifest(Consumer<ManifestDAO> action) {
+//        action.accept(manifestDAO);
+//    }
 
     @Override
-    public void selectPortion(int key, DTO dto) {
-        switch (key){
-            case TableName.MANIFEST:
-                manifestDAO.selectManifest(dto.selectPortionQuery());
-                break;
-            case TableName.ACTIVITY:
-                manifestDAO.selectActivity();
-                break;
-            case TableName.JAVA:
-                javaDAO.selectJava();
-                break;
-            case TableName.XML:
-                javaDAO.selectXml();
-                break;
-            case TableName.COMPONENT:
-                javaDAO.selectComponent();
-                break;
-            case TableName.EVENT:
-                javaDAO.selectEvent();
-                break;
-        }
+    public ArrayList<ManifestDTO> useToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function) {
+        return function.apply(manifestDAO);
     }
 
-    @Override
-    public void insert(int key, DTO dto) {
-        switch (key){
-            case TableName.MANIFEST:
-                manifestDAO.insertManifest();
-                break;
-            case TableName.ACTIVITY:
-                manifestDAO.insertActivity();
-                break;
-            case TableName.JAVA:
-                javaDAO.insertJava();
-                break;
-            case TableName.XML:
-                javaDAO.insertXml();
-                break;
-            case TableName.COMPONENT:
-                javaDAO.insertComponent();
-                break;
-            case TableName.EVENT:
-                javaDAO.insertEvent();
-                break;
-        }
-    }
+//    @Override
+//    public ArrayList<ManifestDTO> useToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function) {
+//        System.out.println("useToManifest");
+//        return function.apply(manifestDAO);
+//    }
 
     @Override
-    public void selectToManifest(Consumer<ManifestDAO> action) {
-        action.accept(manifestDAO);
-    }
-
-    @Override
-    public void selectToJava(Consumer<JavaDAO> action) {
+    public void useToJava(Consumer<JavaDAO> action) {
         action.accept(javaDAO);
     }
 

@@ -1,15 +1,17 @@
 package Analysis.Database.DtatTransferObject;
 
-import Analysis.Database.QueryBuilder.QueryBuilder;
+import java.util.ArrayList;
 
 /**
  * Created by woong on 2016-01-21.
  */
-public class ManifestDTO implements DTO {
+public class ManifestDTO {
     private final String tableName = "Manifest";
+
     private int num;
     private String packageName;
     private String theme;
+    private ArrayList<ActivityDTO> activities;
 
     public ManifestDTO() {
     }
@@ -44,12 +46,16 @@ public class ManifestDTO implements DTO {
         return theme;
     }
 
-    @Override
-    public String selectPortionQuery(){
-        return QueryBuilder.selectAll().from(tableName).build();
+    public ArrayList<ActivityDTO> getActivities() {
+        return activities;
     }
 
-    public boolean isNull(String str){
-        return str == null ? true : false;
+    public void setActivities(ArrayList<ActivityDTO> activities) {
+        this.activities = activities;
+    }
+
+    public void setActivity(ActivityDTO activity) {
+        if(activities == null) activities = new ArrayList<>();
+        activities.add(activity);
     }
 }

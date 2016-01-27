@@ -3,16 +3,20 @@ package Analysis.Database.DatabaseManager;
 import Analysis.Database.DataAccessObject.Java.JavaDAO;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
 import Analysis.Database.DtatTransferObject.DTO;
+import Analysis.Database.DtatTransferObject.ManifestDTO;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Created by woong on 2016-01-24.
  */
 public interface DBManager {
-    public void selectAll(int key, DTO dto);
-    public void selectPortion(int key, DTO dto);
-    public void insert(int key, DTO dto);
-    public void selectToManifest(Consumer<ManifestDAO> action);
-    public void selectToJava(Consumer<JavaDAO> action);
+//    public void useToManifest(Consumer<ManifestDAO> action);
+//    public ArrayList useToManifest(Function<ManifestDAO, ArrayList> function);
+    public ArrayList<ManifestDTO> useToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function);
+//    public void useToManifest(Function<Consumer<ManifestDAO>, ArrayList<ManifestDTO>> function);
+    public void useToJava(Consumer<JavaDAO> action);
 }

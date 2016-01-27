@@ -14,9 +14,7 @@ import java.util.function.Supplier;
  * Created by woong on 2016-01-24.
  */
 public interface DBManager {
-//    public void useToManifest(Consumer<ManifestDAO> action);
-//    public ArrayList useToManifest(Function<ManifestDAO, ArrayList> function);
-    public ArrayList<ManifestDTO> useToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function);
-//    public void useToManifest(Function<Consumer<ManifestDAO>, ArrayList<ManifestDTO>> function);
+    public ArrayList<ManifestDTO> selectToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function);
+    public void insertToManifest(Consumer<ManifestDAO> function);
     public void useToJava(Consumer<JavaDAO> action);
 }

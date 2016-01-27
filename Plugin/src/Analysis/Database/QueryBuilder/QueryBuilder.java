@@ -1,5 +1,6 @@
 package Analysis.Database.QueryBuilder;
 
+import Analysis.Database.QueryBuilder.Insert.InsertBuilder;
 import Analysis.Database.QueryBuilder.Select.SelectFieldBuilder;
 
 /**
@@ -12,5 +13,9 @@ public class QueryBuilder {
 
     public static SelectFieldBuilder selectAll(){
         return new SelectFieldBuilder();
+    }
+
+    public static InsertBuilder insert(){
+        return new InsertBuilder();
     }
 }

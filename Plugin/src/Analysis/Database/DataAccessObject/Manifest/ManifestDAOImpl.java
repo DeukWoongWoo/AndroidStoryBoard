@@ -22,21 +22,8 @@ public class ManifestDAOImpl extends SQLiteOpenHelper implements ManifestDAO {
     private final ActivityDAO activityDAO = new ActivityDAOImpl();
 
     @Override
-    public int insertManifest() {
-        /*ManifestDTO rows = (ManifestDTO) dto.getDTO();
-        PreparedStatement prep = null;
-        Connection connection = getConnection();
-        try {
-            prep = connection.prepareStatement(DatabaseQuery.insertManifest);
-            prep.setString(1,rows.getPackageName());
-            prep.setString(2,rows.getTheme());
-            prep.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            close(connection,prep,null);
-        }*/
-        return 0;
+    public void insertManifest(ManifestDTO manifestDTO) {
+
     }
 
     @Override

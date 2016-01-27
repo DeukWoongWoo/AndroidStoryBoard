@@ -30,7 +30,8 @@ public class MyActionClass extends AnAction {
         manifestDTO.setActivity(new ActivityDTO(0,1,"test",1,11,10));
 
         DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.useToManifest(table->table.selectManifest()).forEach(row ->{System.out.println(row.getPackageName());});
+        databaseManager.selectToManifest(table->table.selectManifest()).forEach(row ->{System.out.println(row.getPackageName());});
+        databaseManager.insertToManifest(table->table.insertManifest(manifestDTO));
 //        databaseManager.useToManifest(table->table.selectActivity()).forEach(manifestItem -> manifestItem.getActivities().forEach(activityItem -> activityItem.getName()));
 //        databaseManager.useToJava(table->table.selectJava());
 //        ArrayList<ManifestDTO> dto = databaseManager.useToManifest(ManifestDAO::selectManifest);

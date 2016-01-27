@@ -58,4 +58,8 @@ public class ManifestDTO {
         if(activities == null) activities = new ArrayList<>();
         activities.add(activity);
     }
+
+    public String getInsertQuery(){
+        return null;
+    }
 }

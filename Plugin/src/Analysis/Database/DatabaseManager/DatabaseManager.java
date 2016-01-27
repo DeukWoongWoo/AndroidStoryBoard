@@ -20,21 +20,15 @@ public class DatabaseManager implements DBManager{
     private final ManifestDAO manifestDAO = new ManifestDAOImpl();
     private final JavaDAO javaDAO = new JavaDAOImpl();
 
-//    @Override
-//    public void useToManifest(Consumer<ManifestDAO> action) {
-//        action.accept(manifestDAO);
-//    }
-
     @Override
-    public ArrayList<ManifestDTO> useToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function) {
+    public ArrayList<ManifestDTO> selectToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function) {
         return function.apply(manifestDAO);
     }
 
-//    @Override
-//    public ArrayList<ManifestDTO> useToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function) {
-//        System.out.println("useToManifest");
-//        return function.apply(manifestDAO);
-//    }
+    @Override
+    public void insertToManifest(Consumer<ManifestDAO> action) {
+        action.accept(manifestDAO);
+    }
 
     @Override
     public void useToJava(Consumer<JavaDAO> action) {

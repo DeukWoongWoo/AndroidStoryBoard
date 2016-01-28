@@ -14,6 +14,7 @@ public class Component {
     private ArrayList<Attribution> Attributes ;
     private int AttributeCount;
     private String id;//자주 쓰임
+    private String tagName;
     private int margin [];
     private int stdMargin [];
     private int realMargin[];
@@ -38,7 +39,7 @@ public class Component {
     public void setAttributes(XmlPullParser xpp){
 
         AttributeCount=xpp.getAttributeCount();
-
+        tagName = xpp.getName();
         for(int i=0;i<AttributeCount;i++) {
             Attribution tempAttr=new Attribution();
             tempAttr.setAttribute(xpp.getAttributeName(i));
@@ -59,6 +60,9 @@ public class Component {
     }
     public int getAttributeCount(){
         return AttributeCount;
+    }
+    public String getTagName(){
+        return tagName;
     }
 
 

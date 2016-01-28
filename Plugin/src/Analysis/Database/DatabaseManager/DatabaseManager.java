@@ -1,10 +1,17 @@
 package Analysis.Database.DatabaseManager;
 
+import Analysis.Constant.TableName;
 import Analysis.Database.DataAccessObject.Java.JavaDAO;
 import Analysis.Database.DataAccessObject.Java.JavaDAOImpl;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAOImpl;
-import Analysis.Database.QueryBuilder.QueryBuilder;
+import Analysis.Database.DtatTransferObject.DTO;
+import Analysis.Database.DtatTransferObject.ManifestDTO;
+
+import java.util.ArrayList;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Created by woong on 2016-01-24.
@@ -14,14 +21,18 @@ public class DatabaseManager implements DBManager{
     private final JavaDAO javaDAO = new JavaDAOImpl();
 
     @Override
-    public void select(int key) {
-        String query = QueryBuilder.selectAll().from("Manifest").build();
-        System.out.println("DatabaseManager Query : " + query);
-        query = QueryBuilder.selectAll().from("Manifest").where("id = 1").build();
-        System.out.println("DatabaseManager Query : " + query);
+    public ArrayList<ManifestDTO> selectToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function) {
+        return function.apply(manifestDAO);
     }
 
     @Override
-    public void insert() {
+    public void insertToManifest(Consumer<ManifestDAO> action) {
+        action.accept(manifestDAO);
     }
+
+    @Override
+    public void useToJava(Consumer<JavaDAO> action) {
+        action.accept(javaDAO);
+    }
+
 }

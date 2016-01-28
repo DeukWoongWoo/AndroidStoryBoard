@@ -5,7 +5,7 @@ import com.intellij.psi.*;
 /**
  * Created by woong on 2016-01-14.
  */
-public class JavaParser implements Parser {
+public class JavaParser implements FileParser {
     private PsiJavaFile psiJavaFile;
     public JavaParser(PsiFile psiFile){
         psiJavaFile = (PsiJavaFile) psiFile;

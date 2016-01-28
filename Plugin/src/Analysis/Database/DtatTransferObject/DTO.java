@@ -1,14 +1,8 @@
 package Analysis.Database.DtatTransferObject;
 
 /**
- * Created by woong on 2016-01-21.
+ * Created by woong on 2016-01-25.
  */
-public class DTO <T> {
-    private T t;
-
-    public DTO(T t){
-        this.t = t;
-    }
-
-    public T getDTO() { return t; }
+public interface DTO {
+    public String selectPortionQuery();
 }

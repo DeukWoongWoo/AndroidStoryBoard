@@ -1,18 +1,18 @@
 package Analysis.Parser;
 
-import Analysis.Constant;
+import Analysis.Constant.ConstantEtc;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.xml.XmlTag;
 
+
 /**
  * Created by woong on 2016-01-14.
  */
-public class XmlParser implements Parser {
+public class XmlParser implements FileParser {
 
     private XmlFile xmlFile;
 
@@ -22,10 +22,15 @@ public class XmlParser implements Parser {
 
     @Override
     public void parsing() {
-        if(Constant.PROJECT_JAVA_PATH==null) {
+        if(ConstantEtc.PROJECT_JAVA_PATH==null) {
             makeProjectJavaPath();
         }
         XmlTag xmlTag = xmlFile.getRootTag().findSubTags("application")[0];
+
+//        Stream<XmlTag> activityTag = Stream.of(xmlTag.findSubTags("activity"));
+//        activityTag.filter(subTag -> subTag.findSubTags("intent-filter").length != 0)
+//                .forEach(subTag -> System.out.println(subTag.findSubTags("intent-filter")[0].findSubTags("action")[0].getAttributeValue("android:name")));
+
         for(XmlTag subTag : xmlTag.findSubTags("activity")){
             System.out.println("subTag Content " + subTag.getAttributeValue("android:name"));
             if(subTag.findSubTags("intent-filter").length != 0){
@@ -48,8 +53,8 @@ public class XmlParser implements Parser {
         String strPath = "/java";
         for(int i=0;i<str.length;i++)
             strPath += "/" + str[i];
-        Constant.PROJECT_JAVA_PATH = strPath;
-        System.out.println("XmlParser javaPath : "+Constant.PROJECT_JAVA_PATH);
-        Messages.showInfoMessage("javaPath : "+Constant.PROJECT_JAVA_PATH,"XmlParser");
+        ConstantEtc.PROJECT_JAVA_PATH = strPath;
+        System.out.println("XmlParser javaPath : "+ ConstantEtc.PROJECT_JAVA_PATH);
+        Messages.showInfoMessage("javaPath : "+ ConstantEtc.PROJECT_JAVA_PATH,"XmlParser");
     }
 }

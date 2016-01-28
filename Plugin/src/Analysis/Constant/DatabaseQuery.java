@@ -1,4 +1,4 @@
-package Analysis.Database;
+package Analysis.Constant;
 
 /**
  * Created by woong on 2016-01-20.

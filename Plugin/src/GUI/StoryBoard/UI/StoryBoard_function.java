@@ -16,9 +16,9 @@ public class StoryBoard_function extends JPanel {
 
     public StoryBoard_function() {
         System.out.println("storyboard create function is called");
-        makeActivityName("abcdsfsdfsdfsdfsdfsdf");
+        makeActivityName("abcd");
         makeActivityName("test");
-
+        makeActivityName("wow");
     }
 
     private void makeActivityName(String id){
@@ -32,12 +32,12 @@ public class StoryBoard_function extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         System.out.println("paintCoponent is called");
-        drawActivity(10,10, g);
-        drawActivity(400,10, g);
-        drawActivity(800,10,g);
+        drawActivity(10,10, g ,0);
+        drawActivity(400,10, g, 1);
+        drawActivity(800,10,g, 2);
     }
 
-    public void drawActivity(int startx, int starty, Graphics g)
+    public void drawActivity(int startx, int starty, Graphics g, int ID)
     {
         g.setColor(Color.BLACK);
         g.fillRoundRect(startx,starty, 200, 384 ,10, 10);
@@ -47,16 +47,16 @@ public class StoryBoard_function extends JPanel {
         g.fillRect(startx+4,starty+32, 192, 12);
         g.setColor(new Color(46,82,154));
         g.fillRect(startx+4,starty+44, 192, 32);
-     /*   for(JLabel label : items) {
+     /*      for(JLabel label : items) {
             label.setLocation(startx + 4, starty + 10);
             label.setVisible(true);
             this.add(label);
         }
 */
-//        name = items.get(0);
-//        name.setLocation(startx+4,starty+10);
-//        name.setVisible(true);
-//        this.add(name);
+        name = items.get(ID);
+        name.setLocation(startx+4,starty+10);
+        name.setVisible(true);
+        this.add(name);
     }
 }
 

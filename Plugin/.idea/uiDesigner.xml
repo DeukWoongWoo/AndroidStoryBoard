@@ -127,7 +127,7 @@
       <item class="GUI.StoryBoard.UI.storyboard" icon="" removable="true" auto-create-binding="false" can-attach-label="false">
         <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
       </item>
-      <item class="GUI.StoryBoard.UI.commandTree" icon="" removable="true" auto-create-binding="false" can-attach-label="false">
+      <item class="GUI.StoryBoard.UI.componentTree" icon="" removable="true" auto-create-binding="false" can-attach-label="false">
         <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
       </item>
     </group>

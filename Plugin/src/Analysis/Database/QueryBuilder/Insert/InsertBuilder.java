@@ -12,6 +12,6 @@ public class InsertBuilder implements Builder{
 
     @Override
     public String build() {
-        return null;
+        return "INSERT INTO";
     }
 }

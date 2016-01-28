@@ -65,8 +65,8 @@ public final class ConnectionPool {
     private void loadConf() {
         this.driver = "org.sqlite.JDBC";
         this.url = "jdbc:sqlite:C:/Users/woong/IdeaProjects/PluginTest/storyboard.db";
-        this.initialCons = 2;
-        this.maxCons = 3;
+        this.initialCons = 3;
+        this.maxCons = 10;
         this.block = true;
         this.timeout = 10000;
     }
@@ -97,7 +97,6 @@ public final class ConnectionPool {
     public boolean getBlock() {
         return block;
     }
-
 
     public Connection getConnection() throws SQLException {
         return getConnection(this.block, timeout);

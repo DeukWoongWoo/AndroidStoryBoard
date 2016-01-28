@@ -1,6 +1,7 @@
 package Analysis.Database.QueryBuilder.Insert;
 
 import Analysis.Database.QueryBuilder.Builder;
+import Analysis.Database.QueryBuilder.StringUtils;
 
 /**
  * Created by woong on 2016-01-27.
@@ -20,6 +21,6 @@ public class InsertColumnsBuilder implements Builder{
 
     @Override
     public String build() {
-        return null;
+        return insertIntoBuilder.build() + "(" + StringUtils.join(",",columns) + ")";
     }
 }

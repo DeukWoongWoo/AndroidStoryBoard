@@ -19,8 +19,11 @@ public class storyboard{
 
     public storyboard(){
         StoryBoard_function storyboard_p = new StoryBoard_function();
+
         System.out.println("storyboard : " + storyboard_p);
+
         mainview.add(storyboard_p);
+        plus_b.add(storyboard_p.plus_button);
         System.out.println("After Add ");
     }
 

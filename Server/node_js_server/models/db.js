@@ -25,6 +25,15 @@ mysql.getAppList = function (param, callback) {
         });
 }
 
+mysql.getAppNumList = function (param, callback) {
+    mysql.query('SELECT app_info.app_num FROM user_info '
+        + 'INNER JOIN app_info ON user_info.user_id = app_info.user_id '
+        + 'AND app_info.user_id = \'' + param.session.user_id + '\''
+        , function (err, result, fields) {
+            callback(err, result);
+        });
+}
+
 mysql.getUserId = function (param, callback) {
     mysql.query('SELECT user_info.user_id FROM user_info '
         + 'where user_info.user_id = \'' + param.body.user_id + '\''

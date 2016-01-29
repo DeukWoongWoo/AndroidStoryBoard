@@ -5,6 +5,24 @@ var async = require('async');
 var fs = require('fs');
 var mkdirp = require('mkdirp');    // mkdirp 모듈있는 곳을 설정해주면됩니다.
 
+router.get('/ajax', function(req, res){
+    console.log(req.body.name); // Ajax parameter data
+    db.query('select * from user_info', function(error, result){
+        res.send(result);
+    });
+});
+
+router.get('/d3test', function (req, res, next) {
+
+    isLogin(req, function (err) {
+        if (err) res.redirect('/login');
+        else
+            db.getAppNumList(req, function (err, appList) {
+                res.render('d3test', {app: appList});
+            });
+    });
+});
+
 router.get('/', function (req, res, next) {
     renderAppPage(req, res);
 });

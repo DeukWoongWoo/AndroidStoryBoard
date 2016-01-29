@@ -3,9 +3,7 @@ var router = express.Router();
 var db = require('../models/db');
 var async = require('async');
 var fs = require('fs');
-
 var mkdirp = require('mkdirp');    // mkdirp 모듈있는 곳을 설정해주면됩니다.
-
 
 router.get('/', function (req, res, next) {
     renderAppPage(req, res);
@@ -16,18 +14,17 @@ router.get('/logout', function (req, res, next) {
 });
 
 router.post('/registerapp', function (req, res, next) {
-    registerApp(req, res, function(err){
-        if(err) console.log(err);//TODO:경고 메시지 띄우기
+    registerApp(req, res, function (err) {
+        if (err) console.log(err);//TODO:경고 메시지 띄우기
         else renderAppPage(req, res);
     });
 });
 
 function renderAppPage(req, res) {
     isLogin(req, function (err) {
-        if (err)
-            res.redirect('/login');
+        if (err) res.redirect('/login');
         else
-            db.getAppList(req, function (appList) {
+            db.getAppList(req, function (err, appList) {
                 res.render('home', {
                     user_id: req.session.user_id,
                     app: appList,
@@ -41,23 +38,26 @@ function registerApp(req, res, callback) {
         if (err) res.redirect('/login');
         else {
             async.series([
-                function(callback){
-                    uploadRequest(req, function (err) {
-                        if(err) callback(err);
-                        else callback(null);
-                    });
-                },
                 function (callback) {
-                    fileUpload(req, function (err){
-                        if(err) callback(err);
+                    uploadRequest(req, function (err) {
+                        if (err) callback(err);
                         else callback(null);
                     });
+                },function (callback) {
+                    fileUpload(req, function (err) {
+                        if (err) callback(err);
+                        else callback(null);
+                    });
+                },function (callback) {
+                    //parseJSON(req, function(err){
+                       callback(null);
+                    //});
                 }
             ], function (err) {
-                if(err) {
+                if (err) {
                     fs.unlink(req.files.storyboard.path);
                     callback(err);
-                }else {
+                } else {
                     db.addApp(req);
                     callback(null);
                 }

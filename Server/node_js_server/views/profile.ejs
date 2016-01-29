@@ -36,10 +36,10 @@
             <form name="profile" method="post" action="/profile">
                 <!--TODO : 현재 유저 정보 표시-->
                 <p class="form-control-static"><%= user_id %></p>
-                <input class="form-control" type="text" name="name" placeholder="name"/>
-                <input class="form-control" type="password" name="password" placeholder="password"/>
-                <input class="form-control" type="password" name="confirm_password" placeholder="confirm password"/>
-                <input class="form-control" type="text" name="email" placeholder="email"/>
+                <input class="form-control" type="text" name="name" placeholder="name" value="<%= name%>"/>
+                <input class="form-control" type="password" name="password" placeholder="password" value="<%= password%>"/>
+                <input class="form-control" type="password" name="confirm_password" placeholder="confirm password" value="<%= password%>"/>
+                <input class="form-control" type="text" name="email" placeholder="email" value="<%= email%>"/>
                 <button class="btn btn-info" type="submit">Update</button>
             </form>
         </div>

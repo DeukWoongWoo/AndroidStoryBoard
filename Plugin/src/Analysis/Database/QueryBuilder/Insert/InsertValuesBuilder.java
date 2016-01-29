@@ -1,6 +1,7 @@
 package Analysis.Database.QueryBuilder.Insert;
 
 import Analysis.Database.QueryBuilder.Builder;
+import Analysis.Database.QueryBuilder.StringUtils;
 
 /**
  * Created by woong on 2016-01-27.
@@ -11,21 +12,21 @@ public class InsertValuesBuilder implements Builder {
 
     public InsertValuesBuilder(InsertColumnsBuilder insertColumnsBuilder, Object... values) {
         this.insertColumnsBuilder = insertColumnsBuilder;
-        this.values = values;
+        this.values = check(values);
     }
 
-//    private Object[] check(Object[] values){
-//        Object[] check = new Object[values.length];
-//        for(Object item : values){
-//            if(item instanceof String){
-//
-//            }
-//        }
-//        return check;
-//    }
+    private Object[] check(Object[] values){
+        Object[] check = new Object[values.length];
+        for(int i=0;i<values.length;i++){
+            if(values[i] instanceof String){
+                check[i] = "'" + values[i] +"'";
+            }else check[i] = values[i];
+        }
+        return check;
+    }
 
     @Override
     public String build() {
-        return null;
+        return insertColumnsBuilder.build() + " VALUES(" + StringUtils.join(",",values) + ")";
     }
 }

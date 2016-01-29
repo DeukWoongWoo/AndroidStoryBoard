@@ -7,13 +7,13 @@ import java.sql.*;
  */
 public class SQLiteOpenHelper {
 
-    static{
-        try{
-            Class.forName("org.sqlite.JDBC");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+//    static{
+//        try{
+//            Class.forName("org.sqlite.JDBC");
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 
     public Connection getConnection(){
         Connection connection = null;

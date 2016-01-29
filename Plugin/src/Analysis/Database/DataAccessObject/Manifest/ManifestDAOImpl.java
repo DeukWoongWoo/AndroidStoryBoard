@@ -2,15 +2,11 @@ package Analysis.Database.DataAccessObject.Manifest;
 
 import Analysis.Database.DataAccessObject.Activity.ActivityDAO;
 import Analysis.Database.DataAccessObject.Activity.ActivityDAOImpl;
-import Analysis.Database.DtatTransferObject.ActivityDTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
 import Analysis.Database.QueryBuilder.QueryBuilder;
 import Analysis.Database.SQLiteOpenHelper;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -23,7 +19,17 @@ public class ManifestDAOImpl extends SQLiteOpenHelper implements ManifestDAO {
 
     @Override
     public void insertManifest(ManifestDTO manifestDTO) {
-
+        Statement statement = null;
+        Connection connection = getConnection();
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(manifestDTO.getInsertQuery());
+//            statement.executeUpdate("INSERT INTO Manifest(package, theme) VALUES('storyboard','test')");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            close(connection,statement);
+        }
     }
 
     @Override

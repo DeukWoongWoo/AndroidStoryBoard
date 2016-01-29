@@ -1,11 +1,12 @@
 html, body {
     height: 100%;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .content, .sidebar, .content-body, .main-body {
     height: 95%;
 }
+
 .container-center {
     text-align: center;
 }
@@ -37,27 +38,27 @@ html, body {
 .main-logo {
     font-family: 'Candal', sans-serif;
     font-size: 20px;
-    color:black;
+    color: black;
 }
 
-a:hover{
-    text-decoration : none;
+a:hover {
+    text-decoration: none;
 }
 
-.fa{
+.fa {
     font-size: 30px;
 }
 
-.sidebar{
-    left : -300px;
+.sidebar {
+    left: -300px;
     position: fixed;
     width: 300px;
-    overflow:auto;
+    overflow: auto;
     background: #dcdcdc;
-    height:80%;
+    height: 80%;
 }
 
-.menu{
+.menu {
     /*height:80%;*/
 }
 
@@ -90,27 +91,29 @@ a:hover{
     font-size: 15px;
     text-decoration: none;
     /*text-transform: uppercase;*/
-    font-weight:bold;
+    font-weight: bold;
 }
 
 .content-body {
-    left : 0px;
+    left: 0px;
     position: fixed;
-    width:100%;
-    overflow:auto;
+    width: 100%;
+    overflow: auto;
 }
 
-.graph{
-    width : 60%;
-    height : 40%;
+.graph {
+    /*width: 60%;*/
+    /*height: 40%;*/
 
-    background: #8FBC8F;
-    margin-left : 20%;
-    margin-top : 10px;
-    margin-bottom : 10px;
+    /*background: #8FBC8F;*/
+    /*margin-left: 20%;*/
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;*/
+
+    /*overflow: auto;*/
 }
 
-.navigation{
+.navigation {
     height: 5%;
     min-height: 70px;
     /*position: fixed;*/

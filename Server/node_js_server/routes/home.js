@@ -12,8 +12,14 @@ router.get('/ajax', function(req, res){
     });
 });
 
-router.get('/d3test', function (req, res, next) {
+router.get('/ajax/frequency', function(req, res){
+    console.log(req.body.name); // Ajax parameter data
+    db.query('select object_info.object_frequency from object_info', function(error, result){
+        res.send(result);
+    });
+});
 
+router.get('/d3test', function (req, res, next) {
     isLogin(req, function (err) {
         if (err) res.redirect('/login');
         else

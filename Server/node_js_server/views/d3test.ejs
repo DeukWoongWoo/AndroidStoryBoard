@@ -13,72 +13,99 @@
     <script type="text/javascript" src="javascripts/d3/d3.js"></script>
 
 </head>
-<body style="overflow:auto;">
-<!--<div id="dataTest" style="visibility: hidden">-->
-<div id="dataTest" style="display: none">
-    <% app.forEach(function (app) { %>
-    <li ><%= app.app_num%> <%=app.count%></li>
-    <% })%>
-
-    <%var i%>
-    <% for(i=0; i < app.length; i++){ %>
-    <li id="li<%=i%>"><%= app[i].app_num %></li>
-    <% }%>
-</div>
-
-<div id="div1">
-    <h2>Let jQuery AJAX Change This Text</h2>
-</div>
-
-<div id="div2">
-
-</div>
-<button>Get External Content</button>
+<body style="overflow: auto;">
+<button>press</button>
+<div id="div2"></div>
 
 <script type="text/javascript">
-    var w = 500;
-    var h = 500;
-    var dataset = [5, 2, 3, 10, 20, , 6, 8,1,1,1,1,1,1,1,1, 42, 22, 31, 10, 13, 12, 10, 1, 10, 10, 3, 15, 20, 34, 10, 3, 5, 10, 20, 30];
-    var txt = "text";
-    var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
-    var rects = svg.selectAll("rect").data(dataset).enter().append("rect").attr("fill", "teal");
-    var label = svg.append("text");
 
-    console.log($('#dataTest').text());
-    console.log($('#dataTest').text()*1);
+    function graph(d) {
+        this.divId;
+        this.w = screen.width * 0.6;
+        this.h = screen.height * 0.4;
 
-    rects.attr("x", function (d, i) {
-                return i * (w / dataset.length);
-            })
-            .attr("y", function (d) {
-                return h - d * 10;
-            })
-            .attr("width", w / dataset.length - 5)
-            .attr("height", function (d) {
-                return d * 10;
-            })
-            .attr("class", "a");
+        this.svg;
+        this.graphDiv;
+        this.rects;
+        this.label;
+    }
 
-    $('.a').mouseover(function () {
-        $(this).css("fill", "hotpink");
-        label.attr("x", $(this).attr("x")).attr("y",  $(this).attr("y")).text("test");
-    }).mouseout(function () {
-        $(this).css("fill", "");
+
+    graph.prototype.drawGraph = function (divId, data) {
+        this.divId = divId;
+        var w = this.w;
+        var h = this.h;
+        this.svg = d3.select("#" + divId).append("svg").attr("width", w).attr("height", h);
+        this.graphDiv = this.svg.append("rect").attr("width", w).attr("height", h).attr("fill", "#8FBC8F");
+        this.rects = this.svg.selectAll("rect").data(data).enter().append("rect").attr("fill", "teal");
+        this.label = this.svg.append("text");
+        var label = this.label;
+        this.rects.attr("x", function (d, i) {
+                    return i * (w / data.length);
+                })
+                .attr("y", function (d) {
+                    return h - d * 5;
+                })
+                .attr("width", w / data.length - ((w / data.length) / 10))
+                .attr("height", function (d) {
+                    return d * 10;
+                })
+                .attr("class", "a");
+
+        $('.a').mouseover(function () {
+            $(this).css("fill", "hotpink");
+            label.attr("x", $(this).attr("x")).attr("y", $(this).attr("y")).text("test");
+        }).mouseout(function () {
+            $(this).css("fill", "");
+        });
+    }
+
+    var data = new Array();
+    $.get("/ajax/frequency", function (data, status) {
+        for(var i = 0; i < data.length; i++){
+            data[i] = data[i].object_frequency;
+        }
+        var g = new graph();
+        g.drawGraph("div2", data);
     });
 
-    /**
-     *
-     */
-    $(document).ready(function() {
-        $("button").click(function() {
-            $.get("/ajax", function(data, status) {
-                $.each(data, function(i, field){
-                    $("#div2").append("<h2>" + field.user_id + " " + i + "</h2>");
-                    $("#div2").append("<h2>" + field.name + " " + i + "</h2>");
+
+
+
+
+    //    var w = screen.width  * 0.6;
+    //    var h = screen.height * 0.4;
+    //    var dataset = [5, 2, 3, 10, 20, , 6, 8, 1, 1, 1, 1, 1, 1, 1, 1, 42, 22, 31, 10, 13, 12, 10, 1, 10, 10, 3, 15, 20, 34, 10, 3, 5, 10, 20, 30];
+    //
+    //    var svg = d3.select("#div2").append("svg").attr("width", w).attr("height", h);
+    //    var graphDiv = svg.append("rect").attr("width", w).attr("height", h).attr("fill", "#8FBC8F");;
+    //    var rects = svg.selectAll("rect").data(dataset).enter().append("rect").attr("fill", "teal");
+    //    var label = svg.append("text");
+    //
+    //    rects.attr("x", function (d, i) {
+    //                return i * (w / dataset.length);
+    //            })
+    //            .attr("y", function (d) {
+    //                return h - d * 5;
+    //            })
+    //            .attr("width", w / dataset.length - ((w/dataset.length)/10))
+    //            .attr("height", function (d) {
+    //                return d * 10;
+    //            })
+    //            .attr("class", "a");
+    //
+
+
+        $(document).ready(function () {
+            $("button").click(function () {
+                $.get("/ajax", function (data, status) {
+                    $.each(data, function (i, field) {
+                        $("#div2").append("<h2>" + field.user_id + " " + i + "</h2>");
+                        $("#div2").append("<h2>" + field.name + " " + i + "</h2>");
+                    });
                 });
             });
         });
-    });
 </script>
 
 </body>

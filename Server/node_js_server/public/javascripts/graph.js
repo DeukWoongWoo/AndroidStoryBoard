@@ -8,12 +8,7 @@ function graph() {
     this.barColor = 'teal';
 }
 
-graph.prototype.drawGraph = function (divId, data, type) {
-    var frequency = new Array();
-    for (var i = 0; i < data.length; i++) {
-        if (type == 0)frequency[i] = data[i].object_frequency;
-        else frequency[i] = data[i].error_frequency;
-    }
+graph.prototype.drawGraph = function (divId, data, frequency) {
     var length = frequency.length;
 
     var w = this.w;
@@ -50,7 +45,7 @@ graph.prototype.drawGraph = function (divId, data, type) {
         var className = '.' + $(this).attr("class");
 
         $('rect').css("fill", "");
-        $(className).css("fill", "hotpink");
+        $(className).css("fill", "gold");
 
 
         var rectInfo = $('.rect-info').children('div');

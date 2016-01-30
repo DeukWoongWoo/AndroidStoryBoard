@@ -130,3 +130,11 @@ svg {
 .magin0 {
     margin: 0px;
 }
+
+#rect-use-frequency {
+    color: #6ADBD8;
+}
+
+#rect-err-frequency {
+    color: #E880A2;
+}

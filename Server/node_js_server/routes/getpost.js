@@ -22,8 +22,11 @@ router.post('/app/use',function(req, res){
 });
 
 router.post('/app/activity',function(req, res){
-    db.addActivity(req);
-    res.send('success');
+    db.addActivity(req, function(err){
+        if(err)res.send(err);
+        else res.send('success');
+    });
+
 });
 
 router.post('/app/activity/use',function(req, res){

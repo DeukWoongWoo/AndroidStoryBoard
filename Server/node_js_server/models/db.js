@@ -1,4 +1,5 @@
 var db = require('mysql');
+var async = require('async');
 
 var mysql = db.createConnection({
     host: 'localhost',
@@ -19,8 +20,6 @@ mysql.connect(function (err) {
 mysql.getUserAppObject = function (param, callback) {
     user_id = param.body.user_id;
     app_name = param.body.app_name;
-    //console.log(param);
-    //console.log(param.body);
     mysql.query('SELECT object_info.*, activity_info.* FROM user_info INNER JOIN app_info ON user_info.user_id = app_info.user_id '
         + ' INNER JOIN activity_info ON app_info.app_num = activity_info.app_num '
         + ' INNER JOIN object_info ON activity_info.activity_num = object_info.activity_num '
@@ -109,18 +108,65 @@ mysql.addApp = function (param) {
     insertData('app', app);
 }
 
-mysql.addActivity = function (param) {
+mysql.addActivity = function (param, callback) {
     var activity = {
         activity_name: param.body.activity_name,
         total_time: 0,
-        app_num: param.body.app_num
+        app_num: null
     };
-    /**
-     * TODO:user_id에 따라서 app_num을 찾아서 넣어줘야함
-     * TODO:user_id 마다 activity의 이름이 중복이 안되도록 구현
-     */
 
-    insertData('activity', activity);
+    async.series([
+        function (callback) {   //AppNum 찾기
+            mysql.getAppNumByUserIdAppName(param, function (err, result) {
+                if (err) callback(err);
+                else {
+                    param.body.app_num = result[0].app_num;
+                    callback(null);
+                }
+            });
+        }, function (callback) {    //activity 이름 중복 검사
+            mysql.isActivityNameByAppNum(param, function (err, result) {
+                if (isDefined(result)) callback('exist activity_name');
+                else callback(null);
+            });
+        }], function (err) {
+        if (err) callback(err);
+        else {
+            activity.app_num = param.body.app_num;
+            insertData('activity', activity);
+            callback(null);
+        }
+    });
+}
+
+mysql.isActivityNameByAppNum = function (param, callback) {
+    console.log(' ' + param.body.app_num);
+    mysql.query('SELECT activity_name FROM activity_info '
+        + ' WHERE app_num = ' + param.body.app_num
+        + ' AND activity_name = \'' + param.body.activity_name + '\' '
+        , function (err, result) {
+            callback(err, result);
+        });
+}
+
+mysql.isActivityNameByUserIdAppName = function (param, callback) {
+    mysql.query('SELECT activity_name FROM app_info '
+        + ' INNER JOIN activity_info ON app_info.user_id = \'' + param.body.user_id + '\' '
+        + ' AND app_name = \'' + param.body.app_name + '\''
+        + ' AND activity_name = \'' + param.body.activity_name + '\''
+        , function (err, result) {
+            callback(err, result);
+        });
+}
+
+mysql.getAppNumByUserIdAppName = function (param, callback) {
+    mysql.query('SELECT app_info.app_num FROM user_info '
+        + ' INNER JOIN app_info ON user_info.user_id = app_info.user_id '
+        + ' AND user_info.user_id = \'' + param.body.user_id + '\' '
+        + ' AND app_info.app_name = \'' + param.body.app_name + '\' '
+        , function (err, result) {
+            callback(err, result);
+        });
 }
 
 mysql.addObject = function (param) {
@@ -277,6 +323,10 @@ function throwError(error, result, fields) {
         console.error(error);
     } else {
     }
+}
+
+function isDefined(param) {
+    return param != '' && param != undefined;
 }
 
 module.exports = mysql;

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>D3 Test</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
+
+    <script type="text/javascript" src="javascripts/d3/d3.js"></script>
+
+</head>
+<body style="overflow: auto;">
+<button>press</button>
+<div id="div2"></div>
+
+<script type="text/javascript">
+
+    function graph() {
+        this.w = screen.width * 0.6;
+        this.h = screen.height * 0.4;
+
+        this.svg;
+        this.graphDiv;
+        this.rects;
+        this.label;
+
+        this.testData;
+        this.setData();
+    }
+
+
+    graph.prototype.drawGraph = function (divId, data) {
+        var w = this.w;
+        var h = this.h;
+        this.svg = d3.select("#" + divId).append("svg").attr("width", w).attr("height", h);
+        this.graphDiv = this.svg.append("rect").attr("width", w).attr("height", h).attr("fill", "#8FBC8F");
+        this.rects = this.svg.selectAll("rect").data(data).enter().append("rect").attr("fill", "teal");
+        this.label = this.svg.append("text");
+        var label = this.label;
+        this.rects.attr("x", function (d, i) {
+                    return i * (w / data.length);
+                })
+                .attr("y", function (d) {
+                    return h - d * 5;
+                })
+                .attr("width", w / data.length - ((w / data.length) / 10))
+                .attr("height", function (d) {
+                    return d * 10;
+                })
+                .attr("class", "a");
+
+        $('.a').mouseover(function () {
+            $(this).css("fill", "hotpink");
+            label.attr("x", $(this).attr("x")).attr("y", $(this).attr("y")).text("test");
+        }).mouseout(function () {
+            $(this).css("fill", "");
+        });
+    }
+
+    graph.prototype.setData = function () {
+        var temp;
+        $.get("/ajax/frequency", function (data) {
+            for (var i = 0; i < data.length; i++) {
+                this.testData[i] = data[i].object_frequency;
+            }
+        });
+    }
+
+    var gData;
+    $.get("/ajax/frequency", function (data) {
+        for (var i = 0; i < data.length; i++) {
+            gData[i] = data[i].object_frequency;
+        }
+    });
+    var g = new graph();
+
+    if(gData != null)
+        g.drawGraph("div2", gData);
+
+
+//    $(document).ready(function () {
+//        $("button").click(function () {
+//            $.get("/ajax", function (data, status) {
+//                $.each(data, function (i, field) {
+//                    $("#div2").append("<h2>" + field.user_id + " " + i + "</h2>");
+//                    $("#div2").append("<h2>" + field.name + " " + i + "</h2>");
+//                });
+//            });
+//        });
+//    });
+</script>
+
+</body>
+</html>

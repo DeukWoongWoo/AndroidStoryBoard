@@ -17,6 +17,11 @@
 
     <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
 
+
+    <script type="text/javascript" src="javascripts/d3/d3.js"></script>
+    <script src="javascripts/graph.js"></script>
+    <script src="javascripts/drag.js"></script>
+
     <script>
         var main = function () {
 
@@ -77,6 +82,13 @@
                 $('.register-app-form').css("display", "none");
                 $('#register-app').css("display", "");
             });
+
+            $('#rect-info-close').click(function(){
+                $(this).parent().parent().css("visibility", "hidden");
+            });
+
+            console.log(screen.width);
+            $('.rect-info').css("left", screen.width*0.3 + "px").css("top", screen.height*0.3 + "px");
         };
 
         $(document).ready(main);
@@ -92,7 +104,7 @@
         </div>
 
         <div class="right">
-            <b> <%= user_id %> </b>
+            <b id="user_id"><%= user_id %></b>
             <a class="btn btn-info" href="/profile">Profile</a>
             <a class="btn btn-info" href="/logout">Logout</a>
         </div>
@@ -110,9 +122,9 @@
         <div class="register-app-form" style="display: none;">
             <form method="post" action="/registerapp" enctype="multipart/form-data">
                 <input type="text" class="form-control" name="app_name" placeholder="App Name"/>
-                <label for="exampleInputFile">파일 업로드</label>
+                <label for="exampleInputFile">File Upload</label>
                 <input type="file" name="storyboard">
-                <p class="help-block">스토리보드 파일을 올리세요.</p>
+                <p class="help-block">Upload StoryBoard File</p>
                 <div class="container-center">
                     <button type="submit" class="btn btn-primary" id="register-app-confirm">Confirm</button>
                     <button type="button" class="btn btn-warning" id="register-app-close">Close</button>
@@ -125,8 +137,8 @@
             <b style="font-size:30px;">App List</b>
             <ul>
                 <% app.forEach(function (app) { %>
-                <li><a class="btn btn-success" href="#"><%= app.app_name %></a></li>
-                <% })%>
+                <li><a class="btn btn-success app_name" href="#"><%= app.app_name %></a></li>
+                <% }) %>
             </ul>
         </div>
     </div>
@@ -136,12 +148,50 @@
         <div id="menu-button left"><i class="fa fa-bars"></i></div>
 
         <div class="main-body container-center">
-            <div class="graph"></div>
-            <div class="graph"></div>
-            <div class="graph"></div>
-            <div class="graph" id="test1"></div>
+            <div class="graph" id="graph1" style="display: inline-block"></div>
+            <div class="graph" id="graph2" style="display: inline-block"></div>
+            <div class="graph" id="graphTest"></div>
+            <div class="graph" id="graph3"></div>
         </div>
     </div>
 </div>
+<div style="height : 100px"></div>
+<div class="rect-info" style="position: absolute; visibility: hidden; left:20px; top:20px; background-color: #68606A; height: auto; position: fixed;  width: 200px;" onmousedown="startDrag(event, this)">
+    <div class="rect-info-bar" style="background: #A3A7B7; height:15px; width: auto;">
+        <div id="rect-info-close"><i class="fa fa-times right" style="font-size: 15px;"></i></div>
+    </div>
+    <div style=" color:white">
+        <b>object name : </b><b class="rect-value" id="rect-object-name"></b><hr class="magin0">
+        <b>object use frequency : </b><b class="rect-value" id="rect-use-frequency"></b><hr class="magin0">
+        <b>object err frequency : </b><b class="rect-value" id="rect-err-frequency"></b><hr class="magin0">
+        <b>activity name : </b><b class="rect-value" id="rect-activity-name"></b><hr class="magin0">
+        <b>activity using time : </b><b class="rect-value" id="rect-activity-time"></b><hr class="magin0">
+    </div>
+</div>
+<script>
+    var data;
+    var useGraph = new graph();
+    var errGraph = new graph();
+    useGraph.setColor('#457D97');
+    errGraph.setColor('#EA3556');
+
+    $('.app_name').click(function () {
+        var app_name = $(this).text();
+        var user_id = $('#user_id').text();
+        $('.rect-info').css("visibility", "hidden");
+        $.post("/get/object_info", {app_name: app_name, user_id: user_id}
+                , function (data) {
+//                    console.log(objectName);
+                    $('#graph1').empty();//자식 노드들 제거
+                    $('#graph2').empty();
+                    useGraph.drawGraph("graph1", data, 0);
+                    errGraph.drawGraph("graph2", data, 1);
+                });
+    });
+
+
+    //    g.drawGraph("graph2", data);
+    //    g.drawGraph("graph3", data);
+</script>
 </body>
 </html>

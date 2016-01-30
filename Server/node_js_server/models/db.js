@@ -16,6 +16,21 @@ mysql.connect(function (err) {
     }
 });
 
+mysql.getUserAppObject = function (param, callback) {
+    user_id = param.body.user_id;
+    app_name = param.body.app_name;
+    //console.log(param);
+    //console.log(param.body);
+    mysql.query('SELECT object_info.* FROM user_info INNER JOIN app_info ON user_info.user_id = app_info.user_id '
+        + ' INNER JOIN activity_info ON app_info.app_num = activity_info.app_num '
+        + ' INNER JOIN object_info ON activity_info.activity_num = object_info.activity_num '
+        + ' AND user_info.user_id = \'' + user_id + '\' '
+        + ' AND app_info.app_name = \'' + app_name + '\' '
+        , function (err, result) {
+            callback(err, result);
+        });
+}
+
 mysql.getAppList = function (param, callback) {
     mysql.query('SELECT app_info.app_name FROM user_info '
         + 'INNER JOIN app_info ON user_info.user_id = app_info.user_id '
@@ -168,7 +183,7 @@ mysql.addActivityUse = function (param) {
         + 'AND app_info.app_name = \'' + param.body.app_name + '\''
         , function (error, result, fields) {
             if (error) console.error(error);
-            else if(result){
+            else if (result) {
                 activityUse.activity_num = result[0].activity_num;
                 insertData('activity_use', activityUse)
                 updateTotalTime('activity', activityUse.activity_num, activityUse.during_time_start, activityUse.during_time_end);

@@ -17,6 +17,10 @@
 
     <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
 
+
+    <script type="text/javascript" src="javascripts/d3/d3.js"></script>
+    <script src="javascripts/test.js"></script>
+
     <script>
         var main = function () {
 
@@ -92,7 +96,7 @@
         </div>
 
         <div class="right">
-            <b> <%= user_id %> </b>
+            <b id="user_id"><%= user_id %></b>
             <a class="btn btn-info" href="/profile">Profile</a>
             <a class="btn btn-info" href="/logout">Logout</a>
         </div>
@@ -125,8 +129,8 @@
             <b style="font-size:30px;">App List</b>
             <ul>
                 <% app.forEach(function (app) { %>
-                <li><a class="btn btn-success" href="#"><%= app.app_name %></a></li>
-                <% })%>
+                <li><a class="btn btn-success app_name" href="#"><%= app.app_name %></a></li>
+                <% }) %>
             </ul>
         </div>
     </div>
@@ -136,15 +140,45 @@
         <div id="menu-button left"><i class="fa fa-bars"></i></div>
 
         <div class="main-body container-center">
-                <svg class="graph" id="object-use">
-
-                </svg>
-            </div>
-            <div class="graph"></div>
-            <div class="graph"></div>
-            <div class="graph" id="test1"></div>
+            <div class="graph" id="graph1" style="display: inline-block"></div>
+            <div class="graph" id="graph2" style="display: inline-block"></div>
+            <div class="graph" id="graphTest"></div>
+            <div class="graph" id="graph3"></div>
         </div>
     </div>
 </div>
+<div style="height : 100px"></div>
+<script>
+    var data;
+    var useGraph = new graph();
+    var errGraph = new graph();
+    useGraph.setColor('#457D97');
+    errGraph.setColor('#EA3556');
+
+    $('.app_name').click(function () {
+        var app_name = $(this).text();
+        var user_id = $('#user_id').text();
+        $.post("/get/object_info", {app_name: app_name, user_id: user_id}
+                , function (data) {
+                    var objectUseFrequency = new Array();
+                    var objectErrFrequency = new Array();
+                    var objectName = new Array();
+                    for (var i = 0; i < data.length; i++){
+                        objectUseFrequency[i] = data[i].object_frequency;
+                        objectErrFrequency[i] = data[i].error_frequency;
+                        objectName[i]         = data[i].object_name;
+                    }
+                    console.log(objectName);
+                    $('#graph1').empty();//자식 노드들 제거
+                    $('#graph2').empty();
+                    useGraph.drawGraph("graph1", objectUseFrequency, objectName);
+                    errGraph.drawGraph("graph2", objectErrFrequency, objectName);
+                });
+    });
+
+
+    //    g.drawGraph("graph2", data);
+    //    g.drawGraph("graph3", data);
+</script>
 </body>
 </html>

@@ -4,7 +4,7 @@ html, body {
 }
 
 .content, .sidebar, .content-body, .main-body {
-    height: 95%;
+    height: 90%;
 }
 
 .container-center {
@@ -103,12 +103,12 @@ a:hover {
 
 .graph {
     /*width: 60%;*/
-    /*height: 40%;*/
+    /*height: 50%;*/
 
     /*background: #8FBC8F;*/
     /*margin-left: 20%;*/
-    /*margin-top: 10px;*/
-    /*margin-bottom: 10px;*/
+    margin-top: 10px;
+    margin-bottom: 10px;
 
     /*overflow: auto;*/
 }
@@ -117,4 +117,8 @@ a:hover {
     height: 5%;
     min-height: 70px;
     /*position: fixed;*/
+}
+
+svg {
+    background: #CCD4BD;
 }

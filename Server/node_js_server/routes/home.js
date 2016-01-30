@@ -19,6 +19,13 @@ router.get('/ajax/frequency', function(req, res){
     });
 });
 
+router.post('/get/object_info', function(req, res){
+    db.getUserAppObject(req, function(err, result){
+        if(err) console.log(err);
+        else res.send(result);
+    });
+});
+
 router.get('/d3test', function (req, res, next) {
     isLogin(req, function (err) {
         if (err) res.redirect('/login');

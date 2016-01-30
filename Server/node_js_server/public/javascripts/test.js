@@ -2,14 +2,10 @@ function graph() {
     this.w = screen.width * 0.4;
     this.h = screen.height * 0.4;
 
-    //this.svg;
-    this.graphDiv;
     this.rects;
     this.label;
 
     this.barColor = 'teal';
-
-    //this.graphDiv = this.svg.append("rect").attr("width", this.w).attr("height", this.h).attr("fill", "#8FBC8F");
 }
 
 
@@ -31,7 +27,7 @@ graph.prototype.drawGraph = function (divId, data, oName) {
             return i * (w / data.length);
         })
         .attr("y", function (d) {
-            return h - ((d * rY) * 0.8 + 5);//0;//((d) * rY) * 0.8;
+            return h - ((d * rY) * 0.8 + 5);
         })
         .attr("width", w / data.length - ((w / data.length) / 10))
         .attr("height", function (d) {
@@ -48,12 +44,14 @@ graph.prototype.drawGraph = function (divId, data, oName) {
     });
 
 
-    $('rect').mouseover(function () {
-        var className = '.' + $(this).attr("class");
-        console.log("className : ", className);
-        $(className).css("fill", "hotpink")
-    }).mouseout(function () {
+    $('.graph').children('svg').children('rect').mouseover(function () {
         $('rect').css("fill", "");
+        var className = '.' + $(this).attr("class");
+        $(className).css("fill", "hotpink")
+        console.log("x : " + event.clientX );
+        $('.rect-info').css("left", event.clientX).css("top", event.clientY + document.body.scrollTop).css("visibility", "visible");
+    }).mouseout(function () {
+
     });
 }
 

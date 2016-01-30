@@ -81,6 +81,12 @@
                 $('.register-app-form').css("display", "none");
                 $('#register-app').css("display", "");
             });
+
+            $('#rect-info-close').click(function(){
+                $(this).parent().parent().css("visibility", "hidden");
+            });
+
+            $('#rect-info-close').draggable();
         };
 
         $(document).ready(main);
@@ -148,6 +154,18 @@
     </div>
 </div>
 <div style="height : 100px"></div>
+<div class="rect-info" style="position: absolute; visibility: hidden; background-color: #68606A; height: auto; position: fixed;  width: 200px;">
+    <div class="rect-info-bar" style="background: #A3A7B7; height:15px; width: auto;">
+        <div id="rect-info-close"><i class="fa fa-times right" style="font-size: 15px;"></i></div>
+    </div>
+    <div style=" color:whitesmoke;">
+        <b>object name             : button<br></b>
+        <b>object use frequency    : 10<br></b>
+        <b>object err frequency    : 1<br></b>
+        <b>activity name           : main<br></b>
+        <b>activity using time     : 343241<br></b>
+    </div>
+</div>
 <script>
     var data;
     var useGraph = new graph();
@@ -158,15 +176,16 @@
     $('.app_name').click(function () {
         var app_name = $(this).text();
         var user_id = $('#user_id').text();
+        $('.rect-info').css("visibility", "hidden");
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
                     var objectUseFrequency = new Array();
                     var objectErrFrequency = new Array();
                     var objectName = new Array();
-                    for (var i = 0; i < data.length; i++){
+                    for (var i = 0; i < data.length; i++) {
                         objectUseFrequency[i] = data[i].object_frequency;
                         objectErrFrequency[i] = data[i].error_frequency;
-                        objectName[i]         = data[i].object_name;
+                        objectName[i] = data[i].object_name;
                     }
                     console.log(objectName);
                     $('#graph1').empty();//자식 노드들 제거

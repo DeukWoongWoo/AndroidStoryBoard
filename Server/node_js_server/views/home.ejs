@@ -20,6 +20,7 @@
 
     <script type="text/javascript" src="javascripts/d3/d3.js"></script>
     <script src="javascripts/test.js"></script>
+    <script src="javascripts/drag.js"></script>
 
     <script>
         var main = function () {
@@ -154,7 +155,7 @@
     </div>
 </div>
 <div style="height : 100px"></div>
-<div class="rect-info" style="position: absolute; visibility: hidden; background-color: #68606A; height: auto; position: fixed;  width: 200px;">
+<div class="rect-info" style="position: absolute; visibility: hidden; background-color: #68606A; height: auto; position: fixed;  width: 200px;" onmousedown="startDrag(event, this)">
     <div class="rect-info-bar" style="background: #A3A7B7; height:15px; width: auto;">
         <div id="rect-info-close"><i class="fa fa-times right" style="font-size: 15px;"></i></div>
     </div>

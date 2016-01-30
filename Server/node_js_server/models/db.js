@@ -21,7 +21,7 @@ mysql.getUserAppObject = function (param, callback) {
     app_name = param.body.app_name;
     //console.log(param);
     //console.log(param.body);
-    mysql.query('SELECT object_info.* FROM user_info INNER JOIN app_info ON user_info.user_id = app_info.user_id '
+    mysql.query('SELECT object_info.*, activity_info.* FROM user_info INNER JOIN app_info ON user_info.user_id = app_info.user_id '
         + ' INNER JOIN activity_info ON app_info.app_num = activity_info.app_num '
         + ' INNER JOIN object_info ON activity_info.activity_num = object_info.activity_num '
         + ' AND user_info.user_id = \'' + user_id + '\' '

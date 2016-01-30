@@ -19,7 +19,7 @@
 
 
     <script type="text/javascript" src="javascripts/d3/d3.js"></script>
-    <script src="javascripts/test.js"></script>
+    <script src="javascripts/graph.js"></script>
     <script src="javascripts/drag.js"></script>
 
     <script>
@@ -87,7 +87,8 @@
                 $(this).parent().parent().css("visibility", "hidden");
             });
 
-            $('#rect-info-close').draggable();
+            console.log(screen.width);
+            $('.rect-info').css("left", screen.width*0.3 + "px").css("top", screen.height*0.3 + "px");
         };
 
         $(document).ready(main);
@@ -155,16 +156,16 @@
     </div>
 </div>
 <div style="height : 100px"></div>
-<div class="rect-info" style="position: absolute; visibility: hidden; background-color: #68606A; height: auto; position: fixed;  width: 200px;" onmousedown="startDrag(event, this)">
+<div class="rect-info" style="position: absolute; visibility: hidden; left:20px; top:20px; background-color: #68606A; height: auto; position: fixed;  width: 200px;" onmousedown="startDrag(event, this)">
     <div class="rect-info-bar" style="background: #A3A7B7; height:15px; width: auto;">
         <div id="rect-info-close"><i class="fa fa-times right" style="font-size: 15px;"></i></div>
     </div>
-    <div style=" color:whitesmoke;">
-        <b>object name             : button<br></b>
-        <b>object use frequency    : 10<br></b>
-        <b>object err frequency    : 1<br></b>
-        <b>activity name           : main<br></b>
-        <b>activity using time     : 343241<br></b>
+    <div style=" color:white">
+        <b>object name : </b><b class="rect-value" id="rect-object-name"></b><hr class="magin0">
+        <b>object use frequency : </b><b class="rect-value" id="rect-use-frequency"></b><hr class="magin0">
+        <b>object err frequency : </b><b class="rect-value" id="rect-err-frequency"></b><hr class="magin0">
+        <b>activity name : </b><b class="rect-value" id="rect-activity-name"></b><hr class="magin0">
+        <b>activity using time : </b><b class="rect-value" id="rect-activity-time"></b><hr class="magin0">
     </div>
 </div>
 <script>
@@ -180,19 +181,11 @@
         $('.rect-info').css("visibility", "hidden");
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
-                    var objectUseFrequency = new Array();
-                    var objectErrFrequency = new Array();
-                    var objectName = new Array();
-                    for (var i = 0; i < data.length; i++) {
-                        objectUseFrequency[i] = data[i].object_frequency;
-                        objectErrFrequency[i] = data[i].error_frequency;
-                        objectName[i] = data[i].object_name;
-                    }
-                    console.log(objectName);
+//                    console.log(objectName);
                     $('#graph1').empty();//자식 노드들 제거
                     $('#graph2').empty();
-                    useGraph.drawGraph("graph1", objectUseFrequency, objectName);
-                    errGraph.drawGraph("graph2", objectErrFrequency, objectName);
+                    useGraph.drawGraph("graph1", data, 0);
+                    errGraph.drawGraph("graph2", data, 1);
                 });
     });
 

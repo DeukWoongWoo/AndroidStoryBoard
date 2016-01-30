@@ -181,17 +181,18 @@
         $('.rect-info').css("visibility", "hidden");
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
-//                    console.log(objectName);
+                    var useFrequency = new Array();
+                    var errFrequency = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        useFrequency[i] = data[i].object_frequency;
+                        errFrequency[i] = data[i].error_frequency;
+                    }
                     $('#graph1').empty();//자식 노드들 제거
                     $('#graph2').empty();
-                    useGraph.drawGraph("graph1", data, 0);
-                    errGraph.drawGraph("graph2", data, 1);
+                    useGraph.drawGraph("graph1", data, useFrequency);
+                    errGraph.drawGraph("graph2", data, errFrequency);
                 });
     });
-
-
-    //    g.drawGraph("graph2", data);
-    //    g.drawGraph("graph3", data);
 </script>
 </body>
 </html>

@@ -19,6 +19,22 @@ router.get('/ajax/frequency', function(req, res){
     });
 });
 
+router.post('/date-search', function(req, res){
+
+    if(isDefined(req.body.start_date) && isDefined(req.body.end_date)){
+
+    }else{
+        db.getUserAppObject(req, function(err, result){
+
+            console.log(req.body);
+            console.log(err);
+            console.log(result);
+            if(err) console.log(err);
+            else res.send(result);
+        });
+    }
+});
+
 router.post('/get/object_info', function(req, res){
     db.getUserAppObject(req, function(err, result){
         if(err) console.log(err);

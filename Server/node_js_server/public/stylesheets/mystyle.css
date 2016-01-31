@@ -87,11 +87,13 @@ a:hover {
 }
 
 .menu a {
-    color: #6e6e6e;
-    font-size: 15px;
+    color: #67A6A6;
+    font-size: 20px;
     text-decoration: none;
     /*text-transform: uppercase;*/
     font-weight: bold;
+    width: 250px;
+    text-align: left;
 }
 
 .content-body {
@@ -114,8 +116,9 @@ a:hover {
 }
 
 .navigation {
-    height: 5%;
-    min-height: 70px;
+    height: auto;
+    background: #DCE0E6;
+    /*min-height: 70px;*/
     /*position: fixed;*/
 }
 

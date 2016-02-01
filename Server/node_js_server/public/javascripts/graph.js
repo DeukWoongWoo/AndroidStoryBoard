@@ -3,8 +3,9 @@ function graph() {
     this.h = screen.height * 0.4;
 
     this.rects;
-    this.label;
-
+    this.svg;
+    this.rY;
+    this.maxY;
     this.barColor = 'teal';
 }
 
@@ -16,6 +17,9 @@ graph.prototype.drawGraph = function (divId, data, frequency) {
     var barColor = this.barColor;
     var maxY = Math.max.apply(null, frequency);
     var rY = h / maxY;
+    this.rY = rY;
+    this.maxY = maxY;
+
     this.svg = d3.select("#" + divId).append("svg").attr("width", w).attr("height", h);
     this.rects = this.svg.selectAll("rect").data(frequency).enter().append("rect").attr("fill", function (d) {
         if (d == 0) return 'black';
@@ -23,10 +27,10 @@ graph.prototype.drawGraph = function (divId, data, frequency) {
     });
 
     this.rects.attr("x", function (d, i) {
-            return i * (w / length);
+            return i * (w / length) + 5;
         })
         .attr("y", function (d) {
-            return h - ((d * rY) * 0.8 + 5);
+            return h - ((d * rY) * 0.8 + 1) - 10;
         })
         .attr("width", w / length - ((w / length) * 0.1))
         .attr("height", function (d) {
@@ -63,17 +67,38 @@ graph.prototype.drawGraph = function (divId, data, frequency) {
     });
 }
 
+graph.prototype.drawAxis = function(){
+    var h = this.h;
+    var w = this.w;
+
+    var maxY = this.maxY;
+    var rY = this.rY;
+    //((maxY * rY) * 0.8 + 1)
+
+    console.log;
+    //h - ;
+    //rY * 0.8 + 5
+    //(maxY - 5)
+    //(d * rY) * 0.8 + 5;
+    //(d * rY) * 0.8 + 5
+    var yScale = d3.scale.linear().domain([maxY, 0]).range([0, (maxY*rY*0.8)]);
+    var yAxis = d3.svg.axis();
+    yAxis.scale(yScale).orient("right");
+    this.svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + (h - ((maxY * rY) * 0.8 + 1) - 10) + ")")
+        .call(yAxis);
+
+    var xAxis = d3.svg.axis();
+    var xScale = d3.scale.linear().domain([0, 0]).range([0, w]);
+    xAxis.scale(xScale).orient("top");;
+    this.svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + h + ")")
+        .call(xAxis);
+
+}
+
 graph.prototype.setColor = function (color) {
     this.barColor = color;
 }
-
-$(document).ready(function () {
-    $("button").click(function () {
-        $.get("/ajax", function (data, status) {
-            $.each(data, function (i, field) {
-                $("#div2").append("<h2>" + field.user_id + " " + i + "</h2>");
-                $("#div2").append("<h2>" + field.name + " " + i + "</h2>");
-            });
-        });
-    });
-});

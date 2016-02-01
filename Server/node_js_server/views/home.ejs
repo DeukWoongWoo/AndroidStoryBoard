@@ -146,6 +146,7 @@
 <div class="content">
     <div class="content-body">
         <div class="container-center">
+            <h3 id="current_app_name">&nbsp</h3>
             <form method="post" action="/date-search" class="form-inline">
                 <input type="date" class="form-control" name="start_date"/>
                 ~
@@ -154,7 +155,7 @@
             </form>
         </div>
 
-        <div class="main-body container-center">
+        <div class="main-body container-center" id="graphs">
             <div class="graph" id="graph1" style="display: inline-block"></div>
             <div class="graph" id="graph2" style="display: inline-block"></div>
             <div class="graph" id="graphTest"></div>
@@ -194,7 +195,8 @@
         $('.rect-info').css("visibility", "hidden");
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
-                    $('#graph1').attr('name', app_name);
+                    $('#graphs').attr('name', app_name);
+                    $('#current_app_name').text(app_name);
                     var useFrequency = new Array();
                     var errFrequency = new Array();
                     for (var i = 0; i < data.length; i++) {
@@ -205,8 +207,11 @@
                     $('#graph2').empty();
                     useGraph.drawGraph("graph1", data, useFrequency);
                     errGraph.drawGraph("graph2", data, errFrequency);
+                    useGraph.drawAxis();
+                    errGraph.drawAxis();
                 });
     });
+
 </script>
 </body>
 </html>

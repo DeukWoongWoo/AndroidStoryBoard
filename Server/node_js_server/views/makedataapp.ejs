@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Candal' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
+
+</head>
+<body>
+
+
+<div id="app" class="container">
+    <h1>apps of <%=user_id%></h1>
+
+    <div class="register">
+        <form method="post" action="/makedata/app/add" class="form-inline">
+            <input class="form-control" type="text" name="user_id" value="<%=user_id%>" style="width:100px;" readonly>
+            <input class="form-control" type="text" name="app_name" placeholder="app name">
+            <button id="register-btn" type="submit">add</button>
+        </form>
+    </div>
+
+    <% app.forEach(function (app) { %>
+    <ul class="list-unstyled">
+        <li>
+            <form method="post" action="/makedata/activity" class="form-inline">
+                <input class="form-control" type="text" name="app_num" value="<%=app.app_num%>" style="width:100px;" readonly>
+                <input class="form-control" type="text" name="app_name" value="<%=app.app_name%>" readonly>
+                <button type="submit">activitys</button>
+            </form>
+        </li>
+    </ul>
+    <% }) %>
+</div>
+
+
+</body>
+
+<script>
+</script>
+</html>

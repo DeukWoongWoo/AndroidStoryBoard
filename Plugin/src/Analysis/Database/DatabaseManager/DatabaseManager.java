@@ -7,6 +7,7 @@ import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAOImpl;
 import Analysis.Database.DtatTransferObject.DTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -19,6 +20,28 @@ import java.util.function.Supplier;
 public class DatabaseManager implements DBManager{
     private final ManifestDAO manifestDAO = new ManifestDAOImpl();
     private final JavaDAO javaDAO = new JavaDAOImpl();
+
+    public volatile static DatabaseManager instance = null;
+
+    public static DatabaseManager getInstance(){
+        if(instance == null) {
+            synchronized (DatabaseManager.class) {
+                if (instance == null) instance = new DatabaseManager();
+            }
+        }
+        return instance;
+    }
+
+    @Override
+    public void onCreateTable() {
+        System.out.println("onCreateTable...");
+        manifestDAO.createManifest();
+        manifestDAO.createActivity();
+        javaDAO.createJava();
+        javaDAO.createXml();
+        javaDAO.createComponent();
+        javaDAO.createEvent();
+    }
 
     @Override
     public ArrayList<ManifestDTO> selectToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function) {

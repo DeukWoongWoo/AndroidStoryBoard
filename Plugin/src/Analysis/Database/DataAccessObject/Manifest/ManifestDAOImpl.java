@@ -1,5 +1,6 @@
 package Analysis.Database.DataAccessObject.Manifest;
 
+import Analysis.Constant.DatabaseQuery;
 import Analysis.Database.DataAccessObject.Activity.ActivityDAO;
 import Analysis.Database.DataAccessObject.Activity.ActivityDAOImpl;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
@@ -16,6 +17,27 @@ public class ManifestDAOImpl extends SQLiteOpenHelper implements ManifestDAO {
     private final String tableName = "Manifest";
 
     private final ActivityDAO activityDAO = new ActivityDAOImpl();
+
+    @Override
+    public void createManifest() {
+        System.out.println("Manifest table create ...");
+        Statement statement = null;
+        Connection connection = getConnection();
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(DatabaseQuery.dropTable + tableName);
+            statement.executeUpdate(DatabaseQuery.createManifestTable);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            close(connection,statement);
+        }
+    }
+
+    @Override
+    public void createActivity() {
+        activityDAO.create();
+    }
 
     @Override
     public void insertManifest(ManifestDTO manifestDTO) {

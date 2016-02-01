@@ -40,7 +40,7 @@ public class StoryBoard_function extends JPanel implements MouseMotionListener, 
         JLabel name = new JLabel(id);
         name.setFont(new Font("Verdana",1,20));
         name.setForeground(Color.white);
-        items.add(name);
+//        items.add(name);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class StoryBoard_function extends JPanel implements MouseMotionListener, 
             this.add(label);
         }
 */
-        name = items.get(ID);
+//        name = items.get(ID);
         name.setLocation(startx+4,starty+10);
         name.setVisible(true);
         this.add(name);

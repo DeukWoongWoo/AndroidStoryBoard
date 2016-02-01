@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Candal' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
+
+</head>
+<body>
+<div id="activity" class="container">
+    <h1>activitys of <%=app_name%></h1>
+
+    <div class="register">
+        <form method="post" action="/makedata/activity/add" class="form-inline">
+            <input class="form-control" type="text" name="app_num" value="<%=app_num%>" style="width:100px;" readonly>
+            <input class="form-control" type="text" name="app_name" value="<%=app_name%>" style="width:100px;" readonly>
+            <input class="form-control" type="text" name="activity_name" placeholder="activity name">
+            <button id="register-btn" type="submit">add</button>
+        </form>
+    </div>
+
+    <% activity.forEach(function (activity) { %>
+    <ul class="list-unstyled">
+        <li>
+            <form method="post" action="/makedata/object" class="form-inline">
+                <input class="form-control" type="text" name="activity_num" value="<%=activity.activity_num %>" style="width:100px;" readonly>
+                <input class="form-control" type="text" name="activity_name" value="<%=activity.activity_name %>" readonly>
+                <button type="submit">objects</button>
+            </form>
+        </li>
+    </ul>
+    <% }) %>
+</div>
+
+
+</body>
+
+<script>
+</script>
+</html>

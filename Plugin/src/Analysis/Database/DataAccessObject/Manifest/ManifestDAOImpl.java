@@ -46,7 +46,6 @@ public class ManifestDAOImpl extends SQLiteOpenHelper implements ManifestDAO {
         try {
             statement = connection.createStatement();
             statement.executeUpdate(manifestDTO.getInsertQuery());
-//            statement.executeUpdate("INSERT INTO Manifest(package, theme) VALUES('storyboard','test')");
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {

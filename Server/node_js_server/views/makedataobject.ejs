@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Candal' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
+
+</head>
+<body>
+<div id="object" class="container">
+    <h1>objects of <%= activity_name %></h1>
+
+    <div class="register">
+        <form method="post" action="/makedata/object/add" class="form-inline">
+            <input class="form-control" type="text" name="activity_num" value="<%= activity_num %>" style="width:100px;"
+                   readonly>
+            <input class="form-control" type="text" name="activity_name" value="<%= activity_name %>"
+                   style="width:100px;" readonly>
+            <input class="form-control" type="text" name="object_name" placeholder="object name">
+            <button id="register-btn" type="submit">add</button>
+        </form>
+    </div>
+
+    <% object.forEach(function (object) { %>
+    <ul class="list-unstyled">
+        <li>
+            <form method="post" action="/makedata/object/use"class="form-inline">
+                <input class="form-control" type="text" name="object_num" value="<%= object.object_num %>"
+                       style="width:100px;" readonly>
+                <input class="form-control" type="text" name="object_name" value="<%= object.object_name %>" readonly>
+                <input class="form-control" type="text" name="object_frequency" value="<%= object.object_frequency %>" style="width:50px;" readonly>
+                <button type="submit">use</button>
+            </form>
+            <form method="post" action="/makedata/object/err"class="form-inline">
+                <input class="form-control" type="text" name="object_num" value="<%= object.object_num %>"
+                       style="width:100px;" readonly>
+                <input class="form-control" type="text" name="object_name" value="<%= object.object_name %>" readonly>
+                <input class="form-control" type="text" name="error_frequency" value="<%= object.error_frequency %>" style="width:50px;" readonly>
+                <button type="submit">error</button>
+            </form>
+        </li>
+    </ul>
+    <% }) %>
+</div>
+
+
+</body>
+
+<script>
+</script>
+</html>

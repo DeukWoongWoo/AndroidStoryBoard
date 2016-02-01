@@ -18,13 +18,55 @@ mysql.connect(function (err) {
 });
 
 mysql.getUserAppObject = function (param, callback) {
-    user_id = param.body.user_id;
-    app_name = param.body.app_name;
     mysql.query('SELECT object_info.*, activity_info.* FROM user_info INNER JOIN app_info ON user_info.user_id = app_info.user_id '
         + ' INNER JOIN activity_info ON app_info.app_num = activity_info.app_num '
         + ' INNER JOIN object_info ON activity_info.activity_num = object_info.activity_num '
-        + ' AND user_info.user_id = \'' + user_id + '\' '
-        + ' AND app_info.app_name = \'' + app_name + '\' '
+        + ' AND user_info.user_id = \'' + param.body.user_id + '\' '
+        + ' AND app_info.app_name = \'' + param.body.app_name + '\' '
+        , function (err, result) {
+            callback(err, result);
+        });
+}
+
+mysql.getAllUserID = function (param, callback) {
+    mysql.query('SELECT * FROM user_info'
+        , function (err, result) {
+            callback(err, result);
+        });
+}
+
+mysql.getAppByUserId = function (param, callback) {
+    mysql.query('SELECT * FROM app_info WHERE user_id = \''
+        + param.body.user_id + '\''
+        , function (err, result) {
+            callback(err, result);
+        });
+}
+
+mysql.getObjectByActivityNum = function (param, callback) {
+    console.log(param.body.app_num);
+    mysql.query('SELECT * FROM object_info '
+        + ' WHERE activity_num = ' + param.body.activity_num
+        , function (err, result) {
+            callback(err, result);
+        });
+}
+
+mysql.getActivityByAppNum = function (param, callback) {
+    console.log(param.body.app_num);
+    mysql.query('SELECT * FROM activity_info '
+        + ' WHERE app_num = ' + param.body.app_num
+        , function (err, result) {
+            callback(err, result);
+        });
+}
+
+mysql.getActivityByUserId = function (param, callback) {
+    console.log(param.body.user_id);
+    mysql.query('SELECT * FROM activity_info '
+        + ' INNER JOIN app_info ON app_info.app_num = activity_info.app_num '
+        + ' WHERE user_id = \'' + param.body.user_id + '\' '
+        + ' AND app_name = \'' + param.body.app_name + '\''
         , function (err, result) {
             callback(err, result);
         });
@@ -102,7 +144,7 @@ mysql.addApp = function (param) {
     var app = {
         app_name: param.body.app_name,
         total_time: 0,
-        user_id: param.session.user_id
+        user_id: isDefined(param.session.user_id) ? param.session.user_id : param.body.user_id
     };
 
     insertData('app', app);

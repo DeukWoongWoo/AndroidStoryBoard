@@ -141,3 +141,13 @@ svg {
 #rect-err-frequency {
     color: #E880A2;
 }
+
+.axis path,
+.axis line{
+    fill:#938172;
+    storke:black;
+    shape-rendering : crispEdges;
+}
+g > text{
+    fill:#938172;
+}

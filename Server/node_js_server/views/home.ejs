@@ -207,6 +207,8 @@
                     $('#graph2').empty();
                     useGraph.drawGraph("graph1", data, useFrequency);
                     errGraph.drawGraph("graph2", data, errFrequency);
+                    useGraph.drawAxis();
+                    errGraph.drawAxis();
                 });
     });
 

@@ -25,7 +25,6 @@ router.post('/date-search', function(req, res){
 
     }else{
         db.getUserAppObject(req, function(err, result){
-
             console.log(req.body);
             console.log(err);
             console.log(result);

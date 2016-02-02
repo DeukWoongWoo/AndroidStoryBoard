@@ -188,6 +188,8 @@
     var useGraph = new Graph();
     var errGraph = new Graph();
     var useLineGraph = new Graph();
+    var bar = new Bar();
+
     var useFrequency = null;
     var errFrequency = null;
     var objectName = null;
@@ -221,15 +223,21 @@
                     useGraph.location('#use-graph')
                             .graphData(useFrequency)
                             .graphDataName(objectName)
-                            .draw();
+                            .createGraph();
 
-                    errGraph.location('#err-graph')
-                            .graphData(errFrequency)
-                            .graphDataName(objectName)
-                            .draw();
+                    useGraph.setGraphType(bar);
+                    useGraph.create();
+                    useGraph.draw();
+                    useGraph.animate();
 
-                    clearInterval(intervalID);
-                    intervalID = setInterval(update, 2000);
+
+//                    errGraph.location('#err-graph')
+//                            .graphData(errFrequency)
+//                            .graphDataName(objectName)
+//                            .draw();
+
+//                    clearInterval(intervalID);
+//                    intervalID = setInterval(update, 2000);
                 });
     });
 

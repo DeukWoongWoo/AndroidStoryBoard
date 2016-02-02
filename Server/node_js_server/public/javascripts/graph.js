@@ -12,203 +12,248 @@ function Graph() {
     this.data = null;
     this.dataName = null;
 
-    //this.dataObject = null;
+    this.dataObject = null;
     this.svg = null;
     this.yAxis = null;
     this.xAxis = null;
 }
 
-Graph.prototype.graphData = function (data) {
-    this.data = data;
-    this.maxY = Math.max.apply(null, data);
-    return this;
-}
+Graph.prototype = {
 
-Graph.prototype.graphDataName = function (dataName) {
-    this.dataName = dataName;
-    //this.dataObject.data(dataName)
-    //    .attr("class", function (d) {
-    //        return d + 'ABS-object-name'
-    //    })
-    //    .attr("number", function (d, i) {
-    //        return i;
-    //    });
-    return this;
-}
+    graphData: function (data) {
+        this.data = data;
+        this.maxY = Math.max.apply(null, data);
+        return this;
+    },
 
-Graph.prototype.setWidth = function (width) {
-    this.svgWidth = width;
-    return this;
-}
+    graphDataName: function (dataName) {
+        this.dataName = dataName;
+        //this.dataObject.data(dataName)
+        //    .attr("class", function (d) {
+        //        return d + 'ABS-object-name'
+        //    })
+        //    .attr("number", function (d, i) {
+        //        return i;
+        //    });
+        return this;
+    },
 
-Graph.prototype.setHeight = function (height) {
-    this.svgHeight = height;
-    return this;
-}
+    setWidth: function (width) {
+        this.svgWidth = width;
+        return this;
+    },
 
-Graph.prototype.setDataColor = function (color) {
-    this.dataColor = color;
-    return this;
-}
+    setHeight: function (height) {
+        this.svgHeight = height;
+        return this;
+    },
 
-Graph.prototype.setType = function (type) {
-    this.graphType = type;
-    return this;
-}
+    setDataColor: function (color) {
+        this.dataColor = color;
+        return this;
+    },
 
-Graph.prototype.location = function (selectTarget) {
-    this.selectTarget = selectTarget;
-    return this;
-}
+    location: function (selectTarget) {
+        this.selectTarget = selectTarget;
+        return this;
+    },
 
-Graph.prototype.setEase = function (es) {
-    this.ease = es;
-    return this;
-}
+    setEase: function (es) {
+        this.ease = es;
+        return this;
+    },
 
-Graph.prototype.update = function (data) {
-    this.graphData(data);
-    this.drawBar();
-    this.drawYAxis();
-    this.drawXAxis();
-}
+    update: function (data) {
+        this.graphData(data);
+        this.drawBar();
+        this.drawYAxis();
+        this.drawXAxis();
+    },
 
-Graph.prototype.draw = function () {
-    this.createGraph();
+    //draw: function () {
+    //    this.createGraph();
+    //
+    //    this.createBar();
+    //    this.drawBar();
+    //    this.animateBar("bounce-in");
+    //
+    //    this.createYAxis();
+    //    this.drawYAxis();
+    //    this.animateYAxis("bounce");
+    //
+    //    this.createXAxis();
+    //    this.drawXAxis();
+    //    this.animateXAxis("bounce");
+    //},
 
-    this.createBar();
-    this.drawBar();
-    this.animateBar("bounce-in");
+    createGraph: function () {
+        var selectTarget = this.selectTarget;
+        var width = this.svgWidth;
+        var height = this.svgHeight;
 
-    this.createYAxis();
-    this.drawYAxis();
-    this.animateYAxis("bounce");
+        $(selectTarget).empty();
+        this.svg = d3.select(selectTarget).append("svg").attr("width", width).attr("height", height);
+    },
 
-    this.createXAxis();
-    this.drawXAxis();
-    this.animateXAxis("bounce");
-}
+    //createYAxis: function () {
+    //    var rY = this.rY = this.svgHeight / this.maxY;
+    //    var height = this.svgHeight;
+    //    var maxY = this.maxY;
+    //
+    //    this.yAxis = this.svg.append("g")
+    //        .attr("class", "axis")
+    //        .attr("transform", "translate(0," + (height - calY(maxY, rY) - 10) + ")");
+    //},
+    //
+    //drawYAxis: function () {
+    //    var height = this.svgHeight;
+    //    var maxY = this.maxY;
+    //    var rY = this.rY;
+    //    var es = this.ease;
+    //
+    //    var yScale = d3.scale.linear().domain([maxY, 0]).range([0, calY(maxY, rY) - 1]);
+    //    var yAxis = d3.svg.axis();
+    //    yAxis.scale(yScale).orient("right");
+    //
+    //    this.yAxis.transition().duration(500).ease(es)
+    //        .attr("transform", "translate(0," + (height - calY(maxY, rY) - 10) + ")")
+    //        .call(yAxis);
+    //},
+    //
+    //animateYAxis: function (es) {
+    //    var height = this.svgHeight;
+    //    this.ease = es ? es : this.ease;
+    //
+    //    this.yAxis.attr("transform", "translate(0," + height / 2 + ")");
+    //    this.drawYAxis();
+    //},
+    //
+    //createXAxis: function () {
+    //    var height = this.svgHeight;
+    //
+    //    this.xAxis = this.svg.append("g")
+    //        .attr("class", "axis")
+    //        .attr("transform", "translate(0," + height + ")");
+    //},
+    //
+    //drawXAxis: function () {
+    //    var height = this.svgHeight;
+    //    var width = this.svgWidth;
+    //    var es = this.ease;
+    //    var xAxis = d3.svg.axis();
+    //    var xScale = d3.scale.linear().domain([0, 0]).range([0, width]);
+    //
+    //    xAxis.scale(xScale).orient("top");
+    //    this.xAxis.transition().duration(500).ease(es)
+    //        .attr("transform", "translate(0," + height + ")")
+    //        .call(xAxis);
+    //},
+    //
+    //animateXAxis: function (es) {
+    //    var height = this.svgHeight;
+    //    var width = this.svgWidth;
+    //    this.ease = es ? es : this.ease;
+    //
+    //    this.xAxis.attr("transform", "translate(" + (-width) + ", " + height + ")");
+    //    this.drawXAxis();
+    //},
+    setGraphType: function (gType) {
+        this.gType = gType;
+        this.package = {
+            gData: this.data,
+            dataColor: this.dataColor,
+            emptyDataColor: this.emptyDataColor,
+            width: this.svgWidth,
+            height: this.svgHeight,
+            es: this.ease,
+            svg : this.svg
+        }
+        gType.setData(this.package);
+    },
+    draw : function(){
+        return this.gType.draw();
+    },
+    create : function(){
+        return this.gType.create();
+    },
+    animate : function(){
+        return this.gType.animate('bounce');
+    }
 
-Graph.prototype.createGraph = function () {
-    var selectTarget = this.selectTarget;
-    var width = this.svgWidth;
-    var height = this.svgHeight;
-
-    $(selectTarget).empty();
-    this.svg = d3.select(selectTarget).append("svg").attr("width", width).attr("height", height);
-}
-
-Graph.prototype.createBar = function () {
-    var type = this.graphType;
-    var data = this.data;
-    this.svg.selectAll(type).data(data).enter().append(type);
-    this.dataObject = this.svg.selectAll(type);
-}
-
-Graph.prototype.drawBar = function () {
-    var data = this.data;
-    var rY = this.rY = this.svgHeight / this.maxY;
-    var length = data.length;
-
-    var dataColor = this.dataColor;
-    var emptyDataColor = this.emptyDataColor;
-    var width = this.svgWidth;
-    var height = this.svgHeight;
-    var es = this.ease;
-
-    this.dataObject.data(data)
-        .attr("fill", function (d) {
-            if (d == 0) return emptyDataColor;
-            else return dataColor;
-        })
-        .transition().duration(1000).ease(es)
-        .attr("x", function (d, i) {
-            return i * (width / length) + 5;
-        })
-        .attr("y", function (d) {
-            return height - calY(d, rY) - 10;
-        })
-        .attr("width", width / length - ((width / length) * 0.1))
-        .attr("height", function (d) {
-            return calY(d, rY) + 5;
-        });
-}
-
-Graph.prototype.animateBar = function (es) {
-    var height = this.svgHeight;
-    var data = this.data;
-    this.ease = es ? es : this.ease;
-
-    this.dataObject.data(data).attr("y", height);
-    this.drawBar();
-}
-
-Graph.prototype.createYAxis = function () {
-    var rY = this.rY = this.svgHeight / this.maxY;
-    var height = this.svgHeight;
-    var maxY = this.maxY;
-
-    this.yAxis = this.svg.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(0," + (height - calY(maxY, rY) - 10) + ")");
-}
-
-Graph.prototype.drawYAxis = function () {
-    var height = this.svgHeight;
-    var maxY = this.maxY;
-    var rY = this.rY;
-    var es = this.ease;
-
-    var yScale = d3.scale.linear().domain([maxY, 0]).range([0, calY(maxY, rY) - 1]);
-    var yAxis = d3.svg.axis();
-    yAxis.scale(yScale).orient("right");
-
-    this.yAxis.transition().duration(500).ease(es)
-        .attr("transform", "translate(0," + (height - calY(maxY, rY) - 10) + ")")
-        .call(yAxis);
-}
-
-Graph.prototype.animateYAxis = function (es) {
-    var height = this.svgHeight;
-    this.ease = es ? es : this.ease;
-
-    this.yAxis.attr("transform", "translate(0," + height / 2 + ")");
-    this.drawYAxis();
-}
-
-Graph.prototype.createXAxis = function () {
-    var height = this.svgHeight;
-
-    this.xAxis = this.svg.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(0," + height + ")");
-}
-
-Graph.prototype.drawXAxis = function () {
-    var height = this.svgHeight;
-    var width = this.svgWidth;
-    var es = this.ease;
-    var xAxis = d3.svg.axis();
-    var xScale = d3.scale.linear().domain([0, 0]).range([0, width]);
-
-    xAxis.scale(xScale).orient("top");
-    this.xAxis.transition().duration(500).ease(es)
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-}
-
-Graph.prototype.animateXAxis = function (es) {
-    var height = this.svgHeight;
-    var width = this.svgWidth;
-    this.ease = es ? es : this.ease;
-
-    this.xAxis.attr("transform", "translate(" + (-width) +  ", " + height + ")");
-    this.drawXAxis();
 }
 
 function calY(d, rY) {
     return ((d * rY) * 0.8 + 1);
 }
+
+var GraphType = function(){
+    this.setData = function (package) {
+
+        this.emptyDataColor = package.emptyDataColor;
+        this.width = package.width;
+        this.height = package.height;
+        this.es = package.es;
+        this.svg = package.svg;
+
+        this.gData = package.gData;
+        this.dataColor = package.dataColor;
+
+        this.length = this.gData.length;
+        this.maxY = Math.max.apply(null, package.gData);
+        this.rY = this.height / this.maxY;
+    }
+}
+
+var Bar = function () {
+    this.draw = function () {
+        var data = this.gData;
+        var emptyDataColor = this.emptyDataColor;
+        var dataColor = this.dataColor;
+        var es = this.es;
+        var width = this.width;
+        var height = this.height;
+        var rY = this.rY;
+        var length = this.length;
+
+        console.log(this);
+
+        this.dataObject.data(data)
+            .attr("fill", function (d) {
+                if (d == 0) return emptyDataColor;
+                else return dataColor;
+            })
+            .transition().duration(1000).ease(es)
+            .attr("x", function (d, i) {
+                return i * (width / length) + 5;
+            })
+            .attr("y", function (d) {
+                return height - calY(d, rY) - 10;
+            })
+            .attr("width", width / length - ((width / length) * 0.1))
+            .attr("height", function (d) {
+                return calY(d, rY) + 5;
+            });
+
+    }
+
+    this.create = function () {
+        var data = this.gData;
+        this.svg.selectAll('rect').data(data).enter().append('rect');
+        this.dataObject = this.svg.selectAll('rect');
+    }
+
+    this.animate = function(es){
+        var data = this.gData;
+        var es = es ? es : this.es;
+        var height = this.height;
+
+        this.es = es ? es : this.es;
+        this.dataObject.data(data).attr("y", height);
+        this.draw();
+    }
+}
+
+Bar.prototype = new GraphType();
 
 
 Graph.prototype.setHightlight = function () {

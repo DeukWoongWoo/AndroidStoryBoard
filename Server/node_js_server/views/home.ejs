@@ -156,8 +156,9 @@
         </div>
 
         <div class="main-body container-center" id="graphs">
-            <div class="graph" id="graph1" style="display: inline-block"></div>
-            <div class="graph" id="graph2" style="display: inline-block"></div>
+            <div class="graph" id="use-graph" style="display: inline-block"></div>
+            <div class="graph" id="use-line-graph" style="display: inline-block"></div>
+            <div class="graph" id="err-graph" style="display: inline-block"></div>
             <div class="graph" id="graphTest"></div>
             <div class="graph" id="graph3"></div>
         </div>
@@ -186,13 +187,18 @@
 <script>
     var useGraph = new graph();
     var errGraph = new graph();
+    var useLineGraph = new graph();
+    var app_name;
+    var user_id;
+    var intervalID;
     useGraph.setColor('#457D97');
+    useLineGraph.setColor('#457D97');
     errGraph.setColor('#EA3556');
 
     $('.app_name').click(function () {
-        var app_name = $(this).text();
-        var user_id = $('#user_id').text();
-        $('.rect-info').css("visibility", "hidden");
+        app_name = $(this).text();
+        user_id = $('#user_id').text();
+//        $('.rect-info').css("visibility", "hidden");
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
                     $('#graphs').attr('name', app_name);
@@ -203,14 +209,36 @@
                         useFrequency[i] = data[i].object_frequency;
                         errFrequency[i] = data[i].error_frequency;
                     }
-                    $('#graph1').empty();//자식 노드들 제거
-                    $('#graph2').empty();
-                    useGraph.drawGraph("graph1", data, useFrequency);
-                    errGraph.drawGraph("graph2", data, errFrequency);
-                    useGraph.drawAxis();
-                    errGraph.drawAxis();
+                    $('#use-graph').empty();//자식 노드들 제거
+                    $('#use-line-graph').empty();
+                    $('#err-graph').empty();
+
+                    useGraph.drawBarGraph("use-graph", data, useFrequency).drawYAxis();
+                    useLineGraph.drawLineGraph("use-line-graph", data, useFrequency);
+                    errGraph.drawBarGraph("err-graph", data, errFrequency);
+//                    useGraph.drawYAxis();
+                    useLineGraph.drawYAxis();
+                    errGraph.drawYAxis();
+
+                    clearInterval(intervalID);
+                    intervalID = setInterval(doTest, 2000);
                 });
     });
+
+    function doTest(){
+        $.post("/get/object_info", {app_name: app_name, user_id: user_id}
+                , function (data) {
+                    var useFrequency = new Array();
+                    var errFrequency = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        useFrequency[i] = data[i].object_frequency;
+                        errFrequency[i] = data[i].error_frequency;
+                    }
+                    useLineGraph.updateLineGraph(data,useFrequency);
+                    useGraph.updateBarGraph(data,useFrequency);
+                    errGraph.updateBarGraph(data,errFrequency);
+                });
+    }
 
 </script>
 </body>

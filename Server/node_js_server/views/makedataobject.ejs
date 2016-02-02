@@ -37,6 +37,10 @@
     <ul class="list-unstyled">
         <li>
             <form method="post" action="/makedata/object/use"class="form-inline">
+                <input class="form-control" type="hidden" name="activity_num" value="<%= activity_num %>"
+                       readonly>
+                <input class="form-control" type="hidden" name="activity_name" value="<%= activity_name %>"
+                       style="width:100px;" readonly>
                 <input class="form-control" type="text" name="object_num" value="<%= object.object_num %>"
                        style="width:100px;" readonly>
                 <input class="form-control" type="text" name="object_name" value="<%= object.object_name %>" readonly>
@@ -44,6 +48,10 @@
                 <button type="submit">use</button>
             </form>
             <form method="post" action="/makedata/object/err"class="form-inline">
+                <input class="form-control" type="hidden" name="activity_num" value="<%= activity_num %>"
+                       readonly>
+                <input class="form-control" type="hidden" name="activity_name" value="<%= activity_name %>"
+                       style="width:100px;" readonly>
                 <input class="form-control" type="text" name="object_num" value="<%= object.object_num %>"
                        style="width:100px;" readonly>
                 <input class="form-control" type="text" name="object_name" value="<%= object.object_name %>" readonly>

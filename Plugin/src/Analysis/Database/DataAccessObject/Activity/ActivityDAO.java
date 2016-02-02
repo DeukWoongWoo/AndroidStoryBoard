@@ -1,5 +1,6 @@
 package Analysis.Database.DataAccessObject.Activity;
 
+import Analysis.Database.DtatTransferObject.ActivityDTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
 
 /**
@@ -7,7 +8,7 @@ import Analysis.Database.DtatTransferObject.ManifestDTO;
  */
 public interface ActivityDAO {
     public void create();
-    public void insert();
+    public void insert(ActivityDTO activityDTO);
     public ManifestDTO select();
 //    public void select();
 }

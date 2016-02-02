@@ -13,7 +13,7 @@ public interface ManifestDAO {
     public void createActivity();
 
     public void insertManifest(ManifestDTO manifestDTO);
-    public void insertActivity();
+    public void insertActivity(ActivityDTO activityDTO);
 
     public void selectAll();
     public ArrayList<ManifestDTO> selectManifest();

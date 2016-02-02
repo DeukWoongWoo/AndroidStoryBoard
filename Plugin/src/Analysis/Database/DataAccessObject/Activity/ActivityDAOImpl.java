@@ -34,8 +34,18 @@ public class ActivityDAOImpl extends SQLiteOpenHelper implements ActivityDAO {
     }
 
     @Override
-    public void insert() {
-
+    public void insert(ActivityDTO activityDTO) {
+        System.out.println("insertActivity...");
+        Statement statement = null;
+        Connection connection = getConnection();
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(activityDTO.getInsertQuery());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            close(connection,statement);
+        }
     }
 
     @Override
@@ -57,7 +67,6 @@ public class ActivityDAOImpl extends SQLiteOpenHelper implements ActivityDAO {
             return items;
         }
     }
-
 //    @Override
 //    public void select() {
 //    }

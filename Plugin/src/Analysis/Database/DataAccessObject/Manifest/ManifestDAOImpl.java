@@ -3,6 +3,7 @@ package Analysis.Database.DataAccessObject.Manifest;
 import Analysis.Constant.DatabaseQuery;
 import Analysis.Database.DataAccessObject.Activity.ActivityDAO;
 import Analysis.Database.DataAccessObject.Activity.ActivityDAOImpl;
+import Analysis.Database.DtatTransferObject.ActivityDTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
 import Analysis.Database.QueryBuilder.QueryBuilder;
 import Analysis.Database.SQLiteOpenHelper;
@@ -17,6 +18,8 @@ public class ManifestDAOImpl extends SQLiteOpenHelper implements ManifestDAO {
     private final String tableName = "Manifest";
 
     private final ActivityDAO activityDAO = new ActivityDAOImpl();
+
+    private int currentManifestId;
 
     @Override
     public void createManifest() {
@@ -41,21 +44,29 @@ public class ManifestDAOImpl extends SQLiteOpenHelper implements ManifestDAO {
 
     @Override
     public void insertManifest(ManifestDTO manifestDTO) {
+        System.out.println("insertManifest...");
         Statement statement = null;
+        PreparedStatement prep = null;
         Connection connection = getConnection();
+        ResultSet rows = null;
         try {
             statement = connection.createStatement();
             statement.executeUpdate(manifestDTO.getInsertQuery());
+            prep = connection.prepareStatement(QueryBuilder.selectAll().from(tableName).where("package='"+manifestDTO.getPackageName()+"'").build());
+            rows = prep.executeQuery();
+            currentManifestId = rows.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
             close(connection,statement);
+            close(null, prep, rows);
         }
     }
 
     @Override
-    public void insertActivity() {
-        activityDAO.insert();
+    public void insertActivity(ActivityDTO activityDTO) {
+        activityDTO.setManifestId(currentManifestId);
+        activityDAO.insert(activityDTO);
     }
 
     @Override

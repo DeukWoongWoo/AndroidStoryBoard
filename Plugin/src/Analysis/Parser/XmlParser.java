@@ -2,6 +2,7 @@ package Analysis.Parser;
 
 import Analysis.Constant.ConstantEtc;
 import Analysis.Database.DatabaseManager.DatabaseManager;
+import Analysis.Database.DtatTransferObject.ActivityDTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
@@ -37,19 +38,32 @@ public class XmlParser implements FileParser {
     }
 
     private void activityTag(XmlTag xmlTag) {
+        ActivityDTO activityDTO = new ActivityDTO();
+
         for(XmlTag subTag : xmlTag.findSubTags("activity")){
-            System.out.println("subTag Content " + subTag.getAttributeValue("android:name"));
+//            System.out.println("subTag Content " + subTag.getAttributeValue("android:name"));
+            activityDTO.setName(subTag.getAttributeValue("android:name"));
+
             if(subTag.findSubTags("intent-filter").length != 0){
                 String str = subTag.findSubTags("intent-filter")[0].findSubTags("action")[0].getAttributeValue("android:name");
-                System.out.println("action name : "+str);
-            }
+//                System.out.println("action name : "+str);
+                activityDTO.setAction(1);
+            }else activityDTO.setAction(0);
+
             FileDocumentManager fdm = FileDocumentManager.getInstance();
             Document doc = fdm.getCachedDocument(xmlFile.getVirtualFile());
+
             int startLine = doc.getLineNumber(subTag.getTextRange().getStartOffset());
             int endLine = doc.getLineNumber(subTag.getTextRange().getEndOffset());
             int totalLine = endLine - startLine;
-            System.out.println("Start getLineNumber : "+ (startLine+1));
-            System.out.println("total : "+totalLine);
+
+//            System.out.println("Start getLineNumber : "+ (startLine+1));
+//            System.out.println("total : "+totalLine+1);
+
+            activityDTO.setStartLine((startLine+1));
+            activityDTO.setTotalLine(totalLine+1);
+
+            DatabaseManager.getInstance().insertToManifest(table->table.insertActivity(activityDTO));
         }
     }
 

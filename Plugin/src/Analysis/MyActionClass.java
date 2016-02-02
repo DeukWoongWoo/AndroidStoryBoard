@@ -21,7 +21,7 @@ public class MyActionClass extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         // TODO: insert action logic here
         ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
-//        projectAnalysis.execute(intellijPath+"/Activity", ConstantEtc.JAVA_PATTERN);
+        projectAnalysis.execute(intellijPath+"/Activity", ConstantEtc.JAVA_PATTERN);
 //        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);
 
 //        ManifestDTO manifestDTO = new ManifestDTO();

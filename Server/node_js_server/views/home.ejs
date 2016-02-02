@@ -188,9 +188,14 @@
     var useGraph = new Graph();
     var errGraph = new Graph();
     var useLineGraph = new Graph();
+    var useFrequency = null;
+    var errFrequency = null;
+    var objectName = null;
     var app_name;
     var user_id;
     var intervalID;
+    useGraph.setDataColor('#457D97');
+    errGraph.setDataColor('#EA3556');
 //    useGraph.setColor('#457D97');
 //    useLineGraph.setColor('#457D97');
 //    errGraph.setColor('#EA3556');
@@ -198,61 +203,47 @@
     $('.app_name').click(function () {
         app_name = $(this).text();
         user_id = $('#user_id').text();
-//        $('.rect-info').css("visibility", "hidden");
+
+
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
-                    $('#graphs').attr('name', app_name);
-                    $('#current_app_name').text(app_name);
-                    var useFrequency = new Array();
-                    var errFrequency = new Array();
-                    var objectName = new Array();
+                    useFrequency = new Array();
+                    errFrequency = new Array();
+                    objectName = new Array();
                     for (var i = 0; i < data.length; i++) {
                         useFrequency[i] = data[i].object_frequency;
                         errFrequency[i] = data[i].error_frequency;
                         objectName[i] = data[i].object_name;
                     }
+//                    $('#use-graph').empty();//자식 노드들 제거
+//                    $('#use-line-graph').empty();
+//                    $('#err-graph').empty();
+                    useGraph.location('#use-graph')
+                            .graphData(useFrequency)
+                            .graphDataName(objectName)
+                            .draw();
 
-                    $('#use-graph').empty();//자식 노드들 제거
-                    $('#use-line-graph').empty();
-                    $('#err-graph').empty();
+                    errGraph.location('#err-graph')
+                            .graphData(errFrequency)
+                            .graphDataName(objectName)
+                            .draw();
 
-                    useGraph.setLocation('#use-graph');
-                    useGraph.graphData(useFrequency);
-                    useGraph.graphDataName(objectName);
-                    useGraph.createGraph();
-                    useGraph.draw();
-                    useGraph.setHightlight();
-
-                    errGraph.setLocation('#err-graph');
-                    errGraph.graphData(errFrequency);
-                    errGraph.graphDataName(objectName);
-                    errGraph.createGraph();
-                    errGraph.draw();
-                    errGraph.setHightlight();
-//                    useGraph.drawBarGraph("use-graph", data, useFrequency).drawYAxis().drawXAxis();
-//                    useLineGraph.drawLineGraph("use-line-graph", data, useFrequency);
-//                    errGraph.drawBarGraph("err-graph", data, errFrequency);
-////                    useGraph.drawYAxis();
-//                    useLineGraph.drawYAxis();
-//                    errGraph.drawYAxis();
-//
-//                    clearInterval(intervalID);
-//                    intervalID = setInterval(doTest, 2000);
+                    clearInterval(intervalID);
+                    intervalID = setInterval(update, 2000);
                 });
     });
 
-    function doTest(){
+    function update(){
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
-                    var useFrequency = new Array();
-                    var errFrequency = new Array();
+                    useFrequency = new Array();
+                    errFrequency = new Array();
                     for (var i = 0; i < data.length; i++) {
                         useFrequency[i] = data[i].object_frequency;
                         errFrequency[i] = data[i].error_frequency;
                     }
-                    useLineGraph.updateLineGraph(data,useFrequency);
-                    useGraph.updateBarGraph(data,useFrequency);
-                    errGraph.updateBarGraph(data,errFrequency);
+                    useGraph.setEase("cubic").update(useFrequency);
+                    errGraph.setEase("cubic").update(errFrequency);
                 });
     }
 

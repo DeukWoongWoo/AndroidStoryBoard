@@ -22,6 +22,7 @@
     <script src="javascripts/graph/Graph.js"></script>
     <script src="javascripts/graph/Bar.js"></script>
     <script src="javascripts/graph/Line.js"></script>
+    <script src="javascripts/graph/Circle.js"></script>
     <script src="javascripts/drag.js"></script>
 
     <script>
@@ -190,67 +191,66 @@
     var useGraph = new Graph();
     var errGraph = new Graph();
     var useLineGraph = new Graph();
-    var useBar = new Bar();
-    var errBar = new Bar();
+    var useCircleGraph = new Graph();
+
+    var useBar = new Bar('use');
+    var errBar = new Bar('err');
     var line = new Line();
+    var circle = new Circle();
 
     var useFrequency = null;
     var errFrequency = null;
     var objectName = null;
+    var objectNum = null;
     var app_name;
     var user_id;
     var intervalID;
+
     useGraph.setDataColor('#457D97');
     errGraph.setDataColor('#EA3556');
-//    useGraph.setColor('#457D97');
-//    useLineGraph.setColor('#457D97');
-//    errGraph.setColor('#EA3556');
+    useLineGraph.setDataColor('#02779E');
+    useCircleGraph.setDataColor('#02779E');
 
     $('.app_name').click(function () {
         app_name = $(this).text();
         user_id = $('#user_id').text();
-
-
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
                     useFrequency = new Array();
                     errFrequency = new Array();
                     objectName = new Array();
+                    objectNum = new Array();
                     for (var i = 0; i < data.length; i++) {
                         useFrequency[i] = data[i].object_frequency;
                         errFrequency[i] = data[i].error_frequency;
                         objectName[i] = data[i].object_name;
+                        objectNum[i] = data[i].object_num;
                     }
-//                    $('#use-graph').empty();//자식 노드들 제거
-//                    $('#use-line-graph').empty();
-//                    $('#err-graph').empty();
+                    console.log(data);
+
                     useGraph.location('#use-graph')
                             .setData(useFrequency)
                             .graphDataName(objectName)
-                            .createGraph();
-
-                    useGraph.setGraphType(useBar);
-                    useGraph.create();//.draw().animate();
+                            .createGraph()
+                            .setGraphType(useBar).create();
 
                     errGraph.location('#err-graph')
                             .setData(errFrequency)
                             .graphDataName(objectName)
-                            .createGraph();
-
-                    errGraph.setGraphType(errBar);
-                    errGraph.create();//.draw().animate();
+                            .createGraph()
+                            .setGraphType(errBar).create();
 
 
                     useLineGraph.location('#use-line-graph')
                             .setData(useFrequency)
                             .graphDataName(objectName)
-                            .createGraph();
-
-                    useLineGraph.setGraphType(line);
-                    useLineGraph.create();//.draw().animate();
+                            .createGraph()
+                            .setGraphType(line).create()
+                            .setGraphType(circle).create();
 
                     clearInterval(intervalID);
                     intervalID = setInterval(update, 2000);
+                    highlight();
                 });
     });
 
@@ -259,6 +259,7 @@
                 , function (data) {
                     useFrequency = new Array();
                     errFrequency = new Array();
+
                     for (var i = 0; i < data.length; i++) {
                         useFrequency[i] = data[i].object_frequency;
                         errFrequency[i] = data[i].error_frequency;
@@ -266,10 +267,39 @@
 
                     useGraph.setData(useFrequency).update();
                     errGraph.setData(errFrequency).update();
-                    useLineGraph.setData(useFrequency).update();
+
+                    useLineGraph.setGraphType(circle).setData(useFrequency).update();
+                    useLineGraph.setGraphType(line).setData(useFrequency).update();
                 });
     }
 
+    var w, r;
+    function highlight(){
+        $('.graph').children('svg').children('rect').mouseover(function () {
+            // rect의 클래스 네임 받아온다
+            var className = '.' + $(this).attr("class");
+
+            //받아온 클래스 네임의 데이터들을 하이라이트 한다.
+            $('rect').css("fill", "");
+            $('circle').css("fill", "");
+            $('rect' + className).css("fill", "gold");
+            $('circle' + className).css("fill", "red");
+
+            //받아온 클래스 네임의 오브젝트의 정보를 띄워준다.
+            var useFrequency = $('#use-graph ' + className).attr("use-data");
+            var errFrequency = $('#err-graph ' + className).attr("err-data")
+
+            var rectInfo = $('.rect-info').children('div');
+            var objectName = $(this).attr("object-name");
+
+            $('.rect-info').css("visibility", "visible");
+            rectInfo.children('#rect-object-name').text(objectName);
+            rectInfo.children('#rect-use-frequency').text(useFrequency);
+            rectInfo.children('#rect-err-frequency').text(errFrequency);
+        }).mouseout(function () {
+
+        });
+    }
 </script>
 </body>
 </html>

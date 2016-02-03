@@ -1,5 +1,5 @@
-var Bar = function (name) {
-    var type = 'rect';
+var Circle =  function (name) {
+    var type = 'circle';
     this.graphName = name;
     this.draw = function () {
         var data = this.gData;
@@ -17,15 +17,14 @@ var Bar = function (name) {
                 else return dataColor;
             })
             .transition().duration(1000).ease(es)
-            .attr("x", function (d, i) {
+            .attr("cx", function (d, i) {
                 return i * (width / length) + 5;
             })
-            .attr("y", function (d) {
+            .attr("cy", function (d) {
                 return height - calY(d, rY) - 10;
             })
-            .attr("width", width / length - ((width / length) * 0.1))
-            .attr("height", function (d) {
-                return calY(d, rY) + 5;
+            .attr("r", function(){
+                return width/(length*7);
             })
             .attr(this.graphName + "-data", function(d){return d;});
 
@@ -62,7 +61,7 @@ var Bar = function (name) {
         this.es = es ? es : this.es;
         var height = this.height;
 
-        this.dataObject.data(data).attr("y", height);
+        this.dataObject.data(data).attr("cy", height/2);
         this.draw();
 
         return this;
@@ -80,6 +79,8 @@ var Bar = function (name) {
     this.getType = function () {
         return type;
     }
+
+
 }
 
-Bar.prototype = new GraphType();
+Circle.prototype = new GraphType();

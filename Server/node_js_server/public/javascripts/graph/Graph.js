@@ -10,7 +10,8 @@ function Graph() {
     this.rY = 1;
     this.maxY = null;
     this.data = null;
-    this.dataName = null;
+    //this.dataName = null;
+    this.objectName = null,
 
     this.dataObject = null;
     this.svg = null;
@@ -47,8 +48,8 @@ Graph.prototype = {
         return this;
     },
 
-    graphDataName: function (dataName) {
-        this.dataName = dataName;
+    graphDataName: function (objectName) {
+        this.objectName = objectName;
         return this;
     },
 
@@ -87,6 +88,7 @@ Graph.prototype = {
 
         this.package = {
             gData: this.data,
+            gObjectName: this.objectName,
             dataColor: this.dataColor,
             emptyDataColor: this.emptyDataColor,
             width: this.svgWidth,
@@ -99,7 +101,7 @@ Graph.prototype = {
         }
         gType.setGraphData(this.package);
 
-        return gType;
+        return this;
     },
 
     update: function (data) {
@@ -121,7 +123,7 @@ Graph.prototype = {
         this.gType.create().draw().animate();
         this.axis().animateAxis();
 
-        return this.gType;
+        return this;
     },
 
     animate: function () {
@@ -222,83 +224,6 @@ Graph.prototype = {
 }
 
 
-//var height = this.svgHeight;
-//var rY = this.rY = this.svgHeight / this.maxY;
-//var maxY = this.maxY;
-//
-//this.xAxis = this.svg.append("g")
-//    .attr("class", "axis")
-//    .attr("transform", "translate(0," + height + ")");
-//
-//this.yAxis = this.svg.append("g")
-//    .attr("class", "axis")
-//    .attr("transform", "translate(0," + (height - calY(maxY, rY) - 10) + ")");
-//
-//return axis;
-
-//createXAxis: function () {
-//    var height = this.svgHeight;
-//
-//    this.xAxis = this.svg.append("g")
-//        .attr("class", "axis")
-//        .attr("transform", "translate(0," + height + ")");
-//},
-//
-//createYAxis: function () {
-//    var rY = this.rY = this.svgHeight / this.maxY;
-//    var height = this.svgHeight;
-//    var maxY = this.maxY;
-//
-//    this.yAxis = this.svg.append("g")
-//        .attr("class", "axis")
-//        .attr("transform", "translate(0," + (height - calY(maxY, rY) - 10) + ")");
-//},
-//
-//drawYAxis: function () {
-//    var height = this.svgHeight;
-//    var maxY = this.maxY;
-//    var rY = this.rY;
-//    var es = this.ease;
-//
-//    var yScale = d3.scale.linear().domain([maxY, 0]).range([0, calY(maxY, rY) - 1]);
-//    var yAxis = d3.svg.axis();
-//    yAxis.scale(yScale).orient("right");
-//
-//    this.yAxis.transition().duration(1000).ease(es)
-//        .attr("transform", "translate(0," + (height - calY(maxY, rY) - 10) + ")")
-//        .call(yAxis);
-//},
-//
-//animateYAxis: function (es) {
-//    var height = this.svgHeight;
-//    this.ease = es ? es : this.ease;
-//
-//    this.yAxis.attr("transform", "translate(0," + height / 2 + ")");
-//    this.drawYAxis();
-//},
-//
-//createXAxis: function () {
-//    var height = this.svgHeight;
-//
-//    this.xAxis = this.svg.append("g")
-//        .attr("class", "axis")
-//        .attr("transform", "translate(0," + height + ")");
-//},
-//
-//drawXAxis: function () {
-//    var height = this.svgHeight;
-//    var width = this.svgWidth;
-//    var es = this.ease;
-//    var xAxis = d3.svg.axis();
-//    var xScale = d3.scale.linear().domain([0, 0]).range([0, width]);
-//
-//    xAxis.scale(xScale).orient("top");
-//    this.xAxis.transition().duration(500).ease(es)
-//        .attr("transform", "translate(0," + height + ")")
-//        .call(xAxis);
-//},
-
-
 function calY(d, rY) {
     return ((d * rY) * 0.8 + 1);
 }
@@ -313,6 +238,7 @@ var GraphType = function () {
         this.type = package.type;
 
         this.gData = package.gData;
+        this.gObjectName = package.gObjectName;
         this.dataColor = package.dataColor;
 
         //this.length = this.gData.length;
@@ -330,26 +256,12 @@ var GraphType = function () {
  *
  */
 
-//
-//Graph.prototype.setHighlight = function () {
-//    var data = this.data;
-//    var dataName = this.dataName;
-//    $('.graph').children('svg').children('rect').mouseover(function () {
-//        var className = '.' + $(this).attr("class");
-//
-//        $('rect').css("fill", "");
-//        $(className).css("fill", "gold");
-//
-//        var rectInfo = $('.rect-info').children('div');
-//        var number = $(this).attr("number");
-//
-//        $('.rect-info').css("visibility", "visible");
-//        rectInfo.children('#rect-object-name').text(dataName[number]);
-//        rectInfo.children('#rect-use-frequency').text(data[number]);
-//    }).mouseout(function () {
-//
-//    });
-//}
+
+Graph.prototype.setHighlight = function () {
+    var data = this.data;
+    var dataName = this.dataName;
+
+}
 //
 //Graph.prototype.highlight = function (divId, data, frequency) {
 //

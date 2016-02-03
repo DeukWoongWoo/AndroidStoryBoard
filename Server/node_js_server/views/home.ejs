@@ -202,6 +202,7 @@
     var errFrequency = null;
     var objectName = null;
     var objectNum = null;
+    var occur_time = null;
     var app_name;
     var user_id;
     var intervalID;
@@ -216,90 +217,129 @@
         user_id = $('#user_id').text();
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
-                    useFrequency = new Array();
-                    errFrequency = new Array();
-                    objectName = new Array();
-                    objectNum = new Array();
+                    initDataToArray();
                     for (var i = 0; i < data.length; i++) {
-                        useFrequency[i] = data[i].object_frequency;
-                        errFrequency[i] = data[i].error_frequency;
-                        objectName[i] = data[i].object_name;
-                        objectNum[i] = data[i].object_num;
+                        setObjectData(i, data);
                     }
-                    console.log(data);
-
-                    useGraph.location('#use-graph')
-                            .setData(useFrequency)
-                            .graphDataName(objectName)
-                            .createGraph()
-                            .setGraphType(useBar).create();
-
-                    errGraph.location('#err-graph')
-                            .setData(errFrequency)
-                            .graphDataName(objectName)
-                            .createGraph()
-                            .setGraphType(errBar).create();
-
-
-                    useLineGraph.location('#use-line-graph')
-                            .setData(useFrequency)
-                            .graphDataName(objectName)
-                            .createGraph()
-                            .setGraphType(line).create()
-                            .setGraphType(circle).create();
-
+                    createGraphs();
                     clearInterval(intervalID);
                     intervalID = setInterval(update, 2000);
-                    highlight();
+
+                    rectMouseOver();
                 });
     });
 
-    function update(){
+    function initDataToArray() {
+        useFrequency = new Array();
+        errFrequency = new Array();
+        objectName = new Array();
+        objectNum = new Array();
+        occur_time = new Array();
+    }
+
+    function setObjectData(i, data) {
+        useFrequency[i] = data[i].object_frequency;
+        errFrequency[i] = data[i].error_frequency;
+        objectName[i] = data[i].object_name;
+        objectNum[i] = data[i].object_num;
+    }
+
+    function createGraphs() {
+        useGraph.location('#use-graph')
+                .graphData(useFrequency)
+                .graphDataName(objectName)
+                .graphDataNnum(objectNum)
+                .createGraph()
+                .setGraphType(useBar).create();
+        errGraph.location('#err-graph')
+                .graphData(errFrequency)
+                .graphDataName(objectName)
+                .graphDataNnum(objectNum)
+                .createGraph()
+                .setGraphType(errBar).create();
+
+    }
+
+    function update() {
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
-                    useFrequency = new Array();
-                    errFrequency = new Array();
-
                     for (var i = 0; i < data.length; i++) {
                         useFrequency[i] = data[i].object_frequency;
                         errFrequency[i] = data[i].error_frequency;
                     }
 
-                    useGraph.setData(useFrequency).update();
-                    errGraph.setData(errFrequency).update();
+                    useGraph.graphData(useFrequency).update();
+                    errGraph.graphData(errFrequency).update();
 
-                    useLineGraph.setGraphType(circle).setData(useFrequency).update();
-                    useLineGraph.setGraphType(line).setData(useFrequency).update();
+//                    useLineGraph.setGraphType(circle).graphData(useFrequency).update();
+//                    useLineGraph.setGraphType(line).graphData(useFrequency).update();
                 });
     }
 
-    var w, r;
-    function highlight(){
+    function rectMouseOver() {
         $('.graph').children('svg').children('rect').mouseover(function () {
-            // rect의 클래스 네임 받아온다
             var className = '.' + $(this).attr("class");
+            highlightByClassName(className);
+            popObjectInfoByClassName.call(this, className);
 
-            //받아온 클래스 네임의 데이터들을 하이라이트 한다.
-            $('rect').css("fill", "");
-            $('circle').css("fill", "");
-            $('rect' + className).css("fill", "gold");
-            $('circle' + className).css("fill", "red");
-
-            //받아온 클래스 네임의 오브젝트의 정보를 띄워준다.
-            var useFrequency = $('#use-graph ' + className).attr("use-data");
-            var errFrequency = $('#err-graph ' + className).attr("err-data")
-
-            var rectInfo = $('.rect-info').children('div');
-            var objectName = $(this).attr("object-name");
-
-            $('.rect-info').css("visibility", "visible");
-            rectInfo.children('#rect-object-name').text(objectName);
-            rectInfo.children('#rect-use-frequency').text(useFrequency);
-            rectInfo.children('#rect-err-frequency').text(errFrequency);
+            var objectNum = $(this).attr("object-num");
+            console.log("objectNum : " + objectNum);
+            $.post("/get/object_use_info", {object_num: 3}
+                    , function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            occur_time[i] = data[i].occur_time;
+                        }
+                        console.log("occur time : " + occur_time);
+                        console.log("test : " + "2011-01-02");
+                        console.log("test : " + ("2011-01-02"*1));
+                        //todo:날짜
+//                        useCircleGraph.location('#use-line-graph')
+//                                .graphData(occur_time)
+//                                .createGraph()
+//                                .setGraphType(line).create()
+//                                .setGraphType(circle).create();
+                    });
         }).mouseout(function () {
 
         });
     }
+
+    function NumOfDate(date) {
+        /**
+         *  날짜, 시간에 문자열을 숫자로 표현된 값으로 반환
+         */
+        var piece = date.split(" ");
+        var standardYears = 1990 * 60 * 60 * 30 * 12;
+        var years = piece[0].split("-")[0] * 60 * 60 * 30 * 12 - standardYears;
+        var month = piece[0].split("-")[1] * 60 * 60 * 30;
+        var days = piece[0].split("-")[2] * 60 * 60 * 24;
+        var hours = piece[1].split(":")[0] * 60 * 60;
+        var minutes = piece[1].split(":")[1] * 60;
+        var seconds = piece[1].split(":")[2] * 1;
+
+        return years + month + days + hours + minutes + seconds;
+    }
+
+    function highlightByClassName(className) {
+        $('rect').css("fill", "");
+        $('circle').css("fill", "");
+        $('rect' + className).css("fill", "gold");
+        $('circle' + className).css("fill", "red");
+    }
+
+    function popObjectInfoByClassName(className) {
+        var useFrequency = $('#use-graph ' + className).attr("use-data");
+        var errFrequency = $('#err-graph ' + className).attr("err-data")
+
+        var rectInfo = $('.rect-info').children('div');
+        var objectName = $(this).attr("object-name");
+
+        $('.rect-info').css("visibility", "visible");
+        rectInfo.children('#rect-object-name').text(objectName);
+        rectInfo.children('#rect-use-frequency').text(useFrequency);
+        rectInfo.children('#rect-err-frequency').text(errFrequency);
+    }
+
 </script>
 </body>
 </html>

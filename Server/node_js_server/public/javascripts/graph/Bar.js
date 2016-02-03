@@ -27,7 +27,9 @@ var Bar = function (name) {
             .attr("height", function (d) {
                 return calY(d, rY) + 5;
             })
-            .attr(this.graphName + "-data", function(d){return d;});
+            .attr(this.graphName + "-data", function (d) {
+                return d;
+            });
 
         return this;
     }
@@ -39,6 +41,7 @@ var Bar = function (name) {
         this.dataObject = this.svg.selectAll(type);
 
         this.setDataName();
+        this.setDataNum();
 
         return this;
     }
@@ -50,10 +53,18 @@ var Bar = function (name) {
                 return d + '-object-name';
             })
             .attr("object-name", function (d, i) {
-                return d ;
+                return d;
             })
             .attr("num", function (d, i) {
                 return i;
+            });
+    }
+
+    this.setDataNum = function () {
+        var gObjectNum = this.gObjectNum;
+        this.dataObject.data(gObjectNum)
+            .attr("object-num", function (d, i) {
+                return d;
             });
     }
 

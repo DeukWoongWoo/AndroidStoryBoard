@@ -38,6 +38,7 @@ var Circle =  function (name) {
         this.dataObject = this.svg.selectAll(type);
 
         this.setDataName();
+        //this.setDataNum();
 
         return this;
     }
@@ -53,6 +54,14 @@ var Circle =  function (name) {
             })
             .attr("num", function (d, i) {
                 return i;
+            });
+    }
+
+    this.setDataNum = function () {
+        var gObjectNum = this.gObjectNum;
+        this.dataObject.data(gObjectNum)
+            .attr("object-num", function (d, i) {
+                return d;
             });
     }
 

@@ -11,7 +11,8 @@ function Graph() {
     this.maxY = null;
     this.data = null;
     //this.dataName = null;
-    this.objectName = null,
+    this.objectName = null;
+    this.objectNum = null;
 
     this.dataObject = null;
     this.svg = null;
@@ -22,7 +23,7 @@ function Graph() {
 
     this.xAxisData = {
         orient: 'top',
-        position: {x: this.svgWidth/2, y: this.svgHeight/2},
+        position: {x: this.svgWidth / 2, y: this.svgHeight / 2},
         range: {start: -this.svgWidth, end: this.svgWidth},
         domain: {start: -this.svgWidth, end: this.svgWidth}
     };
@@ -30,7 +31,7 @@ function Graph() {
 
     this.yAxisData = {
         orient: 'right',
-        position: {x: this.svgWidth/2, y: this.svgHeight/2},
+        position: {x: this.svgWidth / 2, y: this.svgHeight / 2},
         range: {start: -this.svgHeight, end: this.svgHeight},
         domain: {start: -this.svgHeight, end: this.svgHeight}
         //position: {x: 0, y: height - calY(maxY, rY) - 10},
@@ -41,7 +42,7 @@ function Graph() {
 
 Graph.prototype = {
 
-    setData: function (data) {
+    graphData: function (data) {
         this.data = data;
         this.maxY = Math.max.apply(null, data);
 
@@ -50,6 +51,11 @@ Graph.prototype = {
 
     graphDataName: function (objectName) {
         this.objectName = objectName;
+        return this;
+    },
+
+    graphDataNnum: function (objectName) {
+        this.objectNum = objectNum;
         return this;
     },
 
@@ -89,6 +95,7 @@ Graph.prototype = {
         this.package = {
             gData: this.data,
             gObjectName: this.objectName,
+            gObjectNum: this.objectNum,
             dataColor: this.dataColor,
             emptyDataColor: this.emptyDataColor,
             width: this.svgWidth,
@@ -142,15 +149,15 @@ Graph.prototype = {
         return this;
     },
 
-    setXAxisData : function(axisData){
+    setXAxisData: function (axisData) {
         this.xAxisData = axisData;
     },
 
-    setYAxisData : function(axisData){
+    setYAxisData: function (axisData) {
         this.yAxisData = axisData;
     },
 
-    axis : function(){
+    axis: function () {
         this.xAxis = this.createAxis();
         this.yAxis = this.createAxis();
         this.setAxisData();
@@ -158,14 +165,14 @@ Graph.prototype = {
         return this;
     },
 
-    updateAxis : function(){
+    updateAxis: function () {
         this.setAxisData();
 
         this.drawAxis(this.xAxis, this.xAxisData);
         this.drawAxis(this.yAxis, this.yAxisData);
     },
 
-    setAxisData : function(){
+    setAxisData: function () {
         this.setXAxisData({
             orient: 'top',
             position: {x: 0, y: this.svgHeight},
@@ -193,36 +200,35 @@ Graph.prototype = {
             .call(d3.svg.axis().scale(scale).orient(axisData.orient));
     },
 
-    animateAxis : function(){
+    animateAxis: function () {
         this.middleAxis();
 
         this.drawAxis(this.xAxis, this.xAxisData);
         this.drawAxis(this.yAxis, this.yAxisData);
     },
 
-    middleAxis : function(){
+    middleAxis: function () {
         this.drawAxisWithoutAni(this.xAxis, {
             orient: 'top',
-            position: {x: this.svgWidth/2, y: this.svgHeight/2},
+            position: {x: this.svgWidth / 2, y: this.svgHeight / 2},
             range: {start: -this.svgWidth, end: this.svgWidth},
             domain: {start: -this.svgWidth, end: this.svgWidth}
         });
         this.drawAxisWithoutAni(this.yAxis, {
             orient: 'right',
-            position: {x: this.svgWidth/2, y: this.svgHeight/2},
+            position: {x: this.svgWidth / 2, y: this.svgHeight / 2},
             range: {start: -this.svgHeight, end: this.svgHeight},
             domain: {start: -this.svgHeight, end: this.svgHeight}
         });
     },
 
-    drawAxisWithoutAni : function (axis, axisData) {
+    drawAxisWithoutAni: function (axis, axisData) {
         var scale = d3.scale.linear().domain([axisData.domain.start, axisData.domain.end]).range([axisData.range.start, axisData.range.end]);
         axis.attr("transform", "translate(" + axisData.position.x + "," + axisData.position.y + ")")
             .call(d3.svg.axis().scale(scale).orient(axisData.orient));
     }
 
 }
-
 
 function calY(d, rY) {
     return ((d * rY) * 0.8 + 1);
@@ -239,6 +245,7 @@ var GraphType = function () {
 
         this.gData = package.gData;
         this.gObjectName = package.gObjectName;
+        this.gObjectNum= package.gObjectNum;
         this.dataColor = package.dataColor;
 
         //this.length = this.gData.length;
@@ -250,40 +257,3 @@ var GraphType = function () {
         this.rY = package.rY;//this.height / this.maxY;
     }
 }
-
-
-/**
- *
- */
-
-
-Graph.prototype.setHighlight = function () {
-    var data = this.data;
-    var dataName = this.dataName;
-
-}
-//
-//Graph.prototype.highlight = function (divId, data, frequency) {
-//
-//    $('.graph').children('svg').children('rect').mouseover(function () {
-//        var className = '.' + $(this).attr("class");
-//
-//        $('rect').css("fill", "");
-//        $(className).css("fill", "gold");
-//
-//        var rectInfo = $('.rect-info').children('div');
-//        var number = $(this).attr("number");
-//
-//        $('.rect-info').css("visibility", "visible");
-//        rectInfo.children('#rect-object-name').text(data[number].object_name);
-//        rectInfo.children('#rect-use-frequency').text(data[number].object_frequency);
-//        rectInfo.children('#rect-err-frequency').text(data[number].error_frequency);
-//        rectInfo.children('#rect-activity-name').text(data[number].activity_name);
-//        rectInfo.children('#rect-activity-time').text(data[number].total_time);
-//
-//    }).mouseout(function () {
-//
-//    });
-//
-//    return this;
-//}

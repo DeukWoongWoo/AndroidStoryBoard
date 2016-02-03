@@ -230,6 +230,9 @@
                             .createGraph();
 
                     useGraph.setGraphType(useBar);
+//                    useGraph.createAxis();
+//                    useGraph.drawAxis();
+
                     useGraph.create().draw().animate();
 
                     errGraph.location('#err-graph')
@@ -265,6 +268,7 @@
                     }
 
                     useGraph.setData(useFrequency).update();
+//                    useGraph.drawAxis();
                     errGraph.setData(errFrequency).update();
                     useLineGraph.setData(useFrequency).update();
                 });

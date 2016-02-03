@@ -221,19 +221,16 @@
                         errFrequency[i] = data[i].error_frequency;
                         objectName[i] = data[i].object_name;
                     }
-                    $('#use-graph').empty();//자식 노드들 제거
-                    $('#use-line-graph').empty();
-                    $('#err-graph').empty();
+//                    $('#use-graph').empty();//자식 노드들 제거
+//                    $('#use-line-graph').empty();
+//                    $('#err-graph').empty();
                     useGraph.location('#use-graph')
                             .setData(useFrequency)
                             .graphDataName(objectName)
                             .createGraph();
 
                     useGraph.setGraphType(useBar);
-//                    useGraph.createAxis();
-//                    useGraph.drawAxis();
-
-                    useGraph.create().draw().animate();
+                    useGraph.create();//.draw().animate();
 
                     errGraph.location('#err-graph')
                             .setData(errFrequency)
@@ -241,7 +238,7 @@
                             .createGraph();
 
                     errGraph.setGraphType(errBar);
-                    errGraph.create().draw().animate();
+                    errGraph.create();//.draw().animate();
 
 
                     useLineGraph.location('#use-line-graph')
@@ -250,7 +247,7 @@
                             .createGraph();
 
                     useLineGraph.setGraphType(line);
-                    useLineGraph.create().draw().animate();
+                    useLineGraph.create();//.draw().animate();
 
                     clearInterval(intervalID);
                     intervalID = setInterval(update, 2000);
@@ -268,7 +265,6 @@
                     }
 
                     useGraph.setData(useFrequency).update();
-//                    useGraph.drawAxis();
                     errGraph.setData(errFrequency).update();
                     useLineGraph.setData(useFrequency).update();
                 });

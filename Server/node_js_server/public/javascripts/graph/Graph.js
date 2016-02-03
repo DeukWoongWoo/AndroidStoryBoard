@@ -4,7 +4,7 @@ function Graph() {
     this.dataColor = 'teal';
     this.emptyDataColor = 'black';
 
-    this.ease = 'cubic';
+    this.ease = 'bounce-in';
     this.graphType = 'rect';
     this.selectTarget = null;
     this.rY = 1;
@@ -16,25 +16,21 @@ function Graph() {
     this.svg = null;
     this.yAxis = null;
     this.xAxis = null;
+
+    this.gType = null;
 }
 
 Graph.prototype = {
 
-    graphData: function (data) {
+    setData: function (data) {
         this.data = data;
         this.maxY = Math.max.apply(null, data);
+
         return this;
     },
 
     graphDataName: function (dataName) {
         this.dataName = dataName;
-        //this.dataObject.data(dataName)
-        //    .attr("class", function (d) {
-        //        return d + 'ABS-object-name'
-        //    })
-        //    .attr("number", function (d, i) {
-        //        return i;
-        //    });
         return this;
     },
 
@@ -62,29 +58,6 @@ Graph.prototype = {
         this.ease = es;
         return this;
     },
-
-    update: function (data) {
-        this.graphData(data);
-        this.drawBar();
-        this.drawYAxis();
-        this.drawXAxis();
-    },
-
-    //draw: function () {
-    //    this.createGraph();
-    //
-    //    this.createBar();
-    //    this.drawBar();
-    //    this.animateBar("bounce-in");
-    //
-    //    this.createYAxis();
-    //    this.drawYAxis();
-    //    this.animateYAxis("bounce");
-    //
-    //    this.createXAxis();
-    //    this.drawXAxis();
-    //    this.animateXAxis("bounce");
-    //},
 
     createGraph: function () {
         var selectTarget = this.selectTarget;
@@ -157,6 +130,7 @@ Graph.prototype = {
     //    this.xAxis.attr("transform", "translate(" + (-width) + ", " + height + ")");
     //    this.drawXAxis();
     //},
+
     setGraphType: function (gType) {
         this.gType = gType;
         this.package = {
@@ -166,17 +140,25 @@ Graph.prototype = {
             width: this.svgWidth,
             height: this.svgHeight,
             es: this.ease,
-            svg : this.svg
+            svg: this.svg
         }
-        gType.setData(this.package);
+        gType.setGraphData(this.package);
+
+        return gType;
     },
-    draw : function(){
+    update: function (data) {
+        this.setEase("circle");
+        this.setGraphType(this.gType);
+        console.log("gtype : " + this.gType.getType());
         return this.gType.draw();
     },
-    create : function(){
+    draw: function () {
+        return this.gType.draw();
+    },
+    create: function () {
         return this.gType.create();
     },
-    animate : function(){
+    animate: function () {
         return this.gType.animate('bounce');
     }
 
@@ -186,14 +168,14 @@ function calY(d, rY) {
     return ((d * rY) * 0.8 + 1);
 }
 
-var GraphType = function(){
-    this.setData = function (package) {
-
+var GraphType = function () {
+    this.setGraphData = function (package) {
         this.emptyDataColor = package.emptyDataColor;
         this.width = package.width;
         this.height = package.height;
         this.es = package.es;
         this.svg = package.svg;
+        this.type = package.type;
 
         this.gData = package.gData;
         this.dataColor = package.dataColor;
@@ -203,57 +185,6 @@ var GraphType = function(){
         this.rY = this.height / this.maxY;
     }
 }
-
-var Bar = function () {
-    this.draw = function () {
-        var data = this.gData;
-        var emptyDataColor = this.emptyDataColor;
-        var dataColor = this.dataColor;
-        var es = this.es;
-        var width = this.width;
-        var height = this.height;
-        var rY = this.rY;
-        var length = this.length;
-
-        console.log(this);
-
-        this.dataObject.data(data)
-            .attr("fill", function (d) {
-                if (d == 0) return emptyDataColor;
-                else return dataColor;
-            })
-            .transition().duration(1000).ease(es)
-            .attr("x", function (d, i) {
-                return i * (width / length) + 5;
-            })
-            .attr("y", function (d) {
-                return height - calY(d, rY) - 10;
-            })
-            .attr("width", width / length - ((width / length) * 0.1))
-            .attr("height", function (d) {
-                return calY(d, rY) + 5;
-            });
-
-    }
-
-    this.create = function () {
-        var data = this.gData;
-        this.svg.selectAll('rect').data(data).enter().append('rect');
-        this.dataObject = this.svg.selectAll('rect');
-    }
-
-    this.animate = function(es){
-        var data = this.gData;
-        var es = es ? es : this.es;
-        var height = this.height;
-
-        this.es = es ? es : this.es;
-        this.dataObject.data(data).attr("y", height);
-        this.draw();
-    }
-}
-
-Bar.prototype = new GraphType();
 
 
 Graph.prototype.setHightlight = function () {
@@ -357,6 +288,8 @@ Graph.prototype.drawLineGraph = function (divId, data, frequency) {
     this.maxY = maxY;
 
     this.svg = d3.select("#" + divId).append("svg").attr("width", w).attr("height", h);
+
+
     //this.dataObject = this.svg.selectAll("circle").data(frequency).enter().append("circle");
     //
     //this.dataObject

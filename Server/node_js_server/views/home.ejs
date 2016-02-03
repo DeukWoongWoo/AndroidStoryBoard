@@ -19,7 +19,9 @@
 
 
     <script type="text/javascript" src="javascripts/d3/d3.js"></script>
-    <script src="javascripts/graph.js"></script>
+    <script src="javascripts/graph/Graph.js"></script>
+    <script src="javascripts/graph/Bar.js"></script>
+    <script src="javascripts/graph/Line.js"></script>
     <script src="javascripts/drag.js"></script>
 
     <script>
@@ -188,7 +190,9 @@
     var useGraph = new Graph();
     var errGraph = new Graph();
     var useLineGraph = new Graph();
-    var bar = new Bar();
+    var useBar = new Bar();
+    var errBar = new Bar();
+    var line = new Line();
 
     var useFrequency = null;
     var errFrequency = null;
@@ -217,27 +221,36 @@
                         errFrequency[i] = data[i].error_frequency;
                         objectName[i] = data[i].object_name;
                     }
-//                    $('#use-graph').empty();//자식 노드들 제거
-//                    $('#use-line-graph').empty();
-//                    $('#err-graph').empty();
+                    $('#use-graph').empty();//자식 노드들 제거
+                    $('#use-line-graph').empty();
+                    $('#err-graph').empty();
                     useGraph.location('#use-graph')
-                            .graphData(useFrequency)
+                            .setData(useFrequency)
                             .graphDataName(objectName)
                             .createGraph();
 
-                    useGraph.setGraphType(bar);
-                    useGraph.create();
-                    useGraph.draw();
-                    useGraph.animate();
+                    useGraph.setGraphType(useBar);
+                    useGraph.create().draw().animate();
+
+                    errGraph.location('#err-graph')
+                            .setData(errFrequency)
+                            .graphDataName(objectName)
+                            .createGraph();
+
+                    errGraph.setGraphType(errBar);
+                    errGraph.create().draw().animate();
 
 
-//                    errGraph.location('#err-graph')
-//                            .graphData(errFrequency)
-//                            .graphDataName(objectName)
-//                            .draw();
+                    useLineGraph.location('#use-line-graph')
+                            .setData(useFrequency)
+                            .graphDataName(objectName)
+                            .createGraph();
 
-//                    clearInterval(intervalID);
-//                    intervalID = setInterval(update, 2000);
+                    useLineGraph.setGraphType(line);
+                    useLineGraph.create().draw().animate();
+
+                    clearInterval(intervalID);
+                    intervalID = setInterval(update, 2000);
                 });
     });
 
@@ -250,8 +263,10 @@
                         useFrequency[i] = data[i].object_frequency;
                         errFrequency[i] = data[i].error_frequency;
                     }
-                    useGraph.setEase("cubic").update(useFrequency);
-                    errGraph.setEase("cubic").update(errFrequency);
+
+                    useGraph.setData(useFrequency).update();
+                    errGraph.setData(errFrequency).update();
+                    useLineGraph.setData(useFrequency).update();
                 });
     }
 

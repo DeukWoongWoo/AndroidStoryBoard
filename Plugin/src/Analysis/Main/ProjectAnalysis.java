@@ -1,6 +1,8 @@
 package Analysis.Main;
 
 import Analysis.Constant.ConstantEtc;
+import Analysis.Database.ConnectionPool;
+import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Parser.JavaParser;
 import Analysis.Parser.FileParser;
 import Analysis.Parser.XmlParser;
@@ -35,9 +37,17 @@ public class ProjectAnalysis {
     public ProjectAnalysis(AnActionEvent e,String path){
         this.project = e.getProject();
         baseDir = project.getBaseDir();
+        ConnectionPool.ProjectDir = project.getBasePath();
+
+        createTable();
 
         PsiDirectory psiDirectory = currentDirectory(path);
         findFiles(ConstantEtc.XML_PATTERN, psiDirectory);
+    }
+
+    public void execute(String path, String pattern, boolean start){
+        if(start) createTable();
+        execute(path, pattern);
     }
 
     public void execute(String path, String pattern) {
@@ -47,6 +57,10 @@ public class ProjectAnalysis {
         findFiles(pattern, psiDirectory);
 
         findDirectories(path, psiDirectory, pattern);
+    }
+
+    private void createTable(){
+        DatabaseManager.getInstance().onCreateTable();
     }
 
     private void findFiles(String pattern, PsiDirectory psiDirectory) {
@@ -83,6 +97,7 @@ public class ProjectAnalysis {
             }
         }
     }
+
     private void codeParsing(FileParser parser) {
         System.out.println("codeParsing!!!!");
         parser.parsing();

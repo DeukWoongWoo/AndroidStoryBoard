@@ -17,9 +17,13 @@
 
     <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
 
-    <script>
-        var main = function () {
 
+    <script type="text/javascript" src="javascripts/d3/d3.js"></script>
+    <script src="javascripts/graph.js"></script>
+    <script src="javascripts/drag.js"></script>
+
+    <script>
+        var sideMenu = function () {
             $('.fa').mouseover(function () {
                 $(this).css("color", "gray");
             }).mouseout(function () {
@@ -67,7 +71,8 @@
                         "visibility", ""
                 );
             });
-
+        }
+        var registerApp = function () {
             $('#register-app').click(function () {
                 $('.register-app-form').css("display", "");
                 $('#register-app').css("display", "none");
@@ -77,6 +82,17 @@
                 $('.register-app-form').css("display", "none");
                 $('#register-app').css("display", "");
             });
+        }
+
+        var main = function () {
+            sideMenu();
+            registerApp();
+
+            $('#rect-info-close').click(function () {
+                $(this).parent().parent().css("visibility", "hidden");
+            });
+
+            $('.rect-info').css("left", screen.width * 0.3 + "px").css("top", screen.height * 0.3 + "px");
         };
 
         $(document).ready(main);
@@ -84,15 +100,43 @@
 
 </head>
 <body>
+<div class="sidebar">
+    <div class="container-fluid" id="menu-close"><i class="fa fa-times"></i></div>
+    <div class="container-center">
+        <button class="btn btn-danger" id="register-app">Register App</button>
+    </div>
 
+    <div class="register-app-form" style="display: none;">
+        <form method="post" action="/registerapp" enctype="multipart/form-data">
+            <input type="text" class="form-control" name="app_name" placeholder="App Name"/>
+            <label for="exampleInputFile">File Upload</label>
+            <input type="file" name="storyboard">
+            <p class="help-block">Upload StoryBoard File</p>
+            <div class="container-center">
+                <button type="submit" class="btn btn-primary" id="register-app-confirm">Confirm</button>
+                <button type="button" class="btn btn-warning" id="register-app-close">Close</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="menu">
+        <b style="font-size:30px;">App List</b>
+        <ul>
+            <% app.forEach(function (app) { %>
+            <li><a class="btn btn-inverse app_name" href="#"><%= app.app_name %></a></li>
+            <% }) %>
+        </ul>
+    </div>
+</div>
 <div class="navigation">
-    <div class="container">
-        <div class="left">
+    <div class="container-fluid">
+        <div class="left" id="menu-button" style="display: inline-block; width:20%;"><i class="fa fa-bars"></i></div>
+        <div style="display: inline-block;">
             <a href="/" class="main-logo">AndroidStoryBoard</a>
         </div>
-
-        <div class="right">
-            <b> <%= user_id %> </b>
+        <div class="right" style="display: inline-block;">
+            <b id="user_id"><%= user_id %></b>
             <a class="btn btn-info" href="/profile">Profile</a>
             <a class="btn btn-info" href="/logout">Logout</a>
         </div>
@@ -100,48 +144,102 @@
 </div>
 
 <div class="content">
-    <div class="sidebar left">
-        <div id="menu-close"><i class="fa fa-times"></i></div>
-
+    <div class="content-body">
         <div class="container-center">
-            <button class="btn btn-danger" id="register-app">Register App</button>
-        </div>
-
-        <div class="register-app-form" style="display: none;">
-            <form method="post" action="/registerapp" enctype="multipart/form-data">
-                <input type="text" class="form-control" name="app_name" placeholder="App Name"/>
-                <label for="exampleInputFile">파일 업로드</label>
-                <input type="file" name="storyboard">
-                <p class="help-block">스토리보드 파일을 올리세요.</p>
-                <div class="container-center">
-                    <button type="submit" class="btn btn-primary" id="register-app-confirm">Confirm</button>
-                    <button type="button" class="btn btn-warning" id="register-app-close">Close</button>
-                </div>
-
+            <h3 id="current_app_name">&nbsp</h3>
+            <form method="post" action="/date-search" class="form-inline">
+                <input type="date" class="form-control" name="start_date"/>
+                ~
+                <input type="date" class="form-control" name="end_date"/>
+                <button type="submit">search</button>
             </form>
         </div>
 
-        <div class="menu">
-            <b style="font-size:30px;">App List</b>
-            <ul>
-                <% app.forEach(function (app) { %>
-                <li><a class="btn btn-success" href="#"><%= app.app_name %></a></li>
-                <% })%>
-            </ul>
-        </div>
-    </div>
-
-    <div class="content-body">
-
-        <div id="menu-button left"><i class="fa fa-bars"></i></div>
-
-        <div class="main-body container-center">
-            <div class="graph"></div>
-            <div class="graph"></div>
-            <div class="graph"></div>
-            <div class="graph" id="test1"></div>
+        <div class="main-body container-center" id="graphs">
+            <div class="graph" id="use-graph" style="display: inline-block"></div>
+            <div class="graph" id="use-line-graph" style="display: inline-block"></div>
+            <div class="graph" id="err-graph" style="display: inline-block"></div>
+            <div class="graph" id="graphTest"></div>
+            <div class="graph" id="graph3"></div>
         </div>
     </div>
 </div>
+<!--<div style="height : 100px"></div>-->
+<div class="rect-info"
+     style="position: absolute; visibility: hidden; left:20px; top:20px; background-color: #68606A; height: auto; position: fixed;  width: 200px;"
+     onmousedown="startDrag(event, this)">
+    <div class="rect-info-bar" style="background: #A3A7B7; height:15px; width: auto;">
+        <div id="rect-info-close"><i class="fa fa-times right" style="font-size: 15px;"></i></div>
+    </div>
+    <div style=" color:white">
+        <b>object name : </b><b class="rect-value" id="rect-object-name"></b>
+        <hr class="magin0">
+        <b>object use frequency : </b><b class="rect-value" id="rect-use-frequency"></b>
+        <hr class="magin0">
+        <b>object err frequency : </b><b class="rect-value" id="rect-err-frequency"></b>
+        <hr class="magin0">
+        <b>activity name : </b><b class="rect-value" id="rect-activity-name"></b>
+        <hr class="magin0">
+        <b>activity using time : </b><b class="rect-value" id="rect-activity-time"></b>
+        <hr class="magin0">
+    </div>
+</div>
+<script>
+    var useGraph = new graph();
+    var errGraph = new graph();
+    var useLineGraph = new graph();
+    var app_name;
+    var user_id;
+    var intervalID;
+    useGraph.setColor('#457D97');
+    useLineGraph.setColor('#457D97');
+    errGraph.setColor('#EA3556');
+
+    $('.app_name').click(function () {
+        app_name = $(this).text();
+        user_id = $('#user_id').text();
+//        $('.rect-info').css("visibility", "hidden");
+        $.post("/get/object_info", {app_name: app_name, user_id: user_id}
+                , function (data) {
+                    $('#graphs').attr('name', app_name);
+                    $('#current_app_name').text(app_name);
+                    var useFrequency = new Array();
+                    var errFrequency = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        useFrequency[i] = data[i].object_frequency;
+                        errFrequency[i] = data[i].error_frequency;
+                    }
+                    $('#use-graph').empty();//자식 노드들 제거
+                    $('#use-line-graph').empty();
+                    $('#err-graph').empty();
+
+                    useGraph.drawBarGraph("use-graph", data, useFrequency).drawYAxis();
+                    useLineGraph.drawLineGraph("use-line-graph", data, useFrequency);
+                    errGraph.drawBarGraph("err-graph", data, errFrequency);
+//                    useGraph.drawYAxis();
+                    useLineGraph.drawYAxis();
+                    errGraph.drawYAxis();
+
+                    clearInterval(intervalID);
+                    intervalID = setInterval(doTest, 2000);
+                });
+    });
+
+    function doTest(){
+        $.post("/get/object_info", {app_name: app_name, user_id: user_id}
+                , function (data) {
+                    var useFrequency = new Array();
+                    var errFrequency = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        useFrequency[i] = data[i].object_frequency;
+                        errFrequency[i] = data[i].error_frequency;
+                    }
+                    useLineGraph.updateLineGraph(data,useFrequency);
+                    useGraph.updateBarGraph(data,useFrequency);
+                    errGraph.updateBarGraph(data,errFrequency);
+                });
+    }
+
+</script>
 </body>
 </html>

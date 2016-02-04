@@ -22,8 +22,11 @@ router.post('/app/use',function(req, res){
 });
 
 router.post('/app/activity',function(req, res){
-    db.addActivity(req);
-    res.send('success');
+    db.addActivity(req, function(err){
+        if(err)res.send(err);
+        else res.send('success');
+    });
+
 });
 
 router.post('/app/activity/use',function(req, res){
@@ -43,6 +46,29 @@ router.post('/app/activity/object/use',function(req, res){
 
 router.post('/app/activity/object/error/use',function(req, res){
     db.addErrorUse(req);
+    res.send('success');
+});
+/**
+ * json 파싱
+ */
+router.post('/test', function(req, res){
+    console.log('req');
+    var user_id = req.session.user_id;
+    var activity = req.body.activity;
+
+    activity.forEach(function(activity){
+        console.log('activity : ' + activity.name);
+        var object = activity.object;
+        object.forEach(function(object){
+            console.log('object : ' + object.name);
+            console.log('w : ' + object.size.w);
+            console.log('h : ' + object.size.h);
+            console.log('image : ' + object.image);
+            console.log('color : ' + object.color);
+            console.log('x : ' + object.location.x);
+            console.log('y : ' + object.location.y);
+        });
+    });
     res.send('success');
 });
 

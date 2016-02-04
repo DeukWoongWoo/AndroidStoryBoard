@@ -20,6 +20,6 @@ public class InsertIntoBuilder implements Builder {
 
     @Override
     public String build() {
-        return null;
+        return insertBuilder.build() + " " + tableName;
     }
 }

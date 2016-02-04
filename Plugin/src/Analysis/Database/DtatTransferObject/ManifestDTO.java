@@ -1,5 +1,7 @@
 package Analysis.Database.DtatTransferObject;
 
+import Analysis.Database.QueryBuilder.QueryBuilder;
+
 import java.util.ArrayList;
 
 /**
@@ -60,6 +62,6 @@ public class ManifestDTO {
     }
 
     public String getInsertQuery(){
-        return null;
+        return QueryBuilder.insert().into(tableName).columns("package","theme").values(packageName, theme).build();
     }
 }

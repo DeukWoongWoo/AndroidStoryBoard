@@ -133,7 +133,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <nested-form id="73747" form-file="GUI/StoryBoard/UI/commandTree.form">
+              <nested-form id="73747" form-file="GUI/StoryBoard/UI/componentTree.form">
                 <constraints border-constraint="Center"/>
               </nested-form>
             </children>

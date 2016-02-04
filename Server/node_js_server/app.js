@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(multiparty());
+app.use(multiparty());//파일 업로드에 필요
 
 app.use(session({
   secret: 'keyboard cat',

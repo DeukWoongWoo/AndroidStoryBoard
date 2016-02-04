@@ -18,11 +18,12 @@
 
 <body>
 <div class="navigation">
-    <div class="container">
-        <div class="left">
+    <div class="container-fluid">
+        <div class="left" id="menu-button" style="display: inline-block; width:20%;"><i style="visibility: hidden">여백</i></div>
+        <div style="display: inline-block;">
             <a href="/" class="main-logo">AndroidStoryBoard</a>
         </div>
-        <div class="right">
+        <div class="right" style="display: inline-block;">
             <a class="btn btn-info" href="/">Home</a>
             <a class="btn btn-info" href="/logout">Logout</a>
         </div>
@@ -34,7 +35,7 @@
         <h1>Profile Update</h1>
         <div class="center-block" id="profile">
             <form name="profile" method="post" action="/profile">
-                <!--TODO : 현재 유저 정보 표시-->
+                <!--TODO : 현재 유저 정보 표시 해야함-->
                 <p class="form-control-static"><%= user_id %></p>
                 <input class="form-control" type="text" name="name" placeholder="name"/>
                 <input class="form-control" type="password" name="password" placeholder="password"/>

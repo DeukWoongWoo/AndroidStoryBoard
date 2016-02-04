@@ -6,7 +6,8 @@ package Analysis.Constant;
 public class DatabaseQuery {
     public static final String dropTable = "DROP TABLE IF EXISTS ";
 
-    public static final String createManifestTable = "CREATE TABLE Manifest ( num INTEGER PRIMARY KEY AUTOINCREMENT," +
+    public static final String createManifestTable = "CREATE TABLE Manifest (" +
+            " num INTEGER PRIMARY KEY AUTOINCREMENT," +
             "package TEXT, theme TEXT)";
     public static final String createActivityTable = "CREATE TABLE Activity (" +
             "num INTEGER PRIMARY KEY AUTOINCREMENT," +

@@ -2,15 +2,13 @@ package Analysis.Database.DataAccessObject.Activity;
 
 
 
+import Analysis.Constant.DatabaseQuery;
 import Analysis.Database.DtatTransferObject.ActivityDTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
 import Analysis.Database.QueryBuilder.QueryBuilder;
 import Analysis.Database.SQLiteOpenHelper;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -20,8 +18,34 @@ public class ActivityDAOImpl extends SQLiteOpenHelper implements ActivityDAO {
     private final String tableName = "Activity";
 
     @Override
-    public void insert() {
+    public void create() {
+        System.out.println("Activity table create ...");
+        Statement statement = null;
+        Connection connection = getConnection();
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(DatabaseQuery.dropTable + tableName);
+            statement.executeUpdate(DatabaseQuery.createActivityTable);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            close(connection,statement);
+        }
+    }
 
+    @Override
+    public void insert(ActivityDTO activityDTO) {
+        System.out.println("insertActivity...");
+        Statement statement = null;
+        Connection connection = getConnection();
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(activityDTO.getInsertQuery());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            close(connection,statement);
+        }
     }
 
     @Override
@@ -43,7 +67,6 @@ public class ActivityDAOImpl extends SQLiteOpenHelper implements ActivityDAO {
             return items;
         }
     }
-
 //    @Override
 //    public void select() {
 //    }

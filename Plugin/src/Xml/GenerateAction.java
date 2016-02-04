@@ -12,10 +12,14 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.xml.XmlDocument;
 import com.sun.jna.platform.win32.COM.COMUtils;
 import org.w3c.dom.*;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +58,10 @@ public class GenerateAction extends AnAction {
             "layout_toRightOf",
             "layout_toEndOf"
     };
-    String layout_belowOption = "layout_below";
+    String layout_HeigtOption[] = {
+            "layout_above",
+            "layout_below"
+    };
 
     String layout_Margin[]={
             "layout_marginTop",
@@ -69,16 +76,6 @@ public class GenerateAction extends AnAction {
     int stdBottomMargin=0;
     int stdLeftMargin=0;
     int stdRightMargin=0;
-/*
-    class Component{
-        String id;
-        int margin[]=new int[6];
-        int stdmargin[]=new int[4];
-    }
-*/
-
-
-
 
     @Override
     public void actionPerformed(AnActionEvent e) {
@@ -89,9 +86,18 @@ public class GenerateAction extends AnAction {
         Messages.showInfoMessage("TestParsing","TestParsing");
 
         try{
-            String Filepath="C:/Users/cho/AndroidStudioProjects/T3/app/src/main/res/layout/content_main.xml";
+            String Filepath="C:/Users/cho/Desktop/android_project/MyApplication4/app/src/main/res/layout/content_main.xml";
+
+/*
+
+            DocumentBuilderFactory f= DocumentBuilderFactory.newInstance();
+            DocumentBuilder parser = f.newDocumentBuilder();
+            org.w3c.dom.Document  XmlDoc= parser.parse(Filepath);
+            Element root = XmlDoc.getDocumentElement();
+            XmlDoc.getDocumentElement().normalize();
 
 
+*/
             File ff = new File(Filepath);
             XmlPullParserFactory xppf = XmlPullParserFactory.newInstance();
             xppf.setNamespaceAware(true);
@@ -100,16 +106,31 @@ public class GenerateAction extends AnAction {
             xpp.setInput(fis,null);
 
             ComponentManager componentManager=new ComponentManager();
-
+            int padding []=new int[]{0,0,0,0,0,0};
             int type = xpp.getEventType();
             while(type != XmlPullParser.END_DOCUMENT){
+
                 if(type == XmlPullParser.START_TAG) {
 
                     Component component = new Component();
                     component.setAttributes(xpp);
+                    component.setPadding(padding);
                     componentManager.addComponent(component);
                 }
                 else  if(type == XmlPullParser.END_TAG) {
+                    String paddingArr[] ={
+                            "paddingTop",
+                            "paddingBottom",
+                            "paddingLeft",
+                            "paddingStart",
+                            "paddingRight",
+                            "paddingEnd"
+                    };
+                    if(xpp.getName().equals("RelativeLayout"))
+                        for(int i=0;i<xpp.getAttributeCount();i++)
+                            for(int j=0;j<6;j++)
+                                if(xpp.getAttributeName(i).equals(paddingArr[j]))
+                                    padding[j] = changeDpToInt(xpp.getAttributeValue(i))*2;
                 }
                     type = xpp.next();
             }
@@ -126,140 +147,157 @@ public class GenerateAction extends AnAction {
 
             for(int i=0;i<componentManager.size();i++){
                 if(componentManager.getComponent(i).getTagName().equals("Button"))
-                Messages.showInfoMessage("TagNme : " + componentManager.getComponent(i).getTagName()+"\n"+
-                        "Axis:"+getRealValue(componentManager,componentManager.getComponent(i).getId())+" \n","Axis");
+               Messages.showInfoMessage("TagNme : " + componentManager.getComponent(i).getTagName()+"\n"+
+                        "Axis:"+getHeightRealValue(componentManager,componentManager.getComponent(i).getId())+" \n","Axis");
+               // Messages.showInfoMessage("TagNme : " + componentManager.getComponent(i).getTagName()+"\n"+
+                //"Width:"+componentManager.getComponent(i).getWidth()+" \n","Axis");
             }
 
 
-        }catch(Exception e2){
 
+
+        }catch(Exception e2){
             Messages.showInfoMessage("error1","error1");
         }
-
         StringBuilder sourceRootsList = new StringBuilder();
         VirtualFile[] vFiles = ProjectRootManager.getInstance(project).getContentSourceRoots();
-
         for (VirtualFile file : vFiles) {
             sourceRootsList.append(file.getUrl()).append("\n");
         }
-
         PsiClass psiClass=getPsiClassFromContext(e);
-
         GenerateDialog dlg  = new GenerateDialog(psiClass);
         dlg.show();
         if(dlg.isOK()){
             generateComparable(psiClass, dlg.getFields());
         }
-
-
     }
-
     public int getRealValue(ComponentManager componentManager,String id){
         int stdValue=0;
-        int alignValue=0;
-        int realValue=0;
         int dp =0;
         int margin =0;
         Component component = new Component();
         for(int i=1;i<componentManager.size();i++){
             if(componentManager.getComponent(i).getId().equals(id)){
                 component = componentManager.getComponent(i);
+                break;
             }
-
-        }
-
-
-
-        for(int i=0;i<component.getAttributeCount();i++){
-
-                if(layout_ParentOption[2].equals(component.getAttributes(i))){
-                    stdValue=0;
-
-                }
-                else if(layout_ParentOption[4].equals(component.getAttributes(i))){
-                    stdValue=0;
-
-            }
-
         }
 
         for(int i=0;i<component.getAttributeCount();i++){
-
-                if(layout_alignOption[2].equals(component.getAttributes(i))){
-                    String getId = component.getAttributesValue(i);
-                    stdValue=getRealValue(componentManager,getId);
-
-                }
-                else if(layout_alignOption[4].equals(component.getAttributes(i))){
-                    String getId = component.getAttributesValue(i);
-                    stdValue=getRealValue(componentManager,getId);
-            }
-
+            if(layout_ParentOption[2].equals(component.getAttributes(i)))
+                stdValue=0;
+            else if(layout_ParentOption[4].equals(component.getAttributes(i)))
+                stdValue=768;
         }
 
         for(int i=0;i<component.getAttributeCount();i++){
+            if(layout_alignOption[2].equals(component.getAttributes(i))){
+                String getId = component.getAttributesValue(i);
+                stdValue=getRealValue(componentManager,getId);
+            }
+            else if(layout_alignOption[4].equals(component.getAttributes(i))){
+                String getId = component.getAttributesValue(i);
+                stdValue=getRealValue(componentManager,getId);
 
-                if(layout_Margin[2].equals(component.getAttributes(i))){
-                    margin = changeDpToInt(component.getAttributesValue(i));
+                for(int j=1;j<componentManager.size();j++){
+                    if(componentManager.getComponent(j).getId().equals(getId)){
+                        stdValue=stdValue+componentManager.getComponent(j).getWidth();
+                        break;
+                    }
                 }
+            }
+        }
+
+        for(int i=0;i<component.getAttributeCount();i++){
+            if(layout_toOption[2].equals(component.getAttributes(i))){
+                String getId = component.getAttributesValue(i);
+                stdValue=getRealValue(componentManager,getId);
+            }
+            else if(layout_toOption[4].equals(component.getAttributes(i))){
+                String getId = component.getAttributesValue(i);
+                stdValue=getRealValue(componentManager,getId);
+
+                for(int j=1;j<componentManager.size();j++){
+                    if(componentManager.getComponent(j).getId().equals(getId)){
+                        stdValue=stdValue+componentManager.getComponent(j).getWidth();
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        for(int i=0;i<component.getAttributeCount();i++){
+            if(layout_Margin[2].equals(component.getAttributes(i))){
+                margin = changeDpToInt(component.getAttributesValue(i))*2;
+            }
             if(layout_Margin[4].equals(component.getAttributes(i))){
-                margin = 384-changeDpToInt(component.getAttributesValue(i));
+                margin = (changeDpToInt(component.getAttributesValue(i))*2)+component.getWidth();
+                margin = -1*margin;
             }
-
         }
         dp = stdValue+margin;
-        Messages.showInfoMessage("get margin : "+dp +" \n","get margin");
-
         return dp;
     }
 
 
+    public int getHeightRealValue(ComponentManager componentManager,String id){
+        int stdValue=0;
+        int dp =0;
+        int margin =0;
+        Component component = new Component();
+        for(int i=1;i<componentManager.size();i++){
+            if(componentManager.getComponent(i).getId().equals(id)){
+                component = componentManager.getComponent(i);
+                break;
+            }
+        }
 
+        for(int i=0;i<component.getAttributeCount();i++){
+                if(layout_ParentOption[0].equals(component.getAttributes(i)))
+                    stdValue=0;
+                else if(layout_ParentOption[1].equals(component.getAttributes(i)))
+                    stdValue=1280;
+        }
+
+        for(int i=0;i<component.getAttributeCount();i++){
+            if(layout_HeigtOption[0].equals(component.getAttributes(i))
+                    || layout_alignOption[0].equals(component.getAttributes(i))){//above & alignTop
+                String getId = component.getAttributesValue(i);
+                stdValue=getRealValue(componentManager,getId);
+
+            }else if(layout_HeigtOption[1].equals(component.getAttributes(i))
+                    || layout_alignOption[1].equals(component.getAttributes(i))){//below & alignBottom
+                String getId = component.getAttributesValue(i);
+                stdValue=getRealValue(componentManager,getId);
+                for(int j=1;j<componentManager.size();j++){
+                    if(componentManager.getComponent(j).getId().equals(getId)){
+                        stdValue=stdValue+componentManager.getComponent(j).getHeight();
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        for(int i=0;i<component.getAttributeCount();i++){
+                if(layout_Margin[0].equals(component.getAttributes(i))){
+                    margin = changeDpToInt(component.getAttributesValue(i))*2;
+                }
+                if(layout_Margin[1].equals(component.getAttributes(i))){
+                    margin = (changeDpToInt(component.getAttributesValue(i))*2)+component.getHeight();
+                    margin = -1*margin;
+                }
+        }
+        dp = stdValue+margin;
+        return dp;
+    }
     public static int changeDpToInt(String value){
         int dp=0;
         char val[] = value.toCharArray();
         for(int i=0;val[i]!='d';i++)
             dp =dp*10+ val[i]-'0';
         return dp;
-    }
-
-
-    public static void listAllAttributes(Element element)
-    {
-        //Messages.showInfoMessage("TagName : "+ element.getNodeName(),"TagName");
-
-        NamedNodeMap attributes = element.getAttributes();
-        int numAttrs = attributes.getLength();
-
-        for(int i = 0;i<numAttrs;i++){
-            Attr attr = (Attr) attributes.item(i);
-            String attrName = attr.getNodeName();
-            String attrValue = attr.getValue();
-            //Messages.showInfoMessage("Attribute : "+attrName+" Value : "+attrValue+" " ,"Attribute");
-        }
-    }
-
-
-    private static void printNode(NodeList nodeList, int level) {
-        level++;
-        if (nodeList != null && nodeList.getLength() > 0) {
-            Messages.showInfoMessage("NodeList Legth is  "+nodeList.getLength(),"NodeLength");
-
-            for (int i = 0; i < nodeList.getLength(); i++) {
-
-                Node node = nodeList.item(i);
-                Messages.showInfoMessage("Node Type "+node.getNodeType() +" node Name " +node.getNodeName()+" ","NodeType");
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Messages.showInfoMessage(node.getNodeName() + "[" + level + "]","Depth");
-                    printNode(node.getChildNodes(), level);
-
-                    // how depth is it?
-                    if (level > depthOfXML) {
-                        depthOfXML = level;
-                    }
-                }
-            }
-        }
     }
 
     private void generateComparable(PsiClass psiClass, List<PsiField> fields) {

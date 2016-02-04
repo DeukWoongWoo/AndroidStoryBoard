@@ -10,7 +10,7 @@ var Circle =  function (name) {
         var height = this.height;
         var rY = this.rY;
         var length = this.length;
-
+        console.log(this.length);
         this.dataObject.data(data)
             .attr("fill", function (d) {
                 if (d == 0) return emptyDataColor;
@@ -37,7 +37,7 @@ var Circle =  function (name) {
         this.svg.selectAll(type).data(data).enter().append(type);
         this.dataObject = this.svg.selectAll(type);
 
-        this.setDataName();
+        //this.setDataName();
         //this.setDataNum();
 
         return this;

@@ -12,7 +12,7 @@ var Line = function () {
 
         this.dataObject.data(data)
             .style("stroke", dataColor)
-            .transition().duration(1000).ease(es)
+            .transition().duration(500).ease(es)
             .attr("x1", function (d, i) {
                 return i * (width / length) + 5;
             })
@@ -43,7 +43,6 @@ var Line = function () {
         var data = this.gData;
         var height = this.height;
         this.es = es ? es : this.es;
-
         this.dataObject.data(data).attr("y1", height / 2).attr("y2", height / 2);
         this.draw();
 

@@ -47,6 +47,8 @@ var Bar = function (name) {
     }
 
     this.setDataName = function () {
+        if(this.gObjectName == null) return;
+
         var gObjectName = this.gObjectName;
         this.dataObject.data(gObjectName)
             .attr("class", function (d, i) {
@@ -61,6 +63,8 @@ var Bar = function (name) {
     }
 
     this.setDataNum = function () {
+        if(this.gObjectNum == null) return;
+
         var gObjectNum = this.gObjectNum;
         this.dataObject.data(gObjectNum)
             .attr("object-num", function (d, i) {

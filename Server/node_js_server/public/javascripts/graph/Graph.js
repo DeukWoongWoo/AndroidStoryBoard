@@ -120,22 +120,26 @@ Graph.prototype = {
     },
 
     draw: function () {
-        this.gType.draw()
+        this.gType.draw();
         this.drawAxis();
 
         return this.gType;
     },
 
     create: function () {
-        this.gType.create().draw().animate();
+        console.log('test');
+        this.gType.create().draw().animate(this.ease);
+        console.log('test');
+
         this.axis().animateAxis();
+
 
         return this;
     },
 
     animate: function () {
         this.animateAxis();
-        return this.gType.animate('bounce');
+        return this.gType.animate(this.ease);
     },
 
     createGraph: function () {

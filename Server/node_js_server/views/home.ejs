@@ -162,8 +162,7 @@
             <div class="graph" id="use-graph" style="display: inline-block"></div>
             <div class="graph" id="use-line-graph" style="display: inline-block"></div>
             <div class="graph" id="err-graph" style="display: inline-block"></div>
-            <div class="graph" id="graphTest"></div>
-            <div class="graph" id="graph3"></div>
+            <div class="graph" id="err-line-graph" style="display: inline-block"></div>
         </div>
     </div>
 </div>
@@ -192,10 +191,12 @@
     var errGraph = new Graph();
     var useLineGraph = new Graph();
     var useCircleGraph = new Graph();
+    var errLineGraph = new Graph();
 
     var useBar = new Bar('use');
     var errBar = new Bar('err');
-    var line = new Line();
+    var useLine = new Line();
+    var errLine = new Line();
     var circle = new Circle();
 
     var useFrequency = null;
@@ -203,6 +204,10 @@
     var objectName = null;
     var objectNum = null;
     var occur_time = null;
+
+    var useTime = null;
+    var errTime = null;
+
     var app_name;
     var user_id;
     var intervalID;
@@ -210,7 +215,8 @@
     useGraph.setDataColor('#457D97');
     errGraph.setDataColor('#EA3556');
     useLineGraph.setDataColor('#02779E');
-    useCircleGraph.setDataColor('#02779E');
+    errLineGraph.setDataColor('#EA3556');
+//    useCircleGraph.setDataColor('#02779E');
 
     $('.app_name').click(function () {
         app_name = $(this).text();
@@ -234,7 +240,8 @@
         errFrequency = new Array();
         objectName = new Array();
         objectNum = new Array();
-        occur_time = new Array();
+        useTime = new Array(12);
+        errTime = new Array(12);
     }
 
     function setObjectData(i, data) {
@@ -251,6 +258,7 @@
                 .graphDataNnum(objectNum)
                 .createGraph()
                 .setGraphType(useBar).create();
+
         errGraph.location('#err-graph')
                 .graphData(errFrequency)
                 .graphDataName(objectName)
@@ -258,6 +266,15 @@
                 .createGraph()
                 .setGraphType(errBar).create();
 
+        useLineGraph.location('#use-line-graph')
+                .graphData(useTime)
+                .createGraph()
+                .setGraphType(useLine).create();
+
+        errLineGraph.location('#err-line-graph')
+                .graphData(errTime)
+                .createGraph()
+                .setGraphType(errLine).create();
     }
 
     function update() {
@@ -279,31 +296,58 @@
     function rectMouseOver() {
         $('.graph').children('svg').children('rect').mouseover(function () {
             var className = '.' + $(this).attr("class");
+            var objectNum = $(this).attr("object-num");
+
             highlightByClassName(className);
             popObjectInfoByClassName.call(this, className);
 
-            var objectNum = $(this).attr("object-num");
-            console.log("objectNum : " + objectNum);
-            $.post("/get/object_use_info", {object_num: 3}
-                    , function (data) {
-                        for (var i = 0; i < data.length; i++) {
-                            occur_time[i] = data[i].occur_time;
-                        }
-                        console.log("occur time : " + occur_time);
-                        console.log("test : " + "2011-01-02");
-                        console.log("test : " + ("2011-01-02"*1));
-                        //todo:날짜
-//                        useCircleGraph.location('#use-line-graph')
-//                                .graphData(occur_time)
-//                                .createGraph()
-//                                .setGraphType(line).create()
-//                                .setGraphType(circle).create();
-                    });
+            getObjectInfo(objectNum);
+            getErrorInfo(objectNum);
         }).mouseout(function () {
 
         });
     }
 
+    var rDate =  new Date('2016/01/01');
+    var tDate =  new Date('2017/02/01');
+    var testT;
+
+    console.log("- test : " + tDate.getTime());
+    testT = tDate.getTime() - 100000000000;
+    console.log("testT : " + testT);
+    console.log("testT2 : " + (new Date(testT)));
+
+    function getObjectInfo(objectNum) {
+        $.post("/get/object_use_info", {object_num: objectNum}
+                , function (data) {
+                    occur_time = new Array();
+                    useTime = new Array(12);
+                    for (var i = 0; i < data.length; i++)
+                        occur_time[i] = new Date(data[i].occur_time).getMonth();
+                    for (var i = 0; i < 12; i++)
+                        useTime[i] = 0;
+                    for (var i = 0; i < occur_time.length; i++)
+                        useTime[occur_time[i]]++;
+
+                    useLineGraph.graphData(useTime).setEase("circle-out").update();
+                });
+    }
+
+    function getErrorInfo(objectNum) {
+        $.post("/get/error_use_info", {object_num: objectNum}
+                , function (data) {
+                    occur_time = new Array();
+                    errTime = new Array(12);
+                    for (var i = 0; i < data.length; i++)
+                        occur_time[i] = new Date(data[i].occur_time).getMonth();
+                    for (var i = 0; i < 12; i++)
+                        errTime[i] = 0;
+                    for (var i = 0; i < occur_time.length; i++)
+                        errTime[occur_time[i]]++;
+
+                    errLineGraph.graphData(errTime).setEase("circle-out").update();
+                });
+    }
     function NumOfDate(date) {
         /**
          *  날짜, 시간에 문자열을 숫자로 표현된 값으로 반환

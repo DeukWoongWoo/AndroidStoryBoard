@@ -27,6 +27,22 @@ mysql.getUserAppObject = function (param, callback) {
             callback(err, result);
         });
 }
+mysql.getErrorUseInfoByNum = function (param, callback) {
+    mysql.query('SELECT * FROM error_use_info '
+        + ' WHERE object_num = \'' + param.body.object_num + '\' '
+        , function (err, result) {
+            callback(err, result);
+        });
+}
+
+mysql.getObjectUseInfoByNum = function (param, callback) {
+    mysql.query('SELECT * FROM object_use_info '
+        + ' WHERE object_num = \'' + param.body.object_num + '\' '
+        , function (err, result) {
+            callback(err, result);
+        });
+}
+
 
 mysql.getAllUserID = function (param, callback) {
     mysql.query('SELECT * FROM user_info'

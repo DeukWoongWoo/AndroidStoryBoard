@@ -1417,7 +1417,7 @@
       };
       return zoom;
     };
-    function location(p) {
+    function selectId(p) {
       return [ (p[0] - view.x) / view.k, (p[1] - view.y) / view.k ];
     }
     function point(l) {
@@ -1470,7 +1470,7 @@
       }), center0 = null;
     }
     function mousedowned() {
-      var that = this, dispatch = event.of(that, arguments), dragged = 0, subject = d3.select(d3_window(that)).on(mousemove, moved).on(mouseup, ended), location0 = location(d3.mouse(that)), dragRestore = d3_event_dragSuppress(that);
+      var that = this, dispatch = event.of(that, arguments), dragged = 0, subject = d3.select(d3_window(that)).on(mousemove, moved).on(mouseup, ended), location0 = selectId(d3.mouse(that)), dragRestore = d3_event_dragSuppress(that);
       d3_selection_interrupt.call(that);
       zoomstarted(dispatch);
       function moved() {
@@ -1493,7 +1493,7 @@
         var touches = d3.touches(that);
         scale0 = view.k;
         touches.forEach(function(t) {
-          if (t.identifier in locations0) locations0[t.identifier] = location(t);
+          if (t.identifier in locations0) locations0[t.identifier] = selectId(t);
         });
         return touches;
       }
@@ -1557,7 +1557,7 @@
     function mousewheeled() {
       var dispatch = event.of(this, arguments);
       if (mousewheelTimer) clearTimeout(mousewheelTimer); else d3_selection_interrupt.call(this), 
-      translate0 = location(center0 = center || d3.mouse(this)), zoomstarted(dispatch);
+      translate0 = selectId(center0 = center || d3.mouse(this)), zoomstarted(dispatch);
       mousewheelTimer = setTimeout(function() {
         mousewheelTimer = null;
         zoomended(dispatch);
@@ -1569,7 +1569,7 @@
     }
     function dblclicked() {
       var p = d3.mouse(this), k = Math.log(view.k) / Math.LN2;
-      zoomTo(this, p, location(p), d3.event.shiftKey ? Math.ceil(k) - 1 : Math.floor(k) + 1);
+      zoomTo(this, p, selectId(p), d3.event.shiftKey ? Math.ceil(k) - 1 : Math.floor(k) + 1);
     }
     return d3.rebind(zoom, event, "on");
   };

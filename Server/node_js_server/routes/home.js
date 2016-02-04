@@ -5,6 +5,8 @@ var async = require('async');
 var fs = require('fs');
 var mkdirp = require('mkdirp');    // mkdirp 모듈있는 곳을 설정해주면됩니다.
 
+var dateutils = require('date-utils');
+
 router.get('/ajax', function (req, res) {
     //console.log(req.body.name); // Ajax parameter data
     db.query('select * from user_info', function (error, result) {
@@ -102,10 +104,13 @@ function getObjectAndRender(req, res){
 }
 
 router.post('/makedata/object/use', function (req, res) {
-    //console.log(req.body);
+    var dt = new Date();
+    var d = dt.toFormat('YYYY-MM-DD HH24:MI:SS');
+
+    console.log('[' + d + '] ' + '현재 시간');
     var use = {
         object_num : req.body.object_num,
-        occur_time : '2016-02-01',
+        occur_time : d,
         event_type : 'button'
     }
 
@@ -150,6 +155,20 @@ router.post('/date-search', function (req, res) {
 
 router.post('/get/object_info', function (req, res) {
     db.getUserAppObject(req, function (err, result) {
+        if (err) console.log(err);
+        else res.send(result);
+    });
+});
+
+router.post('/get/object_use_info', function (req, res) {
+    db.getObjectUseInfoByNum(req, function (err, result) {
+        if (err) console.log(err);
+        else res.send(result);
+    });
+});
+
+router.post('/get/error_use_info', function (req, res) {
+    db.getErrorUseInfoByNum(req, function(err, result) {
         if (err) console.log(err);
         else res.send(result);
     });

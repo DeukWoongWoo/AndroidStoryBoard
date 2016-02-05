@@ -8,7 +8,7 @@ function Graph() {
     this.graphType = 'rect';
     this.selectTarget = null;
     this.rY = 1;
-    this.maxY = null;
+    this.maxY = 0;
     this.data = null;
     //this.dataName = null;
     this.objectName = null;
@@ -107,7 +107,6 @@ Graph.prototype = {
             length: this.length
         }
         gType.setGraphData(this.package);
-
         return this;
     },
 
@@ -127,13 +126,8 @@ Graph.prototype = {
     },
 
     create: function () {
-        console.log('test');
         this.gType.create().draw().animate(this.ease);
-        console.log('test');
-
         this.axis().animateAxis();
-
-
         return this;
     },
 
@@ -198,6 +192,16 @@ Graph.prototype = {
 
     drawAxis: function (axis, axisData) {
         ////축 데이터
+        //console.log("Graph drawAxis axis: ");
+        //console.log(axis);
+        //console.log("Graph drawAxis axisData: ");
+        //console.log(axisData);
+        //console.log("Graph drawAxis axisData domain start : " + axisData.domain.start);
+        //console.log("Graph drawAxis axisData domain end : " + axisData.domain.end);
+        //console.log("Graph drawAxis axisData range start : " + axisData.range.start);
+        //console.log("Graph drawAxis axisData range end : " + axisData.range.end);
+        //console.log("Graph drawAxis axisData x : " + axisData.position.x);
+        //console.log("Graph drawAxis axisData y : " + axisData.position.y);
         var scale = d3.scale.linear().domain([axisData.domain.start, axisData.domain.end]).range([axisData.range.start, axisData.range.end]);
         axis.transition().duration(500).ease(this.ease)
             .attr("transform", "translate(" + axisData.position.x + "," + axisData.position.y + ")")

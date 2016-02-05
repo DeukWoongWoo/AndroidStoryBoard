@@ -1,6 +1,7 @@
 var Circle =  function (name) {
     var type = 'circle';
     this.graphName = name;
+
     this.draw = function () {
         var data = this.gData;
         var emptyDataColor = this.emptyDataColor;
@@ -10,7 +11,7 @@ var Circle =  function (name) {
         var height = this.height;
         var rY = this.rY;
         var length = this.length;
-        console.log(this.length);
+
         this.dataObject.data(data)
             .attr("fill", function (d) {
                 if (d == 0) return emptyDataColor;

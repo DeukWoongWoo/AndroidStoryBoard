@@ -1,6 +1,7 @@
 var Bar = function (name) {
     var type = 'rect';
     this.graphName = name;
+
     this.draw = function () {
         var data = this.gData;
         var emptyDataColor = this.emptyDataColor;

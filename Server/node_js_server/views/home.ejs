@@ -148,14 +148,14 @@
 
 <div class="content">
     <div class="content-body">
-        <div class="container-center">
+        <div class="container-center" id="search-div" style="visibility: hidden;">
             <h3 id="current_app_name">&nbsp</h3>
-            <form method="post" action="/date-search" class="form-inline">
-                <input type="date" class="form-control" name="start_date"/>
+            <a class="form-inline">
+                <input type="date" class="form-control" id="start-date"/>
                 ~
-                <input type="date" class="form-control" name="end_date"/>
-                <button type="submit">search</button>
-            </form>
+                <input type="date" class="form-control" id="end-date"/>
+                <button id="search-date">search</button>
+            </a>
         </div>
 
         <div class="main-body container-center" id="graphs">
@@ -197,16 +197,21 @@
     var errBar = new Bar('err');
     var useLine = new Line();
     var errLine = new Line();
-    var circle = new Circle();
+    var useCircle = new Circle();
+    var errCircle = new Circle();
 
     var useFrequency = null;
     var errFrequency = null;
     var objectName = null;
     var objectNum = null;
+
+    var searchTime = null;
     var occur_time = null;
 
-    var useTime = null;
-    var errTime = null;
+    var oneDay = 86400000; // onday = 86400000 msec
+    var startDate;
+    var endDate;
+    var xAxisSize = 100;
 
     var app_name;
     var user_id;
@@ -216,32 +221,81 @@
     errGraph.setDataColor('#EA3556');
     useLineGraph.setDataColor('#02779E');
     errLineGraph.setDataColor('#EA3556');
-//    useCircleGraph.setDataColor('#02779E');
+    //    useCircleGraph.setDataColor('#02779E');
 
     $('.app_name').click(function () {
         app_name = $(this).text();
         user_id = $('#user_id').text();
+        $('#current_app_name').text(app_name);
+        $('#search-div').css('visibility', 'visible');
+
+        initSearchDate();
+        createUseTimeGraph();
+
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
                     initDataToArray();
                     for (var i = 0; i < data.length; i++) {
                         setObjectData(i, data);
                     }
-                    createGraphs();
+                    createFrequencyGraphs();
                     clearInterval(intervalID);
-                    intervalID = setInterval(update, 2000);
+                    intervalID = setInterval(updateFrequencyGraph, 2000);
 
                     rectMouseOver();
                 });
     });
 
+    function initSearchDate(){
+        document.getElementById("start-date").defaultValue = getToday();
+        document.getElementById("end-date").defaultValue = getToday();
+    }
+
+    function getToday(){
+        var today = new Date();
+        var day = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getFullYear();
+
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
+
+        today = year + "-" + month + "-" + day;
+
+        return today;
+    }
+
+    function createUseTimeGraph(){
+        $('#search-date').click(function () {
+            setSearchTime();
+            console.log("createUseTimeGraph");
+            useLineGraph.location('#use-line-graph');
+            useLineGraph.graphData(searchTime);
+            useLineGraph.createGraph();
+            useLineGraph.setGraphType(useLine).create();
+            console.log("createUseTimeGraph - userLineGraph");
+            errLineGraph.location('#err-line-graph')
+                    .graphData(searchTime)
+                    .createGraph()
+                    .setGraphType(errLine).create();
+        });
+    }
+
+    function setSearchTime() {
+        startDate = (new Date(document.getElementById("start-date").value).getTime()) / oneDay -1;
+        endDate = (new Date(document.getElementById("end-date").value).getTime()) / oneDay;
+
+//        console.log('start date : ' + startDate);
+//        console.log('end date : ' + endDate);
+//        console.log('- : ' + (endDate - startDate));
+        searchTime = new Array(xAxisSize);//.fill(0);
+    }
+
     function initDataToArray() {
-        useFrequency = new Array();
-        errFrequency = new Array();
-        objectName = new Array();
-        objectNum = new Array();
-        useTime = new Array(12);
-        errTime = new Array(12);
+        useFrequency = new Array().fill(0);
+        errFrequency = new Array().fill(0);
+        objectName = new Array().fill(0);
+        objectNum = new Array().fill(0);
     }
 
     function setObjectData(i, data) {
@@ -251,7 +305,7 @@
         objectNum[i] = data[i].object_num;
     }
 
-    function createGraphs() {
+    function createFrequencyGraphs() {
         useGraph.location('#use-graph')
                 .graphData(useFrequency)
                 .graphDataName(objectName)
@@ -265,31 +319,17 @@
                 .graphDataNnum(objectNum)
                 .createGraph()
                 .setGraphType(errBar).create();
-
-        useLineGraph.location('#use-line-graph')
-                .graphData(useTime)
-                .createGraph()
-                .setGraphType(useLine).create();
-
-        errLineGraph.location('#err-line-graph')
-                .graphData(errTime)
-                .createGraph()
-                .setGraphType(errLine).create();
     }
 
-    function update() {
+    function updateFrequencyGraph() {
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
                     for (var i = 0; i < data.length; i++) {
                         useFrequency[i] = data[i].object_frequency;
                         errFrequency[i] = data[i].error_frequency;
                     }
-
                     useGraph.graphData(useFrequency).update();
                     errGraph.graphData(errFrequency).update();
-
-//                    useLineGraph.setGraphType(circle).graphData(useFrequency).update();
-//                    useLineGraph.setGraphType(line).graphData(useFrequency).update();
                 });
     }
 
@@ -301,67 +341,16 @@
             highlightByClassName(className);
             popObjectInfoByClassName.call(this, className);
 
-            getObjectInfo(objectNum);
-            getErrorInfo(objectNum);
+            getObjectInfo(objectNum, function(err){
+                useLineGraph.graphData(searchTime).setEase("circle-out").update();
+            });
+
+            getErrorInfo(objectNum, function(err){
+                errLineGraph.graphData(searchTime).setEase("circle-out").update();
+            });
+
         }).mouseout(function () {
-
         });
-    }
-
-    var rDate =  new Date('2016/01/01');
-    var tDate =  new Date('2017/02/01');
-    var testT;
-
-    console.log("- test : " + tDate.getTime());
-    testT = tDate.getTime() - 100000000000;
-    console.log("testT : " + testT);
-    console.log("testT2 : " + (new Date(testT)));
-
-    function getObjectInfo(objectNum) {
-        $.post("/get/object_use_info", {object_num: objectNum}
-                , function (data) {
-                    occur_time = new Array();
-                    useTime = new Array(12);
-                    for (var i = 0; i < data.length; i++)
-                        occur_time[i] = new Date(data[i].occur_time).getMonth();
-                    for (var i = 0; i < 12; i++)
-                        useTime[i] = 0;
-                    for (var i = 0; i < occur_time.length; i++)
-                        useTime[occur_time[i]]++;
-
-                    useLineGraph.graphData(useTime).setEase("circle-out").update();
-                });
-    }
-
-    function getErrorInfo(objectNum) {
-        $.post("/get/error_use_info", {object_num: objectNum}
-                , function (data) {
-                    occur_time = new Array();
-                    errTime = new Array(12);
-                    for (var i = 0; i < data.length; i++)
-                        occur_time[i] = new Date(data[i].occur_time).getMonth();
-                    for (var i = 0; i < 12; i++)
-                        errTime[i] = 0;
-                    for (var i = 0; i < occur_time.length; i++)
-                        errTime[occur_time[i]]++;
-
-                    errLineGraph.graphData(errTime).setEase("circle-out").update();
-                });
-    }
-    function NumOfDate(date) {
-        /**
-         *  날짜, 시간에 문자열을 숫자로 표현된 값으로 반환
-         */
-        var piece = date.split(" ");
-        var standardYears = 1990 * 60 * 60 * 30 * 12;
-        var years = piece[0].split("-")[0] * 60 * 60 * 30 * 12 - standardYears;
-        var month = piece[0].split("-")[1] * 60 * 60 * 30;
-        var days = piece[0].split("-")[2] * 60 * 60 * 24;
-        var hours = piece[1].split(":")[0] * 60 * 60;
-        var minutes = piece[1].split(":")[1] * 60;
-        var seconds = piece[1].split(":")[2] * 1;
-
-        return years + month + days + hours + minutes + seconds;
     }
 
     function highlightByClassName(className) {
@@ -382,6 +371,45 @@
         rectInfo.children('#rect-object-name').text(objectName);
         rectInfo.children('#rect-use-frequency').text(useFrequency);
         rectInfo.children('#rect-err-frequency').text(errFrequency);
+    }
+
+    function getObjectInfo(objectNum, callback) {
+        $.post("/get/object_use_info", {object_num: objectNum}
+                , function (data) {
+                    searchTime = new Array();
+                    getTimeData(data);
+                    callback(null);
+                });
+    }
+
+    function getErrorInfo(objectNum, callback) {
+        $.post("/get/error_use_info", {object_num: objectNum}
+                , function (data) {
+                    searchTime = new Array();
+                    getTimeData(data);
+                    callback(null);
+                });
+    }
+
+    function getTimeData(data) {
+        occur_time = new Array().fill(0);
+        for (var i = 0; i < xAxisSize; i++)
+            searchTime[i] = 0;
+        var temp;
+        for (var i = 0; i < data.length; i++) {
+            temp = (new Date(data[i].occur_time).getTime()) / oneDay;
+            console.log(temp);
+            if (temp > startDate && temp < endDate)
+                occur_time[i] = parseInt((temp - startDate) * (xAxisSize / (endDate - startDate)));
+        }
+
+        occur_time.sort(function (left, right) {
+            return left - right;
+        });
+
+
+        for (var i = 0; i < occur_time.length; i++)
+            searchTime[occur_time[i]]++;
     }
 
 </script>

@@ -1,5 +1,6 @@
 var Line = function () {
     var type = 'line';
+
     this.draw = function () {
         var data = this.gData;
         var emptyDataColor = this.emptyDataColor;
@@ -17,17 +18,18 @@ var Line = function () {
                 return i * (width / length) + 5;
             })
             .attr("y1", function (d) {
+                console.log("line y1 d : " + d);
                 return height - ((d * rY) * 0.8 + 1) - 10;
             })
             .attr("x2", function (d, i) {
                 return (i + 1) * (width / length) + 5;
             })
             .attr("y2", function (d, i) {
+                console.log("line y2 d : " + d);
                 if (i + 1 < length)
                     return height - ((data[i + 1] * rY) * 0.8 + 1) - 10;
                 else return height - (d * rY * 0.8 + 1) - 10;
             });
-
         return this;
     }
 

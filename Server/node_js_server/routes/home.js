@@ -7,6 +7,11 @@ var mkdirp = require('mkdirp');    // mkdirp 모듈있는 곳을 설정해주면
 
 var dateutils = require('date-utils');
 
+
+router.get('/str', function (req, res) {
+    res.render('webstoryboard');
+});
+
 router.get('/ajax', function (req, res) {
     //console.log(req.body.name); // Ajax parameter data
     db.query('select * from user_info', function (error, result) {

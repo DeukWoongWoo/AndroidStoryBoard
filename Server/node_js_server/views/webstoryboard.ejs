@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>  <!-- For intranet rendering only, remove when page is placed in production. -->
+    <title>SVG viewBox Attribute Values</title>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div>
+    <svg currentScale="1" width="500px" height="500px" viewBox="0 0 1000 1000" id="storyboard-svg" style="background: white;"  >
+        <rect id="storyboard-background" x="-5000" y="-5000" width="10000" height="10000"
+              style="stroke: black; fill: white; stroke-width: 3px;" onmousedown="startDrag(event)" />
+
+        <svg onmousedown="startDrag(event, this)">
+            <rect x="0" y="0" width="300" height="200"
+                  style="stroke: black; fill: #D4C9AD; stroke-width: 1px;" id="test-rect"/>
+            <circle cx="50" cy="100" r="25" style="stroke: black; fill: white;"/>
+        </svg>
+
+        <svg onmousedown="startDrag(event, this)">
+            <rect x="300" y="200" width="100" height="200"
+                  style="stroke: black; fill: #F1ECDF; stroke-width: 1px"/>
+        </svg>
+
+        <svg onmousedown="startDrag(event, this)">
+            <rect x="800" y="100" width="100" height="200"
+                  style="stroke: black; fill: #C7BA99; stroke-width: 1px"/>
+        </svg>
+
+    </svg>
+</div>
+
+</body>
+
+<script>
+    var storybaordSvg = document.getElementById('storyboard-svg');
+    var box = storybaordSvg.viewBox.baseVal;
+    var storyboardBack = document.getElementById('storyboard-background');
+    var backWidth = storyboardBack.getAttribute('width');
+    var backHeight = storyboardBack.getAttribute('height');
+
+    $("body").on("mousewheel", function (event) {
+        console.log();
+        var zoomValue = event.originalEvent.wheelDelta;
+        if(box.width + zoomValue*7 > 0 && box.height + zoomValue*7 > 0
+            && box.width + zoomValue < backWidth && box.height + zoomValue < backHeight){
+            box.x -= zoomValue/2;
+            box.y -= zoomValue/2;
+            box.width += zoomValue;
+            box.height += zoomValue;
+        }
+    });
+
+    var bae = box.width/500;
+    var rX=0, rY=0;
+    var targetObj;
+
+    function startDrag(e, obj) {
+        var e_obj = window.event ? window.event : e;
+        targetObj = obj;
+        bae = box.width/500;
+
+        if(obj){
+            rX = targetObj.getAttribute('x') - e_obj.clientX*bae;
+            rY = targetObj.getAttribute('y') - e_obj.clientY*bae;
+        }else{
+            rX = box.x * (-1) - (e_obj.clientX*bae);
+            rY = box.y * (-1) - (e_obj.clientY*bae);
+        }
+
+        document.onmousemove = moveDrag;
+        document.onmouseup = stopDrag;
+        if (e_obj.preventDefault)e_obj.preventDefault();
+    }
+
+    function moveDrag(e) {
+        var e_obj = window.event ? window.event : e;
+        bae = box.width/500;
+        if(targetObj){
+            targetObj.setAttribute('x', (rX + e_obj.clientX*bae));
+            targetObj.setAttribute('y', (rY + e_obj.clientY*bae));
+        }else {
+            if (rX + (e_obj.clientX * bae) < backWidth / 2
+                    && box.width - (rX + (e_obj.clientX * bae)) < backWidth / 2)
+                box.x = -(rX + (e_obj.clientX * bae));
+            if (rY + (e_obj.clientY * bae) < backHeight / 2
+                    && box.height - (rY + (e_obj.clientY * bae)) < backHeight / 2)
+                box.y = -(rY + (e_obj.clientY * bae));
+        }
+        return false;
+    }
+
+    function stopDrag() {
+        document.onmousemove = null;
+        document.onmouseup = null;
+    }
+
+</script>
+
+</html>
+

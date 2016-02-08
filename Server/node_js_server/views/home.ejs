@@ -47,7 +47,7 @@
                 );
             });
 
-            $('.fa-times').click(function () {
+            $('.content').click(function () {
                 $('.sidebar').animate({
                     left: "-300px"
                 }, 200);
@@ -145,7 +145,6 @@
         </div>
     </div>
 </div>
-
 <div class="content">
     <div class="content-body">
         <div class="container-center" id="search-div" style="visibility: hidden;">
@@ -157,8 +156,11 @@
                 <button id="search-date">search</button>
             </a>
         </div>
+        <div class="container-center">
 
+        </div>
         <div class="main-body container-center" id="graphs">
+            <div id="storyboard"></div>
             <div class="graph" id="use-graph" style="display: inline-block"></div>
             <div class="graph" id="use-line-graph" style="display: inline-block"></div>
             <div class="graph" id="err-graph" style="display: inline-block"></div>
@@ -169,7 +171,7 @@
 <!--<div style="height : 100px"></div>-->
 <div class="rect-info"
      style="position: absolute; visibility: hidden; left:20px; top:20px; background-color: #68606A; height: auto; position: fixed;  width: 200px;"
-     onmousedown="startDrag(event, this)">
+     onmousedown="startDragAppinfo(event, this)">
     <div class="rect-info-bar" style="background: #A3A7B7; height:15px; width: auto;">
         <div id="rect-info-close"><i class="fa fa-times right" style="font-size: 15px;"></i></div>
     </div>
@@ -217,6 +219,8 @@
     var user_id;
     var intervalID;
 
+    $('#storyboard').load("str");
+
     useGraph.setDataColor('#457D97');
     errGraph.setDataColor('#EA3556');
     useLineGraph.setDataColor('#02779E');
@@ -229,8 +233,6 @@
         $('#current_app_name').text(app_name);
         $('#search-div').css('visibility', 'visible');
 
-        initSearchDate();
-        createUseTimeGraph();
 
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
@@ -238,6 +240,9 @@
                     for (var i = 0; i < data.length; i++) {
                         setObjectData(i, data);
                     }
+                    initSearchDate();
+                    createUseTimeGraph();
+
                     createFrequencyGraphs();
                     clearInterval(intervalID);
                     intervalID = setInterval(updateFrequencyGraph, 2000);
@@ -246,12 +251,12 @@
                 });
     });
 
-    function initSearchDate(){
+    function initSearchDate() {
         document.getElementById("start-date").defaultValue = getToday();
         document.getElementById("end-date").defaultValue = getToday();
     }
 
-    function getToday(){
+    function getToday() {
         var today = new Date();
         var day = today.getDate();
         var month = today.getMonth() + 1;
@@ -265,7 +270,7 @@
         return today;
     }
 
-    function createUseTimeGraph(){
+    function createUseTimeGraph() {
         $('#search-date').click(function () {
             setSearchTime();
             console.log("createUseTimeGraph");
@@ -282,7 +287,7 @@
     }
 
     function setSearchTime() {
-        startDate = (new Date(document.getElementById("start-date").value).getTime()) / oneDay -1;
+        startDate = (new Date(document.getElementById("start-date").value).getTime()) / oneDay - 1;
         endDate = (new Date(document.getElementById("end-date").value).getTime()) / oneDay;
 
 //        console.log('start date : ' + startDate);
@@ -341,11 +346,11 @@
             highlightByClassName(className);
             popObjectInfoByClassName.call(this, className);
 
-            getObjectInfo(objectNum, function(err){
+            getObjectInfo(objectNum, function (err) {
                 useLineGraph.graphData(searchTime).setEase("circle-out").update();
             });
 
-            getErrorInfo(objectNum, function(err){
+            getErrorInfo(objectNum, function (err) {
                 errLineGraph.graphData(searchTime).setEase("circle-out").update();
             });
 
@@ -354,8 +359,8 @@
     }
 
     function highlightByClassName(className) {
-        $('rect').css("fill", "");
-        $('circle').css("fill", "");
+        $('.graph rect').css("fill", "");
+        $('.graph circle').css("fill", "");
         $('rect' + className).css("fill", "gold");
         $('circle' + className).css("fill", "red");
     }

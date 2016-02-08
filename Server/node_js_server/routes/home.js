@@ -303,9 +303,11 @@ function checkFile(req, callback) {
 function isExistAppName(req, callback) {
     var err = null;
     db.getAppList(req, function (appList) {
-        for (var i = 0; i < appList.length; i++) {
-            if (req.body.app_name == appList[i].app_name) {
-                err = '같은 이름이 있습니다';
+        if(isDefined(appList)){
+            for (var i = 0; i < appList.length; i++) {
+                if (req.body.app_name == appList[i].app_name) {
+                    err = '같은 이름이 있습니다';
+                }
             }
         }
         callback(err);

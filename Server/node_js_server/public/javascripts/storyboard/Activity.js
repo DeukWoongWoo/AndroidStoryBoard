@@ -1,4 +1,5 @@
 document.write("<script src='javascripts/storyboard/EObject.js'></script>");
+document.write("<script src='javascripts/storyboard/ObjectType/Button.js'></script>");
 
 function Activity() {
     var name;
@@ -35,7 +36,8 @@ function Activity() {
     this.addObject = function (objectData) {
         var num = numOfObjects;
         objects[num] = new EObject();
-        objects[num].create(this.svg);
+        objects[num].target(this.svg);
+        //objects[num].create(this.svg);
         numOfObjects++;
 
         return objects[num];

@@ -5,6 +5,7 @@ function Storyboard(){
     var activities = new Array();
     var numOfActivities = 0;
     var target;
+    var storyboardData;
 
     this.targetDiv = function(arg){
         if(isDefined(arg)){
@@ -41,6 +42,34 @@ function Storyboard(){
             .attr('x2', pos.x2)
             .attr('y2', pos.y2)
             .attr('stroke', 'black');
+    }
+
+    this.storyboardData =function(arg){
+        storyboardData = arg;
+        console.log('storyboardData');
+        console.log(storyboardData);
+    }
+
+    this.drawActivityObject = function() {
+        for (var i in storyboardData.activity) {
+            var activityData = storyboardData.activity[i];
+            var activity = this.addActivity().x(activityData.x).y(activityData.y).width(activityData.width).height(activityData.height).update();
+            for (var j in storyboardData.activity[i].object) {
+                var objectData = storyboardData.activity[i].object[j];
+                activity.addObject().type(objectData.type).width(objectData.width).height(objectData.height).x(objectData.x).y(objectData.y).color(objectData.color).create();
+            }
+        }
+    }
+
+    this.drawNextActivityLine = function(){
+        //for (var i in storyboardData.activity) {
+        //    var activityData = storyboardData.activity[i];
+        //    var activityName = storyboardData.activity[i].name;
+        //    for (var j in storyboardData.activity[i].object) {
+        //        var objectData = storyboardData.activity[i].object[j];
+        //        var nextActivity = objectData.next;
+        //    }
+        //}
     }
 }
 

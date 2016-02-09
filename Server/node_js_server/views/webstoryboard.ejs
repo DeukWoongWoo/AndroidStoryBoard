@@ -9,16 +9,23 @@
             word-break: break-all;
             /*text-overflow : ellipsis;*/
         }
+
     </style>
 </head>
 
 <body>
 <div>
+    <image></image>
     <svg currentScale="1" viewBox="0 0 1000 1000" id="storyboard-svg"
          style="background: white;">
         <rect id="storyboard-background" x="-5000" y="-5000" width="10000" height="10000"
               style="fill: #8BC5B7; stroke: black;  stroke-width: 100px;" onmousedown="startDrag(event)"/>
 
+        <svg onmousedown="startDrag(event, this)">
+
+            <rect x="400" y="10" width="500" height="500" fill=""></rect>
+            <image x="400" y="10" height="500" width="500" xlink:href="https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"></image>
+        </svg>
         <svg onmousedown="startDrag(event, this)">
             <rect x="10" y="10" width="300" height="200"
                   style="stroke: white; fill: #D4C9AD; stroke-width: 1px;" id="test-rect"/>
@@ -45,136 +52,23 @@
     var storyboard = new Storyboard();
     storyboard.targetDiv('#storyboard-svg');
 
-    var testStoryboardData =
-    {
-        appName:'test',
-        activity : [
-            {
-                name:'firstActivity',
-                x : 50,
-                y : 100,
-                width : 300,
-                height : 500,
-                object:[
-                    {
-                        name:'firstObject',
-                        x : 10,
-                        y : 10,
-                        width : 100,
-                        height : 30,
-                        color : 'red'
-                    },
-                    {
-                        name:'object2',
-                        x : 100,
-                        y : 10,
-                        width : 100,
-                        height : 30,
-                        color : 'green',
-                        next : 'secondActivity',
-                    },
-                    {
-                        name:'object3',
-                        x : 10,
-                        y : 100,
-                        width : 100,
-                        height : 30,
-                        color : 'blue'
-                    }
-                ]
-            },
-            {
-                name:'thirdActivity',
-                x : 400,
-                y : 600,
-                width : 300,
-                height : 500,
-                object:[
-                    {
-                        name:'object_1',
-                        x : 100,
-                        y : 100,
-                        width : 100,
-                        height : 30,
-                        color : 'black'
-                    },
-                    {
-                        name:'object_2',
-                        x : 50,
-                        y : 50,
-                        width : 100,
-                        height : 30,
-                        color : 'green'
-                    },
-                    {
-                        name:'object_3',
-                        x : 50,
-                        y : 150,
-                        width : 100,
-                        height : 30,
-                        color : 'yellow'
-                    }
-                ]
-            },
-            {
-                name:'secondActivity',
-                x : 800,
-                y : 200,
-                width : 300,
-                height : 500,
-                object:[
-                    {
-                        name:'object_1',
-                        x : 100,
-                        y : 100,
-                        width : 100,
-                        height : 30,
-                        color : 'black'
-                    },
-                    {
-                        name:'object_2',
-                        x : 50,
-                        y : 50,
-                        width : 100,
-                        height : 30,
-                        color : 'green'
-                    },
-                    {
-                        name:'object_3',
-                        x : 50,
-                        y : 150,
-                        width : 100,
-                        height : 30,
-                        color : 'yellow'
-                    }
-                ]
-            }
-        ]
-    };
+    $.get("/storyboard/a/jsontest.json", function(storyboardData){
+        console.log(storyboardData.activity);
+        storyboard.storyboardData(storyboardData);
+        storyboard.drawActivityObject();
+        storyboard.drawNextActivityLine();
 
-    for(var i in testStoryboardData.activity){
-        var tmpAct = testStoryboardData.activity[i];
-        var act = storyboard.addActivity().x(tmpAct.x).y(tmpAct.y).width(tmpAct.width).height(tmpAct.height).update();
-        for(var j in testStoryboardData.activity[i].object){
-            var tmpObj = testStoryboardData.activity[i].object[j];
-            act.addObject().width(tmpObj.width).height(tmpObj.height).x(tmpObj.x).y(tmpObj.y).color(tmpObj.color).update();
-
-//            if(tmpObj.next){
-//                for(var k in testStoryboardData.activity){
-//                    if(testStoryboardData.activity[k].name == tmpObj.next){
-//                        console.log('aa');
-//                        var tmpAct2 = testStoryboardData.activity[k];
-//                        var pos = {x1:tmpAct.x + tmpAct.width/2, y1:tmpAct.y + tmpAct.height/2, x2:tmpAct2.x + tmpAct2.width/2, y2:tmpAct2.y + tmpAct2.height/2};
-//                        storyboard.addLine(pos);
-//                    }
-//                }
-//            }
-        }
-    }
+    });
 
     /**
-     *  위에는 스토리보드 액티비티 오브젝트 그려주기 구현 하는중...
-     *  아래는 스토리보드의 확대, 축소, 이동 구현 완료
+     *  위
+     *      nextActivity를 보여주기 위한 선 드래그 할때 이동 가능하게 구현해야함
+     *      텍스트 자동 줄 바꿈 구현 방법 찾아보기
+     *
+     *      서버로 부터 사용자가 등록한 스토리보드 데이터를 받아와서
+     *      스토리보드 액티비티 오브젝트 그려주기 완료
+     *  아래
+     *      스토리보드의 확대, 축소, 이동 구현 완료
      */
 
     var storyboardSvg = document.getElementById('storyboard-svg');
@@ -211,6 +105,7 @@
     var targetObj;
 
     function startDrag(e, obj) {
+        console.log(obj);
         var e_obj = window.event ? window.event : e;
         targetObj = obj;
         bae = box.width / (window.innerHeight * 0.4);

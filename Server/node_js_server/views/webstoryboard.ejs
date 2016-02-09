@@ -2,7 +2,14 @@
 <html>
 
 <head>
-
+    <style>
+        p {
+            width: 30px;
+            white-space: pre-line;
+            word-break: break-all;
+            /*text-overflow : ellipsis;*/
+        }
+    </style>
 </head>
 
 <body>
@@ -17,19 +24,15 @@
                   style="stroke: white; fill: #D4C9AD; stroke-width: 1px;" id="test-rect"/>
 
             <circle cx="50" cy="100" r="25" style="stroke: black; fill: white;"/>
+            <text  x="10" y="10" stroke="black" height="100px">
+
+                <tspan x="10" y="70">Second line.</tspan>
+            </text>
+
         </svg>
-
-        <!--<svg onmousedown="startDrag(event, this)">-->
-            <!--<rect x="300" y="200" width="100" height="200"-->
-                  <!--style="stroke: white; fill: #F1ECDF; stroke-width: 1px"/>-->
-        <!--</svg>-->
-
-        <!--<svg onmousedown="startDrag(event, this)">-->
-            <!--<rect x="800" y="100" width="100" height="200"-->
-                  <!--style="stroke: white; fill: #C7BA99; stroke-width: 1px"/>-->
-        <!--</svg>-->
-
+        <text id='tex' x="10" y="10" white-space="pre-line" width="50px" word-break="break-all">Firstkkkkkkkkk fg fg ggggggggggg   gggggggggg kkkkkkk line.</text>
     </svg>
+
 </div>
 
 </body>
@@ -37,12 +40,142 @@
 <script type="text/javascript" src="javascripts/d3/d3.js"></script>
 <script src="javascripts/storyboard/Storyboard.js"></script>
 <script>
+    console.log($('#tex'));
 
     var storyboard = new Storyboard();
     storyboard.targetDiv('#storyboard-svg');
-    storyboard.addActivity();
-    var object = new EObject();
 
+    var testStoryboardData =
+    {
+        appName:'test',
+        activity : [
+            {
+                name:'firstActivity',
+                x : 50,
+                y : 100,
+                width : 300,
+                height : 500,
+                object:[
+                    {
+                        name:'firstObject',
+                        x : 10,
+                        y : 10,
+                        width : 100,
+                        height : 30,
+                        color : 'red'
+                    },
+                    {
+                        name:'object2',
+                        x : 100,
+                        y : 10,
+                        width : 100,
+                        height : 30,
+                        color : 'green',
+                        next : 'secondActivity',
+                    },
+                    {
+                        name:'object3',
+                        x : 10,
+                        y : 100,
+                        width : 100,
+                        height : 30,
+                        color : 'blue'
+                    }
+                ]
+            },
+            {
+                name:'thirdActivity',
+                x : 400,
+                y : 600,
+                width : 300,
+                height : 500,
+                object:[
+                    {
+                        name:'object_1',
+                        x : 100,
+                        y : 100,
+                        width : 100,
+                        height : 30,
+                        color : 'black'
+                    },
+                    {
+                        name:'object_2',
+                        x : 50,
+                        y : 50,
+                        width : 100,
+                        height : 30,
+                        color : 'green'
+                    },
+                    {
+                        name:'object_3',
+                        x : 50,
+                        y : 150,
+                        width : 100,
+                        height : 30,
+                        color : 'yellow'
+                    }
+                ]
+            },
+            {
+                name:'secondActivity',
+                x : 800,
+                y : 200,
+                width : 300,
+                height : 500,
+                object:[
+                    {
+                        name:'object_1',
+                        x : 100,
+                        y : 100,
+                        width : 100,
+                        height : 30,
+                        color : 'black'
+                    },
+                    {
+                        name:'object_2',
+                        x : 50,
+                        y : 50,
+                        width : 100,
+                        height : 30,
+                        color : 'green'
+                    },
+                    {
+                        name:'object_3',
+                        x : 50,
+                        y : 150,
+                        width : 100,
+                        height : 30,
+                        color : 'yellow'
+                    }
+                ]
+            }
+        ]
+    };
+
+    for(var i in testStoryboardData.activity){
+        var tmpAct = testStoryboardData.activity[i];
+        var act = storyboard.addActivity().x(tmpAct.x).y(tmpAct.y).width(tmpAct.width).height(tmpAct.height).update();
+        for(var j in testStoryboardData.activity[i].object){
+            var tmpObj = testStoryboardData.activity[i].object[j];
+            act.addObject().width(tmpObj.width).height(tmpObj.height).x(tmpObj.x).y(tmpObj.y).color(tmpObj.color).update();
+
+//            if(tmpObj.next){
+//                for(var k in testStoryboardData.activity){
+//                    if(testStoryboardData.activity[k].name == tmpObj.next){
+//                        console.log('aa');
+//                        var tmpAct2 = testStoryboardData.activity[k];
+//                        var pos = {x1:tmpAct.x + tmpAct.width/2, y1:tmpAct.y + tmpAct.height/2, x2:tmpAct2.x + tmpAct2.width/2, y2:tmpAct2.y + tmpAct2.height/2};
+//                        storyboard.addLine(pos);
+//                    }
+//                }
+//            }
+        }
+    }
+
+    /**
+     *  위에는 스토리보드 액티비티 오브젝트 그려주기 구현 하는중...
+     *  아래는 스토리보드의 확대, 축소, 이동 구현 완료
+     */
 
     var storyboardSvg = document.getElementById('storyboard-svg');
     storyboardSvg.setAttribute('height', window.innerHeight * 0.4);
@@ -54,7 +187,9 @@
     var backHeight = storyboardBack.getAttribute('height');
 
     $('#storyboard-svg').mouseover(function () {
-        document.onmousewheel = function(){return false;}
+        document.onmousewheel = function () {
+            return false;
+        }
     }).mouseout(function () {
         document.onmousewheel = null;
     });
@@ -114,7 +249,6 @@
         document.onmousemove = null;
         document.onmouseup = null;
     }
-
 
 
 </script>

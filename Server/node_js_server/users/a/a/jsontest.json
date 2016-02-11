@@ -2,7 +2,7 @@
         "appName": "test",
         "activity": [
             {
-                "name": "firstActivity",
+                "name": "a",
                 "x": 50,
                 "y": 100,
                 "width": 300,
@@ -40,14 +40,14 @@
                 ]
             },
             {
-                "name": "thirdActivity",
+                "name": "c",
                 "x": 400,
                 "y": 600,
                 "width": 300,
                 "height": 500,
                 "object": [
                     {
-                        "name": "a1",
+                        "name": "c9",
                         "x": 100,
                         "y": 100,
                         "width": 100,
@@ -65,7 +65,7 @@
                         "type" : "radio button"
                     },
                     {
-                        "name": "a3",
+                        "name": "c8",
                         "x": 50,
                         "y": 150,
                         "width": 100,

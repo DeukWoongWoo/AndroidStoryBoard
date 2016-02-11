@@ -55,8 +55,8 @@ var Bar = function (name) {
 
         var gObjectName = this.gObjectName;
         this.dataObject.data(gObjectName)
-            .attr("class", function (d, i) {
-                return d + '-object-name';
+            .attr('id', function(d){
+                return d;
             })
             .attr("object-name", function (d) {
                 return d;
@@ -83,6 +83,9 @@ var Bar = function (name) {
         this.dataObject.data(activityName)
             .attr("activity-name", function (d, i) {
                 return d;
+            })
+            .attr("class", function (d, i) {
+                return d + '-activity-name';
             });
     }
 

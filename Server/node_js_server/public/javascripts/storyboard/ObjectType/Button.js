@@ -15,7 +15,8 @@ function Button(){
             .attr('fill', this.color())
             .attr('stroke-width', this.width() / 10)
             .attr("object-name", this.name())
-            .attr("class", this.name() + '-object-name');
+            .attr("class", this.activityName() + '-activity-name')
+            .attr("id", this.name());
 
         return this;
     }

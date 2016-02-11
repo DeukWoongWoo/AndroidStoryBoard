@@ -360,8 +360,9 @@
         $('.light').children('svg').children().mouseover(function () {
             var className = '.' + $(this).attr("class");
             var objectNum = $(this).attr("object-num");
+            var objectName = $(this).attr("object-name");
 
-            highlightByClassName(className);
+            highlightByClassName(objectName, className);
             popObjectInfoByClassName.call(this, className);
 
             getObjectInfo(objectNum, function (err) {
@@ -376,17 +377,17 @@
         });
     }
 
-    function highlightByClassName(className) {
+    function highlightByClassName(objectName, className) {
 
         $('.graph rect').css("fill", "");
         $('.graph circle').css("fill", "");
-        $('.graph rect' + className).css("fill", "gold");
-        $('.graph circle' + className).css("fill", "gold");
-
         $('.storyboard rect').css("stroke", "");
         $('.storyboard circle').css("stroke", "");
-        $('.storyboard rect' + className).css("stroke", "gold");
-        $('.storyboard circle' + className).css("stroke", "gold");
+
+        $('.graph rect' + className + '#' + objectName).css("fill", "gold");
+        $('.graph circle' + className + '#' + objectName).css("fill", "gold");
+        $('.storyboard rect' + className + '#' + objectName).css("stroke", "gold");
+        $('.storyboard circle' + className + '#' + objectName).css("stroke", "gold");
     }
 
     function popObjectInfoByClassName(className) {

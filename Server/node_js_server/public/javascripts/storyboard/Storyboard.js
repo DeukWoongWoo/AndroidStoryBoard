@@ -53,10 +53,10 @@ function Storyboard(){
     this.drawActivityObject = function() {
         for (var i in storyboardData.activity) {
             var activityData = storyboardData.activity[i];
-            var activity = this.addActivity().name(activityData.name).x(activityData.x).y(activityData.y).width(activityData.width).height(activityData.height).update();
+            var activity = this.addActivity().activityName(activityData.name).x(activityData.x).y(activityData.y).width(activityData.width).height(activityData.height).update();
             for (var j in storyboardData.activity[i].object) {
                 var objectData = storyboardData.activity[i].object[j];
-                activity.addObject().type(objectData.type).name(objectData.name).width(objectData.width).height(objectData.height).x(objectData.x).y(objectData.y).color(objectData.color).create();
+                activity.addObject().type(objectData.type).name(objectData.name).activityName(activityData.name).width(objectData.width).height(objectData.height).x(objectData.x).y(objectData.y).color(objectData.color).create();
             }
         }
     }

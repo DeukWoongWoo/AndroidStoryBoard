@@ -11,7 +11,7 @@ function getTop(o) {
 }
 
 // 이미지 움직이기
-function moveDrag(e) {
+function moveDragAppinfo(e) {
     var e_obj = window.event ? window.event : e;
     var dmvx = parseInt(e_obj.clientX + img_L);
     var dmvy = parseInt(e_obj.clientY + img_T);
@@ -21,19 +21,19 @@ function moveDrag(e) {
 }
 
 // 드래그 시작
-function startDrag(e, obj) {
+function startDragAppinfo(e, obj) {
     targetObj = obj;
     var e_obj = window.event ? window.event : e;
     img_L = getLeft(obj) - e_obj.clientX;
     img_T = getTop(obj) - e_obj.clientY;
 
-    document.onmousemove = moveDrag;
-    document.onmouseup = stopDrag;
+    document.onmousemove = moveDragAppinfo;
+    document.onmouseup = stopDragAppinfo;
     if (e_obj.preventDefault)e_obj.preventDefault();
 }
 
 // 드래그 멈추기
-function stopDrag() {
+function stopDragAppinfo() {
     document.onmousemove = null;
     document.onmouseup = null;
 }

@@ -19,7 +19,10 @@
 
 
     <script type="text/javascript" src="javascripts/d3/d3.js"></script>
-    <script src="javascripts/graph.js"></script>
+    <script src="javascripts/graph/Graph.js"></script>
+    <script src="javascripts/graph/Bar.js"></script>
+    <script src="javascripts/graph/Line.js"></script>
+    <script src="javascripts/graph/Circle.js"></script>
     <script src="javascripts/drag.js"></script>
 
     <script>
@@ -44,7 +47,7 @@
                 );
             });
 
-            $('.fa-times').click(function () {
+            $('.content').click(function () {
                 $('.sidebar').animate({
                     left: "-300px"
                 }, 200);
@@ -142,32 +145,33 @@
         </div>
     </div>
 </div>
-
 <div class="content">
     <div class="content-body">
-        <div class="container-center">
+        <div class="container-center" id="search-div" style="visibility: hidden;">
             <h3 id="current_app_name">&nbsp</h3>
-            <form method="post" action="/date-search" class="form-inline">
-                <input type="date" class="form-control" name="start_date"/>
+            <a class="form-inline">
+                <input type="date" class="form-control" id="start-date"/>
                 ~
-                <input type="date" class="form-control" name="end_date"/>
-                <button type="submit">search</button>
-            </form>
+                <input type="date" class="form-control" id="end-date"/>
+                <button id="search-date">search</button>
+            </a>
         </div>
+        <div class="container-center">
 
+        </div>
         <div class="main-body container-center" id="graphs">
+            <div id="storyboard"></div>
             <div class="graph" id="use-graph" style="display: inline-block"></div>
             <div class="graph" id="use-line-graph" style="display: inline-block"></div>
             <div class="graph" id="err-graph" style="display: inline-block"></div>
-            <div class="graph" id="graphTest"></div>
-            <div class="graph" id="graph3"></div>
+            <div class="graph" id="err-line-graph" style="display: inline-block"></div>
         </div>
     </div>
 </div>
 <!--<div style="height : 100px"></div>-->
 <div class="rect-info"
      style="position: absolute; visibility: hidden; left:20px; top:20px; background-color: #68606A; height: auto; position: fixed;  width: 200px;"
-     onmousedown="startDrag(event, this)">
+     onmousedown="startDragAppinfo(event, this)">
     <div class="rect-info-bar" style="background: #A3A7B7; height:15px; width: auto;">
         <div id="rect-info-close"><i class="fa fa-times right" style="font-size: 15px;"></i></div>
     </div>
@@ -184,60 +188,234 @@
         <hr class="magin0">
     </div>
 </div>
+
 <script>
-    var useGraph = new graph();
-    var errGraph = new graph();
-    var useLineGraph = new graph();
+    var useGraph = new Graph();
+    var errGraph = new Graph();
+    var useLineGraph = new Graph();
+    var useCircleGraph = new Graph();
+    var errLineGraph = new Graph();
+
+    var useBar = new Bar('use');
+    var errBar = new Bar('err');
+    var useLine = new Line();
+    var errLine = new Line();
+    var useCircle = new Circle();
+    var errCircle = new Circle();
+
+    var useFrequency = null;
+    var errFrequency = null;
+    var objectName = null;
+    var objectNum = null;
+
+    var searchTime = null;
+    var occur_time = null;
+
+    var oneDay = 86400000; // onday = 86400000 msec
+    var startDate;
+    var endDate;
+    var xAxisSize = 100;
+
     var app_name;
     var user_id;
     var intervalID;
-    useGraph.setColor('#457D97');
-    useLineGraph.setColor('#457D97');
-    errGraph.setColor('#EA3556');
+
+//    $('#storyboard').load("str");
+
+    useGraph.setDataColor('#457D97');
+    errGraph.setDataColor('#EA3556');
+    useLineGraph.setDataColor('#02779E');
+    errLineGraph.setDataColor('#EA3556');
+    //    useCircleGraph.setDataColor('#02779E');
 
     $('.app_name').click(function () {
         app_name = $(this).text();
         user_id = $('#user_id').text();
-//        $('.rect-info').css("visibility", "hidden");
+        $('#current_app_name').text(app_name);
+        $('#search-div').css('visibility', 'visible');
+
+
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
-                    $('#graphs').attr('name', app_name);
-                    $('#current_app_name').text(app_name);
-                    var useFrequency = new Array();
-                    var errFrequency = new Array();
+                    initDataToArray();
                     for (var i = 0; i < data.length; i++) {
-                        useFrequency[i] = data[i].object_frequency;
-                        errFrequency[i] = data[i].error_frequency;
+                        setObjectData(i, data);
                     }
-                    $('#use-graph').empty();//자식 노드들 제거
-                    $('#use-line-graph').empty();
-                    $('#err-graph').empty();
+                    initSearchDate();
+                    createUseTimeGraph();
 
-                    useGraph.drawBarGraph("use-graph", data, useFrequency).drawYAxis();
-                    useLineGraph.drawLineGraph("use-line-graph", data, useFrequency);
-                    errGraph.drawBarGraph("err-graph", data, errFrequency);
-//                    useGraph.drawYAxis();
-                    useLineGraph.drawYAxis();
-                    errGraph.drawYAxis();
-
+                    createFrequencyGraphs();
                     clearInterval(intervalID);
-                    intervalID = setInterval(doTest, 2000);
+                    intervalID = setInterval(updateFrequencyGraph, 2000);
+
+                    rectMouseOver();
                 });
     });
 
-    function doTest(){
+    function initSearchDate() {
+        document.getElementById("start-date").defaultValue = getToday();
+        document.getElementById("end-date").defaultValue = getToday();
+    }
+
+    function getToday() {
+        var today = new Date();
+        var day = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getFullYear();
+
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
+
+        today = year + "-" + month + "-" + day;
+
+        return today;
+    }
+
+    function createUseTimeGraph() {
+        $('#search-date').click(function () {
+            setSearchTime();
+            console.log("createUseTimeGraph");
+            useLineGraph.location('#use-line-graph');
+            useLineGraph.graphData(searchTime);
+            useLineGraph.createGraph();
+            useLineGraph.setGraphType(useLine).create();
+            console.log("createUseTimeGraph - userLineGraph");
+            errLineGraph.location('#err-line-graph')
+                    .graphData(searchTime)
+                    .createGraph()
+                    .setGraphType(errLine).create();
+        });
+    }
+
+    function setSearchTime() {
+        startDate = (new Date(document.getElementById("start-date").value).getTime()) / oneDay - 1;
+        endDate = (new Date(document.getElementById("end-date").value).getTime()) / oneDay;
+
+//        console.log('start date : ' + startDate);
+//        console.log('end date : ' + endDate);
+//        console.log('- : ' + (endDate - startDate));
+        searchTime = new Array(xAxisSize);//.fill(0);
+    }
+
+    function initDataToArray() {
+        useFrequency = new Array().fill(0);
+        errFrequency = new Array().fill(0);
+        objectName = new Array().fill(0);
+        objectNum = new Array().fill(0);
+    }
+
+    function setObjectData(i, data) {
+        useFrequency[i] = data[i].object_frequency;
+        errFrequency[i] = data[i].error_frequency;
+        objectName[i] = data[i].object_name;
+        objectNum[i] = data[i].object_num;
+    }
+
+    function createFrequencyGraphs() {
+        useGraph.location('#use-graph')
+                .graphData(useFrequency)
+                .graphDataName(objectName)
+                .graphDataNnum(objectNum)
+                .createGraph()
+                .setGraphType(useBar).create();
+
+        errGraph.location('#err-graph')
+                .graphData(errFrequency)
+                .graphDataName(objectName)
+                .graphDataNnum(objectNum)
+                .createGraph()
+                .setGraphType(errBar).create();
+    }
+
+    function updateFrequencyGraph() {
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
-                    var useFrequency = new Array();
-                    var errFrequency = new Array();
                     for (var i = 0; i < data.length; i++) {
                         useFrequency[i] = data[i].object_frequency;
                         errFrequency[i] = data[i].error_frequency;
                     }
-                    useLineGraph.updateLineGraph(data,useFrequency);
-                    useGraph.updateBarGraph(data,useFrequency);
-                    errGraph.updateBarGraph(data,errFrequency);
+                    useGraph.graphData(useFrequency).update();
+                    errGraph.graphData(errFrequency).update();
                 });
+    }
+
+    function rectMouseOver() {
+        $('.graph').children('svg').children('rect').mouseover(function () {
+            var className = '.' + $(this).attr("class");
+            var objectNum = $(this).attr("object-num");
+
+            highlightByClassName(className);
+            popObjectInfoByClassName.call(this, className);
+
+            getObjectInfo(objectNum, function (err) {
+                useLineGraph.graphData(searchTime).setEase("circle-out").update();
+            });
+
+            getErrorInfo(objectNum, function (err) {
+                errLineGraph.graphData(searchTime).setEase("circle-out").update();
+            });
+
+        }).mouseout(function () {
+        });
+    }
+
+    function highlightByClassName(className) {
+        $('.graph rect').css("fill", "");
+        $('.graph circle').css("fill", "");
+        $('rect' + className).css("fill", "gold");
+        $('circle' + className).css("fill", "red");
+    }
+
+    function popObjectInfoByClassName(className) {
+        var useFrequency = $('#use-graph ' + className).attr("use-data");
+        var errFrequency = $('#err-graph ' + className).attr("err-data")
+
+        var rectInfo = $('.rect-info').children('div');
+        var objectName = $(this).attr("object-name");
+
+        $('.rect-info').css("visibility", "visible");
+        rectInfo.children('#rect-object-name').text(objectName);
+        rectInfo.children('#rect-use-frequency').text(useFrequency);
+        rectInfo.children('#rect-err-frequency').text(errFrequency);
+    }
+
+    function getObjectInfo(objectNum, callback) {
+        $.post("/get/object_use_info", {object_num: objectNum}
+                , function (data) {
+                    searchTime = new Array();
+                    getTimeData(data);
+                    callback(null);
+                });
+    }
+
+    function getErrorInfo(objectNum, callback) {
+        $.post("/get/error_use_info", {object_num: objectNum}
+                , function (data) {
+                    searchTime = new Array();
+                    getTimeData(data);
+                    callback(null);
+                });
+    }
+
+    function getTimeData(data) {
+        occur_time = new Array().fill(0);
+        for (var i = 0; i < xAxisSize; i++)
+            searchTime[i] = 0;
+        var temp;
+        for (var i = 0; i < data.length; i++) {
+            temp = (new Date(data[i].occur_time).getTime()) / oneDay;
+            console.log(temp);
+            if (temp > startDate && temp < endDate)
+                occur_time[i] = parseInt((temp - startDate) * (xAxisSize / (endDate - startDate)));
+        }
+
+        occur_time.sort(function (left, right) {
+            return left - right;
+        });
+
+
+        for (var i = 0; i < occur_time.length; i++)
+            searchTime[occur_time[i]]++;
     }
 
 </script>

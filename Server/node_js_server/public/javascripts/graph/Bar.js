@@ -44,6 +44,9 @@ var Bar = function (name) {
         this.setDataName();
         this.setDataNum();
 
+        this.setActivityName();
+        this.setActivityTime();
+
         return this;
     }
 
@@ -52,10 +55,10 @@ var Bar = function (name) {
 
         var gObjectName = this.gObjectName;
         this.dataObject.data(gObjectName)
-            .attr("class", function (d, i) {
-                return d + '-object-name';
+            .attr('id', function(d){
+                return d;
             })
-            .attr("object-name", function (d, i) {
+            .attr("object-name", function (d) {
                 return d;
             })
             .attr("num", function (d, i) {
@@ -68,7 +71,29 @@ var Bar = function (name) {
 
         var gObjectNum = this.gObjectNum;
         this.dataObject.data(gObjectNum)
-            .attr("object-num", function (d, i) {
+            .attr("object-num", function (d) {
+                return d;
+            });
+    }
+
+    this.setActivityName = function () {
+        if(this.activityName == null) return;
+        var activityName = this.activityName;
+        console.log(activityName);
+        this.dataObject.data(activityName)
+            .attr("activity-name", function (d, i) {
+                return d;
+            })
+            .attr("class", function (d, i) {
+                return d + '-activity-name';
+            });
+    }
+
+    this.setActivityTime = function () {
+        if(this.activityTime == null) return;
+        var activityTime = this.activityTime;
+        this.dataObject.data(activityTime)
+            .attr("activity-time", function (d) {
                 return d;
             });
     }

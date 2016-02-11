@@ -28,7 +28,8 @@ function Activity() {
             .attr("height", height)
             .attr('fill', color)
             .attr("stroke", "black")
-            .attr('stroke-width', '5');
+            .attr('stroke-width', '5')
+            .attr("activity-name", name);
 
         return this;
     }

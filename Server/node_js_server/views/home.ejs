@@ -161,10 +161,10 @@
         </div>
         <div class="main-body container-center" id="graphs">
             <div id="storyboard"></div>
-            <div class="graph" id="use-graph" style="display: inline-block"></div>
-            <div class="graph" id="use-line-graph" style="display: inline-block"></div>
-            <div class="graph" id="err-graph" style="display: inline-block"></div>
-            <div class="graph" id="err-line-graph" style="display: inline-block"></div>
+            <div class="graph light" id="use-graph" style="display: inline-block"></div>
+            <div class="graph light" id="use-line-graph" style="display: inline-block"></div>
+            <div class="graph light" id="err-graph" style="display: inline-block"></div>
+            <div class="graph light" id="err-line-graph" style="display: inline-block"></div>
         </div>
     </div>
 </div>
@@ -188,7 +188,9 @@
         <hr class="magin0">
     </div>
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="javascripts/d3/d3.js"></script>
+<script src="javascripts/storyboard/Storyboard.js"></script>
 <script>
     var useGraph = new Graph();
     var errGraph = new Graph();
@@ -208,6 +210,9 @@
     var objectName = null;
     var objectNum = null;
 
+    var activityTime = null;
+    var activityName = null;
+
     var searchTime = null;
     var occur_time = null;
 
@@ -220,7 +225,7 @@
     var user_id;
     var intervalID;
 
-//    $('#storyboard').load("str");
+    $('#storyboard').load("str");
 
     useGraph.setDataColor('#457D97');
     errGraph.setDataColor('#EA3556');
@@ -237,6 +242,8 @@
 
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
+//                    console.log('home - /get/object_info');
+//                    console.log(data);
                     initDataToArray();
                     for (var i = 0; i < data.length; i++) {
                         setObjectData(i, data);
@@ -302,6 +309,9 @@
         errFrequency = new Array().fill(0);
         objectName = new Array().fill(0);
         objectNum = new Array().fill(0);
+
+        activityName = new Array().fill(0);
+        activityTime = new Array().fill(0);
     }
 
     function setObjectData(i, data) {
@@ -309,20 +319,27 @@
         errFrequency[i] = data[i].error_frequency;
         objectName[i] = data[i].object_name;
         objectNum[i] = data[i].object_num;
+
+        activityName[i] = data[i].activity_name;
+        activityTime[i] = data[i].total_time;
     }
 
     function createFrequencyGraphs() {
         useGraph.location('#use-graph')
                 .graphData(useFrequency)
                 .graphDataName(objectName)
-                .graphDataNnum(objectNum)
+                .graphDataNum(objectNum)
+                .graphActivityName(activityName)
+                .graphActivityTime(activityTime)
                 .createGraph()
                 .setGraphType(useBar).create();
 
         errGraph.location('#err-graph')
                 .graphData(errFrequency)
                 .graphDataName(objectName)
-                .graphDataNnum(objectNum)
+                .graphDataNum(objectNum)
+                .graphActivityName(activityName)
+                .graphActivityTime(activityTime)
                 .createGraph()
                 .setGraphType(errBar).create();
     }
@@ -340,7 +357,7 @@
     }
 
     function rectMouseOver() {
-        $('.graph').children('svg').children('rect').mouseover(function () {
+        $('.light').children('svg').children().mouseover(function () {
             var className = '.' + $(this).attr("class");
             var objectNum = $(this).attr("object-num");
 
@@ -360,10 +377,16 @@
     }
 
     function highlightByClassName(className) {
+
         $('.graph rect').css("fill", "");
         $('.graph circle').css("fill", "");
-        $('rect' + className).css("fill", "gold");
-        $('circle' + className).css("fill", "red");
+        $('.graph rect' + className).css("fill", "gold");
+        $('.graph circle' + className).css("fill", "gold");
+
+        $('.storyboard rect').css("stroke", "");
+        $('.storyboard circle').css("stroke", "");
+        $('.storyboard rect' + className).css("stroke", "gold");
+        $('.storyboard circle' + className).css("stroke", "gold");
     }
 
     function popObjectInfoByClassName(className) {
@@ -372,11 +395,15 @@
 
         var rectInfo = $('.rect-info').children('div');
         var objectName = $(this).attr("object-name");
+        var activityName = $(this).attr("activity-name");
+        var activityTime = $(this).attr("activity-time");
 
         $('.rect-info').css("visibility", "visible");
         rectInfo.children('#rect-object-name').text(objectName);
         rectInfo.children('#rect-use-frequency').text(useFrequency);
         rectInfo.children('#rect-err-frequency').text(errFrequency);
+        rectInfo.children('#rect-activity-name').text(activityName);
+        rectInfo.children('#rect-activity-time').text(activityTime);
     }
 
     function getObjectInfo(objectNum, callback) {

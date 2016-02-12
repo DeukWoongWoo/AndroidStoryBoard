@@ -25,7 +25,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_PRODUCTS_TABLE = "CREAT TABLE "+ TABLE_PRODUCTS + "("+COLUMN_ID+" INTEGER PRIMARY KEY,"+COLUMN_PRODUCTNAME
+        String CREATE_PRODUCTS_TABLE = "CREATE TABLE "+ TABLE_PRODUCTS + "("+COLUMN_ID+" INTEGER PRIMARY KEY,"+COLUMN_PRODUCTNAME
                 +" TEXT,"+COLUMN_QUANTITY+" INTEGER"+")";
         db.execSQL(CREATE_PRODUCTS_TABLE);
 

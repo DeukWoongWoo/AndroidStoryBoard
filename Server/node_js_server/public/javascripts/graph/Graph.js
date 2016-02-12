@@ -54,8 +54,18 @@ Graph.prototype = {
         return this;
     },
 
-    graphDataNnum: function (objectName) {
+    graphDataNum: function (objectNum) {
         this.objectNum = objectNum;
+        return this;
+    },
+
+    graphActivityName: function (activityName) {
+        this.activityName = activityName;
+        return this;
+    },
+
+    graphActivityTime: function (activityTime) {
+        this.activityTime = activityTime;
         return this;
     },
 
@@ -96,6 +106,8 @@ Graph.prototype = {
             gData: this.data,
             gObjectName: this.objectName,
             gObjectNum: this.objectNum,
+            activityName: this.activityName,
+            activityTime: this.activityTime,
             dataColor: this.dataColor,
             emptyDataColor: this.emptyDataColor,
             width: this.svgWidth,
@@ -254,11 +266,9 @@ var GraphType = function () {
         this.gData = package.gData;
         this.gObjectName = package.gObjectName;
         this.gObjectNum= package.gObjectNum;
+        this.activityTime = package.activityTime;
+        this.activityName = package.activityName;
         this.dataColor = package.dataColor;
-
-        //this.length = this.gData.length;
-        //this.maxY = Math.max.apply(null, package.gData);
-        //this.rY = this.height / this.maxY;
 
         this.length = package.length;
         this.maxY = package.maxY;//Math.max.apply(null, package.gData);

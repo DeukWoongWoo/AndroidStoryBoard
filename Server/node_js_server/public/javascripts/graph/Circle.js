@@ -47,14 +47,24 @@ var Circle =  function (name) {
     this.setDataName = function () {
         var gObjectName = this.gObjectName;
         this.dataObject.data(gObjectName)
-            .attr("class", function (d, i) {
-                return d + '-object-name';
-            })
             .attr("object-name", function (d, i) {
                 return d ;
             })
             .attr("num", function (d, i) {
                 return i;
+            });
+    }
+
+    this.setActivityName = function () {
+        if(this.activityName == null) return;
+        var activityName = this.activityName;
+        console.log(activityName);
+        this.dataObject.data(activityName)
+            .attr("activity-name", function (d, i) {
+                return d;
+            })
+            .attr("class", function (d, i) {
+                return d + '-activity-name';
             });
     }
 

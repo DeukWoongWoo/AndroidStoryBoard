@@ -12,7 +12,11 @@ function Button(){
             .attr("height", this.height())
             .attr('x', this.x())
             .attr('y', this.y())
-            .attr('fill', this.color());
+            .attr('fill', this.color())
+            .attr('stroke-width', this.width() / 10)
+            .attr("object-name", this.name())
+            .attr("class", this.activityName() + '-activity-name')
+            .attr("id", this.name());
 
         return this;
     }

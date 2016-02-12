@@ -14,13 +14,19 @@ function RadioButton() {
             .attr('cy', this.y() + (this.height()/2))
             .attr('stroke', this.color())
             .attr('stroke-width', this.width() / 10)
-            .attr('fill', 'white');
+            .attr('fill', 'white')
+            .attr("object-name", this.name())
+            .attr("class", this.activityName() + '-activity-name')
+            .attr("id", this.name());;
 
         inCircle.attr("r", this.width() / 4)
             .attr('cx', this.x() + (this.width()/2))
             .attr('cy', this.y() + (this.height()/2))
             .attr('stroke', this.color())
-            .attr('fill', this.color());
+            .attr('fill', this.color())
+            .attr("object-name", this.name())
+            .attr("class", this.activityName() + '-activity-name')
+            .attr("id", this.name());;
     }
 }
 

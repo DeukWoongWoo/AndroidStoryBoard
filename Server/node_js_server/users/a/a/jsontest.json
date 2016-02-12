@@ -2,14 +2,14 @@
         "appName": "test",
         "activity": [
             {
-                "name": "firstActivity",
+                "name": "a",
                 "x": 50,
                 "y": 100,
                 "width": 300,
                 "height": 500,
                 "object": [
                     {
-                        "name": "firstObject",
+                        "name": "a1",
                         "x": 10,
                         "y": 10,
                         "width": 100,
@@ -19,7 +19,7 @@
                         "type" : "radio button"
                     },
                     {
-                        "name": "object2",
+                        "name": "a2",
                         "x": 100,
                         "y": 10,
                         "width": 100,
@@ -29,7 +29,7 @@
                         "next": "secondActivity"
                     },
                     {
-                        "name": "object3",
+                        "name": "a3",
                         "x": 10,
                         "y": 100,
                         "width": 100,
@@ -40,14 +40,14 @@
                 ]
             },
             {
-                "name": "thirdActivity",
+                "name": "c",
                 "x": 400,
                 "y": 600,
                 "width": 300,
                 "height": 500,
                 "object": [
                     {
-                        "name": "object_1",
+                        "name": "c9",
                         "x": 100,
                         "y": 100,
                         "width": 100,
@@ -56,7 +56,7 @@
                         "type" : "button"
                     },
                     {
-                        "name": "object_2",
+                        "name": "a2",
                         "x": 50,
                         "y": 50,
                         "width": 100,
@@ -65,7 +65,7 @@
                         "type" : "radio button"
                     },
                     {
-                        "name": "object_3",
+                        "name": "c8",
                         "x": 50,
                         "y": 150,
                         "width": 100,
@@ -83,7 +83,7 @@
                 "height": 500,
                 "object": [
                     {
-                        "name": "object_1",
+                        "name": "a1",
                         "x": 100,
                         "y": 100,
                         "width": 100,
@@ -93,7 +93,7 @@
                         "next": "firstActivity"
                     },
                     {
-                        "name": "object_2",
+                        "name": "a2",
                         "x": 50,
                         "y": 50,
                         "width": 100,
@@ -102,7 +102,7 @@
                         "type" : "button"
                     },
                     {
-                        "name": "object_3",
+                        "name": "a3",
                         "x": 50,
                         "y": 150,
                         "width": 100,

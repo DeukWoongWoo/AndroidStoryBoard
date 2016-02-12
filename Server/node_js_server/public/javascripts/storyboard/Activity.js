@@ -3,6 +3,7 @@ document.write("<script src='javascripts/storyboard/ObjectType/Button.js'></scri
 
 function Activity() {
     var name;
+    var activityName;
     var width = 0, height = 0;
     var x = 0, y = 0;
     var objects = new Array();
@@ -28,7 +29,9 @@ function Activity() {
             .attr("height", height)
             .attr('fill', color)
             .attr("stroke", "black")
-            .attr('stroke-width', '5');
+            .attr('stroke-width', '5')
+            .attr("activity-name", name);
+        this.svg.attr("activity-name", name);
 
         return this;
     }
@@ -92,6 +95,13 @@ function Activity() {
             name = arg;
             return this;
         } else return name;
+    }
+
+    this.activityName = function(arg){
+        if (isDefined(arg)) {
+            activityName = arg;
+            return this;
+        } else return activityName;
     }
 }
 

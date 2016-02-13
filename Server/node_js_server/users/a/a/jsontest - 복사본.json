@@ -26,7 +26,7 @@
                         "height": 30,
                         "color": "green",
                         "type" : "button",
-                        "next": "c"
+                        "next": "secondActivity"
                     },
                     {
                         "name": "a3",
@@ -35,13 +35,12 @@
                         "width": 100,
                         "height": 30,
                         "color": "blue",
-                        "type" : "button",
-			"next": "b"
+                        "type" : "button"
                     }
                 ]
             },
             {
-                "name": "b",
+                "name": "c",
                 "x": 400,
                 "y": 600,
                 "width": 300,
@@ -77,34 +76,33 @@
                 ]
             },
             {
-                "name": "c",
+                "name": "secondActivity",
                 "x": 800,
                 "y": 200,
                 "width": 300,
                 "height": 500,
                 "object": [
                     {
-                        "name": "c9",
+                        "name": "a1",
                         "x": 100,
                         "y": 100,
                         "width": 100,
                         "height": 30,
                         "color": "black",
                         "type" : "button",
-                        "next": "a"
+                        "next": "firstActivity"
                     },
                     {
-                        "name": "c8",
+                        "name": "a2",
                         "x": 50,
                         "y": 50,
                         "width": 100,
                         "height": 30,
                         "color": "green",
-                        "type" : "button",
-                        "next": "b"
+                        "type" : "button"
                     },
                     {
-                        "name": "c8",
+                        "name": "a3",
                         "x": 50,
                         "y": 150,
                         "width": 100,

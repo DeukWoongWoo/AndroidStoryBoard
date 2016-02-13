@@ -252,8 +252,11 @@
                     createUseTimeGraph();
 
                     createFrequencyGraphs();
-                    clearInterval(intervalID);
-                    intervalID = setInterval(updateFrequencyGraph, 2000);
+                    /**
+                     * 타이머
+                     */
+//                    clearInterval(intervalID);
+//                    intervalID = setInterval(updateFrequencyGraph, 2000);
 
                     rectMouseOver();
                 });
@@ -358,22 +361,24 @@
 
     function rectMouseOver() {
         $('.light').children('svg').children().mouseover(function () {
-            var className = '.' + $(this).attr("class");
-            var objectNum = $(this).attr("object-num");
-            var objectName = $(this).attr("object-name");
+                    var className = '.' + $(this).attr("class");
+                    var objectNum = $(this).attr("object-num");
+                    var objectName = $(this).attr("object-name");
 
-            highlightByClassName(objectName, className);
-            popObjectInfoByClassName.call(this, className);
+                    highlightByClassName(objectName, className);
+                    popObjectInfoByClassName.call(this, className);
 
-            getObjectInfo(objectNum, function (err) {
-                useLineGraph.graphData(searchTime).setEase("circle-out").update();
-            });
+                    if (isDefined(searchTime)) {
+                        getObjectInfo(objectNum, function (err) {
+                            useLineGraph.graphData(searchTime).setEase("circle-out").update();
+                        });
 
-            getErrorInfo(objectNum, function (err) {
-                errLineGraph.graphData(searchTime).setEase("circle-out").update();
-            });
-
-        }).mouseout(function () {
+                        getErrorInfo(objectNum, function (err) {
+                            errLineGraph.graphData(searchTime).setEase("circle-out").update();
+                        });
+                    }
+                }
+        ).mouseout(function () {
         });
     }
 

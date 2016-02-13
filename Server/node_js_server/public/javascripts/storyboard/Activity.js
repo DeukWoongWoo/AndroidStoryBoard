@@ -8,15 +8,14 @@ function Activity() {
     var x = 0, y = 0;
     var objects = new Array();
     var numOfObjects = 0;
-    var parentSvg;
     var color = 'white';
     var own;
 
     this.create = function (target) {
         if (isDefined(target)) {
-            this.svg = d3.select(target).append("svg");//.attr('x', 300).attr('y', 300);
+            this.svg = d3.select(target).append("svg").attr('class', 'activity');;//.attr('x', 300).attr('y', 300);
             this.svg.attr('onmousedown', 'startDrag(event, this)');
-            own = this.svg.append('rect');
+            own = this.svg.append('rect')
             this.update();
 
             return this;
@@ -24,15 +23,13 @@ function Activity() {
     }
 
     this.update = function () {
-        this.svg.attr('x', x).attr('y', y);
+        this.svg.attr('x', x).attr('y', y).attr('id', activityName);
         own.attr("width", width)
             .attr("height", height)
             .attr('fill', color)
             .attr("stroke", "black")
             .attr('stroke-width', '5')
-            .attr("activity-name", name);
-        this.svg.attr("activity-name", name);
-
+            .attr("activity-name", activityName);
         return this;
     }
 
@@ -40,7 +37,6 @@ function Activity() {
         var num = numOfObjects;
         objects[num] = new EObject();
         objects[num].target(this.svg);
-        //objects[num].create(this.svg);
         numOfObjects++;
 
         return objects[num];
@@ -102,6 +98,13 @@ function Activity() {
             activityName = arg;
             return this;
         } else return activityName;
+    }
+
+    this.nextActivity = function(arg){
+        if (isDefined(arg)) {
+            nextActivities = arg;
+            return this;
+        } else return nextActivities;
     }
 }
 

@@ -233,12 +233,14 @@
     errLineGraph.setDataColor('#EA3556');
     //    useCircleGraph.setDataColor('#02779E');
 
+
     $('.app_name').click(function () {
         app_name = $(this).text();
         user_id = $('#user_id').text();
         $('#current_app_name').text(app_name);
         $('#search-div').css('visibility', 'visible');
 
+        getUserAppStoryboard();
 
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
@@ -261,6 +263,25 @@
                     rectMouseOver();
                 });
     });
+
+    function getUserAppStoryboard() {
+        var storyboard = new Storyboard();
+        storyboard.targetDiv('#storyboard-svg');
+
+        $.get("/storyboard/" + app_name, function (storyboardData) {
+            storyboard.removeStoryboard();
+            storyboard.addBackBoard();
+            storyboard.storyboardData(storyboardData);
+
+            storyboard.drawActivityObject();
+
+            storyboard.initLine();
+            storyboard.drawNextActivityLine();
+
+            storyboard.removeActivityObject();
+            storyboard.drawActivityObject();
+        });
+    }
 
     function initSearchDate() {
         document.getElementById("start-date").defaultValue = getToday();
@@ -384,15 +405,24 @@
 
     function highlightByClassName(objectName, className) {
 
+
+
         $('.graph rect').css("fill", "");
         $('.graph circle').css("fill", "");
         $('.storyboard rect').css("stroke", "");
         $('.storyboard circle').css("stroke", "");
+//        d3.selectAll('.storyboard rect').transition().duration(300).attr('stroke', '');
+//        d3.selectAll('.storyboard circle').transition().duration(300).attr('stroke', '');
+
+
+//        $('.graph circle' + className + '#' + objectName).css("fill", "gold");
+        $('.storyboard rect' + className + '#' + objectName).css("stroke", "gold");
+        $('.storyboard circle' + className + '#' + objectName).css("stroke", "gold");
 
         $('.graph rect' + className + '#' + objectName).css("fill", "gold");
         $('.graph circle' + className + '#' + objectName).css("fill", "gold");
-        $('.storyboard rect' + className + '#' + objectName).css("stroke", "gold");
-        $('.storyboard circle' + className + '#' + objectName).css("stroke", "gold");
+//        d3.select('.storyboard rect' + className + '#' + objectName).transition().duration(300).attr('stroke', 'gold');
+//        d3.select('.storyboard circle' + className + '#' + objectName).transition().duration(300).attr('stroke', 'gold');
     }
 
     function popObjectInfoByClassName(className) {
@@ -437,7 +467,7 @@
         var temp;
         for (var i = 0; i < data.length; i++) {
             temp = (new Date(data[i].occur_time).getTime()) / oneDay;
-            console.log(temp);
+//            console.log(temp);
             if (temp > startDate && temp < endDate)
                 occur_time[i] = parseInt((temp - startDate) * (xAxisSize / (endDate - startDate)));
         }

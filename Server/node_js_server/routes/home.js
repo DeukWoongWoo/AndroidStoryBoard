@@ -7,17 +7,17 @@ var mkdirp = require('mkdirp');    // mkdirp 모듈있는 곳을 설정해주면
 
 var dateutils = require('date-utils');
 
-router.get('/storyboard/:app_name/:file_name', function (req, res) {
+router.get('/storyboard/:app_name', function (req, res) {
     //TODO: req.params.user_id -> session.user_id로 변경 해야함
-    var fileUrl = './users/' + req.session.user_id + '/' + req.params.app_name + '/' + req.params.file_name;
+    var fileUrl = './users/' + req.session.user_id + '/' + req.params.app_name + '/' + req.params.app_name + '.json';
     fs.exists(fileUrl, function (exists) {
         if (exists) {
             fs.readFile(fileUrl, function (err, data) {
                 var obj;
-                try{
+                try {
                     obj = JSON.parse(data);
                     res.send(obj);
-                }catch(e){
+                } catch (e) {
                     console.log(e);
                 }
             });
@@ -32,10 +32,10 @@ router.get('/image/:user_id/:app_name/:file_name', function (req, res) {
     fs.exists(fileUrl, function (exists) {
         if (exists) {
             fs.readFile(fileUrl, function (err, data) {
-                    res.end(data);
+                res.end(data);
             });
         } else {
-            res.eend('file is not exists');
+            res.end('file is not exists');
         }
     })
 });
@@ -265,9 +265,11 @@ function registerApp(req, res, callback) {
                         else callback(null);
                     });
                 }, function (callback) {
-                    //parseJSON(req, function(err){
-                    callback(null);
-                    //});
+                    console.log('req.body');
+                    console.log(req.body);
+                    registerStoryboardFile(req, function(err){
+                        callback(err);
+                    });
                 }
             ], function (err) {
                 if (err) {
@@ -278,6 +280,21 @@ function registerApp(req, res, callback) {
                     callback(null);
                 }
             });
+        }
+    });
+}
+
+function registerStoryboardFile(req, callback){
+    var file = './users/' + req.session.user_id + '/' + req.body.app_name + '/' + req.files.storyboard.originalFilename;
+    fs.readFile(file, function (err, data) {
+        var obj;
+        try {
+            obj = JSON.parse(data);
+//todo:스토리보드 데이터를 가지고 데이터베이스에 데이터들을 만들어야함.
+            callback(null);
+        } catch (e) {
+            console.log(e);
+            callback(e);
         }
     });
 }

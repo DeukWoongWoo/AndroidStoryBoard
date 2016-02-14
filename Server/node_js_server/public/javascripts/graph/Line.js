@@ -11,27 +11,45 @@ var Line = function () {
         var rY = this.rY;
         var length = this.length;
 
-        this.dataObject.data(data)
-            .style("stroke", dataColor)
-            .transition().duration(500).ease(es)
-            .attr("x1", function (d, i) {
-                return i * (width / length) + 5;
-            })
-            .attr("y1", function (d) {
-                console.log("line y1 d : " + d);
-                return height - ((d * rY) * 0.8 + 1) - 10;
-            })
-            .attr("x2", function (d, i) {
-                return (i + 1) * (width / length) + 5;
-            })
-            .attr("y2", function (d, i) {
-                console.log("line y2 d : " + d);
-                if (i + 1 < length)
-                    return height - ((data[i + 1] * rY) * 0.8 + 1) - 10;
-                else return height - (d * rY * 0.8 + 1) - 10;
-            });
+        if(isDefined(data) && isDefined(width) && isDefined(height) && isDefined(rY) && isDefined(length)){
+            this.dataObject.data(data)
+                .style("stroke", dataColor)
+                .transition().duration(500).ease(es)
+                .attr("x1", function (d, i) {
+                    return x1(i);
+                })
+                .attr("y1", function (d) {
+                    return y1(d);
+                })
+                .attr("x2", function (d, i) {
+                    return x2(i);
+                })
+                .attr("y2", function (d, i) {
+                    return y2(d, i);
+                });
+        }
+
+        function x1(i){
+            return i * (width / length) + 5 ? i * (width / length) + 5 : 0;
+        }
+        function x2(i){
+            return (i + 1) * (width / length) + 5 ? (i + 1) * (width / length) + 5 : 0;
+        }
+        function y1(d){
+            return height - ((d * rY) * 0.8 + 1) - 10 ? height - ((d * rY) * 0.8 + 1) - 10 : 0;
+        }
+        function y2(d, i){
+            if (i + 1 < length)
+                return height - ((data[i + 1] * rY) * 0.8 + 1) - 10 ? height - ((data[i + 1] * rY) * 0.8 + 1) - 10 : 0;
+            else return height - (d * rY * 0.8 + 1) - 10 ? height - (d * rY * 0.8 + 1) - 10 : 0;
+        }
+
+
         return this;
     }
+
+
+
 
     this.create = function () {
         var data = this.gData;

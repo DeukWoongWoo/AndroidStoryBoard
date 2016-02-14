@@ -8,7 +8,7 @@ function Graph() {
     this.graphType = 'rect';
     this.selectTarget = null;
     this.rY = 1;
-    this.maxY = 0;
+    this.maxY = 1;
     this.data = null;
     //this.dataName = null;
     this.objectName = null;
@@ -43,8 +43,10 @@ function Graph() {
 Graph.prototype = {
 
     graphData: function (data) {
-        this.data = data;
-        this.maxY = Math.max.apply(null, data);
+        if(isDefined(data[0])){
+            this.data = data;
+            this.maxY = Math.max.apply(null, data);
+        }
 
         return this;
     },
@@ -96,12 +98,11 @@ Graph.prototype = {
     },
 
     setGraphType: function (gType) {
+
         this.gType = gType;
         this.maxY = Math.max.apply(null, this.data);
         this.rY = this.svgHeight / this.maxY;
-        //var tmp = ;
         this.length = this.data.length;
-
         this.package = {
             gData: this.data,
             gObjectName: this.objectName,
@@ -197,6 +198,11 @@ Graph.prototype = {
             range: {start: 0, end: calY(this.maxY, this.rY) - 1},
             domain: {start: this.maxY, end: 0}
         });
+        console.log('yAxis');
+        console.log(this.yAxisData);
+        console.log(this.maxY);
+        console.log(this.rY);
+        console.log(this.svgHeight);
     },
 
     createAxis: function () {

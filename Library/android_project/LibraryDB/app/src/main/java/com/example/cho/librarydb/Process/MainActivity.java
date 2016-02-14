@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.cho.librarydb.R;
-import com.example.cho.librarydb.Table.AppInfo;
 import com.example.cho.librarydb.Table.UserInfo;
 import com.example.cho.librarydb.TableHandler;
 
@@ -22,9 +21,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-       TableHandler tableHandler = new TableHandler(this,null,null,1);
+        TableHandler tableHandler = new TableHandler(this,null,null,1);
         UserInfo userInfo = new UserInfo("qwer");
-        tableHandler.addUserInfo(userInfo);
+        tableHandler.add(userInfo);
+        userInfo.setUserId("asdf");
+        tableHandler.add(userInfo);
+
+        //tableHandler.delete(userInfo, "asdf");
+        UserInfo findInfo = (UserInfo) tableHandler.find(userInfo,"qwer");
+        findInfo.getUserId();
+
+        //SQLiteDatabase database = SQLiteDatabase.openDatabase("LibraryDB.db",null,SQLiteDatabase.OPEN_READWRITE);
+
+       //TableHandler tableHandler = new TableHandler(this,null,null,1);
+       // UserInfo userInfo = new UserInfo("qwer");
+       // tableHandler.addUserInfo(userInfo);
+/*
+        UserInfo userInfo = new UserInfo("qwer");
+        AppInfo appInfo = new AppInfo("1234","qwert");
+
+        ManageUserInfo addUserInfo = new ManageUserInfo(this,null,null,1);
+        addUserInfo.add(userInfo);
+*/
     //   AppInfo appInfo = new AppInfo("zxcv","qwer");
      //   tableHandler.addAppInfo(appInfo);
 

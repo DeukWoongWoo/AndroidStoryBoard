@@ -1,11 +1,19 @@
 package com.example.cho.librarydb.Table;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.example.cho.librarydb.ManageTable;
+
 /**
  * Created by cho on 2016-02-13.
  */
-public class EventInfo {
+public class EventInfo implements ManageTable{
     private String objectInfo;
     private String _eventTime;
+    private String primaryKey="_eventTime";
+    private String tableName = getClass().getSimpleName();
 
     public EventInfo(){
 
@@ -13,6 +21,7 @@ public class EventInfo {
     public EventInfo(String objectInfo,String eventTime){
         this.objectInfo = objectInfo;
         this._eventTime = eventTime;
+
     }
 
     public void setObjectInfo(String objectInfo){
@@ -27,5 +36,43 @@ public class EventInfo {
     }
     public  String getEventTime(){
         return this._eventTime;
+    }
+
+    public String getPrimaryKey(){
+        return this.primaryKey;
+    }
+    public String getTableName(){return this.tableName;}
+
+    @Override
+    public void add(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+        values.put("_eventTime", getEventTime());
+        values.put("objectInfo",getObjectInfo());
+        db.insert("EventInfo", null, values);
+        db.close();
+    }
+
+    @Override
+    public Object find(SQLiteDatabase db, String field) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(SQLiteDatabase db, String field) {
+        boolean result = false;
+
+        String query = "Select * FROM " + getTableName() + " WHERE " +
+                getPrimaryKey() + " =  \"" + field + "\"";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            db.delete(getTableName(), getPrimaryKey() + " = ?",
+                    new String[] { cursor.getString(0) });
+            cursor.close();
+            result = true;
+        }
+        db.close();
+        return result;
     }
 }

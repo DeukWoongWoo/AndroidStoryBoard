@@ -110,8 +110,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         if (cursor.moveToFirst()) {
             userInfo.setUserId(cursor.getString(0));
+            String tmp =String.valueOf(userInfo.getUserId());
+
             db.delete(TABLE_NAME, COLUMN_ID + " = ?",
-                    new String[] { String.valueOf(userInfo.getUserId()) });
+                    new String[] { tmp });
             cursor.close();
             result = true;
         }
@@ -165,6 +167,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
         if (cursor.moveToFirst()) {
             appInfo.setAppName(cursor.getString(0));
+            //String tmp  = String.valueOf(appInfo.getAppName());
             db.delete(TABLE_NAME2, COLUMN_APPID + " = ?",
                     new String[] { String.valueOf(appInfo.getAppName()) });
             cursor.close();

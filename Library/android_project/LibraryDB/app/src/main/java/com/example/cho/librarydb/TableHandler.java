@@ -14,7 +14,7 @@ import com.example.cho.librarydb.Table.UserInfo;
 public class TableHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION=1;
     private static final String DATABASE_NAME = "LibraryDB.db";
-
+    public String dbPath ;
 
     public TableHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -22,6 +22,7 @@ public class TableHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        dbPath = db.getPath();
         //Table Create
         String[]  CREATE_PRODUCTS_TABLE = tableList();
         for(int i=0;i<CREATE_PRODUCTS_TABLE.length;i++)
@@ -43,8 +44,8 @@ public class TableHandler extends SQLiteOpenHelper {
         String[] table = new String[7];
         table[0] =
                 createTableName("UserInfo")
-                +setField("_userInfo", "TEXT")+","
-                +setPrimaryKey("_userInfo")
+                +setField("_userId", "TEXT")+","
+                +setPrimaryKey("_userId")
                 +")";
         table[1] =
                 createTableName("AppInfo")
@@ -57,12 +58,12 @@ public class TableHandler extends SQLiteOpenHelper {
         table[2] =
                 createTableName("ActivityInfo")
                 +setField("_activityName", "TEXT")+","
-                +setField("_objectName","TEXT")+","
                 +setField("appName","TEXT")+","
-                +setPrimaryKey("_activityName,_objectName")+","
+                +setPrimaryKey("_activityName")+","
                 +setForeignKey("appName","AppInfo","_appName")
                 +setForeignKeyOption("DELETE CASCADE")
                 +")";
+
         table[3]=
                 createTableName("TimeInfo")
                 +setField("_useTime","TEXT")+","
@@ -74,27 +75,27 @@ public class TableHandler extends SQLiteOpenHelper {
 
         table[4]=
                 createTableName("ObjectInfo")
-                +setField("objectName","TEXT")+","
                 +setField("_objectInfo","TEXT")+","
+                +setField("activityName","TEXT")+","
                 +setPrimaryKey("_objectInfo")+","
-                +setForeignKey("objectName", "ActivityInfo", "_objectName")
+                +setForeignKey("activityName", "ActivityInfo", "_activityName")
                 +setForeignKeyOption("DELETE CASCADE")
                 +")";
 
         table[5]=
                 createTableName("ErrorInfo")
                 +setField("_errorTime","TEXT")+","
-                +setField("_errorLog","TEXT")+","
                 +setField("objectInfo","TEXT")+","
-                +setPrimaryKey("_errorTime,_errorLog")+","
+                +setField("errorLog","TEXT")+","
+                +setPrimaryKey("_errorTime")+","
                 +setForeignKey("objectInfo","ObjectInfo","_objectInfo")
                 +setForeignKeyOption("DELETE CASCADE")
                 +")";
 
         table[6]=
                 createTableName("EventInfo")
-                +setField("objectInfo","TEXT")+","
                 +setField("_eventTime","TEXT")+","
+                +setField("objectInfo","TEXT")+","
                 +setPrimaryKey("_eventTime")+","
                 +setForeignKey("objectInfo","ObjectInfo","_objectInfo")
                 +setForeignKeyOption("DELETE CASCADE")
@@ -102,30 +103,6 @@ public class TableHandler extends SQLiteOpenHelper {
 
         return table;
     }
-
-
-
-    public void addUserInfo(UserInfo userInfo) {
-
-        ContentValues values = new ContentValues();
-        values.put("_userInfo", userInfo.getUserId());
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        db.insert("UserInfo", null, values);
-        db.close();
-    }
-    public void addAppInfo(AppInfo appInfo) {
-
-        ContentValues values = new ContentValues();
-        values.put("_appName",appInfo.getAppName());
-        values.put("userId",appInfo.getUserId());
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        db.insert("AppInfo", null, values);
-        db.close();
-    }
-
 
     private String createTableName(String tableName){
         return "CREATE TABLE "+tableName+"(";
@@ -143,5 +120,18 @@ public class TableHandler extends SQLiteOpenHelper {
         return "ON "+option;
     }
 
-    public void addInfo(){}
+    public void add(ManageTable manageTable){
+        SQLiteDatabase db = this.getWritableDatabase();
+        manageTable.add(db);
+    }
+    public Object find(ManageTable manageTable,String field){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return manageTable.find(db, field);
+    }
+
+    public void delete(ManageTable manageTable,String field){
+        SQLiteDatabase db = this.getWritableDatabase();
+        manageTable.delete(db, field);
+    }
+
 }

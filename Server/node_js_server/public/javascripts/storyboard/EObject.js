@@ -12,16 +12,13 @@ function EObject(){
     this.create = function(){
         type.create(target);
         type.update();
-        return type;
+        return this;
     }
 
     this.update = function(){
         type.update();
-        //own.attr("width", this.width())
-        //    .attr("height", this.height())
-        //    .attr('x', this.x())
-        //    .attr('y', this.y())
-        //    .attr('fill', this.color());
+
+        return this;
     }
 
     this.type = function(objectType){

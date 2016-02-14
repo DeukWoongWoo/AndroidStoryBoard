@@ -6,7 +6,6 @@ function Button(){
         return this;
     }
 
-
     this.update = function(){
         own.attr("width", this.width())
             .attr("height", this.height())

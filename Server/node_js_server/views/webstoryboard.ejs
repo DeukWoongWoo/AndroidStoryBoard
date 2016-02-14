@@ -22,12 +22,11 @@
               style="fill: #8BC5B7; stroke: black;  stroke-width: 100px;" onmousedown="startDrag(event)"/>
 
         <svg onmousedown="startDrag(event, this)">
-
-            <rect x="400" y="10" width="500" height="500" fill=""></rect>
-            <image x="400" y="10" height="500" width="500" xlink:href="https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"></image>
+            <rect x="800" y="400" width="500" height="500" fill=""></rect>
+            <image x="800" y="400" height="500" width="500" xlink:href="https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"></image>
         </svg>
         <svg onmousedown="startDrag(event, this)">
-            <rect x="10" y="10" width="300" height="200"
+            <rect class="test-class" x="10" y="10" width="300" height="200"
                   style="stroke: white; fill: #D4C9AD; stroke-width: 1px;" id="test-rect"/>
 
             <circle cx="50" cy="100" r="25" style="stroke: black; fill: white;"/>
@@ -35,36 +34,36 @@
 
                 <tspan x="10" y="70">Second line.</tspan>
             </text>
-
         </svg>
-        <text id='tex' x="10" y="10" white-space="pre-line" width="50px" word-break="break-all">Firstkkkkkkkkk fg fg ggggggggggg   gggggggggg kkkkkkk line.</text>
     </svg>
 
 </div>
 
 </body>
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
-<!--<script type="text/javascript" src="javascripts/d3/d3.js"></script>-->
-<!--<script src="javascripts/storyboard/Storyboard.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="javascripts/d3/d3.js"></script>
+<script src="javascripts/storyboard/Storyboard.js"></script>
 <script>
-    console.log($('#tex'));
-
     var storyboard = new Storyboard();
     storyboard.targetDiv('#storyboard-svg');
 
     $.get("/storyboard/a/jsontest.json", function(storyboardData){
-        console.log(storyboardData.activity);
         storyboard.storyboardData(storyboardData);
         storyboard.drawActivityObject();
+        storyboard.initLine();
         storyboard.drawNextActivityLine();
 
+        storyboard.removeActivityObject();
+        storyboard.drawActivityObject();
     });
 
     /**
      *  위
-     *      nextActivity를 보여주기 위한 선 드래그 할때 이동 가능하게 구현해야함
+     *
      *      텍스트 자동 줄 바꿈 구현 방법 찾아보기
      *
+     *      랜더링 순서 변경 완료
+     *      nextActivity를 보여주기 위한 선 드래그 할때 이동 가능하게 구현 완료
      *      서버로 부터 사용자가 등록한 스토리보드 데이터를 받아와서
      *      스토리보드 액티비티 오브젝트 그려주기 완료
      *  아래
@@ -89,7 +88,6 @@
     });
 
     $("#storyboard-svg").on("mousewheel", function (event) {
-        console.log();
         var zoomValue = event.originalEvent.wheelDelta;
         if (box.width + zoomValue * 7 > 0 && box.height + zoomValue * 7 > 0
                 && box.width + zoomValue < backWidth && box.height + zoomValue < backHeight) {
@@ -103,14 +101,18 @@
     var bae = box.width / window.innerHeight * 0.4;
     var rX = 0, rY = 0;
     var targetObj;
+    var startLineObj;
+    var endLineObj;
 
     function startDrag(e, obj) {
-        console.log(obj);
+        obj = changeLocation(obj);
         var e_obj = window.event ? window.event : e;
         targetObj = obj;
         bae = box.width / (window.innerHeight * 0.4);
 
         if (obj) {
+            saveLineInfo(obj);
+
             rX = targetObj.getAttribute('x') - e_obj.clientX * bae;
             rY = targetObj.getAttribute('y') - e_obj.clientY * bae;
         } else {
@@ -123,12 +125,38 @@
         if (e_obj.preventDefault)e_obj.preventDefault();
     }
 
+    function changeLocation(obj) {
+        var backupObj = obj;
+        $(obj).remove();
+        obj = backupObj;
+        $('.storyboard').append(obj);
+        return obj;
+    }
+
+    function saveLineInfo(obj) {
+        var sCount = 0, eCount = 0;
+        var line = $('line' + '.' + $(obj).attr('id'));
+        startLineObj = new Array();
+        endLineObj = new Array();
+
+        for (var i = 0; i < line.length; i++) {
+            if (line[i].getAttribute('start') == $(obj).attr('id')) {
+                startLineObj[sCount++] = line[i];
+            } else if (line[i].getAttribute('end') == $(obj).attr('id')) {
+                endLineObj[eCount++] = line[i];
+            }
+        }
+    }
+
     function moveDrag(e) {
         var e_obj = window.event ? window.event : e;
         bae = box.width / (window.innerHeight * 0.4);
         if (targetObj) {
             targetObj.setAttribute('x', (rX + e_obj.clientX * bae));
             targetObj.setAttribute('y', (rY + e_obj.clientY * bae));
+
+            moveLine(startLineObj, e_obj, '1');
+            moveLine(endLineObj, e_obj, '2');
         } else {
             if (rX + (e_obj.clientX * bae) < backWidth / 2
                     && box.width - (rX + (e_obj.clientX * bae)) < backWidth / 2)
@@ -140,12 +168,19 @@
         return false;
     }
 
+    function moveLine(lineObj, e_obj, se) {
+        for (var i in lineObj) {
+            var x = lineObj[i].getAttribute('x' + se) * 1;
+            var y = lineObj[i].getAttribute('y' + se) * 1;
+            lineObj[i].setAttribute('x' + se, (rX + e_obj.clientX * bae) + 150);
+            lineObj[i].setAttribute('y' + se, (rY + e_obj.clientY * bae) + 250);
+        }
+    }
+
     function stopDrag() {
         document.onmousemove = null;
         document.onmouseup = null;
     }
-
-
 </script>
 
 </html>

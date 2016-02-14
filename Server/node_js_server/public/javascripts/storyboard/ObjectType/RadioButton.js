@@ -7,7 +7,6 @@ function RadioButton() {
         this.update();
     }
 
-    //<circle cx="50" cy="100" r="25" style="stroke: black; fill: white;"/>
     this.update = function () {
         own.attr("r", this.width() / 2)
             .attr('cx', this.x() + (this.width()/2))
@@ -17,7 +16,7 @@ function RadioButton() {
             .attr('fill', 'white')
             .attr("object-name", this.name())
             .attr("class", this.activityName() + '-activity-name')
-            .attr("id", this.name());;
+            .attr("id", this.name());
 
         inCircle.attr("r", this.width() / 4)
             .attr('cx', this.x() + (this.width()/2))
@@ -26,7 +25,7 @@ function RadioButton() {
             .attr('fill', this.color())
             .attr("object-name", this.name())
             .attr("class", this.activityName() + '-activity-name')
-            .attr("id", this.name());;
+            .attr("id", this.name());
     }
 }
 

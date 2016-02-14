@@ -118,7 +118,8 @@ Graph.prototype = {
             maxY: this.maxY,
             length: this.length
         }
-        gType.setGraphData(this.package);
+        if (isDefined(this.package))
+            gType.setGraphData(this.package);
         return this;
     },
 
@@ -265,7 +266,7 @@ var GraphType = function () {
 
         this.gData = package.gData;
         this.gObjectName = package.gObjectName;
-        this.gObjectNum= package.gObjectNum;
+        this.gObjectNum = package.gObjectNum;
         this.activityTime = package.activityTime;
         this.activityName = package.activityName;
         this.dataColor = package.dataColor;

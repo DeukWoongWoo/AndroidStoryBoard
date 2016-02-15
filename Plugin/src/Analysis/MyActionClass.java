@@ -6,6 +6,7 @@ import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Database.DtatTransferObject.ActivityDTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
 import Analysis.Main.ProjectAnalysis;
+import Analysis.RedoUndo.CodeDriver;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 
@@ -20,7 +21,7 @@ public class MyActionClass extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         // TODO: insert action logic here
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
+//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
 //        projectAnalysis.execute(intellijPath+"/Activity", ConstantEtc.JAVA_PATTERN);
 //        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);
 
@@ -54,6 +55,8 @@ public class MyActionClass extends AnAction {
 //        projectAnalysis.execute(ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
 
 //        PluginTest test = new PluginTest(e);
+
+        new CodeDriver();
     }
 
 }

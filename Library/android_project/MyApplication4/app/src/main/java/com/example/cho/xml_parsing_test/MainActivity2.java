@@ -8,27 +8,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import java.lang.Throwable;
 
-public class Main22Activity extends AppCompatActivity {
+import com.example.cho.xml_parsing_test.Librarys.CatchActivity;
+import com.example.cho.xml_parsing_test.Librarys.CatchError;
+import com.example.cho.xml_parsing_test.Librarys.UserLiporter;
+
+public class MainActivity2 extends AppCompatActivity {
     final String name = this.getClass().getSimpleName();
+    UserLiporter activityLipoter = new CatchActivity();
+    UserLiporter errorLipoter = new CatchError();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread thread, Throwable ex) {
-
-               Log.e("Errorrrrrrr!!","Errrrrrror");
-                finishAffinity();
-            }
-        });
-
-
         setContentView(R.layout.activity_main22);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,16 +42,34 @@ public class Main22Activity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("Start!", "Main2---Start!");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        activityLipoter.set(this);
+        errorLipoter.set(this);
+        errorLipoter.get(null);
+        Log.i("Resume!", "Main2---Resume!");
+    }
 
     @Override
     protected void onPause() {
+        activityLipoter.get(null);
         super.onPause();
+        Log.i("Pause!", "Main2---Pause!!");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.i("Stop!", "Main2---Stop!!");
     }
+
 
     @Override
     protected void onDestroy() {

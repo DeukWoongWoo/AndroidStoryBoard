@@ -1,10 +1,7 @@
 package com.example.cho.xml_parsing_test;
 
-import android.app.ActivityManager;
-import android.content.ComponentName;
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,14 +13,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.example.cho.xml_parsing_test.Librarys.CatchActivity;
+import com.example.cho.xml_parsing_test.Librarys.CatchEvent;
+import com.example.cho.xml_parsing_test.Librarys.UserLiporter;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    UserLiporter activityLiporter = new CatchActivity();
+    UserLiporter eventLiporter = new CatchEvent();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -42,59 +40,50 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final TextView textView = (TextView) findViewById(R.id.textView);
-        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                long now = System.currentTimeMillis();
-                final Date date = new Date(now);
-
-                final SimpleDateFormat sdfNow = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
-
-                final String strNow = sdfNow.format(date);
-                textView.setText("현재시간: " + strNow);
-            }
-        });
-
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Main22Activity.class));
+                startActivity(new Intent(MainActivity.this, MainActivity2.class));
             }
         });
-        findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Main2Activity.class));
+                eventLiporter.get(null);
+                startActivity(new Intent(MainActivity.this, MainActivity3.class));
             }
         });
 
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("Start!", "Main---Start!");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("Resume!", "Main---Resume!");
+        activityLiporter.set(this);
+        eventLiporter.set(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("Pause!","Pause!!");
+        Log.i("Pause!","Main---Pause!!");
+        activityLiporter.get(null);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i("Stop!","Stop!!");
+        Log.i("Stop!","Main---Stop!!");
     }
 
-    public String getPackageName(){
-        try{
-            ActivityManager am = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
-            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-            ComponentName topActivity=taskInfo.get(0).topActivity;
-            return topActivity.getPackageName();
-        }catch(Exception e){
-            e.printStackTrace();
-            return "";
-        }
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,12 +98,10 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

@@ -20,34 +20,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+/*
         TableHandler tableHandler = new TableHandler(this,null,null,1);
         UserInfo userInfo = new UserInfo("qwer");
         tableHandler.add(userInfo);
         userInfo.setUserId("asdf");
         tableHandler.add(userInfo);
 
-        //tableHandler.delete(userInfo, "asdf");
-        UserInfo findInfo = (UserInfo) tableHandler.find(userInfo,"qwer");
-        findInfo.getUserId();
-
-        //SQLiteDatabase database = SQLiteDatabase.openDatabase("LibraryDB.db",null,SQLiteDatabase.OPEN_READWRITE);
-
-       //TableHandler tableHandler = new TableHandler(this,null,null,1);
-       // UserInfo userInfo = new UserInfo("qwer");
-       // tableHandler.addUserInfo(userInfo);
-/*
-        UserInfo userInfo = new UserInfo("qwer");
-        AppInfo appInfo = new AppInfo("1234","qwert");
-
-        ManageUserInfo addUserInfo = new ManageUserInfo(this,null,null,1);
-        addUserInfo.add(userInfo);
+        tableHandler.delete(userInfo, "asdf");
+        //UserInfo findInfo = (UserInfo) tableHandler.find(userInfo,"qwer");
+        //findInfo.getUserId();
 */
-    //   AppInfo appInfo = new AppInfo("zxcv","qwer");
-     //   tableHandler.addAppInfo(appInfo);
-
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

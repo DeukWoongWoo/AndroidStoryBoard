@@ -264,39 +264,84 @@ function registerApp(req, res, callback) {
                         if (err) callback(err);
                         else callback(null);
                     });
-                }, function (callback) {
-                    console.log('req.body');
-                    console.log(req.body);
-                    registerStoryboardFile(req, function(err){
-                        callback(err);
-                    });
                 }
             ], function (err) {
                 if (err) {
                     fs.unlink(req.files.storyboard.path);
                     callback(err);
                 } else {
-                    db.addApp(req);
-                    callback(null);
+                    registerStoryboardFile(req, function (err) {
+                        callback(err);
+                    });
                 }
             });
         }
     });
 }
 
-function registerStoryboardFile(req, callback){
-    var file = './users/' + req.session.user_id + '/' + req.body.app_name + '/' + req.files.storyboard.originalFilename;
-    fs.readFile(file, function (err, data) {
-        var obj;
-        try {
-            obj = JSON.parse(data);
-//todo:스토리보드 데이터를 가지고 데이터베이스에 데이터들을 만들어야함.
+function registerStoryboardFile(req, callback) {
+    var file = './users/' + req.session.user_id + '/' + req.body.app_name + '/' + req.body.app_name + '.json';
+    var obj;
+    async.series([
+        function (callback) {
+            fs.readFile(file, function (err, data) {
+                try {
+                    obj = JSON.parse(data);
+                    callback(null);
+                } catch (e) {
+                    callback(e);
+                }
+            });
+        }, function (callback) {
+            db.addApp(req);
             callback(null);
-        } catch (e) {
-            console.log(e);
-            callback(e);
+        }, function (callback) {
+            req.body.user_id = req.session.user_id;
+            for (var i in obj.activity) {
+                //req.body.activity_name = obj.activity[i].name;
+                console.log('here');
+                console.log(obj.activity[i].name);
+                addActivityObject(req, obj.activity[i], function(err){
+                });
+            }
+            callback(null);
+        }, function (callback) {
+
+            callback(null);
+        }
+    ], function (err) {
+        callback(err);
+    });
+}
+
+function addActivityObject(req, activity, callback) {
+    var objects = activity.object;
+    req.body.activity_name = activity.name;
+    db.addActivity(req, function (err) {
+        if (err)callback(err);
+        else {
+            for (var i in objects) {
+                setObjectData(req, activity, objects[i]);
+                console.log(objects[i].name);
+                console.log(req.body);
+                //todo:name 말고 여러가지 object의 속성들을 담아줘야한다.
+                db.addObject(req, function (err) {
+                    if (err)callback(err);
+                });
+            }
         }
     });
+}
+
+function setObjectData(req, activity, objects) {
+    req.body.activity_name = activity.name;
+    req.body.object_name = objects.name;
+    req.body.location_x = objects.x;
+    req.body.location_y = objects.y;
+    req.body.size_width = objects.width;
+    req.body.size_height = objects.height;
+    req.body.type = objects.type;
+    req.body.color = objects.color;
 }
 
 function uploadRequest(req, callback) {
@@ -318,7 +363,7 @@ function uploadRequest(req, callback) {
 function fileUpload(req, callback) {
     var tmpOfTarget = req.files.storyboard.path;
     var locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
-    var target = locationOfTarget + req.files.storyboard.name;
+    var target = locationOfTarget + req.body.app_name + '.json';
 
     async.series([
         function (callback) {

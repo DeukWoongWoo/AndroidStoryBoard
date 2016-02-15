@@ -48,7 +48,7 @@
                 "height": 500,
                 "object": [
                     {
-                        "name": "c9",
+                        "name": "b1",
                         "x": 100,
                         "y": 100,
                         "width": 100,
@@ -57,7 +57,7 @@
                         "type" : "button"
                     },
                     {
-                        "name": "a2",
+                        "name": "b2",
                         "x": 50,
                         "y": 50,
                         "width": 100,
@@ -66,7 +66,7 @@
                         "type" : "radio button"
                     },
                     {
-                        "name": "c8",
+                        "name": "b3",
                         "x": 50,
                         "y": 150,
                         "width": 100,
@@ -84,7 +84,7 @@
                 "height": 500,
                 "object": [
                     {
-                        "name": "c9",
+                        "name": "c1",
                         "x": 100,
                         "y": 100,
                         "width": 100,
@@ -94,7 +94,7 @@
                         "next": "a"
                     },
                     {
-                        "name": "c8",
+                        "name": "c2",
                         "x": 50,
                         "y": 50,
                         "width": 100,
@@ -104,7 +104,7 @@
                         "next": "b"
                     },
                     {
-                        "name": "c7",
+                        "name": "c3",
                         "x": 50,
                         "y": 150,
                         "width": 100,

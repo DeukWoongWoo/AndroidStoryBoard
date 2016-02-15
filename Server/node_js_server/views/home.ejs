@@ -244,8 +244,8 @@
 
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
-//                    console.log('home - /get/object_info');
-//                    console.log(data);
+                    console.log('home - /get/object_info');
+                    console.log(data);
                     initDataToArray();
                     for (var i = 0; i < data.length; i++) {
                         setObjectData(i, data);

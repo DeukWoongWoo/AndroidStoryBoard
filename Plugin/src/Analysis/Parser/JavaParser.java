@@ -32,7 +32,7 @@ public class JavaParser implements FileParser {
             System.out.println("Methods length : "+p.getMethods().length);
             for(PsiMethod method : p.getMethods()){
                 System.out.println(">> Method Name : "+method.getName());
-                if(method.getName().equals("onCreate")){
+//                if(method.getName().equals("onCreate")){
                     PsiCodeBlock body = method.getBody();
                     for(PsiStatement statement : body.getStatements()){
                         System.out.println(">>>> Statement Name :"+statement.getText());
@@ -42,7 +42,7 @@ public class JavaParser implements FileParser {
                             System.out.println(">>>>>>>> Element Children Name : " + e.getText());
                         }
                     }
-                }
+//                }
             }
         }
     }

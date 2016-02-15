@@ -5,15 +5,54 @@ var async = require('async');
 var fs = require('fs');
 var mkdirp = require('mkdirp');    // mkdirp 모듈있는 곳을 설정해주면됩니다.
 
+var dateutils = require('date-utils');
+
+router.get('/storyboard/:app_name/:file_name', function (req, res) {
+    //TODO: req.params.user_id -> session.user_id로 변경 해야함
+    var fileUrl = './users/' + req.session.user_id + '/' + req.params.app_name + '/' + req.params.file_name;
+    fs.exists(fileUrl, function (exists) {
+        if (exists) {
+            fs.readFile(fileUrl, function (err, data) {
+                var obj;
+                try{
+                    obj = JSON.parse(data);
+                    res.send(obj);
+                }catch(e){
+                    console.log(e);
+                }
+            });
+        } else
+            res.send('file is not exists');
+    })
+});
+
+router.get('/image/:user_id/:app_name/:file_name', function (req, res) {
+    //TODO: req.params.user_id -> session.user_id로 변경 해야함
+    var fileUrl = './users/' + req.params.user_id + '/' + req.params.app_name + '/' + req.params.file_name;
+    fs.exists(fileUrl, function (exists) {
+        if (exists) {
+            fs.readFile(fileUrl, function (err, data) {
+                    res.end(data);
+            });
+        } else {
+            res.eend('file is not exists');
+        }
+    })
+});
+
+router.get('/str', function (req, res) {
+    res.render('webstoryboard');
+});
+
 router.get('/ajax', function (req, res) {
-    console.log(req.body.name); // Ajax parameter data
+    //console.log(req.body.name); // Ajax parameter data
     db.query('select * from user_info', function (error, result) {
         res.send(result);
     });
 });
 
 router.get('/ajax/frequency', function (req, res) {
-    console.log(req.body.name); // Ajax parameter data
+    //console.log(req.body.name); // Ajax parameter data
     db.query('select object_info.object_frequency from object_info', function (error, result) {
         res.send(result);
     });
@@ -26,25 +65,23 @@ router.get('/makedata', function (req, res) {
 });
 
 router.post('/makedata/app', function (req, res) {
-    db.getAppByUserId(req, function (err, result) {
-        if (err)res.send(err);
-        else res.render('makedataapp', {app: result, user_id: req.body.user_id});
-    });
+    getAppAndRender(req, res);
 });
 
 router.post('/makedata/app/add', function (req, res) {
     db.addApp(req);
-    //TODO:새로고침
+    getAppAndRender(req, res);
 });
 
-router.post('/makedata/activity', function (req, res) {
-    db.getActivityByAppNum(req, function (err, result) {
+function getAppAndRender(req, res) {
+    db.getAppByUserId(req, function (err, result) {
         if (err)res.send(err);
-        else {
-            console.log('req body user_id : ', req.body);
-            res.render('makedataactivity', {activity: result, app_num: req.body.app_num, app_name: req.body.app_name});
-        }
+        else res.render('makedataapp', {app: result, user_id: req.body.user_id});
     });
+}
+
+router.post('/makedata/activity', function (req, res) {
+    getActivityAndRender(req, res);
 });
 
 router.post('/makedata/activity/add', function (req, res) {
@@ -55,22 +92,22 @@ router.post('/makedata/activity/add', function (req, res) {
     };
     db.query('insert into activity_info set ?', activity, function (err) {
         if (err)console.error(err);
+        else
+            getActivityAndRender(req, res);
     });
-    //TODO:새로고침
 });
+
+function getActivityAndRender(req, res) {
+    db.getActivityByAppNum(req, function (err, result) {
+        if (err)res.send(err);
+        else
+            res.render('makedataactivity', {activity: result, app_num: req.body.app_num, app_name: req.body.app_name});
+    });
+}
 
 
 router.post('/makedata/object', function (req, res) {
-    db.getObjectByActivityNum(req, function (err, result) {
-        if (err)res.send(err);
-        else {
-            res.render('makedataobject', {
-                object: result,
-                activity_num: req.body.activity_num,
-                activity_name: req.body.activity_name
-            });
-        }
-    });
+    getObjectAndRender(req, res);
 });
 
 router.post('/makedata/object/add', function (req, res) {
@@ -84,40 +121,59 @@ router.post('/makedata/object/add', function (req, res) {
     console.log(object.image_num);
     db.query('insert into object_info set ?', object, function (err) {
         if (err)console.error(err);
+        else
+            getObjectAndRender(req, res);
     });
-    //TODO:새로고침
 });
+
+function getObjectAndRender(req, res) {
+    //console.log(req.body);
+    db.getObjectByActivityNum(req, function (err, result) {
+        if (err)res.send(err);
+        else {
+            res.render('makedataobject', {
+                object: result,
+                activity_num: req.body.activity_num,
+                activity_name: req.body.activity_name
+            });
+        }
+    });
+}
 
 router.post('/makedata/object/use', function (req, res) {
-    console.log(req.body);
+    var dt = new Date();
+    var d = dt.toFormat('YYYY-MM-DD HH24:MI:SS');
+
+    console.log('[' + d + '] ' + '현재 시간');
     var use = {
-        object_num : req.body.object_num,
-        occur_time : '2016-02-01',
-        event_type : 'button'
+        object_num: req.body.object_num,
+        occur_time: d,
+        event_type: 'button'
     }
 
-    db.query('insert into object_use_info set ?', use, function(err){
-        if(err)console.error(err);
+    db.query('insert into object_use_info set ?', use, function (err) {
+        if (err)console.error(err);
     });
-    db.query('update object_info set object_frequency=object_frequency+1 where object_num like ' + req.body.object_num, function(err){
-        if(err)console.error(err);
+    db.query('update object_info set object_frequency=object_frequency+1 where object_num like ' + req.body.object_num, function (err) {
+        if (err)console.error(err);
     });
-    //TODO:새로고침
+
+    getObjectAndRender(req, res);
 });
 router.post('/makedata/object/err', function (req, res) {
-    console.log(req.body);
+    //console.log(req.body);
     var use = {
-        object_num : req.body.object_num,
-        occur_time : '2016-02-01',
+        object_num: req.body.object_num,
+        occur_time: '2016-02-01',
     }
 
-    db.query('insert into error_use_info set ?', use, function(err){
-        if(err)console.error(err);
+    db.query('insert into error_use_info set ?', use, function (err) {
+        if (err)console.error(err);
     });
-    db.query('update object_info set error_frequency=error_frequency+1 where object_num like ' + req.body.object_num, function(err){
-        if(err)console.error(err);
+    db.query('update object_info set error_frequency=error_frequency+1 where object_num like ' + req.body.object_num, function (err) {
+        if (err)console.error(err);
     });
-    //TODO:새로고침
+    getObjectAndRender(req, res);
 });
 
 router.post('/date-search', function (req, res) {
@@ -136,6 +192,20 @@ router.post('/date-search', function (req, res) {
 
 router.post('/get/object_info', function (req, res) {
     db.getUserAppObject(req, function (err, result) {
+        if (err) console.log(err);
+        else res.send(result);
+    });
+});
+
+router.post('/get/object_use_info', function (req, res) {
+    db.getObjectUseInfoByNum(req, function (err, result) {
+        if (err) console.log(err);
+        else res.send(result);
+    });
+});
+
+router.post('/get/error_use_info', function (req, res) {
+    db.getErrorUseInfoByNum(req, function (err, result) {
         if (err) console.log(err);
         else res.send(result);
     });
@@ -265,9 +335,11 @@ function checkFile(req, callback) {
 function isExistAppName(req, callback) {
     var err = null;
     db.getAppList(req, function (appList) {
-        for (var i = 0; i < appList.length; i++) {
-            if (req.body.app_name == appList[i].app_name) {
-                err = '같은 이름이 있습니다';
+        if (isDefined(appList)) {
+            for (var i = 0; i < appList.length; i++) {
+                if (req.body.app_name == appList[i].app_name) {
+                    err = '같은 이름이 있습니다';
+                }
             }
         }
         callback(err);

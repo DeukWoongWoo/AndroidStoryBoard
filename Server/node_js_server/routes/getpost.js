@@ -65,8 +65,8 @@ router.post('/test', function(req, res){
             console.log('h : ' + object.size.h);
             console.log('image : ' + object.image);
             console.log('color : ' + object.color);
-            console.log('x : ' + object.location.x);
-            console.log('y : ' + object.location.y);
+            console.log('x : ' + object.selectId.x);
+            console.log('y : ' + object.selectId.y);
         });
     });
     res.send('success');

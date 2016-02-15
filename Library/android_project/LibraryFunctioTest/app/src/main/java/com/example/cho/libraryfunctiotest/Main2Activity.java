@@ -1,4 +1,4 @@
-package com.example.cho.xml_parsing_test;
+package com.example.cho.libraryfunctiotest;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

@@ -167,6 +167,8 @@ mysql.addApp = function (param) {
 }
 
 mysql.addActivity = function (param, callback) {
+    console.log('mysql.addActivity');
+    console.log(param.body);
     var activity = {
         activity_name: param.body.activity_name,
         total_time: 0,
@@ -220,7 +222,7 @@ mysql.isActivityNameByUserIdAppName = function (param, callback) {
 mysql.getAppNumByUserIdAppName = function (param, callback) {
     mysql.query('SELECT app_info.app_num FROM user_info '
         + ' INNER JOIN app_info ON user_info.user_id = app_info.user_id '
-        + ' AND user_info.user_id = \'' + param.body.user_id + '\' '
+        + ' AND user_info.user_id = \'' + param.body.user_id + '\' '//session
         + ' AND app_info.app_name = \'' + param.body.app_name + '\' '
         , function (err, result) {
             callback(err, result);
@@ -228,18 +230,66 @@ mysql.getAppNumByUserIdAppName = function (param, callback) {
 }
 
 mysql.addObject = function (param) {
+    var activityName = param.body.activity_name;
     var object = {
         object_name: param.body.object_name,
+        location_x : param.body.location_x,
+        location_y : param.body.location_y,
+        size_width : param.body.size_width,
+        size_height : param.body.size_height,
+        type : param.body.type ? param.body.type : 'button',
+        color : param.body.color ? param.body.color : 'gray',
+        image_num: param.body.image_num ? param.body.image_num : 1,//todo
+        activity_num: param.body.activity_num,
+
         object_frequency: 0,
-        error_frequency: 0,
-        image_num: param.body.image_num,
-        activity_num: param.body.activity_num
+        error_frequency: 0
     };
+    console.log('mysql.addObject');
+    console.log(param.body.activity_name);
     /**
      * TODO:오프젝트의 위치, 크기, 텍스트, 컬러 설정해줘야함
      * TODO:user_id에 따라서 activity_num, image_num을 찾아서 넣어줘야함
      */
-    insertData('object', object);
+    mysql.getActivityNumByUserIdAppNameActivityName(param, activityName, function (err, result) {
+        if (err)console.error(err);
+        else {
+            console.log('getActivityNumByUserIdAppNameActivityName');
+            console.log(result[0].activity_num);
+            object.activity_num = result[0].activity_num;
+            insertData('object', object);
+        }
+    });
+}
+
+mysql.getActivityNumByUserIdAppNameActivityName = function (param, activityName, callback) {
+    mysql.getAppNumByUserIdAppName(param, function (err, result) {
+        if (err) callback(err);
+        else {
+            param.body.app_num = result[0].app_num;
+            console.log('getAppNumByUserIdAppName');
+            console.log(result[0].app_num);
+            console.log(param.body.activity_name);
+            mysql.getActivityNumByAppNumActivityName(param, activityName, function (err, result) {
+                if (err) callback(err);
+                else {
+                    console.log('getActivityNumByAppNumActivityName');
+                    console.log(result[0].activity_num);
+                    callback(null, result);
+                }
+            });
+        }
+    });
+}
+
+mysql.getActivityNumByAppNumActivityName = function (param, activityName, callback) {
+    mysql.query('SELECT activity_num FROM activity_info '
+        + ' WHERE app_num = ' + param.body.app_num
+        + ' AND activity_name = \'' + activityName + '\''
+        , function (err, result) {
+            if (err) callback(err);
+            else callback(null, result);
+        });
 }
 
 mysql.addAppUse = function (param) {

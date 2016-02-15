@@ -79,7 +79,7 @@ var Bar = function (name) {
     this.setActivityName = function () {
         if(this.activityName == null) return;
         var activityName = this.activityName;
-        console.log(activityName);
+
         this.dataObject.data(activityName)
             .attr("activity-name", function (d, i) {
                 return d;

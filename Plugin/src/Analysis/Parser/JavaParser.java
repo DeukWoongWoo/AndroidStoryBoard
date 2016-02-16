@@ -153,9 +153,10 @@ public class JavaParser implements FileParser {
                 if(idStr.length > 1) intentName = idStr[idStr.length-1];
                 else intentName = idStr[0];
                 javaDTO.setIntentName(intentName);
-                javaDTO.setNextActivity(strSplit[1].substring(strSplit[1].indexOf("(")+1, strSplit[1].indexOf(")")).split(",")[1].split("\\.")[0]);
-                javaDTO.setIntentName(((PsiMethod)statement.getParent().getParent()).getName());
-                // TODO: 2016-02-17 JavaDAO update
+                javaDTO.setNextActivity(strSplit[1].substring(strSplit[1].indexOf("(")+1, strSplit[1].indexOf(")")).split(",")[1].split("\\.")[0].split("\\s")[1]);
+                javaDTO.setIntentFuncName(((PsiMethod)statement.getParent().getParent()).getName());
+
+                DatabaseManager.getInstance().updateToJava(table->table.updateJava(javaDTO));
             }
             return true;
         }

@@ -127,6 +127,16 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
 
     @Override
     public void updateJava(JavaDTO javaDTO) {
-
+        System.out.println("update Java table ...");
+        Statement statement = null;
+        Connection connection = getConnection();
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(QueryBuilder.update(javaTableName).set("nextActivity='"+javaDTO.getNextActivity()+"'","intentName='"+javaDTO.getIntentName()+"'","intentFuncName='"+javaDTO.getIntentFuncName()+"'").where("num="+currentJavaId).build());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            close(connection,statement);
+        }
     }
 }

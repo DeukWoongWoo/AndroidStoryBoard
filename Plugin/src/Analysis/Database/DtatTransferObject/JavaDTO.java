@@ -114,4 +114,5 @@ public class JavaDTO {
     public String getInsertQuery(){
         return QueryBuilder.insert().into(tableName).columns(columns).values(values).build();
     }
+
 }

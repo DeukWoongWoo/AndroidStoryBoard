@@ -198,11 +198,6 @@ Graph.prototype = {
             range: {start: 0, end: calY(this.maxY, this.rY) - 1},
             domain: {start: this.maxY, end: 0}
         });
-        console.log('yAxis');
-        console.log(this.yAxisData);
-        console.log(this.maxY);
-        console.log(this.rY);
-        console.log(this.svgHeight);
     },
 
     createAxis: function () {

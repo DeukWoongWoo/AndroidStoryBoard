@@ -24,82 +24,7 @@
     <script src="javascripts/graph/Line.js"></script>
     <script src="javascripts/graph/Circle.js"></script>
     <script src="javascripts/drag.js"></script>
-
-    <script>
-        var sideMenu = function () {
-            $('.fa').mouseover(function () {
-                $(this).css("color", "gray");
-            }).mouseout(function () {
-                $(this).css("color", "");
-            });
-
-            $('.fa-bars').click(function () {
-                $('.sidebar').animate({
-                    left: "0px"
-                }, 200);
-
-                $('.content-body').animate({
-                    left: "300px"
-                }, 200);
-
-                $('.fa-bars').css(
-                        "visibility", "hidden"
-                );
-            });
-
-            $('.content').click(function () {
-                $('.sidebar').animate({
-                    left: "-300px"
-                }, 200);
-
-                $('.content-body').animate({
-                    left: "0px"
-                }, 200);
-
-                $('.fa-bars').css(
-                        "visibility", ""
-                );
-            });
-
-            $('.main-body').click(function () {
-                $('.sidebar').animate({
-                    left: "-300px"
-                }, 200);
-
-                $('.content-body').animate({
-                    left: "0px"
-                }, 200);
-
-                $('.fa-bars').css(
-                        "visibility", ""
-                );
-            });
-        }
-        var registerApp = function () {
-            $('#register-app').click(function () {
-                $('.register-app-form').css("display", "");
-                $('#register-app').css("display", "none");
-            });
-
-            $('#register-app-close').click(function () {
-                $('.register-app-form').css("display", "none");
-                $('#register-app').css("display", "");
-            });
-        }
-
-        var main = function () {
-            sideMenu();
-            registerApp();
-
-            $('#rect-info-close').click(function () {
-                $(this).parent().parent().css("visibility", "hidden");
-            });
-
-            $('.rect-info').css("left", screen.width * 0.3 + "px").css("top", screen.height * 0.3 + "px");
-        };
-
-        $(document).ready(main);
-    </script>
+    <script src="javascripts/SideMenu.js"></script>
 
 </head>
 <body>
@@ -119,7 +44,6 @@
                 <button type="submit" class="btn btn-primary" id="register-app-confirm">Confirm</button>
                 <button type="button" class="btn btn-warning" id="register-app-close">Close</button>
             </div>
-
         </form>
     </div>
 
@@ -127,7 +51,20 @@
         <b style="font-size:30px;">App List</b>
         <ul>
             <% app.forEach(function (app) { %>
-            <li><a class="btn btn-inverse app_name" href="#"><%= app.app_name %></a></li>
+            <li>
+                <div class="btn-group" style="display: inline-block">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                       <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <a class="app-name" style="display : none;"><%= app.app_name %></a>
+                        <li><a class="btn btn-inverse" id="re-register">Re Register</a></li>
+                        <li><a class="btn btn-inverse" id="add-image">Add Image</a></li>
+                        <li><a class="btn btn-inverse delete-app" >Delete</a></li>
+                    </ul>
+                </div>
+                <div class="btn btn-inverse app_name"><%= app.app_name %></div>
+            </li>
             <% }) %>
         </ul>
     </div>
@@ -164,6 +101,7 @@
             <div class="graph light" id="use-graph" style="display: inline-block"></div>
             <div class="graph light" id="use-line-graph" style="display: inline-block"></div>
             <div class="graph light" id="err-graph" style="display: inline-block"></div>
+            <div id="err-log" style="display: inline-block"></div>      <!--TODO:error log 띄우기-->
             <div class="graph light" id="err-line-graph" style="display: inline-block"></div>
         </div>
     </div>
@@ -225,7 +163,7 @@
     var user_id;
     var intervalID;
 
-    $('#storyboard').load("str");
+        $('#storyboard').load("str");
 
     useGraph.setDataColor('#457D97');
     errGraph.setDataColor('#EA3556');
@@ -244,8 +182,6 @@
 
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {
-                    console.log('home - /get/object_info');
-                    console.log(data);
                     initDataToArray();
                     for (var i = 0; i < data.length; i++) {
                         setObjectData(i, data);
@@ -256,10 +192,9 @@
                     createFrequencyGraphs();
                     /**
                      * 타이머
+                     * clearInterval(intervalID);
+                     * intervalID = setInterval(updateFrequencyGraph, 2000);
                      */
-//                    clearInterval(intervalID);
-//                    intervalID = setInterval(updateFrequencyGraph, 2000);
-
                     rectMouseOver();
                 });
     });
@@ -305,12 +240,10 @@
     function createUseTimeGraph() {
         $('#search-date').click(function () {
             setSearchTime();
-            console.log("createUseTimeGraph");
-            useLineGraph.location('#use-line-graph');
-            useLineGraph.graphData(searchTime);
-            useLineGraph.createGraph();
-            useLineGraph.setGraphType(useLine).create();
-            console.log("createUseTimeGraph - userLineGraph");
+            useLineGraph.location('#use-line-graph')
+                    .graphData(searchTime)
+                    .createGraph()
+                    .setGraphType(useLine).create();
             errLineGraph.location('#err-line-graph')
                     .graphData(searchTime)
                     .createGraph()
@@ -322,10 +255,7 @@
         startDate = (new Date(document.getElementById("start-date").value).getTime()) / oneDay - 1;
         endDate = (new Date(document.getElementById("end-date").value).getTime()) / oneDay;
 
-//        console.log('start date : ' + startDate);
-//        console.log('end date : ' + endDate);
-//        console.log('- : ' + (endDate - startDate));
-        searchTime = new Array(xAxisSize);//.fill(0);
+        searchTime = new Array(xAxisSize).fill(0);
     }
 
     function initDataToArray() {
@@ -405,24 +335,18 @@
 
     function highlightByClassName(objectName, className) {
 
-
-
         $('.graph rect').css("fill", "");
         $('.graph circle').css("fill", "");
         $('.storyboard rect').css("stroke", "");
         $('.storyboard circle').css("stroke", "");
-//        d3.selectAll('.storyboard rect').transition().duration(300).attr('stroke', '');
-//        d3.selectAll('.storyboard circle').transition().duration(300).attr('stroke', '');
-
-
-//        $('.graph circle' + className + '#' + objectName).css("fill", "gold");
+        $('.storyboard rect').css("stroke-width", "");
+        $('.storyboard circle').css("stroke-width", "");
         $('.storyboard rect' + className + '#' + objectName).css("stroke", "gold");
+        $('.storyboard rect' + className + '#' + objectName).css("stroke-width", "20px");
         $('.storyboard circle' + className + '#' + objectName).css("stroke", "gold");
-
+        $('.storyboard circle' + className + '#' + objectName).css("stroke-width", "20px");
         $('.graph rect' + className + '#' + objectName).css("fill", "gold");
         $('.graph circle' + className + '#' + objectName).css("fill", "gold");
-//        d3.select('.storyboard rect' + className + '#' + objectName).transition().duration(300).attr('stroke', 'gold');
-//        d3.select('.storyboard circle' + className + '#' + objectName).transition().duration(300).attr('stroke', 'gold');
     }
 
     function popObjectInfoByClassName(className) {
@@ -467,7 +391,6 @@
         var temp;
         for (var i = 0; i < data.length; i++) {
             temp = (new Date(data[i].occur_time).getTime()) / oneDay;
-//            console.log(temp);
             if (temp > startDate && temp < endDate)
                 occur_time[i] = parseInt((temp - startDate) * (xAxisSize / (endDate - startDate)));
         }
@@ -475,7 +398,6 @@
         occur_time.sort(function (left, right) {
             return left - right;
         });
-
 
         for (var i = 0; i < occur_time.length; i++)
             searchTime[occur_time[i]]++;

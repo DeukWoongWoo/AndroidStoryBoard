@@ -1,5 +1,6 @@
-package GUI.StoryBoard;
+package GUI.StoryBoard.UI;
 
+import GUI.StoryBoard.storyBoard_func;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.wm.ToolWindow;
@@ -11,11 +12,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * Created by 우철 on 2016-01-15.
  */
-public class mainViewFactory implements ToolWindowFactory, ActionListener{
+public class mainViewFactory implements ToolWindowFactory{
     private JPanel fullContent;
     private JToolBar maintoolbar;
     private JButton save_b;
@@ -33,23 +35,11 @@ public class mainViewFactory implements ToolWindowFactory, ActionListener{
     private JPanel centerContent;
     private ToolWindow mainViewWindow;
 
-    public mainViewFactory() {
+    public mainViewFactory() throws IOException {
         System.out.println("mainViewFactory!!");
-        IconLoader.findIcon("/icon/star.png");
-
-        ///////////////////////////////////////////////
-        ///   이벤트 등록하기
-        ///////////////////////////////////////////////////
-        //                 maintoolbar
-        ///////////////////////////////////////////////////
-        open_b.addActionListener(this);
-        save_b.addActionListener(this);
-        refresh_b.addActionListener(this);
-        ///////////////////////////////////////////////////
-        //                 commandtoolbar
-        ///////////////////////////////////////////////////
-        undo_b.addActionListener(this);
-        redo_b.addActionListener(this);
+        centerContent = new storyBoard_func();
+        System.out.println(centerContent);
+        centerContent.setVisible(true);
 
     }
 
@@ -64,28 +54,4 @@ public class mainViewFactory implements ToolWindowFactory, ActionListener{
 
     }
 
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==open_b){
-
-        }
-        else if(e.getSource()==save_b)
-        {
-
-        }
-        else if(e.getSource()==refresh_b)
-        {
-
-        }
-        else if(e.getSource()==redo_b)
-        {
-
-        }
-        else if(e.getSource()==undo_b)
-        {
-
-        }
-
-    }
 }

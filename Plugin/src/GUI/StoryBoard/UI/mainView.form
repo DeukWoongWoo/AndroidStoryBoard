@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.StoryBoard.mainViewFactory">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.StoryBoard.UI.mainViewFactory">
   <grid id="27dc6" binding="fullContent" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="532" height="400"/>
+      <xy x="20" y="20" width="1414" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -162,11 +162,7 @@
               <foreground color="-1"/>
             </properties>
             <border type="none"/>
-            <children>
-              <nested-form id="1b9b4" form-file="GUI/StoryBoard/UI/storyboard.form">
-                <constraints border-constraint="Center"/>
-              </nested-form>
-            </children>
+            <children/>
           </grid>
         </children>
       </grid>

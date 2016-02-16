@@ -1,0 +1,198 @@
+{
+        "appName": "test",
+        "activity": [
+            {
+                "name": "a",
+                "x": 50,
+                "y": 100,
+                "width": 300,
+                "height": 500,
+                "object": [
+                    {
+                        "name": "a1",
+                        "x": 10,
+                        "y": 10,
+                        "width": 100,
+                        "height": 30,
+                        "color": "red",
+                        "type" : "button",
+                        "type" : "radio button"
+                    },
+                    {
+                        "name": "a2",
+                        "x": 100,
+                        "y": 10,
+                        "width": 100,
+                        "height": 30,
+                        "color": "green",
+                        "type" : "button",
+                        "next": "c"
+                    },
+                    {
+                        "name": "a3",
+                        "x": 10,
+                        "y": 100,
+                        "width": 100,
+                        "height": 30,
+                        "color": "blue",
+                        "type" : "button",
+			"next": "b"
+                    }
+                ]
+            },
+            {
+                "name": "b",
+                "x": 400,
+                "y": 600,
+                "width": 300,
+                "height": 500,
+                "object": [
+                    {
+                        "name": "b1",
+                        "x": 100,
+                        "y": 100,
+                        "width": 100,
+                        "height": 30,
+                        "color": "black",
+                        "type" : "button"
+                    },
+                    {
+                        "name": "b2",
+                        "x": 50,
+                        "y": 50,
+                        "width": 100,
+                        "height": 30,
+                        "color": "green",
+                        "type" : "radio button"
+                    },
+                    {
+                        "name": "b3",
+                        "x": 50,
+                        "y": 150,
+                        "width": 100,
+                        "height": 30,
+                        "color": "yellow",
+                        "type" : "button"
+                    }
+                ]
+            },
+            {
+                "name": "c",
+                "x": 800,
+                "y": 200,
+                "width": 300,
+                "height": 500,
+                "object": [
+                    {
+                        "name": "c1",
+                        "x": 100,
+                        "y": 100,
+                        "width": 100,
+                        "height": 30,
+                        "color": "black",
+                        "type" : "button",
+                        "next": "a"
+                    },
+                    {
+                        "name": "c2",
+                        "x": 50,
+                        "y": 50,
+                        "width": 100,
+                        "height": 30,
+                        "color": "green",
+                        "type" : "button",
+                        "next": "b"
+                    },
+                    {
+                        "name": "c3",
+                        "x": 50,
+                        "y": 150,
+                        "width": 100,
+                        "height": 30,
+                        "color": "yellow",
+                        "type" : "button"
+
+                    }
+                ]
+            },
+            {
+                "name": "d",
+                "x": 800,
+                "y": 200,
+                "width": 300,
+                "height": 500,
+                "object": [
+                    {
+                        "name": "d1",
+                        "x": 100,
+                        "y": 100,
+                        "width": 100,
+                        "height": 30,
+                        "color": "black",
+                        "type" : "button",
+                        "next": "a"
+                    },
+                    {
+                        "name": "d2",
+                        "x": 50,
+                        "y": 50,
+                        "width": 100,
+                        "height": 30,
+                        "color": "green",
+                        "type" : "button",
+                        "next": "b"
+                    },
+                    {
+                        "name": "d3",
+                        "x": 50,
+                        "y": 150,
+                        "width": 100,
+                        "height": 30,
+                        "color": "yellow",
+                        "type" : "button"
+
+                    }
+                ]
+            },
+            {
+                "name": "e",
+                "x": 800,
+                "y": 200,
+                "width": 300,
+                "height": 500,
+                "object": [
+                    {
+                        "name": "e1",
+                        "x": 100,
+                        "y": 100,
+                        "width": 100,
+                        "height": 30,
+                        "color": "black",
+                        "type" : "button",
+                        "next": "a"
+                    },
+                    {
+                        "name": "e2",
+                        "x": 50,
+                        "y": 50,
+                        "width": 100,
+                        "height": 30,
+                        "color": "green",
+                        "type" : "button",
+                        "next": "b"
+                    },
+                    {
+                        "name": "e3",
+                        "x": 50,
+                        "y": 150,
+                        "width": 100,
+                        "height": 30,
+                        "color": "yellow",
+                        "type" : "button"
+
+                    }
+                ]
+            }
+            
+        ]
+    }

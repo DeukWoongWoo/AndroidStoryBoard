@@ -26,10 +26,10 @@ router.post('/app/activity',function(req, res){
         if(err)res.send(err);
         else res.send('success');
     });
-
 });
 
 router.post('/app/activity/use',function(req, res){
+    console.log(req.body);
     db.addActivityUse(req);
     res.send('success');
 });
@@ -40,6 +40,7 @@ router.post('/app/activity/object',function(req, res){
 });
 
 router.post('/app/activity/object/use',function(req, res){
+    console.log(req.body);
     db.addObjectUse(req);
     res.send('success');
 });

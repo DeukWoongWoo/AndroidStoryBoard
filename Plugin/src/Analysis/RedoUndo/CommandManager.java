@@ -3,6 +3,7 @@ package Analysis.RedoUndo;
 import Analysis.RedoUndo.Command.CodeCleanCommand;
 import Analysis.RedoUndo.Command.CodeWriteCommand;
 import Analysis.RedoUndo.Command.Command;
+import Analysis.RedoUndo.CommandObj.Code;
 
 import java.util.HashMap;
 import java.util.Stack;
@@ -25,6 +26,13 @@ public class CommandManager{
     }
 
     public void execute(CommandKey key) {
+        System.out.println("Command Execute...");
+        Command command = commandMap.get(key);
+        command.execute();
+        undo.push(command);
+    }
+
+    public void execute(CommandKey key, Code code) {
         System.out.println("Command Execute...");
         Command command = commandMap.get(key);
         command.execute();

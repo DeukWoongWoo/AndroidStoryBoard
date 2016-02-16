@@ -167,6 +167,8 @@ mysql.addApp = function (param) {
 }
 
 mysql.addActivity = function (param, callback) {
+    console.log('mysql.addActivity');
+    console.log(param.body);
     var activity = {
         activity_name: param.body.activity_name,
         total_time: 0,
@@ -220,7 +222,7 @@ mysql.isActivityNameByUserIdAppName = function (param, callback) {
 mysql.getAppNumByUserIdAppName = function (param, callback) {
     mysql.query('SELECT app_info.app_num FROM user_info '
         + ' INNER JOIN app_info ON user_info.user_id = app_info.user_id '
-        + ' AND user_info.user_id = \'' + param.body.user_id + '\' '
+        + ' AND user_info.user_id = \'' + param.body.user_id + '\' '//session
         + ' AND app_info.app_name = \'' + param.body.app_name + '\' '
         , function (err, result) {
             callback(err, result);
@@ -228,19 +230,94 @@ mysql.getAppNumByUserIdAppName = function (param, callback) {
 }
 
 mysql.addObject = function (param) {
+    var activityName = param.body.activity_name;
     var object = {
         object_name: param.body.object_name,
+        location_x: param.body.location_x,
+        location_y: param.body.location_y,
+        size_width: param.body.size_width,
+        size_height: param.body.size_height,
+        type: param.body.type ? param.body.type : 'button',
+        color: param.body.color ? param.body.color : 'gray',
+        image_num: param.body.image_num ? param.body.image_num : 1,//todo
+        activity_num: param.body.activity_num,
+
         object_frequency: 0,
-        error_frequency: 0,
-        image_num: param.body.image_num,
-        activity_num: param.body.activity_num
+        error_frequency: 0
     };
+    console.log('mysql.addObject');
+    console.log(param.body.activity_name);
     /**
      * TODO:오프젝트의 위치, 크기, 텍스트, 컬러 설정해줘야함
      * TODO:user_id에 따라서 activity_num, image_num을 찾아서 넣어줘야함
      */
-    insertData('object', object);
+    mysql.getActivityNumByUserIdAppNameActivityName(param, activityName, function (err, result) {
+        if (err)console.error(err);
+        else {
+            console.log('getActivityNumByUserIdAppNameActivityName');
+            console.log(result[0].activity_num);
+            object.activity_num = result[0].activity_num;
+            insertData('object', object);
+        }
+    });
 }
+
+mysql.getActivityNumByUserIdAppNameActivityName = function (param, activityName, callback) {
+    mysql.getAppNumByUserIdAppName(param, function (err, result) {
+        if (err) callback(err);
+        else {
+            param.body.app_num = result[0].app_num;
+            console.log('getAppNumByUserIdAppName');
+            console.log(result[0].app_num);
+            console.log(param.body.activity_name);
+            mysql.getActivityNumByAppNumActivityName(param, activityName, function (err, result) {
+                if (err) callback(err);
+                else {
+                    console.log('getActivityNumByAppNumActivityName');
+                    console.log(result[0].activity_num);
+                    callback(null, result);
+                }
+            });
+        }
+    });
+}
+
+mysql.getActivityNumByAppNumActivityName = function (param, activityName, callback) {
+    mysql.query('SELECT activity_num FROM activity_info '
+        + ' WHERE app_num = ' + param.body.app_num
+        + ' AND activity_name = \'' + activityName + '\''
+        , function (err, result) {
+            if (err) callback(err);
+            else callback(null, result);
+        });
+}
+
+mysql.getActivityNumByAppNum = function (app_num, callback) {
+    mysql.query('SELECT activity_num FROM activity_info '
+        + ' WHERE app_num = ' + app_num
+        , function (err, result) {
+            if (err) callback(err);
+            else callback(null, result);
+        });
+}
+
+mysql.getObjectNumByActivityNum = function (activity_num, callback) {
+    mysql.query('SELECT object_num, image_num FROM object_info '
+        + ' WHERE activity_num = ' + activity_num
+        , function (err, result) {
+            if (err) callback(err);
+            else callback(null, result);
+        });
+}
+
+//mysql.getImageNumByObjectNum = function(object_num, callback){
+//    mysql.query('SELECT image_num FROM image '
+//        + ' WHERE object_num = ' + object_num
+//        , function(err, result){
+//            if (err) callback(err);
+//            else callback(null, result);
+//        });
+//}
 
 mysql.addAppUse = function (param) {
     var appUse = {
@@ -322,6 +399,92 @@ function insertData(table, data) {
     mysql.query('insert into ' + table + '_info set ?', data, throwError);
 }
 
+mysql.deleteObjectUseByObjectNum = function (objectNums, callback) {
+    var cnt = 0;
+    var length = objectNums.length;
+    if(length == 0) callback(null);
+    for (var i in objectNums) {
+        mysql.query('DELETE FROM object_use_info WHERE object_num = ' + objectNums[i]
+            , function (err) {
+                if (err)callback(err);
+            });
+        cnt++;
+        if (cnt == length) callback(null);
+    }
+}
+
+mysql.deleteObjectErrByObjectNum = function (objectNums, callback) {
+    var cnt = 0;
+    var length = objectNums.length;
+    if(length == 0) callback(null);
+    for (var i in objectNums) {
+        mysql.query('DELETE FROM error_use_info WHERE object_num = ' + objectNums[i]
+            , function (err) {
+                if (err)callback(err);
+            });
+        cnt++;
+        if (cnt == length) callback(null);
+    }
+}
+
+mysql.deleteActivityUseByActivityNum = function (activityNums, callback) {
+    var cnt = 0;
+    var length = activityNums.length;
+    if(length == 0) callback(null);
+    for (var i in activityNums) {
+        mysql.query('DELETE FROM activity_use_info WHERE activity_num = ' + activityNums[i]
+            , function (err) {
+                if (err)callback(err);
+            });
+        cnt++;
+        if (cnt == length) callback(null);
+    }
+}
+
+mysql.deleteObjectByActivityNum = function (activityNums, callback) {
+    var cnt = 0;
+    var length = activityNums.length;
+    if(length == 0) callback(null);
+    for (var i in activityNums) {
+        mysql.query('DELETE FROM object_info WHERE activity_num = ' + activityNums[i]
+            , function (err) {
+                if (err)callback(err);
+            });
+        cnt++;
+        if (cnt == length) callback(null);
+    }
+}
+
+mysql.deleteActivityByAppNum = function (appNum, callback) {
+    mysql.query('DELETE FROM activity_info WHERE app_num = ' + appNum
+        , function (err) {
+            if (err)callback(err);
+            else callback(null);
+        });
+}
+
+mysql.deleteImageByImageNum = function (imageNums, callback) {
+    var cnt = 0;
+    var length = imageNums.length;
+    if(length == 0) callback(null);
+    for (var i in imageNums) {
+        mysql.query('DELETE FROM image WHERE image_num = ' + imageNums[i]
+            , function (err) {
+                if (err)callback(err);
+            });
+        cnt++;
+        if (cnt == length) callback(null);
+    }
+}
+
+mysql.deleteAppByAppNum = function (appNum, callback) {
+    mysql.query('DELETE FROM app_info WHERE app_num = ' + appNum
+        , function (err) {
+            if (err)callback(err);
+            else callback(null);
+        });
+}
+
 //function getData(table, column, ref){
 //    mysql.query('SELECT ' + column + ' FROM ' + table + ' WHERE ' + '\'' + ref + '\'', ref, throwError);
 //}
@@ -339,7 +502,7 @@ function recordUseAndUpdateFrequency(type, param, dataUse) {
         , function (error, result, fields) {
             if (error) {
                 console.error(error);
-            } else {//TODO:result가 없을 때 예외처리
+            } else if (isDefined(result[0])) {//TODO:result가 없을 때 예외처리
                 dataUse.object_num = result[0].object_num;
                 mysql.query('insert into ' + type + '_use_info set ?', dataUse, throwError);
                 updateFrequency(type, result[0].object_num);
@@ -348,6 +511,10 @@ function recordUseAndUpdateFrequency(type, param, dataUse) {
 }
 
 function updateTotalTime(type, num, start, end) {
+    console.log('updateTotalTime');
+    console.log(start);
+    console.log(end);
+    console.log(calDuringTime(start, end));
     mysql.query('update ' + type + '_info set total_time=total_time + ' + calDuringTime(start, end) + ' where ' + type + '_num like ' + num, throwError);
 }
 
@@ -357,6 +524,7 @@ function updateFrequency(type, object_num) {
 
 function calDuringTime(start, end) {
     var time = NumOfDate(end) - NumOfDate(start);
+    console.log(time);
     return time;
 }
 
@@ -364,16 +532,23 @@ function NumOfDate(date) {
     /**
      *  날짜, 시간에 문자열을 숫자로 표현된 값으로 반환
      */
+    console.log(date);
     var piece = date.split(" ");
-    var standardYears = 1990 * 60 * 60 * 30 * 12;
-    var years = piece[0].split("-")[0] * 60 * 60 * 30 * 12 - standardYears;
-    var month = piece[0].split("-")[1] * 60 * 60 * 30;
-    var days = piece[0].split("-")[2] * 60 * 60 * 24;
-    var hours = piece[1].split(":")[0] * 60 * 60;
-    var minutes = piece[1].split(":")[1] * 60;
-    var seconds = piece[1].split(":")[2] * 1;
+    var standardYears = 2015 * 60 * 30 * 12;
+    var years = piece[0].split("/")[0] * 60 * 24 * 30 * 12 - standardYears;
+    var month = piece[0].split("/")[1] * 60 * 24 * 30;
+    var days = piece[0].split("/")[2] * 60 * 24;
+    var hours = piece[1].split(":")[0] * 60;
+    var minutes = piece[1].split(":")[1];
 
-    return years + month + days + hours + minutes + seconds;
+    console.log(years);
+    console.log(month);
+    console.log(days);
+    console.log(hours);
+    console.log(minutes);
+    console.log(years + month + days + hours + minutes);
+
+    return years + month + days + hours + minutes;
 }
 
 function throwError(error, result, fields) {

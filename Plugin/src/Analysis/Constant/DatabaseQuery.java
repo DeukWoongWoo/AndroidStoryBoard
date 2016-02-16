@@ -19,6 +19,7 @@ public class DatabaseQuery {
     public static final String createJavaTable = "CREATE TABLE Java (" +
             "num INTEGER PRIMARY KEY AUTOINCREMENT," +
             "name TEXT NOT NULL," +
+            "path TEXT," +
             "extends TEXT," +
             "implements TEXT," +
             "nextActivity TEXT" + ")";

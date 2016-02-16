@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e001467-afda-4d64-899f-df7c96b7dc33" name="Default" comment="">
+<<<<<<< HEAD
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/json-simple-1.1.1.jar" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/json_simple_1_1_1.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GUI/.idea/GUI.iml" />
@@ -31,6 +32,32 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StoryBoard.iml" afterPath="$PROJECT_DIR$/StoryBoard.iml" />
+=======
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/Code.class" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Analysis/RedoUndo/Code.java" afterPath="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/Code.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/Database/ConnectionPool.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/Database/ConnectionPool.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/Main/ProjectAnalysis.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/Main/ProjectAnalysis.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/MyActionClass.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/MyActionClass.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/Parser/JavaParser.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/Parser/JavaParser.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/PluginTest.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/PluginTest.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CodeDriver.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CodeDriver.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/Command/CodeCleanCommand.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/Command/CodeCleanCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/Command/CodeWriteCommand.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/Command/CodeWriteCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandManager.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandManager.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/Constant/DatabaseQuery.java" afterPath="$PROJECT_DIR$/src/Analysis/Constant/DatabaseQuery.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/Database/ConnectionPool.java" afterPath="$PROJECT_DIR$/src/Analysis/Database/ConnectionPool.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/Main/ProjectAnalysis.java" afterPath="$PROJECT_DIR$/src/Analysis/Main/ProjectAnalysis.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/MyActionClass.java" afterPath="$PROJECT_DIR$/src/Analysis/MyActionClass.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/Parser/JavaParser.java" afterPath="$PROJECT_DIR$/src/Analysis/Parser/JavaParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/PluginTest.form" afterPath="$PROJECT_DIR$/src/Analysis/PluginTest.form" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/PluginTest.java" afterPath="$PROJECT_DIR$/src/Analysis/PluginTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java" afterPath="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/RedoUndo/Command/CodeCleanCommand.java" afterPath="$PROJECT_DIR$/src/Analysis/RedoUndo/Command/CodeCleanCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/RedoUndo/Command/CodeWriteCommand.java" afterPath="$PROJECT_DIR$/src/Analysis/RedoUndo/Command/CodeWriteCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandManager.java" afterPath="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandManager.java" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
     </list>
     <ignored path="StoryBoard.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,16 +79,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
       <file leaf-file-name="Activity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Activity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+=======
+      <file leaf-file-name="MyActionClass.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Analysis/MyActionClass.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="mainView.form" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/mainView.form">
           <provider selected="true" editor-type-id="ui-designer">
@@ -104,11 +140,19 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.3125">
               <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+=======
+      <file leaf-file-name="CodeDriver.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Layout_Linear_Root.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Layout_Linear_Root.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -116,11 +160,21 @@
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="false" />
+=======
+      <file leaf-file-name="JavaParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Analysis/Parser/JavaParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="13" column="36" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Button_Click.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Button_Click.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -146,6 +200,13 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+      <file leaf-file-name="LocalButtonCreate.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.0827068">
+              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
               <folding />
             </state>
           </provider>
@@ -164,11 +225,65 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/Layout.java" />
         <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/StoryBoard_function.java" />
         <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/storyboard.java" />
         <option value="$PROJECT_DIR$/src/GUI/StoryBoard/mainViewFactory.java" />
         <option value="$PROJECT_DIR$/src/GUI/StoryBoard/ObjectCustom.java" />
+=======
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/commandTree.form" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/componentTree.form" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/componentTree.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DtatTransferObject/ManifestDTO.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/QueryBuilder.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/Insert/InsertBuilder.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/Insert/InsertIntoBuilder.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/Insert/InsertColumnsBuilder.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/Insert/InsertValuesBuilder.java" />
+        <option value="$PROJECT_DIR$/src/test/java/InsertTest.java" />
+        <option value="$PROJECT_DIR$/src/test/Analysis/InsertTest.java" />
+        <option value="$PROJECT_DIR$/src/Test/Analysis/InsertTest.java" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/StoryBoard_buttongroup.java" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/storyboard.form" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/storyboard.java" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/StoryBoard_function.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DatabaseManager/DBManager.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/SQLiteOpenHelper.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Manifest/ManifestDAO.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Activity/ActivityDAO.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Constant/TableName.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Xml/XmlDAO.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Component/ComponentDAO.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Event/EventDAO.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Java/JavaDAO.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DatabaseManager/DatabaseManager.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Activity/ActivityDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Component/ComponentDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Event/EventDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Manifest/ManifestDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Xml/XmlDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Java/JavaDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Parser/XmlParser.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/Type.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/CodeBuilder.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/FindBuilder.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/Command/Command.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/Command/CodeCleanCommand.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandKey.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandManager.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/Code.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/PluginTest.form" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/Command/CodeWriteCommand.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/Command/LocalButtonCreateCommand.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/ConnectionPool.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Main/ProjectAnalysis.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/MyActionClass.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Parser/JavaParser.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Constant/DatabaseQuery.java" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
       </list>
     </option>
   </component>
@@ -185,7 +300,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="1" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
@@ -203,6 +318,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -252,6 +368,129 @@
               <option name="myItemId" value="GUI" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+<<<<<<< HEAD
+=======
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PluginTest" />
+              <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StoryBoard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Analysis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StoryBoard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Analysis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedoUndo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StoryBoard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Analysis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedoUndo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CommandObj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StoryBoard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Analysis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedoUndo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Command" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StoryBoard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Analysis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Parser" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
             <PATH_ELEMENT>
               <option name="myItemId" value="StoryBoard" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
@@ -297,7 +536,71 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+<<<<<<< HEAD
               <option name="myItemId" value="GUI" />
+=======
+              <option name="myItemId" value="Analysis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DataAccessObject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StoryBoard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Analysis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DataAccessObject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StoryBoard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Analysis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Constant" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -305,12 +608,20 @@
       </pane>
       <pane id="Scratches" />
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+<<<<<<< HEAD
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
+=======
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/comparisonChainGen-master/comparisonChainGen-master" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="extract.method.default.visibility" value="private" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/json-simple-1.1.1.jar!/" />
   </component>
@@ -628,6 +939,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="-11" y="-11" width="1942" height="1046" extended-state="6" />
     <editor active="false" />
     <layout>
@@ -635,21 +947,42 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32699168" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+=======
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2185501" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29369798" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15916398" sideWeight="0.4940476" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Tail" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35281384" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17750533" sideWeight="0.4940476" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32802936" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12953092" sideWeight="0.50595236" order="2" side_tool="true" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39290085" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39285713" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -657,8 +990,12 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2185501" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32699168" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -674,7 +1011,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+<<<<<<< HEAD
       <option name="time" value="15" />
+=======
+      <option name="time" value="27" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -683,6 +1024,7 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/Select/SelectWhereBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -814,11 +1156,166 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.56905156">
           <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Command/Command.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="26" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Manifest/ManifestDAO.java">
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Command/CodeCleanCommand.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19084822">
+          <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandKey.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10602678">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Parser/XmlParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="75" selection-start-line="46" selection-start-column="75" selection-end-line="46" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Activity/ActivityDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Event/EventDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Component/ComponentDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Xml/XmlDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/PluginTest.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/PluginTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="61" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Command/CodeWriteCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding>
+            <element signature="e#235#236#0" expanded="false" />
+            <element signature="e#267#268#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/Code.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="92" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Command/LocalButtonCreateCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+          <folding>
+            <element signature="e#309#310#0" expanded="false" />
+            <element signature="e#351#352#0" expanded="false" />
+            <element signature="e#433#434#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/actionSystem/AnActionEvent.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6785714">
+          <caret line="85" column="19" selection-start-line="85" selection-start-column="19" selection-end-line="85" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/openapi/components/impl/ComponentManagerImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.357142">
+          <caret line="246" column="0" selection-start-line="246" selection-start-column="0" selection-end-line="246" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/util.jar!/com/intellij/util/containers/ConcurrentHashMap.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.678571">
+          <caret line="186" column="0" selection-start-line="186" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/util.jar!/com/intellij/util/pico/ConstructorInjectionComponentAdapter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.392858">
+          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/util.jar!/com/intellij/util/pico/DefaultPicoContainer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.0">
+          <caret line="219" column="0" selection-start-line="219" selection-start-column="0" selection-end-line="219" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/openapi/components/ServiceKt.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/configurationStore/ProjectStoreImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.34775373">
           <caret line="11" column="56" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
         </state>
@@ -926,28 +1423,188 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+=======
+        <state vertical-scroll-proportion="-14.928572">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/util.jar!/com/intellij/util/containers/LockFreeCopyOnWriteArrayList.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.785714">
+          <caret line="647" column="0" selection-start-line="647" selection-start-column="0" selection-end-line="647" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/configurationStore/StateStorageManagerImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.928572">
+          <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/util.jar!/com/intellij/util/PathUtilRt.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.392858">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/configurationStore/ProjectStoreBase.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.928572">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/openapi/project/impl/ProjectImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.0">
+          <caret line="216" column="0" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/ide/IdeEventQueue.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.0">
+          <caret line="606" column="0" selection-start-line="606" selection-start-column="0" selection-end-line="606" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/sqlite-jdbc-3.8.11.1.jar!/org/sqlite/SQLiteConnection.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.464286">
+          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/sqlite-jdbc-3.8.11.1.jar!/org/sqlite/jdbc4/JDBC4Connection.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.75">
+          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/sqlite-jdbc-3.8.11.1.jar!/org/sqlite/jdbc3/JDBC3Connection.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.107143">
+          <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/sqlite-jdbc-3.8.11.1.jar!/org/sqlite/core/CoreConnection.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.107142">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/sqlite-jdbc-3.8.11.1.jar!/org/sqlite/JDBC.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.571428">
+          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+          <folding>
+            <element signature="e#1103#1104#0" expanded="true" />
+            <element signature="e#1185#1186#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DatabaseManager/DatabaseManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/ConnectionPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding>
+            <element signature="method#closeAll#0;class#ConnectionPool#0" expanded="false" />
+            <element signature="method#releaseConnection#0;class#ConnectionPool#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/SQLiteOpenHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/tree/TreeElement.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.321429">
+          <caret line="166" column="34" selection-start-line="166" selection-start-column="34" selection-end-line="166" selection-end-column="34" />
+          <folding>
+            <element signature="e#5549#5550#0" expanded="true" />
+            <element signature="e#5585#5586#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/progress/ProgressManager.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.678571">
+          <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+          <folding>
+            <element signature="e#1074#1075#0" expanded="true" />
+            <element signature="e#1146#1147#0" expanded="true" />
+          </folding>
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
         </state>
       </provider>
       <provider editor-type-id="ui-designer">
         <state />
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$USER_HOME$/Downloads/Source_Files/src/DraggableImageComponent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/progress/ProgressIndicatorProvider.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.571428">
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$USER_HOME$/Downloads/Source_Files/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/tree/CompositeElement.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.357142">
+          <caret line="740" column="0" selection-start-line="740" selection-start-column="0" selection-end-line="740" selection-end-column="0" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/UI/storyboard.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -960,6 +1617,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/tree/CompositePsiElement.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.0">
+          <caret line="202" column="0" selection-start-line="202" selection-start-column="0" selection-end-line="202" selection-end-column="0" />
+          <folding>
+            <element signature="e#7574#7575#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/openapi/wm/impl/FocusManagerImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.037698414">
+          <caret line="854" column="0" selection-start-line="854" selection-start-column="0" selection-end-line="854" selection-end-column="0" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
           <folding />
         </state>
       </provider>
@@ -967,48 +1640,92 @@
         <state />
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/UI/componentTree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Manifest/ManifestDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26127818">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Layout_Linear.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="false" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Main/ProjectAnalysis.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.035714287">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#execute#0;class#ProjectAnalysis#0" expanded="false" />
+            <element signature="method#findFiles#0;class#ProjectAnalysis#0" expanded="false" />
+            <element signature="method#findDirectories#0;class#ProjectAnalysis#0" expanded="false" />
+            <element signature="method#currentDirectory#0;class#ProjectAnalysis#0" expanded="false" />
+            <element signature="method#checkFileType#0;class#ProjectAnalysis#0" expanded="false" />
+            <element signature="method#codeParsing#0;class#ProjectAnalysis#0" expanded="false" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Layout_Root.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+    <entry file="file://$USER_HOME$/IdeaProjects/PluginTest/src/Activity/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.60714287">
+          <caret line="34" column="37" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Button_Root.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/actionSystem/ex/ActionUtil.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35119048">
+          <caret line="159" column="23" selection-start-line="159" selection-start-column="23" selection-end-line="159" selection-end-column="23" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Button_Radio.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Layout_Linear_Root.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1023,10 +1740,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/Analysis/MyActionClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Constant.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1047,10 +1771,37 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Java/JavaDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8214286">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding>
+            <element signature="method#createJava#0;class#JavaDAOImpl#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Parser/JavaParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="36" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Constant/DatabaseQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.64285713">
+          <caret line="12" column="54" selection-start-line="12" selection-start-column="54" selection-end-line="12" selection-end-column="54" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/mainView.form">
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1073,6 +1824,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3125">
           <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0827068">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+>>>>>>> c51fa51ff93a1dde77860ca97605155da0cc56cb
           <folding />
         </state>
       </provider>

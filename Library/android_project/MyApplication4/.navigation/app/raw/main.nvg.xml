@@ -6,26 +6,34 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.example.cho.xml_parsing_test.Main22Activity"/>
+        className = "com.example.cho.xml_parsing_test.FullscreenActivity"/>
       <point      
-        x = "1644"      
-        y = "1176"/>
+        x = "9841"      
+        y = "2233"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.cho.xml_parsing_test.MainActivity2"/>
+      <point      
+        x = "6833"      
+        y = "1320"/>
     </statePointEntry>
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "com.example.cho.xml_parsing_test.MainActivity"/>
       <point      
-        x = "2752"      
-        y = "368"/>
+        x = "5787"      
+        y = "3095"/>
     </statePointEntry>
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.example.cho.xml_parsing_test.Main2Activity"/>
+        className = "com.example.cho.xml_parsing_test.MainActivity3"/>
       <point      
-        x = "656"      
-        y = "340"/>
+        x = "140"      
+        y = "16"/>
     </statePointEntry>
   </locations>
 </navigationModel>

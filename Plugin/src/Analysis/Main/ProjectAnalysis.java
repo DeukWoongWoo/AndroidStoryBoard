@@ -37,7 +37,7 @@ public class ProjectAnalysis {
     public ProjectAnalysis(AnActionEvent e,String path){
         this.project = e.getProject();
         baseDir = project.getBaseDir();
-        ConnectionPool.ProjectDir = project.getBasePath();
+        ConnectionPool.projectDir = project.getBasePath();
 
         createTable();
 

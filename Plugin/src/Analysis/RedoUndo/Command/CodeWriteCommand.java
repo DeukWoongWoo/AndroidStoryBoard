@@ -1,6 +1,6 @@
 package Analysis.RedoUndo.Command;
 
-import Analysis.RedoUndo.Code;
+import Analysis.RedoUndo.CommandObj.Code;
 
 /**
  * Created by woong on 2016. 2. 11..

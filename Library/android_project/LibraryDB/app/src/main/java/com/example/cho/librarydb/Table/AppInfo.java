@@ -50,9 +50,21 @@ public class AppInfo implements ManageTable{
         db.close();
     }
 
+
     @Override
-    public Object find(SQLiteDatabase db, String field) {
-        return null;
+    public boolean find(SQLiteDatabase db, String field) {
+
+        boolean result = false;
+        String query = "Select * FROM " + getTableName() + " WHERE " +
+                getPrimaryKey() + " =  \"" + field + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            result=true;
+            cursor.close();
+        }
+        db.close();
+        return result;
     }
 
     @Override

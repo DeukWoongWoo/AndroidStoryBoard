@@ -17,7 +17,7 @@ public class ActivityInfo implements ManageTable{
 
     public ActivityInfo(){
     }
-    public ActivityInfo(String _activityName,String _objectName,String appName){
+    public ActivityInfo(String _activityName,String appName){
         this._activityName = _activityName;
         this.appName = appName;
     }
@@ -42,6 +42,7 @@ public class ActivityInfo implements ManageTable{
 
     @Override
     public void add(SQLiteDatabase db) {
+
         ContentValues values = new ContentValues();
         values.put("_activityName", getActivityName());
         values.put("appName",getAppName());
@@ -50,8 +51,19 @@ public class ActivityInfo implements ManageTable{
     }
 
     @Override
-    public Object find(SQLiteDatabase db, String field) {
-        return null;
+    public boolean find(SQLiteDatabase db, String field) {
+
+        boolean result = false;
+        String query = "Select * FROM " + getTableName() + " WHERE " +
+                getPrimaryKey() + " =  \"" + field + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            result=true;
+            cursor.close();
+        }
+        db.close();
+        return result;
     }
 
     @Override

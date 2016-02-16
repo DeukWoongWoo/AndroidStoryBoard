@@ -54,6 +54,13 @@ public class ErrorInfo implements ManageTable{
 
     @Override
     public void add(SQLiteDatabase db) {
+        ObjectInfo objectInfo = new ObjectInfo();
+        if(!objectInfo.find(db, getObjectInfo())){
+            //없으면 생성을 해줘야겟다.
+            objectInfo.setObjectInfo(getObjectInfo());
+            objectInfo.add(db);
+        }
+
         ContentValues values = new ContentValues();
         values.put("_errorTime", getErrorTime());
         values.put("objectInfo",getObjectInfo());
@@ -62,9 +69,21 @@ public class ErrorInfo implements ManageTable{
         db.close();
     }
 
+
     @Override
-    public Object find(SQLiteDatabase db, String field) {
-        return null;
+    public boolean find(SQLiteDatabase db, String field) {
+
+        boolean result = false;
+        String query = "Select * FROM " + getTableName() + " WHERE " +
+                getPrimaryKey() + " =  \"" + field + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            result=true;
+            cursor.close();
+        }
+        db.close();
+        return result;
     }
 
     @Override

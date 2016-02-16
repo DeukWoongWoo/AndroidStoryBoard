@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
+        super.onResume();c
         Log.i("Resume!", "Main---Resume!");
         activityLiporter.set(this);
         eventLiporter.set(this);

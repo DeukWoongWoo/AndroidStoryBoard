@@ -20,6 +20,7 @@ public class PluginTest extends JFrame implements ActionListener {
     private JButton button1;
     private JList list1;
     private JLabel label;
+    private JButton button2;
 
     public PluginTest(AnActionEvent e){
         super("Hello World");

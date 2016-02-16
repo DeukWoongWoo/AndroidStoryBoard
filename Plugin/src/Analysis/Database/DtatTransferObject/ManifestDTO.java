@@ -62,6 +62,6 @@ public class ManifestDTO {
     }
 
     public String getInsertQuery(){
-        return QueryBuilder.insert().into(tableName).columns("package","theme").values(packageName, theme).build();
+        return QueryBuilder.insert().into(tableName).columns("package").values(packageName, theme).build();
     }
 }

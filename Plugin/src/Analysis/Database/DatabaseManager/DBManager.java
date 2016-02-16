@@ -17,5 +17,6 @@ public interface DBManager {
     public void onCreateTable();
     public ArrayList<ManifestDTO> selectToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function);
     public void insertToManifest(Consumer<ManifestDAO> function);
-    public void useToJava(Consumer<JavaDAO> action);
+    public void insertToJava(Consumer<JavaDAO> action);
+    public void updateToJava(Consumer<JavaDAO> action);
 }

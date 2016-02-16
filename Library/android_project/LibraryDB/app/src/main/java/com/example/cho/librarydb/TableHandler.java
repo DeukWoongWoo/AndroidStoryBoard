@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.cho.librarydb.Table.ActivityInfo;
 import com.example.cho.librarydb.Table.AppInfo;
 import com.example.cho.librarydb.Table.UserInfo;
 
@@ -14,10 +15,13 @@ import com.example.cho.librarydb.Table.UserInfo;
 public class TableHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION=1;
     private static final String DATABASE_NAME = "LibraryDB.db";
+    private String activityName;
     public String dbPath ;
+
 
     public TableHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+        activityName = context.getClass().getSimpleName();
     }
 
     @Override
@@ -66,9 +70,10 @@ public class TableHandler extends SQLiteOpenHelper {
 
         table[3]=
                 createTableName("TimeInfo")
-                +setField("_useTime","TEXT")+","
+                +setField("_activityStartTime","TEXT")+","
+                +setField("activityEndTime","TEXT")+","
                 +setField("activityName","TEXT")+","
-                +setPrimaryKey("_useTime")+","
+                +setPrimaryKey("_activityStartTime")+","
                 +setForeignKey("activityName","ActivityInfo","_activityName")
                 +setForeignKeyOption("DELETE CASCADE")
                 +")";
@@ -104,6 +109,30 @@ public class TableHandler extends SQLiteOpenHelper {
         return table;
     }
 
+    public void add(ManageTable manageTable){
+        SQLiteDatabase db = this.getWritableDatabase();
+        addable(db,activityName);
+        manageTable.add(db);
+    }
+    public boolean find(ManageTable manageTable,String field){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return manageTable.find(db, field);
+    }
+
+    public void delete(ManageTable manageTable,String field){
+        SQLiteDatabase db = this.getWritableDatabase();
+        manageTable.delete(db, field);
+    }
+    private void addable(SQLiteDatabase db,String activityName){
+        ActivityInfo activityInfo = new ActivityInfo();
+        if(!activityInfo.find(db,activityName)){
+            activityInfo.setActivityName(activityName);
+            activityInfo.setAppName(Names.appName);
+        }
+    }
+
+
+
     private String createTableName(String tableName){
         return "CREATE TABLE "+tableName+"(";
     }
@@ -118,20 +147,6 @@ public class TableHandler extends SQLiteOpenHelper {
     }
     private String setForeignKeyOption(String option){
         return "ON "+option;
-    }
-
-    public void add(ManageTable manageTable){
-        SQLiteDatabase db = this.getWritableDatabase();
-        manageTable.add(db);
-    }
-    public Object find(ManageTable manageTable,String field){
-        SQLiteDatabase db = this.getWritableDatabase();
-        return manageTable.find(db, field);
-    }
-
-    public void delete(ManageTable manageTable,String field){
-        SQLiteDatabase db = this.getWritableDatabase();
-        manageTable.delete(db, field);
     }
 
 }

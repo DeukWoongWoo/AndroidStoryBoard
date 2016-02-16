@@ -45,6 +45,7 @@ public class ObjectInfo implements ManageTable{
 
     @Override
     public void add(SQLiteDatabase db) {
+
         ContentValues values = new ContentValues();
         values.put("_objectInfo", getObjectInfo());
         values.put("activityName",getActivityName());
@@ -53,8 +54,19 @@ public class ObjectInfo implements ManageTable{
     }
 
     @Override
-    public Object find(SQLiteDatabase db, String field) {
-        return null;
+    public boolean find(SQLiteDatabase db, String field) {
+
+        boolean result = false;
+        String query = "Select * FROM " + getTableName() + " WHERE " +
+                getPrimaryKey() + " =  \"" + field + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            result=true;
+            cursor.close();
+        }
+        db.close();
+        return result;
     }
 
     @Override

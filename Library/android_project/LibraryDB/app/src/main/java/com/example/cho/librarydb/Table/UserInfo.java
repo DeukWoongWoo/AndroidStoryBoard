@@ -45,27 +45,21 @@ public class UserInfo implements ManageTable {
         db.close();
     }
 
+
     @Override
-    public Object find(SQLiteDatabase db,String field) {
+    public boolean find(SQLiteDatabase db,String field) {
 
-        ManageTable userInfo= new UserInfo();
-        ContentValues contentValues = new ContentValues();
-
-
+        boolean result = false;
         String query = "Select * FROM " + getTableName() + " WHERE " +
                 getPrimaryKey() + " =  \"" + field + "\"";
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
-            cursor.moveToFirst();
-            setUserId(cursor.getString(0));
-            contentValues.put("_userId",cursor.getString(0));
+            result=true;
             cursor.close();
-        } else {
-            userInfo = null;
         }
         db.close();
-        return userInfo;
+        return result;
     }
 
     @Override

@@ -18,7 +18,7 @@ public final class ConnectionPool {
     private static final boolean debug = true;
 
     private static final String DBName = "storyboard.db";
-    public static String ProjectDir = null;
+    public static String projectDir = null;
 
     private Vector free;
     private Vector used;
@@ -67,7 +67,7 @@ public final class ConnectionPool {
 
     private void loadConf() {
         this.driver = "org.sqlite.JDBC";
-        this.url = "jdbc:sqlite:"+ ProjectDir +"/" + DBName;
+        this.url = "jdbc:sqlite:"+ projectDir +"/" + DBName;
         this.initialCons = 3;
         this.maxCons = 10;
         this.block = true;

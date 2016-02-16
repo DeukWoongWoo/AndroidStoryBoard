@@ -1,6 +1,7 @@
 package Analysis.Parser;
 
 import com.intellij.psi.*;
+import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 
 /**
  * Created by woong on 2016-01-14.
@@ -8,7 +9,10 @@ import com.intellij.psi.*;
 public class JavaParser implements FileParser {
     private PsiJavaFile psiJavaFile;
     public JavaParser(PsiFile psiFile){
-        psiJavaFile = (PsiJavaFile) psiFile;
+        synchronized (psiFile) {
+            psiJavaFile = (PsiJavaFile) psiFile;
+            psiJavaFile.notifyAll();
+        }
     }
 
     @Override
@@ -32,7 +36,7 @@ public class JavaParser implements FileParser {
             System.out.println("Methods length : "+p.getMethods().length);
             for(PsiMethod method : p.getMethods()){
                 System.out.println(">> Method Name : "+method.getName());
-//                if(method.getName().equals("onCreate")){
+                if(method.getName().equals("onCreate")){
                     PsiCodeBlock body = method.getBody();
                     for(PsiStatement statement : body.getStatements()){
                         System.out.println(">>>> Statement Name :"+statement.getText());
@@ -42,7 +46,7 @@ public class JavaParser implements FileParser {
                             System.out.println(">>>>>>>> Element Children Name : " + e.getText());
                         }
                     }
-//                }
+                }
             }
         }
     }

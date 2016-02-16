@@ -1,4 +1,4 @@
-package Analysis.RedoUndo;
+package Analysis.RedoUndo.CommandObj;
 
 import Analysis.RedoUndo.CodeBuilder.CodeBuilder;
 import Analysis.RedoUndo.CodeBuilder.Type;

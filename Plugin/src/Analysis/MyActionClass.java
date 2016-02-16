@@ -9,6 +9,8 @@ import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeDriver;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiElement;
 
 import java.util.ArrayList;
 
@@ -21,8 +23,12 @@ public class MyActionClass extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         // TODO: insert action logic here
-//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
+
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
 //        projectAnalysis.execute(intellijPath+"/Activity", ConstantEtc.JAVA_PATTERN);
+
+        new CodeDriver();
+
 //        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);
 
 //        ManifestDTO manifestDTO = new ManifestDTO();
@@ -55,8 +61,6 @@ public class MyActionClass extends AnAction {
 //        projectAnalysis.execute(ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
 
 //        PluginTest test = new PluginTest(e);
-
-        new CodeDriver();
     }
 
 }

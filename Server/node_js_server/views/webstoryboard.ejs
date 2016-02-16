@@ -3,13 +3,6 @@
 
 <head>
     <style>
-        p {
-            width: 30px;
-            white-space: pre-line;
-            word-break: break-all;
-            /*text-overflow : ellipsis;*/
-        }
-
     </style>
 </head>
 
@@ -22,8 +15,8 @@
               style="fill: #8BC5B7; stroke: black;  stroke-width: 100px;" onmousedown="startDrag(event)"/>
 
         <svg onmousedown="startDrag(event, this)">
-            <rect x="800" y="400" width="500" height="500" fill=""></rect>
-            <image x="800" y="400" height="500" width="500" xlink:href="https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"></image><!--/image/a/a/ori2.jpg-->
+            <rect x="400" y="300" width="200" height="200" fill=""></rect>
+            <image x="400" y="300" height="200" width="200" xlink:href="https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"></image><!--/image/a/a/ori2.jpg-->
         </svg>
         <svg onmousedown="startDrag(event, this)">
             <rect class="test-class" x="10" y="10" width="300" height="200"
@@ -84,6 +77,7 @@
     var backHeight = storyboardBack.getAttribute('height');
 
     $('#storyboard-svg').mouseover(function () {
+        rectMouseOver();
         document.onmousewheel = function () {
             return false;
         }
@@ -185,12 +179,8 @@
     function stopDrag() {
         document.onmousemove = null;
         document.onmouseup = null;
-
-        try{
-            rectMouseOver();
-        }catch (e){}
-
     }
+
 </script>
 
 </html>

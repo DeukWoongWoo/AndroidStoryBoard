@@ -7,6 +7,125 @@ var mkdirp = require('mkdirp');    // mkdirp 모듈있는 곳을 설정해주면
 
 var dateutils = require('date-utils');
 
+router.get('/err', function (req, res) {
+    res.render('error', {
+        message: 'fail',
+        error: {}
+    });
+});
+
+router.get('/delete/:app_name', function (req, res) {
+    req.body.user_id = req.session.user_id;
+    req.body.app_name = req.params.app_name;
+
+    async.waterfall([
+        function (callback) {
+            db.getAppNumByUserIdAppName(req, function (err, result) {
+                if (err) callback(err);
+                else if (isDefined(result[0])) {
+                    var appNum = result[0].app_num;
+                    callback(null, appNum);
+                }
+            });
+        }, function (appNum, callback) {
+            db.getActivityNumByAppNum(appNum, function (err, result) {
+                if (err) callback(err);
+                else if (isDefined(result)) {
+                    var activityNums = [];
+                    for (var i in result)
+                        activityNums.push(result[i].activity_num);
+                    callback(null, appNum, activityNums);
+                } else callback('empty', appNum);
+            });
+        }, function (appNum, activityNums, callback) {
+            var objectNums = [];
+            var imageNums = [];
+            var cnt = 0;
+            for (var i in activityNums) {
+                db.getObjectNumByActivityNum(activityNums[i], function (err, result) {
+                    if (err) callback(err);
+                    else if (isDefined(result)) {
+                        console.log(result);
+                        for (var j in result) {
+                            if (isDefined(result[j])) {
+                                objectNums.push(result[j].object_num);
+                                imageNums.push(result[j].image_num);
+                            }
+                        }
+                    }
+                    cnt++;
+                    if (cnt == activityNums.length)
+                        callback(null, appNum, activityNums, objectNums, imageNums);
+                });
+            }
+        }, function (appNum, activityNums, objectNums, imageNums, callback) {
+            db.deleteObjectUseByObjectNum(objectNums, function (err) {
+                if (err) callback(err);
+                else {
+                    db.deleteObjectErrByObjectNum(objectNums, function (err) {
+                        if (err) callback(err);
+                        else {
+                            db.deleteActivityUseByActivityNum(activityNums, function (err) {
+                                if (err) callback(err);
+                                else callback(null, appNum, activityNums, objectNums, imageNums);
+                            });
+                        }
+                    });
+                }
+            });
+
+        }, function (appNum, activityNums, objectNums, imageNums, callback) {
+            db.deleteObjectByActivityNum(activityNums, function (err) {
+                if (err) callback(err);
+                else {
+                    db.deleteImageByImageNum(imageNums, function (err) {
+                        if (err) callback(err);
+                        else {
+                            db.deleteActivityByAppNum(appNum, function (err) {
+                                if (err) callback(err);
+                                else {
+                                    callback(null, appNum);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    ], function (err, result) {
+        if (result || !err) {
+            db.deleteAppByAppNum(result, function (err) {
+                if (err) console.log(err);
+            });
+            var dirName = './users/' + req.session.user_id + '/' + req.params.app_name + '/';
+            deleteFiles(dirName);
+        } else if (err)console.log(err);
+
+    });
+    res.redirect('/login');
+});
+
+function deleteFiles(dirName) {
+    fs.readdir(dirName, function (err, list) {
+        if (err) throw err;
+        console.log('dir length : ' + list.length);
+        async.each(list,
+            function(file, callback){
+                fs.unlink(dirName + file, function (err) {
+                    if (err) throw err;
+                    else callback(null);
+                });
+            },
+            function(err){
+                fs.rmdir(dirName, function (err) {
+                    if (err) throw err;
+                    console.log('Removed ' + dirName);
+                });
+            }
+        );
+    });
+}
+
 router.get('/storyboard/:app_name', function (req, res) {
     //TODO: req.params.user_id -> session.user_id로 변경 해야함
     var fileUrl = './users/' + req.session.user_id + '/' + req.params.app_name + '/' + req.params.app_name + '.json';
@@ -301,7 +420,7 @@ function registerStoryboardFile(req, callback) {
                 //req.body.activity_name = obj.activity[i].name;
                 console.log('here');
                 console.log(obj.activity[i].name);
-                addActivityObject(req, obj.activity[i], function(err){
+                addActivityObject(req, obj.activity[i], function (err) {
                 });
             }
             callback(null);

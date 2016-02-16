@@ -1,7 +1,6 @@
 package GUI.StoryBoard;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -10,7 +9,7 @@ import java.io.IOException;
 public class example extends JFrame {
 
     public example() throws IOException {
-        storyBoard_func a = new storyBoard_func();
+        storyBoard a = new storyBoard();
         this.setSize(1000, 1000);
         this.add(a);
         this.setVisible(true);

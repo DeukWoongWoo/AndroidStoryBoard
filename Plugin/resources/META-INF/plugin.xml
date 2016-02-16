@@ -26,7 +26,7 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <toolWindow id="StoryBoard" secondary="true" anchor="right"
-                factoryClass="GUI.StoryBoard.example_gui"/>
+                factoryClass="GUI.StoryBoard.StoryBoard_PlugIn"/>
   </extensions>
 
   <actions>

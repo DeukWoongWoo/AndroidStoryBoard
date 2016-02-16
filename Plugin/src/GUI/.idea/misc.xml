@@ -5,8 +5,12 @@
     <option name="id" value="1450616642908" />
     <option name="name" value="default" />
   </component>
-  <component name="EntryPointsManager">
-    <entry_points version="2.0" />
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Bundled (Maven 3)" />
+      </MavenGeneralSettings>
+    </option>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -18,7 +22,21 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" assert-keyword="true" jdk-15="true" project-jdk-name="IntelliJ IDEA Community Edition IC-143.1184.17" project-jdk-type="IDEA JDK">
-    <output url="file://$PROJECT_DIR$/out" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" default="true" assert-keyword="true" jdk-15="true" />
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

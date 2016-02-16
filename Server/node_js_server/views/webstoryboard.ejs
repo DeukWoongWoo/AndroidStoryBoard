@@ -23,11 +23,12 @@
 
         <svg onmousedown="startDrag(event, this)">
             <rect x="800" y="400" width="500" height="500" fill=""></rect>
-            <image x="800" y="400" height="500" width="500" xlink:href="https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"></image>
+            <image x="800" y="400" height="500" width="500" xlink:href="https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"></image><!--/image/a/a/ori2.jpg-->
         </svg>
         <svg onmousedown="startDrag(event, this)">
             <rect class="test-class" x="10" y="10" width="300" height="200"
-                  style="stroke: white; fill: #D4C9AD; stroke-width: 1px;" id="test-rect"/>
+                  style="stroke: white; fill: #D4C9AD; stroke-width: 1px;" id="test-rect">
+            </rect>
 
             <circle cx="50" cy="100" r="25" style="stroke: black; fill: white;"/>
             <text  x="10" y="10" stroke="black" height="100px">
@@ -40,26 +41,29 @@
 </div>
 
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="javascripts/d3/d3.js"></script>
-<script src="javascripts/storyboard/Storyboard.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+<!--<script type="text/javascript" src="javascripts/d3/d3.js"></script>-->
+<!--<script src="javascripts/storyboard/Storyboard.js"></script>-->
 <script>
-    var storyboard = new Storyboard();
-    storyboard.targetDiv('#storyboard-svg');
-
-    $.get("/storyboard/a/jsontest.json", function(storyboardData){
-        storyboard.storyboardData(storyboardData);
-        storyboard.drawActivityObject();
-        storyboard.initLine();
-        storyboard.drawNextActivityLine();
-
-        storyboard.removeActivityObject();
-        storyboard.drawActivityObject();
-    });
+//    var storyboard = new Storyboard();
+//    storyboard.targetDiv('#storyboard-svg');
+//
+//    $.get("/storyboard/" + app_name, function (storyboardData) {
+//        storyboard.removeStoryboard();
+//        storyboard.addBackBoard();
+//        storyboard.storyboardData(storyboardData);
+//
+//        storyboard.drawActivityObject();
+//
+//        storyboard.initLine();
+//        storyboard.drawNextActivityLine();
+//
+//        storyboard.removeActivityObject();
+//        storyboard.drawActivityObject();
+//    });
 
     /**
      *  위
-     *
      *      텍스트 자동 줄 바꿈 구현 방법 찾아보기
      *
      *      랜더링 순서 변경 완료
@@ -88,8 +92,9 @@
     });
 
     $("#storyboard-svg").on("mousewheel", function (event) {
+        var baeyul = 5;
         var zoomValue = event.originalEvent.wheelDelta;
-        if (box.width + zoomValue * 7 > 0 && box.height + zoomValue * 7 > 0
+        if (box.width + zoomValue * baeyul > 0 && box.height + zoomValue * baeyul > 0
                 && box.width + zoomValue < backWidth && box.height + zoomValue < backHeight) {
             box.x -= zoomValue / 2;
             box.y -= zoomValue / 2;
@@ -180,6 +185,11 @@
     function stopDrag() {
         document.onmousemove = null;
         document.onmouseup = null;
+
+        try{
+            rectMouseOver();
+        }catch (e){}
+
     }
 </script>
 

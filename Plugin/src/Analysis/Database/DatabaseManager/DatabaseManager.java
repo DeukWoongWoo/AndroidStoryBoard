@@ -54,7 +54,7 @@ public class DatabaseManager implements DBManager{
     }
 
     @Override
-    public void useToJava(Consumer<JavaDAO> action) {
+    public void insertToJava(Consumer<JavaDAO> action) {
         action.accept(javaDAO);
     }
 

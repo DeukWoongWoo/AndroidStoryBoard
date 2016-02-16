@@ -10,6 +10,8 @@ public class StringUtils {
 
     for (int i = 0, size = array.length; i < size; i++) {
       if (i > 0) {
+        if(array[i] == null) continue;
+
         sb.append(delimiter);
       }
       sb.append(array[i]);

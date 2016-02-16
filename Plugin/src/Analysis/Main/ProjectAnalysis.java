@@ -25,6 +25,8 @@ public class ProjectAnalysis {
     private Project project;
     private VirtualFile baseDir;
 
+    private String curPath;
+
     public static ProjectAnalysis getInstance(AnActionEvent e, String path){
         if(projectAnalysis == null) {
             synchronized (ProjectAnalysis.class) {
@@ -51,12 +53,14 @@ public class ProjectAnalysis {
     }
 
     public void execute(String path, String pattern) {
-        System.out.println("Current Path : "+path);
-        PsiDirectory psiDirectory = currentDirectory(path);
+        curPath = path;
+        System.out.println("Current Path : "+curPath);
+
+        PsiDirectory psiDirectory = currentDirectory(curPath);
 
         findFiles(pattern, psiDirectory);
 
-        findDirectories(path, psiDirectory, pattern);
+        findDirectories(curPath, psiDirectory, pattern);
     }
 
     private void createTable(){
@@ -93,7 +97,7 @@ public class ProjectAnalysis {
             if(matcher.find()){
                 System.out.println("matcherFind..." + patternStr);
                 if(patternStr.equals(ConstantEtc.XML_PATTERN)) codeParsing(new XmlParser(psiFiles[i]));
-                else codeParsing(new JavaParser(psiFiles[i]));
+                else codeParsing(new JavaParser(psiFiles[i],curPath));
             }
         }
     }

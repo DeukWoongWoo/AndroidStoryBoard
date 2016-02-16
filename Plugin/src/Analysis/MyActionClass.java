@@ -9,8 +9,13 @@ import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeDriver;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiElement;
+import com.intellij.openapi.actionSystem.LangDataKeys;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.psi.*;
+import com.intellij.psi.codeStyle.JavaCodeStyleManager;
+import com.intellij.psi.util.PsiTreeUtil;
 
 import java.util.ArrayList;
 
@@ -24,10 +29,12 @@ public class MyActionClass extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         // TODO: insert action logic here
 
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
-//        projectAnalysis.execute(intellijPath+"/Activity", ConstantEtc.JAVA_PATTERN);
+//        codeMakeTest(e);
 
-        new CodeDriver();
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
+        projectAnalysis.execute(intellijPath+"/Activity", ConstantEtc.JAVA_PATTERN);
+
+//        new CodeDriver();
 
 //        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);
 
@@ -39,7 +46,7 @@ public class MyActionClass extends AnAction {
 //        DatabaseManager databaseManager = DatabaseManager.getInstance();
 //        databaseManager.insertToManifest(table->table.insertManifest(manifestDTO));
 //        databaseManager.selectToManifest(table->table.selectManifest()).forEach(row ->{System.out.println(row.getPackageName());});
-//        databaseManager.useToManifest(table->table.selectActivity()).forEach(manifestItem -> manifestItem.getActivities().forEach(activityItem -> activityItem.getName()));
+//        databaseManager.useToManifest(table->table.selectActivity()).forEach(manifestItem -> manifestItem.getActivities().forEach(activityItem -> activityItem.getMethodName()));
 //        databaseManager.useToJava(table->table.selectJava());
 //        ArrayList<ManifestDTO> dto = databaseManager.useToManifest(ManifestDAO::selectManifest);
 //        dto.forEach(row->{
@@ -61,6 +68,28 @@ public class MyActionClass extends AnAction {
 //        projectAnalysis.execute(ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
 
 //        PluginTest test = new PluginTest(e);
+    }
+
+    private void codeMakeTest(AnActionEvent e) {
+        PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
+        Editor editor = e.getData(PlatformDataKeys.EDITOR);
+        int offset = editor.getCaretModel().getOffset();
+        PsiElement elementAt = psiFile.findElementAt(offset);
+        PsiClass psiClass = PsiTreeUtil.getParentOfType(elementAt, PsiClass.class);
+
+        new WriteCommandAction.Simple(psiClass.getProject(), psiClass.getContainingFile()){
+            @Override
+            protected void run() throws Throwable {
+                StringBuilder builder = new StringBuilder("public int compareTo(");
+                builder.append(psiClass.getName()).append(" that) {\n");
+                builder.append("return " + "" + ".start()");
+                builder.append(".result();\n}");
+                PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(psiClass.getProject());
+                PsiMethod compareTo = elementFactory.createMethodFromText(builder.toString(), psiClass);
+                PsiElement el = psiClass.add(compareTo);
+                JavaCodeStyleManager.getInstance(psiClass.getProject()).shortenClassReferences(el);
+            }
+        }.execute();
     }
 
 }

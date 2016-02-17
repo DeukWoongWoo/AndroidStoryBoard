@@ -15,6 +15,7 @@ import Analysis.Database.QueryBuilder.QueryBuilder;
 import Analysis.Database.SQLiteOpenHelper;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by woong on 2016-01-21.
@@ -106,8 +107,32 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
     }
 
     @Override
-    public void selectJava() {
-
+    public ArrayList<JavaDTO> selectJava() {
+        PreparedStatement prep = null;
+        Connection connection = getConnection();
+        ResultSet rows = null;
+        ArrayList<JavaDTO> items = new ArrayList<>();
+        try {
+            prep = connection.prepareStatement(QueryBuilder.selectAll().from(javaTableName).where("name='MainActivity'").build());
+            rows = prep.executeQuery();
+            while(rows.next()){
+                JavaDTO javaDTO = new JavaDTO();
+                javaDTO.setNum(rows.getInt(1));
+                javaDTO.setName(rows.getString(2));
+                javaDTO.setPath(rows.getString(3));
+                javaDTO.setExtendsValue(rows.getString(4));
+                javaDTO.setImplementsValue(rows.getString(5));
+                javaDTO.setNextActivity(rows.getString(6));
+                javaDTO.setIntentFuncName(rows.getString(7));
+                javaDTO.setIntentFuncName(rows.getString(8));
+                items.add(javaDTO);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            close(connection,prep,rows);
+            return items;
+        }
     }
 
     @Override

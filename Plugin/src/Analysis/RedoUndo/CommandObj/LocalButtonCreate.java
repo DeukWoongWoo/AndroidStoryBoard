@@ -1,11 +1,16 @@
 package Analysis.RedoUndo.CommandObj;
 
 import Analysis.Constant.ConstantEtc;
+import Analysis.Constant.SharedPreference;
+import Analysis.Database.DatabaseManager.DatabaseManager;
+import Analysis.Database.QueryBuilder.QueryBuilder;
 import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeBuilder.CodeBuilder;
 import Analysis.RedoUndo.CodeBuilder.Type;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiElement;
+import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.psi.*;
 
 import java.io.*;
 
@@ -17,10 +22,34 @@ public class LocalButtonCreate {
     private FileOutputStream fos;
     private BufferedReader in;
 
-    public void create(){
-        String str = CodeBuilder.Component(Type.Button).findViewById("R.id.button").build();
+    private String buttonName = "button1";
 
-        insertString(str);
+    public void create(){
+        insertPsiElement();
+//        insertString(str);
+        ProjectAnalysis.getInstance(null,null).execute("src/Activity", ConstantEtc.JAVA_PATTERN,true);
+    }
+
+    private void insertPsiElement() {
+        File inFile = new File(DatabaseManager.getInstance().selectToJava(table->table.selectJava()).get(0).getPath());
+
+        PsiJavaFile psiJavaFile = (PsiJavaFile) PsiManager.getInstance(SharedPreference.ACTIONEVENT.getData().getProject()).findFile(LocalFileSystem.getInstance().findFileByIoFile(inFile));
+
+        for(PsiClass p : psiJavaFile.getClasses()){
+            for(PsiMethod method : p.getMethods()){
+                if(method.getName().equals("onCreate")){
+                    new WriteCommandAction.Simple(method.getProject(), method.getContainingFile()) {
+                        @Override
+                        protected void run() throws Throwable {
+                            String makeCode = CodeBuilder.Component(Type.Button).name(buttonName).findViewById("R.id.button").build();
+                            PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(method.getProject());
+                            PsiStatement statement = elementFactory.createStatementFromText(makeCode,method);
+                            method.getBody().add(statement);
+                        }
+                    }.execute();
+                }
+            }
+        }
     }
 
     private void insertString(String str) {

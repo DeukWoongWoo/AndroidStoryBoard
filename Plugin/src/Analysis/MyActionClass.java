@@ -1,6 +1,7 @@
 package Analysis;
 
 import Analysis.Constant.ConstantEtc;
+import Analysis.Constant.SharedPreference;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
 import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Database.DtatTransferObject.ActivityDTO;
@@ -28,13 +29,14 @@ public class MyActionClass extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         // TODO: insert action logic here
+        SharedPreference.ACTIONEVENT.setData(e);
 
 //        codeMakeTest(e);
 
         ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
         projectAnalysis.execute(intellijPath+"/Activity", ConstantEtc.JAVA_PATTERN);
 
-//        new CodeDriver();
+        new CodeDriver();
 
 //        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);
 

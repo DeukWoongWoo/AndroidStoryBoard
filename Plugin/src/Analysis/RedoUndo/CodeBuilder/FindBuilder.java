@@ -18,6 +18,6 @@ public class FindBuilder {
     }
 
     public String build(){
-        return type.name() + " " + type.getValue() + " = (" + type.name() + ")findViewById(" + id + ");";
+        return "(" + type.name() + ")findViewById(" + id + ");";
     }
 }

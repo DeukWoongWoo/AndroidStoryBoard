@@ -4,5 +4,18 @@ package Analysis.RedoUndo;
  * Created by woong on 2016. 2. 11..
  */
 public enum CommandKey{
-    WRITE, CLEAN;
+    WRITE(null), CLEAN(null), LOCALBUTTON(null), MEMBERBUTTON(null), FUNCBUTTON(null);
+
+    String id;
+    CommandKey(String id){
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

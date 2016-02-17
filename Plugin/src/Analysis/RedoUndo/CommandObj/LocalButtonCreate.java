@@ -1,64 +1,116 @@
 package Analysis.RedoUndo.CommandObj;
 
-import Analysis.Constant.ConstantEtc;
+import Analysis.Constant.SharedPreference;
+import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeBuilder.CodeBuilder;
 import Analysis.RedoUndo.CodeBuilder.Type;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiElement;
+import Analysis.RedoUndo.CommandKey;
+import Analysis.RedoUndo.Util.ElementFactory;
+import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.*;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by woong on 2016-02-15.
  */
 public class LocalButtonCreate {
-    private PrintWriter out;
-    private FileOutputStream fos;
-    private BufferedReader in;
+    private static int num = 1;
 
-    public void create(){
-        String str = CodeBuilder.Component(Type.Button).findViewById("R.id.button").build();
+    private final String buttonName = "button";
+    private final String packageName = "android.widget";
+    private PsiJavaFile psiJavaFile;
+    private Project project;
+    VirtualFile virtualFile;
 
-        insertString(str);
+    public LocalButtonCreate(){
+        init();
     }
 
-    private void insertString(String str) {
-        File inFile = new File("C:/Users/woong/IdeaProjects/PluginTest/src/Activity/MainActivity.java");
+    private void init() {
+        project = SharedPreference.ACTIONEVENT.getData().getProject();
+        File inFile = new File(DatabaseManager.getInstance().selectToJava(table->table.selectJava()).get(0).getPath());
+        virtualFile = LocalFileSystem.getInstance().findFileByIoFile(inFile);
+    }
 
-        File outFile = new File("C:/Users/woong/IdeaProjects/PluginTest/src/Activity/temp.java");
-        try {
-            FileInputStream fis = new FileInputStream(inFile);
-            in = new BufferedReader(new InputStreamReader(fis));
-            fos = new FileOutputStream(outFile);
-            out = new PrintWriter(fos);
+    public void create(){
+        if(psiJavaFile == null) psiJavaFile = makePsiJavaFile();
+        insertPsiElement();
+        syncProject();
+    }
 
-            String thisLine = "";
+    private void syncProject() {
+        ProjectAnalysis.getInstance(null,null).executeAll();
+    }
 
-            for (int i=1;(thisLine = in.readLine()) != null;i++) {
-                if (i == 64)
-                    out.println(str);
-                out.println(thisLine);
+    private void insertPsiElement() {
+        for(PsiClass p : psiJavaFile.getClasses()){
+            for(PsiMethod method : p.getMethods()){
+                if(method.getName().equals("onCreate")){
+                    new WriteCommandAction.Simple(method.getProject(), method.getContainingFile()) {
+                        @Override
+                        protected void run() throws Throwable {
+                            ElementFactory elementFactory = new ElementFactory();
+
+                            String makeCode = Type.Button + " " + buttonName + (num++) +" = " +CodeBuilder.Component(Type.Button).findViewById(CommandKey.LOCALBUTTON.getId()).build();
+
+                            method.getBody().add(elementFactory.makePsiStatement(makeCode,method));
+
+                            if (!checkImport(packageName)){
+                                PsiImportStatement psiImportStatement = elementFactory.findPsiImportStatement(packageName, Type.Button.name());
+                                if(psiImportStatement != null) psiJavaFile.getImportList().add(psiImportStatement);
+                                else Messages.showInfoMessage("Cannot find import file...","File Search");
+                            }
+                        }
+                    }.execute();
+                }
             }
-
-            out.flush();
-            out.close();
-            in.close();
-
-            inFile.delete();
-
-            outFile.renameTo(inFile);
-
-            System.out.println("insert File String End !!!!");
-        }catch(IOException e){
-            System.out.println("LocalButtonCreate Error : " + e);
-        }finally {
-//            ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
-//            projectAnalysis.execute("src/Activity", ConstantEtc.JAVA_PATTERN);
         }
     }
 
-    public void remove(){
+    private boolean checkImport(String packageName) {
+        for(PsiImportStatement psiImportStatement : psiJavaFile.getImportList().getImportStatements()){
+            if(psiImportStatement.getText().equals("import "+packageName+"."+ Type.Button.name()+";")) return true;
+        }
+        return false;
+    }
 
+    private PsiJavaFile makePsiJavaFile() {
+        return (PsiJavaFile) PsiManager.getInstance(project).findFile(virtualFile);
+    }
+
+    public void remove(){
+//        String selectMethod = DatabaseManager.getInstance().selectToJava(table->table.selectComponent("name='"+buttonName+"'")).get(0).getComponent(0).getMethodName();
+        removePsiElement();
+        syncProject();
+    }
+
+    private void removePsiElement() {
+        for(PsiClass p : psiJavaFile.getClasses()){
+            for(PsiMethod method : p.getMethods()){
+                if(method.getName().equals("onCreate")){
+                    for(PsiStatement statement : method.getBody().getStatements()){
+                        Pattern pattern = Pattern.compile(buttonName);
+                        Matcher matcher = pattern.matcher(statement.getText());
+
+                        if(matcher.find()){
+                            new WriteCommandAction.Simple(method.getProject(), method.getContainingFile()) {
+                                @Override
+                                protected void run() throws Throwable {
+                                    statement.delete();
+                                }
+                            }.execute();
+                        }
+                    }
+                }
+            }
+        }
     }
 }

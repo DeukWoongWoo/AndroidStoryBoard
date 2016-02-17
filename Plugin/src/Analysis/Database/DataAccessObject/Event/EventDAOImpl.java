@@ -1,6 +1,7 @@
 package Analysis.Database.DataAccessObject.Event;
 
 import Analysis.Constant.DatabaseQuery;
+import Analysis.Database.DtatTransferObject.EventDTO;
 import Analysis.Database.SQLiteOpenHelper;
 
 import java.sql.Connection;
@@ -30,8 +31,18 @@ public class EventDAOImpl extends SQLiteOpenHelper implements EventDAO {
     }
 
     @Override
-    public void insert() {
-
+    public void insert(EventDTO eventDTO) {
+        System.out.println("insert Event Table ...");
+        Statement statement = null;
+        Connection connection = getConnection();
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(eventDTO.getInsertQuery());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            close(connection,statement);
+        }
     }
 
     @Override

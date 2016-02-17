@@ -25,8 +25,8 @@
   -->
 
   <extensions defaultExtensionNs="com.intellij">
-    <toolWindow id="StoryBoard" secondary="true" anchor="right" icon="/icon/star.png"
-                factoryClass="GUI.StoryBoard.mainViewFactory"/>
+    <toolWindow id="StoryBoard" secondary="true" anchor="right"
+                factoryClass="GUI.StoryBoard.StoryBoard_PlugIn"/>
   </extensions>
 
   <actions>

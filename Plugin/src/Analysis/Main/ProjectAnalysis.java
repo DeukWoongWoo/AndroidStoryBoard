@@ -8,6 +8,7 @@ import Analysis.Parser.FileParser;
 import Analysis.Parser.XmlParser;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiFile;
@@ -24,6 +25,8 @@ public class ProjectAnalysis {
 
     private Project project;
     private VirtualFile baseDir;
+
+    private String curPath;
 
     public static ProjectAnalysis getInstance(AnActionEvent e, String path){
         if(projectAnalysis == null) {
@@ -45,18 +48,29 @@ public class ProjectAnalysis {
         findFiles(ConstantEtc.XML_PATTERN, psiDirectory);
     }
 
+    public void executeAll(){
+        createTable();
+        String path = "/src";
+        execute(path,ConstantEtc.XML_PATTERN);
+        execute(path,ConstantEtc.JAVA_PATTERN);
+
+//        execute(ConstantEtc.PROJECT_XML_PATH,ConstantEtc.XML_PATTERN);
+//        execute(ConstantEtc.PROJECT_XML_PATH+ConstantEtc.PROJECT_JAVA_PATH,ConstantEtc.JAVA_PATTERN);
+    }
+
     public void execute(String path, String pattern, boolean start){
         if(start) createTable();
         execute(path, pattern);
     }
 
     public void execute(String path, String pattern) {
-        System.out.println("Current Path : "+path);
-        PsiDirectory psiDirectory = currentDirectory(path);
+        curPath = path;
+        System.out.println("Current Path : "+curPath);
+        PsiDirectory psiDirectory = currentDirectory(curPath);
 
         findFiles(pattern, psiDirectory);
 
-        findDirectories(path, psiDirectory, pattern);
+        if(pattern.equals(ConstantEtc.JAVA_PATTERN)) findDirectories(curPath, psiDirectory, pattern);
     }
 
     private void createTable(){
@@ -93,7 +107,7 @@ public class ProjectAnalysis {
             if(matcher.find()){
                 System.out.println("matcherFind..." + patternStr);
                 if(patternStr.equals(ConstantEtc.XML_PATTERN)) codeParsing(new XmlParser(psiFiles[i]));
-                else codeParsing(new JavaParser(psiFiles[i]));
+                else codeParsing(new JavaParser(psiFiles[i],curPath));
             }
         }
     }

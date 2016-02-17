@@ -11,6 +11,7 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
@@ -30,6 +31,7 @@ public class LocalButtonCreate {
     private static int num = 1;
 
     private final String buttonName = "button";
+    private final String packageName = "android.widget";
     private PsiJavaFile psiJavaFile;
     private Project project;
     VirtualFile virtualFile;
@@ -51,7 +53,7 @@ public class LocalButtonCreate {
     }
 
     private void syncProject() {
-        ProjectAnalysis.getInstance(null,null).execute("src/Activity", ConstantEtc.JAVA_PATTERN,true);
+        ProjectAnalysis.getInstance(null,null).executeAll();
     }
 
     private void insertPsiElement() {
@@ -65,14 +67,21 @@ public class LocalButtonCreate {
                             PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(method.getProject());
                             PsiStatement statement = elementFactory.createStatementFromText(makeCode,method);
                             method.getBody().add(statement);
-
-                            // TODO: 2016-02-17 import 중복체크해서 있으면 추가 하지 않기
-                            psiJavaFile.getImportList().add(elementFactory.createImportStatement(makeImportClass("android.widget",Type.Button.name())));
+                            Messages.showInfoMessage("import beforel!!!","test");
+                            if (!checkImport(packageName)) psiJavaFile.getImportList().add(elementFactory.createImportStatement(makeImportClass(packageName,Type.Button.name())));
                         }
                     }.execute();
                 }
             }
         }
+    }
+
+    private boolean checkImport(String packageName) {
+        for(PsiImportStatement psiImportStatement : psiJavaFile.getImportList().getImportStatements()){
+            System.out.println(psiImportStatement.getText());
+            if(psiImportStatement.getText().equals("import "+packageName+"."+ Type.Button.name()+";")) return true;
+        }
+        return false;
     }
 
     private PsiClass makeImportClass(String packageName, String className) {
@@ -83,8 +92,10 @@ public class LocalButtonCreate {
 
     private PsiClass getBoundaryClass(Project project, String newPackage, ProjectRootManager rootManager, VirtualFile virtualFile, PackageWrapper packageWrapper, String className) {
         PsiClass boundaryClass = lookupClass(project,newPackage, className);
+        Messages.showInfoMessage("boundaryClass !!!" + boundaryClass,"test");
         if (boundaryClass == null) {
-            boundaryClass = createClass(rootManager, virtualFile, packageWrapper, className);
+            Messages.showInfoMessage("boundaryClass Null!!!","test");
+//            boundaryClass = createClass(rootManager, virtualFile, packageWrapper, className);
         }
         return boundaryClass;
     }

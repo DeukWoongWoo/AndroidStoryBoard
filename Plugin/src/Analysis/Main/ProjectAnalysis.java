@@ -8,6 +8,7 @@ import Analysis.Parser.FileParser;
 import Analysis.Parser.XmlParser;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiFile;
@@ -45,6 +46,20 @@ public class ProjectAnalysis {
 
         PsiDirectory psiDirectory = currentDirectory(path);
         findFiles(ConstantEtc.XML_PATTERN, psiDirectory);
+
+        Messages.showInfoMessage("projectPath : " + ConnectionPool.projectDir ,"test");
+    }
+
+    public void executeAll(){
+        createTable();
+        String path = "/src";
+//        execute(path,ConstantEtc.XML_PATTERN);
+//        execute(path,ConstantEtc.JAVA_PATTERN);
+
+        Messages.showInfoMessage("executeAll","Test");
+        execute(ConstantEtc.PROJECT_XML_PATH,ConstantEtc.XML_PATTERN);
+        Messages.showInfoMessage("executeAll Java Parsing ","Test");
+        execute(ConstantEtc.PROJECT_XML_PATH+ConstantEtc.PROJECT_JAVA_PATH,ConstantEtc.JAVA_PATTERN);
     }
 
     public void execute(String path, String pattern, boolean start){
@@ -55,12 +70,14 @@ public class ProjectAnalysis {
     public void execute(String path, String pattern) {
         curPath = path;
         System.out.println("Current Path : "+curPath);
-
+        Messages.showInfoMessage("java path : " + curPath,"test");
         PsiDirectory psiDirectory = currentDirectory(curPath);
 
         findFiles(pattern, psiDirectory);
 
-        findDirectories(curPath, psiDirectory, pattern);
+        if(pattern.equals(ConstantEtc.JAVA_PATTERN)) findDirectories(curPath, psiDirectory, pattern);
+
+        Messages.showInfoMessage( pattern +" execute","test");
     }
 
     private void createTable(){
@@ -86,6 +103,7 @@ public class ProjectAnalysis {
 
     private PsiDirectory currentDirectory(String path) {
         VirtualFile virtualPathFile = baseDir.findFileByRelativePath(path);
+        Messages.showInfoMessage("virtualFile : " + virtualPathFile,"test");
         return PsiManager.getInstance(project).findDirectory(virtualPathFile);
     }
 

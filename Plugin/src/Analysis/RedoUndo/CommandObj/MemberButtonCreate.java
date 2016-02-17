@@ -33,7 +33,7 @@ public class MemberButtonCreate {
     }
 
     private void syncProject() {
-        ProjectAnalysis.getInstance(null,null).execute("src/Activity", ConstantEtc.JAVA_PATTERN,true);
+        ProjectAnalysis.getInstance(null,null).executeAll();
     }
 
     private void insertPsiElement() {
@@ -51,6 +51,8 @@ public class MemberButtonCreate {
 
                             PsiStatement statement = elementFactory.createStatementFromText(makeCode,method);
                             method.getBody().add(statement);
+
+                            // TODO: 2016-02-18 import 추가하기
                         }
                     }.execute();
                 }
@@ -69,6 +71,7 @@ public class MemberButtonCreate {
     }
 
     private void removePsiElement() {
+        // TODO: 2016-02-18 구현하기
         for(PsiClass p : psiJavaFile.getClasses()){
             for(PsiMethod method : p.getMethods()){
                 if(method.getName().equals("onCreate")){

@@ -3,15 +3,21 @@ package Analysis.RedoUndo.CommandObj;
 import Analysis.Constant.ConstantEtc;
 import Analysis.Constant.SharedPreference;
 import Analysis.Database.DatabaseManager.DatabaseManager;
-import Analysis.Database.QueryBuilder.QueryBuilder;
 import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeBuilder.CodeBuilder;
 import Analysis.RedoUndo.CodeBuilder.Type;
 import Analysis.RedoUndo.CommandKey;
 import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ProjectFileIndex;
+import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
+import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.refactoring.PackageWrapper;
+import com.intellij.refactoring.util.RefactoringUtil;
+import com.intellij.util.IncorrectOperationException;
 
 import java.io.*;
 import java.util.regex.Matcher;
@@ -25,6 +31,18 @@ public class LocalButtonCreate {
 
     private final String buttonName = "button";
     private PsiJavaFile psiJavaFile;
+    private Project project;
+    VirtualFile virtualFile;
+
+    public LocalButtonCreate(){
+        init();
+    }
+
+    private void init() {
+        project = SharedPreference.ACTIONEVENT.getData().getProject();
+        File inFile = new File(DatabaseManager.getInstance().selectToJava(table->table.selectJava()).get(0).getPath());
+        virtualFile = LocalFileSystem.getInstance().findFileByIoFile(inFile);
+    }
 
     public void create(){
         if(psiJavaFile == null) psiJavaFile = makePsiJavaFile();
@@ -43,10 +61,13 @@ public class LocalButtonCreate {
                     new WriteCommandAction.Simple(method.getProject(), method.getContainingFile()) {
                         @Override
                         protected void run() throws Throwable {
-                            String makeCode = CodeBuilder.Component(Type.Button).name(buttonName + num++).findViewById(CommandKey.LOCALBUTTON.getId()).build();
+                            String makeCode = Type.Button + " " + buttonName + (num++) +" = " +CodeBuilder.Component(Type.Button).findViewById(CommandKey.LOCALBUTTON.getId()).build();
                             PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(method.getProject());
                             PsiStatement statement = elementFactory.createStatementFromText(makeCode,method);
                             method.getBody().add(statement);
+
+                            // TODO: 2016-02-17 import 중복체크해서 있으면 추가 하지 않기
+                            psiJavaFile.getImportList().add(elementFactory.createImportStatement(makeImportClass("android.widget",Type.Button.name())));
                         }
                     }.execute();
                 }
@@ -54,9 +75,38 @@ public class LocalButtonCreate {
         }
     }
 
+    private PsiClass makeImportClass(String packageName, String className) {
+        final PackageWrapper packageWrapper = new PackageWrapper(psiJavaFile.getManager(), packageName);
+        ProjectRootManager rootManager = ProjectRootManager.getInstance(project);
+        return getBoundaryClass(project, packageName, rootManager, virtualFile, packageWrapper, className);
+    }
+
+    private PsiClass getBoundaryClass(Project project, String newPackage, ProjectRootManager rootManager, VirtualFile virtualFile, PackageWrapper packageWrapper, String className) {
+        PsiClass boundaryClass = lookupClass(project,newPackage, className);
+        if (boundaryClass == null) {
+            boundaryClass = createClass(rootManager, virtualFile, packageWrapper, className);
+        }
+        return boundaryClass;
+    }
+
+    private PsiClass createClass(ProjectRootManager rootManager, VirtualFile virtualFile, PackageWrapper packageWrapper, String className) {
+        try {
+            ProjectFileIndex fileIndex = rootManager.getFileIndex();
+            final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(virtualFile);
+            PsiDirectory packageDirectoryInSourceRoot = RefactoringUtil.createPackageDirectoryInSourceRoot(packageWrapper, sourceRootForFile);
+            return JavaDirectoryService.getInstance().createInterface(packageDirectoryInSourceRoot, className);
+        } catch (IncorrectOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private PsiClass lookupClass(Project project, String boundaryPackage, String newClassName) {
+        GlobalSearchScope globalsearchscope = GlobalSearchScope.allScope(project);
+        return JavaPsiFacade.getInstance(project).findClass(boundaryPackage + "." + newClassName, globalsearchscope);
+    }
+
     private PsiJavaFile makePsiJavaFile() {
-        File inFile = new File(DatabaseManager.getInstance().selectToJava(table->table.selectJava()).get(0).getPath());
-        return (PsiJavaFile) PsiManager.getInstance(SharedPreference.ACTIONEVENT.getData().getProject()).findFile(LocalFileSystem.getInstance().findFileByIoFile(inFile));
+        return (PsiJavaFile) PsiManager.getInstance(project).findFile(virtualFile);
     }
 
     public void remove(){

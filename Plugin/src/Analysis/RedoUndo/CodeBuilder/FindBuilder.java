@@ -6,16 +6,10 @@ package Analysis.RedoUndo.CodeBuilder;
 public class FindBuilder {
     private Type type;
 
-    private String name;
     private String id;
 
     public FindBuilder(Type type){
         this.type = type;
-    }
-
-    public FindBuilder name(String name){
-        this.name = name;
-        return this;
     }
 
     public FindBuilder findViewById(String id){
@@ -24,6 +18,6 @@ public class FindBuilder {
     }
 
     public String build(){
-        return type.name() + " " + name + " = (" + type.name() + ")findViewById(" + id + ");";
+        return "(" + type.name() + ")findViewById(" + id + ");";
     }
 }

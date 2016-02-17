@@ -28,7 +28,6 @@ public class MyActionClass extends AnAction {
     private String intellijPath = "/src";
     @Override
     public void actionPerformed(AnActionEvent e) {
-        // TODO: insert action logic here
         SharedPreference.ACTIONEVENT.setData(e);
 
 //        codeMakeTest(e);

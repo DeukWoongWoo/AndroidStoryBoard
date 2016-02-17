@@ -40,7 +40,7 @@ public class JavaParser implements FileParser {
     @Override
     public void parsing() {
         javaDTO = new JavaDTO();
-        javaDTO.setPath(psiJavaFile.getProject().getBasePath() + curPath + "/" + psiJavaFile.getName());
+        javaDTO.setPath(psiJavaFile.getProject().getBasePath() + "/" +curPath + "/" + psiJavaFile.getName());
 
         for (PsiClass p : psiJavaFile.getClasses()) {
             javaDTO.setName(p.getName());

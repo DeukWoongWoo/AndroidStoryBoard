@@ -1,10 +1,12 @@
 package com.example.cho.librarydb.LibraryFunction;
 
+import android.app.Activity;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.cho.librarydb.Table.ActivityInfo;
+import com.example.cho.librarydb.HttpAsyncTaskJson;
+import com.example.cho.librarydb.Names;
+import com.example.cho.librarydb.Network;
 import com.example.cho.librarydb.Table.TimeInfo;
 import com.example.cho.librarydb.TableHandler;
 
@@ -23,26 +25,33 @@ public class CatchActivity implements UserLiporter{
         CurrentTime currentTime = new CurrentTime();
         activitySatrtTime=currentTime.getCurrentTime();
     }
-    public void getCatchActivity(SQLiteDatabase db){
+    public void getCatchActivity(){
         CurrentTime currentTime = new CurrentTime();
         activityEndTime = currentTime.getCurrentTime();
         Log.e("----------Activity",activityName+"EndTime: " + activityEndTime);
-        //DB저장 부분
-        TableHandler tableHandler = new TableHandler(context,null,null,1);
-        TimeInfo timeInfo = new TimeInfo(activitySatrtTime,activityEndTime,activityName);
-        tableHandler.add(timeInfo);
+        TableHandler tableHandler = new TableHandler(context, null, null, 1);
+        TimeInfo timeInfo = new TimeInfo(activityName,activitySatrtTime, activityEndTime);
+        if(Network.isNetWork((Activity) context)) {
+            HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson();
+            httpAsyncTaskJson.execute(DataForm.getActivityData(
+                    Names.userId, Names.appName, activityName, activitySatrtTime, activityEndTime));
+            tableHandler.postDataFromDB(timeInfo);
+        }else { //DB저장 부분
+
+            tableHandler.add(timeInfo);
+        }
     }
 
     @Override
     public void set(Context context) {
-        activityName =context.getClass().getSimpleName();
+        this.activityName =context.getClass().getSimpleName();
         this.context = context;
         setCatchActivity();
         Log.e("----------Activity",activityName+"StartTime: "+activitySatrtTime);
     }
 
     @Override
-    public void get(SQLiteDatabase db) {
-        getCatchActivity(db);
+    public void get(String objectName) {
+        getCatchActivity();
     }
 }

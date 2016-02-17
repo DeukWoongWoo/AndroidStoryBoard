@@ -3,8 +3,12 @@ package com.example.cho.librarydb.Table;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import com.example.cho.librarydb.HttpAsyncTaskJson;
+import com.example.cho.librarydb.LibraryFunction.DataForm;
 import com.example.cho.librarydb.ManageTable;
+import com.example.cho.librarydb.Names;
 
 /**
  * Created by cho on 2016-02-13.
@@ -53,20 +57,21 @@ public class ErrorInfo implements ManageTable{
     public String getTableName(){return this.tableName;}
 
     @Override
-    public void add(SQLiteDatabase db) {
+    public void add(SQLiteDatabase db,String ...arg) {
+        String activityName =arg[0];
         ObjectInfo objectInfo = new ObjectInfo();
         if(!objectInfo.find(db, getObjectInfo())){
-            //없으면 생성을 해줘야겟다.
+            objectInfo.setActivityName(activityName);
             objectInfo.setObjectInfo(getObjectInfo());
             objectInfo.add(db);
         }
 
         ContentValues values = new ContentValues();
         values.put("_errorTime", getErrorTime());
-        values.put("objectInfo",getObjectInfo());
         values.put("errorLog",getErrorLog());
+        values.put("objectInfo",getObjectInfo());
         db.insert("ErrorInfo", null, values);
-        db.close();
+      //  db.close();
     }
 
 
@@ -82,7 +87,7 @@ public class ErrorInfo implements ManageTable{
             result=true;
             cursor.close();
         }
-        db.close();
+   //     db.close();
         return result;
     }
 
@@ -101,7 +106,29 @@ public class ErrorInfo implements ManageTable{
             cursor.close();
             result = true;
         }
-        db.close();
+    //    db.close();
         return result;
+    }
+
+    @Override
+    public boolean postData(SQLiteDatabase db) {
+        HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson();
+        String objectName = null;
+        String query = "Select ObjectInfo.activityName , ErrorInfo.objectInfo , ErrorInfo._eventTime " +
+                "FROM " + "ErrorInfo , ObjectInfo" + " WHERE " +
+                "ErrorInfo.objectInfo = ObjectInfo._objectInfo";
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            while(cursor.moveToNext()){
+                objectName = cursor.getString(1);
+                Log.e("Query~!!", cursor.getString(0) + "   " + cursor.getString(1) + "   " + cursor.getString(2));
+                httpAsyncTaskJson.execute(DataForm.getErrorData(
+                        Names.userId, Names.appName, cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+            }
+            ObjectInfo obj = new ObjectInfo();
+            obj.delete(db,objectName);
+        }
+
+        return false;
     }
 }

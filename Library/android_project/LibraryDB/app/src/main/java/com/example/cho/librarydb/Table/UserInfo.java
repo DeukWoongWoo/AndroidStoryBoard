@@ -38,11 +38,11 @@ public class UserInfo implements ManageTable {
     public String getTableName(){return this.tableName;}
 
     @Override
-    public void add(SQLiteDatabase db) {
+    public void add(SQLiteDatabase db,String ...arg) {
         ContentValues values = new ContentValues();
         values.put("_userId", getUserId());
         db.insert("UserInfo", null, values);
-        db.close();
+        //db.close();
     }
 
 
@@ -58,7 +58,7 @@ public class UserInfo implements ManageTable {
             result=true;
             cursor.close();
         }
-        db.close();
+      //  db.close();
         return result;
     }
 
@@ -77,7 +77,12 @@ public class UserInfo implements ManageTable {
             cursor.close();
             result = true;
         }
-        db.close();
+      //  db.close();
         return result;
+    }
+
+    @Override
+    public boolean postData(SQLiteDatabase db) {
+        return false;
     }
 }

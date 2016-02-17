@@ -3,8 +3,10 @@ package com.example.cho.librarydb.Table;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.cho.librarydb.ManageTable;
+import com.example.cho.librarydb.Names;
 
 /**
  * Created by cho on 2016-02-13.
@@ -44,13 +46,12 @@ public class ObjectInfo implements ManageTable{
     public String getTableName(){return this.tableName;}
 
     @Override
-    public void add(SQLiteDatabase db) {
-
+    public void add(SQLiteDatabase db,String ...arg) {
         ContentValues values = new ContentValues();
         values.put("_objectInfo", getObjectInfo());
-        values.put("activityName",getActivityName());
+        values.put("activityName",activityName);
         db.insert("ObjectInfo", null, values);
-        db.close();
+    //    db.close();
     }
 
     @Override
@@ -65,7 +66,7 @@ public class ObjectInfo implements ManageTable{
             result=true;
             cursor.close();
         }
-        db.close();
+     //   db.close();
         return result;
     }
 
@@ -84,7 +85,13 @@ public class ObjectInfo implements ManageTable{
             cursor.close();
             result = true;
         }
-        db.close();
+      //  db.close();
         return result;
+    }
+
+    @Override
+    public boolean postData(SQLiteDatabase db) {
+
+        return false;
     }
 }

@@ -2,9 +2,12 @@ package com.example.cho.librarydb;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import com.example.cho.librarydb.LibraryFunction.DataForm;
 import com.example.cho.librarydb.Table.ActivityInfo;
 import com.example.cho.librarydb.Table.AppInfo;
 import com.example.cho.librarydb.Table.UserInfo;
@@ -21,7 +24,7 @@ public class TableHandler extends SQLiteOpenHelper {
 
     public TableHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
-        activityName = context.getClass().getSimpleName();
+        this.activityName = context.getClass().getSimpleName();
     }
 
     @Override
@@ -70,10 +73,11 @@ public class TableHandler extends SQLiteOpenHelper {
 
         table[3]=
                 createTableName("TimeInfo")
-                +setField("_activityStartTime","TEXT")+","
-                +setField("activityEndTime","TEXT")+","
+                +setField("_activityStartTime", "TEXT")+","
+                +setField("activityEndTime", "TEXT")+","
                 +setField("activityName","TEXT")+","
-                +setPrimaryKey("_activityStartTime")+","
+                +setField("idx","INTEGER")+","
+                +setPrimaryKey("idx")+","
                 +setForeignKey("activityName","ActivityInfo","_activityName")
                 +setForeignKeyOption("DELETE CASCADE")
                 +")";
@@ -90,8 +94,8 @@ public class TableHandler extends SQLiteOpenHelper {
         table[5]=
                 createTableName("ErrorInfo")
                 +setField("_errorTime","TEXT")+","
-                +setField("objectInfo","TEXT")+","
                 +setField("errorLog","TEXT")+","
+                +setField("objectInfo","TEXT")+","
                 +setPrimaryKey("_errorTime")+","
                 +setForeignKey("objectInfo","ObjectInfo","_objectInfo")
                 +setForeignKeyOption("DELETE CASCADE")
@@ -101,7 +105,8 @@ public class TableHandler extends SQLiteOpenHelper {
                 createTableName("EventInfo")
                 +setField("_eventTime","TEXT")+","
                 +setField("objectInfo","TEXT")+","
-                +setPrimaryKey("_eventTime")+","
+                +setField("idx","INTEGER")+","
+                +setPrimaryKey("idx")+","
                 +setForeignKey("objectInfo","ObjectInfo","_objectInfo")
                 +setForeignKeyOption("DELETE CASCADE")
                 +")";
@@ -109,10 +114,14 @@ public class TableHandler extends SQLiteOpenHelper {
         return table;
     }
 
-    public void add(ManageTable manageTable){
+    public void add(ManageTable manageTable,String ...activityName){
         SQLiteDatabase db = this.getWritableDatabase();
-        addable(db,activityName);
-        manageTable.add(db);
+        addable(db, this.activityName);
+        if(activityName.length!=0)
+            manageTable.add(db,activityName[0]);
+        else
+            manageTable.add(db);
+        db.close();
     }
     public boolean find(ManageTable manageTable,String field){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -128,7 +137,16 @@ public class TableHandler extends SQLiteOpenHelper {
         if(!activityInfo.find(db,activityName)){
             activityInfo.setActivityName(activityName);
             activityInfo.setAppName(Names.appName);
+            activityInfo.add(db);
         }
+    }
+
+
+    public boolean postDataFromDB(ManageTable manageTable) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        manageTable.postData(db);
+        db.close();
+        return true;
     }
 
 

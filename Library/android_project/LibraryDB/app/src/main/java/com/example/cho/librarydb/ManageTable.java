@@ -7,7 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public interface ManageTable {
 
-    public void add(SQLiteDatabase db);
+    public void add(SQLiteDatabase db,String ...arg);
     public boolean find(SQLiteDatabase db,String field);
     public boolean delete(SQLiteDatabase db,String field);
+    public boolean postData(SQLiteDatabase db);
 }

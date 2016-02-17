@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.cho.librarydb.ManageTable;
+import com.example.cho.librarydb.Names;
 
 /**
  * Created by cho on 2016-02-12.
@@ -41,13 +42,13 @@ public class ActivityInfo implements ManageTable{
     public String getTableName(){return this.tableName;}
 
     @Override
-    public void add(SQLiteDatabase db) {
+    public void add(SQLiteDatabase db,String ...arg) {
 
         ContentValues values = new ContentValues();
         values.put("_activityName", getActivityName());
-        values.put("appName",getAppName());
+        values.put("appName", Names.appName);
         db.insert("ActivityInfo", null, values);
-        db.close();
+      //  db.close();
     }
 
     @Override
@@ -62,7 +63,7 @@ public class ActivityInfo implements ManageTable{
             result=true;
             cursor.close();
         }
-        db.close();
+       // db.close();
         return result;
     }
 
@@ -81,7 +82,12 @@ public class ActivityInfo implements ManageTable{
             cursor.close();
             result = true;
         }
-        db.close();
+       // db.close();
         return result;
+    }
+
+    @Override
+    public boolean postData(SQLiteDatabase db) {
+        return false;
     }
 }

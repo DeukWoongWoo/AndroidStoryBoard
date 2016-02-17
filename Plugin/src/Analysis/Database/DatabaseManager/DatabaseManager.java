@@ -6,6 +6,7 @@ import Analysis.Database.DataAccessObject.Java.JavaDAOImpl;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAOImpl;
 import Analysis.Database.DtatTransferObject.DTO;
+import Analysis.Database.DtatTransferObject.JavaDTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 
@@ -46,6 +47,11 @@ public class DatabaseManager implements DBManager{
     @Override
     public ArrayList<ManifestDTO> selectToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function) {
         return function.apply(manifestDAO);
+    }
+
+    @Override
+    public ArrayList<JavaDTO> selectToJava(Function<JavaDAO, ArrayList<JavaDTO>> function) {
+        return function.apply(javaDAO);
     }
 
     @Override

@@ -25,9 +25,11 @@ function EObject(){
         if(objectType == 'button') {
             type = new Button();
             return this;
-        }
-        else if(objectType == 'radio button'){
+        }else if(objectType == 'radio button'){
             type = new RadioButton();
+            return this;
+        }else if(objectType == 'checkbox'){
+            type = new CheckBox();
             return this;
         }
         else return type;
@@ -42,7 +44,12 @@ function EObject(){
         own.append('text').attr('x', 100).attr('y', 100).attr('fill', 'blue').attr('stroke', 'red').text('text');
     }
 
-
+    this.image = function(arg){
+        if (isDefined(arg)) {
+            image = arg;
+            return this;
+        } else return image;
+    }
 };
 
 EObject.prototype = new Activity();

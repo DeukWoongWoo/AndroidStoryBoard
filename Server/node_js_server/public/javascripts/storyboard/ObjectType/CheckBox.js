@@ -1,4 +1,4 @@
-function Button(){
+function CheckBox(){
     this.create = function(target){
         own = target.append('rect');
         this.update();
@@ -7,12 +7,11 @@ function Button(){
     }
 
     this.update = function(){
-        if(this.image())
         own.attr("width", this.width())
             .attr("height", this.height())
             .attr('x', this.x())
             .attr('y', this.y())
-            .attr('fill', this.color())
+            .attr('stroke', this.color())
             .attr('stroke-width', this.width() / 10)
             .attr("object-name", this.name())
             .attr("class", this.activityName() + '-activity-name')
@@ -22,4 +21,4 @@ function Button(){
     }
 }
 
-Button.prototype = new EObject();
+CheckBox.prototype = new EObject();

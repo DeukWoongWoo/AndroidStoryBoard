@@ -100,9 +100,9 @@ router.get('/delete/:app_name', function (req, res) {
             var dirName = './users/' + req.session.user_id + '/' + req.params.app_name + '/';
             deleteFiles(dirName);
         } else if (err)console.log(err);
-
+        res.redirect('/');
     });
-    res.redirect('/login');
+
 });
 
 function deleteFiles(dirName) {
@@ -113,12 +113,15 @@ function deleteFiles(dirName) {
             function(file, callback){
                 fs.unlink(dirName + file, function (err) {
                     if (err) throw err;
-                    else callback(null);
+                    else{
+                        console.error('unlink ' + dirName + file);
+                        callback(null);
+                    }
                 });
             },
             function(err){
                 fs.rmdir(dirName, function (err) {
-                    if (err) throw err;
+                    if (err) console.error(err);//// throw err;
                     console.log('Removed ' + dirName);
                 });
             }

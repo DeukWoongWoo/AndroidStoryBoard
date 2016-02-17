@@ -7,39 +7,39 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- * Created by 우철 on 2016-02-17.
+ * Created by 우철 on 2016-02-18.
  */
-public class palettePanel extends JPanel {
-    JPanel leftPanel = new JPanel();
+public class componetTreePanel extends JPanel {
+    JPanel rightPanel = new JPanel();
     JPanel CenterPanel =new JPanel();
-    JPanel rightTopPanel = new JPanel();
-    JPanel rightCenterPanel = new JPanel();
-    JButton palettelToggleB = new JButton("palette");
-    JButton hideButton = new JButton("hide");
+    JPanel leftTopPanel = new JPanel();
+    JPanel leftCenterPanel = new JPanel();
+    JButton componetTreeB = new JButton("ComponetTree");
+    JButton hideB = new JButton("hide");
     MouseListener li;
 
-    public palettePanel() {
+    public componetTreePanel() {
         //기존의 jPanel setting
         setLayout(new BorderLayout());
 
-            add(leftPanel,"West");
-                leftPanel.setBorder(new LineBorder(Color.black));
-                leftPanel.setPreferredSize(new Dimension(100, 100));
-                leftPanel.setLayout(new FlowLayout());
-                leftPanel.add(palettelToggleB);
+        add(rightPanel,"East");
+        rightPanel.setBorder(new LineBorder(Color.black));
+        rightPanel.setPreferredSize(new Dimension(100, 100));
+        rightPanel.setLayout(new FlowLayout());
+        rightPanel.add(componetTreeB);
 
-             add(CenterPanel, "Center");
-                CenterPanel.setLayout(new BorderLayout());
-                CenterPanel.setBorder(new LineBorder(Color.black));
-                CenterPanel.add(rightTopPanel,"North");
-                    rightTopPanel.setBackground(Color.BLACK);
-                    rightTopPanel.setPreferredSize(new Dimension(250,50));
-                    rightTopPanel.add(hideButton);
-                        hideButton.setSize(50,50);
-                CenterPanel.add(rightCenterPanel, "Center");
+        add(CenterPanel, "Center");
+        CenterPanel.setLayout(new BorderLayout());
+        CenterPanel.setBorder(new LineBorder(Color.black));
+        CenterPanel.add(leftTopPanel,"North");
+        leftTopPanel.setBackground(Color.BLACK);
+        leftTopPanel.setPreferredSize(new Dimension(250,50));
+        leftTopPanel.add(hideB);
+        hideB.setSize(50,50);
+        CenterPanel.add(leftCenterPanel, "Center");
 
 
-        palettelToggleB.addMouseListener(new MouseListener() {
+        componetTreeB.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(CenterPanel.isVisible()==true)
@@ -68,7 +68,7 @@ public class palettePanel extends JPanel {
 
             }
         });
-        hideButton.addMouseListener(new MouseListener() {
+        hideB.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 CenterPanel.setVisible(false);
@@ -96,6 +96,5 @@ public class palettePanel extends JPanel {
         });
 
     }
-
 
 }

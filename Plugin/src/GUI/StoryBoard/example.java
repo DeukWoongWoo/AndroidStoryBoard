@@ -1,7 +1,6 @@
 package GUI.StoryBoard;
 
-import GUI.StoryBoard.UI.menuPanel;
-
+import GUI.StoryBoard.UI.*;
 import javax.swing.*;
 import java.io.IOException;
 
@@ -11,7 +10,7 @@ import java.io.IOException;
 public class example extends JFrame {
 
     public example() throws IOException {
-        storyBoard a = new storyBoard();
+        palettePanel a = new palettePanel();
         this.setSize(1000, 1000);
         this.add(a);
         this.setVisible(true);

@@ -2,53 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e001467-afda-4d64-899f-df7c96b7dc33" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Activity$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Activity$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Activity$PopUpMenu$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Activity$PopUpMenu$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Activity$PopUpMenu$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Activity$PopUpMenu$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Activity$PopUpMenu.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Activity.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Button_Click.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Button_Radio.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Button_Root$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Button_Root$Change_Window$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Button_Root$Change_Window$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Button_Root$Change_Window$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Button_Root$Change_Window$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Button_Root$Change_Window.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Button_Root$PopUpMenu$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Button_Root$PopUpMenu$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Button_Root$PopUpMenu.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Button_Root.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Layout_Linear.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Layout_Linear_Root.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Layout_Root.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/ObjectCustom$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/ObjectCustom$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/ObjectCustom$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/ObjectCustom.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/example_gui.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/storyBoard_func$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/storyBoard_func$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/storyBoard_func$listner.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/storyBoard_func.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/Layout_Linear.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/Layout_Linear_Root.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/Layout_Root.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/ObjectCustom.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/example_gui.form" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/example_gui.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/Activity.java" afterPath="$PROJECT_DIR$/src/GUI/StoryBoard/Object/Activity.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/Button_Click.java" afterPath="$PROJECT_DIR$/src/GUI/StoryBoard/Object/Button_Click.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/Button_Radio.java" afterPath="$PROJECT_DIR$/src/GUI/StoryBoard/Object/Button_Radio.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/Button_Root.java" afterPath="$PROJECT_DIR$/src/GUI/StoryBoard/Object/Button_Root.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/storyBoard_func.java" afterPath="$PROJECT_DIR$/src/GUI/StoryBoard/storyBoard.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Constant.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/Constant.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/StoryBoard_PlugIn.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/StoryBoard_PlugIn.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/example.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/GUI/StoryBoard/example.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/out/production/StoryBoard/META-INF/plugin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/resources/META-INF/plugin.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/Constant.java" afterPath="$PROJECT_DIR$/src/GUI/StoryBoard/Constant.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/StoryBoard_PlugIn.java" afterPath="$PROJECT_DIR$/src/GUI/StoryBoard/StoryBoard_PlugIn.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GUI/StoryBoard/example.java" afterPath="$PROJECT_DIR$/src/GUI/StoryBoard/example.java" />
     </list>
     <ignored path="StoryBoard.iws" />
@@ -74,18 +33,42 @@
       <file leaf-file-name="plugin.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.6176472">
+            <state vertical-scroll-proportion="0.0">
               <caret line="27" column="26" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StoryBoard_PlugIn.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StoryBoard_PlugIn.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/StoryBoard_PlugIn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47335812">
-              <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="33" column="43" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="menuPanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/UI/menuPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="palettePanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/UI/palettePanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -107,7 +90,7 @@
         <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/storyBoard.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+              <caret line="27" column="48" selection-start-line="27" selection-start-column="48" selection-end-line="27" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -117,27 +100,17 @@
         <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Constant.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+              <caret line="11" column="52" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="example.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="example.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/example.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Layout_Linear.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Object/Layout_Linear.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.5259901">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -168,13 +141,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GradleLocalSettings">
@@ -185,11 +156,25 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/storyboard.form" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/StoryBoard_function.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DatabaseManager/DBManager.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/SQLiteOpenHelper.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Manifest/ManifestDAO.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Activity/ActivityDAO.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Constant/TableName.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Xml/XmlDAO.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Component/ComponentDAO.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Event/EventDAO.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Java/JavaDAO.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DatabaseManager/DatabaseManager.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Activity/ActivityDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Component/ComponentDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Event/EventDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Manifest/ManifestDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Xml/XmlDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Java/JavaDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Parser/XmlParser.java" />
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/Type.java" />
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/CodeBuilder.java" />
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/FindBuilder.java" />
@@ -203,39 +188,25 @@
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/Command/LocalButtonCreateCommand.java" />
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Database/ConnectionPool.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Main/ProjectAnalysis.java" />
         <option value="$PROJECT_DIR$/src/Analysis/MyActionClass.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/StringUtils.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DtatTransferObject/ManifestDTO.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DtatTransferObject/XmlDTO.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Parser/XmlParser.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DtatTransferObject/ComponentDTO.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Constant/DatabaseQuery.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Xml/XmlDAO.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Xml/XmlDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Component/ComponentDAO.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Component/ComponentDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Event/EventDAO.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DtatTransferObject/EventDTO.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Event/EventDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/Test/Analysis/StringSplitTest.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Java/JavaDAO.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/Update/UpdateWhereBuilder.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/Update/UpdateSetBuilder.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DtatTransferObject/JavaDTO.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/QueryBuilder.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/Update/UpdateBuilder.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DatabaseManager/DBManager.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DatabaseManager/DatabaseManager.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Java/JavaDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Parser/JavaParser.java" />
-        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/example_gui.java" />
-        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/storyBoard_func.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/Constant/DatabaseQuery.java" />
         <option value="$PROJECT_DIR$/src/GUI/StoryBoard/storyBoard.java" />
-        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/StoryBoardPlugIn.java" />
-        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/StoryBoard_PlugIn.java" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/storyboard.java" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/mainView.form" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/storyBoard_func.java" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/mainViewFactory.java" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/example_gui.form" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/mainViewFactory.java" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/example_gui.java" />
         <option value="$PROJECT_DIR$/resources/META-INF/plugin.xml" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/Constant.java" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/StoryBoard_PlugIn.java" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/menuPanel.java" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/palettePanel.java" />
+        <option value="$PROJECT_DIR$/src/GUI/StoryBoard/example.java" />
       </list>
     </option>
   </component>
@@ -251,25 +222,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-11" />
-    <option name="y" value="-1091" />
+    <option name="y" value="-11" />
     <option name="width" value="1942" />
     <option name="height" value="1046" />
-  </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>Android</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -297,8 +252,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -370,6 +323,32 @@
               <option name="myItemId" value="GUI" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StoryBoard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UI" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StoryBoard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GUI" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -405,130 +384,44 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/comparisonChainGen-master/comparisonChainGen-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="Downloaded.Files.Path.Enabled" value="true" />
-    <property name="Repository.Attach.JavaDocs" value="true" />
-    <property name="Repository.Attach.Sources" value="true" />
   </component>
-  <component name="PsiViewer.ProjectComponent">
-    <option name="HIGHLIGHT" value="false" />
-    <option name="FILTER_WHITESPACE" value="false" />
-    <option name="SHOW_PROPERTIES" value="true" />
-    <option name="SPLIT_DIVIDER_POSITION" value="300" />
-    <option name="AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="AUTOSCROLL_FROM_SOURCE" value="false" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\우철\Documents\AndroidStoryBoard\Plugin\src\GUI\StoryBoard\UI" />
-      <recent name="C:\Users\woong\Desktop\GitStoryBoard\Plugin\src\Analysis" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\우철\Documents\AndroidStoryBoard\Plugin\resources\icon" />
-      <recent name="C:\Users\woong\Desktop\GitStoryBoard\Plugin" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="Analysis.Database.QueryBuilder" />
-      <recent name="Analysis.Database.DtatTransferObject" />
-      <recent name="Analysis.Database.DataAccessObject" />
-      <recent name="Analysis" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\woong\Desktop\GitStoryBoard\Plugin\src\Analysis" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Plugin.Plugin">
-    <configuration default="false" name="InsertTest" type="JUnit" factoryName="JUnit" temporary="true">
+  <component name="RunManager" selected="Application.example">
+    <configuration default="false" name="abc" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="Test.Analysis.*" />
+          <option name="PATTERN" value="GUI.StoryBoard.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <module name="StoryBoard" />
+      <option name="MAIN_CLASS_NAME" value="GUI.StoryBoard.abc" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="Test.Analysis" />
-      <option name="MAIN_CLASS_NAME" value="Test.Analysis.InsertTest" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="false" name="GUI.StoryBoard.UI in StoryBoard" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="GUI.StoryBoard.UI.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <module name="StoryBoard" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="GUI.StoryBoard.UI" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
       <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="false" name="StringSplitTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="Test.Analysis.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="StoryBoard" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="Test.Analysis" />
-      <option name="MAIN_CLASS_NAME" value="Test.Analysis.StringSplitTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
       <method />
     </configuration>
     <configuration default="false" name="example" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="GUI.StoryBoard.Object.*" />
+          <option name="PATTERN" value="GUI.StoryBoard.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -545,10 +438,37 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="false" name="GUI in StoryBoard" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="GUI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="StoryBoard" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="GUI" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="StoryBoard" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <log_file path="$USER_HOME$/.IdeaIC15/system/plugins-sandbox/system/log/idea.log" checked="false" skipped="true" show_all="false" alias="IDEA LOG" />
       <method />
     </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -789,104 +709,80 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="false" name="Plugin" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+    <configuration default="false" name="a" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="StoryBoard" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <log_file path="$USER_HOME$/.IdeaIC15/system/plugins-sandbox/system/log/idea.log" checked="false" skipped="true" show_all="false" alias="IDEA LOG" />
+      <method />
+    </configuration>
+    <configuration default="false" name="example" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="StoryBoard" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <alternative-path path="IntelliJ IDEA Community Edition IC-143.1184.17" alternative-path-enabled="true" />
+      <log_file path="$USER_HOME$/.IdeaIC15/system/plugins-sandbox/system/log/idea.log" checked="false" skipped="true" show_all="false" alias="IDEA LOG" />
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Plugin.Plugin" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.InsertTest" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.GUI.StoryBoard.UI in StoryBoard" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.StringSplitTest" />
-      <item index="4" class="java.lang.String" itemvalue="Application.example" />
+      <item index="0" class="java.lang.String" itemvalue="Plugin.a" />
+      <item index="1" class="java.lang.String" itemvalue="Plugin.example" />
+      <item index="2" class="java.lang.String" itemvalue="Application.abc" />
+      <item index="3" class="java.lang.String" itemvalue="Application.example" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.GUI in StoryBoard" />
     </list>
     <recent_temporary>
-      <list size="4">
+      <list size="3">
         <item index="0" class="java.lang.String" itemvalue="Application.example" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.StringSplitTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.InsertTest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.GUI.StoryBoard.UI in StoryBoard" />
+        <item index="1" class="java.lang.String" itemvalue="Application.abc" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.GUI in StoryBoard" />
       </list>
     </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
-    <configuration>C:\Users\woong\AppData\Roaming\Subversion</configuration>
+    <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="0e001467-afda-4d64-899f-df7c96b7dc33" name="Default" comment="" />
-      <created>1452665549992</created>
+      <created>1454474799973</created>
       <option name="number" value="Default" />
-      <updated>1452665549992</updated>
+      <updated>1454474799973</updated>
     </task>
     <servers />
   </component>
-  <component name="TestHistory">
-    <history-entry file="StringSplitTest - 2016.02.16 at 19h 54m 15s.xml">
-      <configuration name="StringSplitTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.16 at 19h 54m 31s.xml">
-      <configuration name="StringSplitTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.16 at 19h 54m 50s.xml">
-      <configuration name="StringSplitTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.16 at 19h 56m 07s.xml">
-      <configuration name="StringSplitTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.16 at 19h 56m 20s.xml">
-      <configuration name="StringSplitTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.16 at 19h 56m 36s.xml">
-      <configuration name="StringSplitTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.17 at 02h 16m 53s.xml">
-      <configuration name="StringSplitTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.17 at 02h 18m 04s.xml">
-      <configuration name="StringSplitTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.17 at 02h 18m 58s.xml">
-      <configuration name="StringSplitTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.17 at 02h 19m 12s.xml">
-      <configuration name="StringSplitTest" configurationId="JUnit" />
-    </history-entry>
-  </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-1091" width="1942" height="1046" extended-state="6" />
+    <frame x="-11" y="-11" width="1942" height="1046" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35196194" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19346195" sideWeight="0.4940476" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Tail" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12953092" sideWeight="0.50595236" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30403802" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Tail" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30403802" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2185501" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32699168" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35196194" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -903,7 +799,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="32" />
+      <option name="time" value="27" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -912,14 +808,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiJavaParserFacade.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.640873">
@@ -945,17 +833,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.64285713">
           <caret line="91" column="70" selection-start-line="91" selection-start-column="70" selection-end-line="91" selection-end-column="70" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="method#ProjectAnalysis#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#execute#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#execute#1;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#findFiles#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#findDirectories#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#currentDirectory#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#checkFileType#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#codeParsing#0;class#ProjectAnalysis#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -963,10 +840,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.54702497">
           <caret line="15" column="7" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
-          <folding>
-            <element signature="e#137#138#0" expanded="false" />
-            <element signature="e#187#188#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -974,10 +847,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.58469945">
           <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
-          <folding>
-            <element signature="e#478#479#0" expanded="false" />
-            <element signature="e#540#541#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -985,7 +854,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.67941713">
           <caret line="22" column="39" selection-start-line="20" selection-start-column="11" selection-end-line="22" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1014,16 +882,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-          <folding>
-            <element signature="e#553#554#0" expanded="false" />
-            <element signature="e#583#584#0" expanded="false" />
-            <element signature="e#624#625#0" expanded="false" />
-            <element signature="e#660#661#0" expanded="false" />
-            <element signature="e#706#707#0" expanded="false" />
-            <element signature="e#744#745#0" expanded="false" />
-            <element signature="e#784#785#0" expanded="false" />
-            <element signature="e#816#817#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1031,9 +889,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1041,7 +896,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.928934">
           <caret line="71" column="36" selection-start-line="71" selection-start-column="36" selection-end-line="71" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1098,7 +952,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21626016">
           <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1113,7 +966,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.15447155">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1121,7 +973,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21626016">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1129,7 +980,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1137,29 +987,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.43252033">
           <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
-          <folding>
-            <element signature="method#ComponentDTO#1;class#ComponentDTO#0" expanded="false" />
-            <element signature="e#824#825#0" expanded="false" />
-            <element signature="e#854#855#0" expanded="false" />
-            <element signature="e#893#894#0" expanded="false" />
-            <element signature="e#927#928#0" expanded="false" />
-            <element signature="e#967#968#0" expanded="false" />
-            <element signature="e#999#1000#0" expanded="false" />
-            <element signature="e#1039#1040#0" expanded="false" />
-            <element signature="e#1071#1072#0" expanded="false" />
-            <element signature="e#1123#1124#0" expanded="false" />
-            <element signature="e#1167#1168#0" expanded="false" />
-            <element signature="e#1213#1214#0" expanded="false" />
-            <element signature="e#1251#1252#0" expanded="false" />
-            <element signature="e#1298#1299#0" expanded="false" />
-            <element signature="e#1340#1341#0" expanded="false" />
-            <element signature="e#1387#1388#0" expanded="false" />
-            <element signature="e#1429#1430#0" expanded="false" />
-            <element signature="e#1628#1629#0" expanded="false" />
-            <element signature="e#1655#1656#0" expanded="false" />
-            <element signature="e#1692#1693#0" expanded="false" />
-            <element signature="e#1725#1726#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1167,7 +994,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3707317">
           <caret line="20" column="55" selection-start-line="20" selection-start-column="55" selection-end-line="20" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1175,12 +1001,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.78373986">
           <caret line="62" column="29" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
-          <folding>
-            <element signature="method#getInstance#0;class#DatabaseManager#0" expanded="false" />
-            <element signature="method#onCreateTable#0;class#DatabaseManager#0" expanded="false" />
-            <element signature="e#1951#1952#0" expanded="false" />
-            <element signature="e#1989#1990#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1188,10 +1008,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding>
-            <element signature="e#482#483#0" expanded="false" />
-            <element signature="e#544#545#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1199,7 +1015,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1207,7 +1022,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1215,7 +1029,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1223,7 +1036,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="42" column="54" selection-start-line="42" selection-start-column="54" selection-end-line="42" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1231,7 +1043,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="136" column="32" selection-start-line="136" selection-start-column="32" selection-end-line="136" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1239,9 +1050,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37174723">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding>
-            <element signature="e#463#464#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1249,9 +1057,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.75216854">
           <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
-          <folding>
-            <element signature="method#JavaDTO#1;class#JavaDTO#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1259,7 +1064,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.65055764">
           <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1267,7 +1071,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.13258983">
           <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1275,7 +1078,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7211896">
           <caret line="86" column="184" selection-start-line="86" selection-start-column="184" selection-end-line="86" selection-end-column="184" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1283,20 +1085,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="163" column="5" selection-start-line="163" selection-start-column="5" selection-end-line="163" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1744#1863#0" expanded="false" />
-            <element signature="method#makeXmlDTO#0;class#JavaParser#0" expanded="false" />
-            <element signature="method#makeComponentDTO#0;class#JavaParser#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/storyBoard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1304,7 +1092,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1324,22 +1111,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Constant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/example.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_65/src.zip!/java/net/DualStackPlainSocketImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1350,108 +1121,65 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.6176472">
+        <state vertical-scroll-proportion="0.0">
           <caret line="27" column="26" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Constant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="52" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/StoryBoard_PlugIn.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47335812">
-          <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="43" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>JetBrains JFlex</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>StoryBoard</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>lib</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
+    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/UI/palettePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/UI/menuPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/storyBoard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="48" selection-start-line="27" selection-start-column="48" selection-end-line="27" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/example.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5259901">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>

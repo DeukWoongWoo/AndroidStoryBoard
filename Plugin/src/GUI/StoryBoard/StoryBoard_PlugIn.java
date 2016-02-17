@@ -1,5 +1,6 @@
 package GUI.StoryBoard;
 
+import GUI.StoryBoard.UI.menuPanel;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -26,9 +27,11 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
     public StoryBoard_PlugIn() throws IOException {
         totalPanel = new JPanel();
         centerPanel = new storyBoard();
+        northPanel = new menuPanel();
         totalPanel.setLayout(new BorderLayout());
 
         totalPanel.add(centerPanel,"Center");
+        totalPanel.add(northPanel,"North");
     }
 
     @Override

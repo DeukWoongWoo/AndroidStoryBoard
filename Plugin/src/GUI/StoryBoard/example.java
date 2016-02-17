@@ -1,5 +1,7 @@
 package GUI.StoryBoard;
 
+import GUI.StoryBoard.UI.menuPanel;
+
 import javax.swing.*;
 import java.io.IOException;
 

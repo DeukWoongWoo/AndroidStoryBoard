@@ -24,7 +24,7 @@ public interface JavaDAO {
     public void selectAll();
     public ArrayList<JavaDTO> selectJava();
     public void selectXml();
-    public void selectComponent();
+    public ArrayList<JavaDTO> selectComponent(String... col);
     public void selectEvent();
 
     public void updateJava(JavaDTO javaDTO);

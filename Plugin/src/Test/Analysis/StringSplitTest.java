@@ -35,9 +35,11 @@ public class StringSplitTest {
         System.out.println("id : " + findStr.substring(findStr.lastIndexOf("(")+1,findStr.lastIndexOf(")")));
 
     }
-
+    String tt;
     @Test
     public void intentSplit(){
+        System.out.println(">>>> " + tt);
+
         String str = "Intent intent = new Intent(this, NextActivity.class);";
 
         String[] strSplit = str.split("=");

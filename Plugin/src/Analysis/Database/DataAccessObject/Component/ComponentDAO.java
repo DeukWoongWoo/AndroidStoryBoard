@@ -8,5 +8,5 @@ import Analysis.Database.DtatTransferObject.ComponentDTO;
 public interface ComponentDAO {
     public void create();
     public void insert(ComponentDTO componentDTO);
-    public int select(String col);
+    public ComponentDTO select(String... col);
 }

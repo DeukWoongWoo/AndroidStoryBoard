@@ -1,20 +1,25 @@
 package Analysis.RedoUndo;
 
-import Analysis.RedoUndo.CommandObj.LocalButtonCreate;
-
 /**
  * Created by woong on 2016. 2. 11..
  */
 public class CodeDriver {
     public CodeDriver(){
-        /*CommandManager commandManager = new CommandManager();
+        CommandManager commandManager = new CommandManager();
 
-        commandManager.execute(CommandKey.WRITE);
-        commandManager.undo();
-        commandManager.execute(CommandKey.CLEAN);
-        commandManager.undo();
-        commandManager.redo();*/
+        CommandKey.LOCALBUTTON.setId("R.id.button");
+        commandManager.execute(CommandKey.LOCALBUTTON);
 
-        new LocalButtonCreate().create();
+        CommandKey.LOCALBUTTON.setId("R.id.button1");
+        commandManager.execute(CommandKey.LOCALBUTTON);
+
+//        commandManager.undo();
+//        commandManager.redo();
+//        commandManager.execute(CommandKey.WRITE);
+//        commandManager.undo();
+//        commandManager.execute(CommandKey.CLEAN);
+//        commandManager.undo();
+//        commandManager.redo();
+
     }
 }

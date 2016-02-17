@@ -97,7 +97,7 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
 
     @Override
     public void insertEvent(EventDTO eventDTO) {
-        eventDTO.setComponentId(componentDAO.select(eventDTO.getComponentName()));
+        eventDTO.setComponentId(componentDAO.select("name='"+eventDTO.getComponentName()+"'").getNum());
         eventDAO.insert(eventDTO);
     }
 
@@ -141,8 +141,12 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
     }
 
     @Override
-    public void selectComponent() {
-
+    public ArrayList<JavaDTO> selectComponent(String... col) {
+        JavaDTO javaDTO = new JavaDTO();
+        javaDTO.setComponent(componentDAO.select(col));
+        ArrayList<JavaDTO> list = new ArrayList<>();
+        list.add(javaDTO);
+        return list;
     }
 
     @Override

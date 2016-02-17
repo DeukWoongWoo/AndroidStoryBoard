@@ -5,18 +5,9 @@ import Analysis.Database.DtatTransferObject.ComponentDTO;
 import Analysis.Database.DtatTransferObject.EventDTO;
 import Analysis.Database.DtatTransferObject.JavaDTO;
 import Analysis.Database.DtatTransferObject.XmlDTO;
-import com.intellij.codeInsight.template.JavaCodeContextType;
-import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.psi.*;
-import com.intellij.psi.codeStyle.JavaCodeStyleManager;
-import com.intellij.psi.util.PsiExpressionTrimRenderer;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.util.PsiTypesUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,27 +41,6 @@ public class JavaParser implements FileParser {
     public void parsing() {
         javaDTO = new JavaDTO();
         javaDTO.setPath(psiJavaFile.getProject().getBasePath() + curPath + "/" + psiJavaFile.getName());
-
-//        PsiClass psiClass = PsiTreeUtil.getParentOfType(psiJavaFile.getClasses()[0].getFirstChild(), PsiClass.class);
-//
-//        System.out.println("MakePsiClass : " + psiClass);
-//
-//        new WriteCommandAction.Simple(psiClass.getProject(), psiClass.getContainingFile()){
-//            @Override
-//            protected void run() throws Throwable {
-//                StringBuilder builder = new StringBuilder("private Button button;");
-//                PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(psiClass.getProject());
-////                PsiMethod compareTo = elementFactory.createMethodFromText(builder.toString(), psiClass);
-////                PsiElement el = psiClass.add(compareTo);
-////                JavaCodeStyleManager.getInstance(psiClass.get,.Project()).shortenClassReferences(el);
-//
-//                PsiField field = elementFactory.createFieldFromText(builder.toString(), psiClass);
-////                PsiField field = elementFactory.createField(builder.toString(), psiClass.getAllFields()[0].getType());
-//
-//                psiClass.add(field);
-//
-//            }
-//        }.execute();
 
         for (PsiClass p : psiJavaFile.getClasses()) {
             javaDTO.setName(p.getName());

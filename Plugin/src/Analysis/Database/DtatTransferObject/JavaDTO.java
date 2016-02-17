@@ -2,6 +2,8 @@ package Analysis.Database.DtatTransferObject;
 
 import Analysis.Database.QueryBuilder.QueryBuilder;
 
+import java.util.ArrayList;
+
 /**
  * Created by woong on 2016-01-21.
  */
@@ -16,6 +18,8 @@ public class JavaDTO {
     private String nextActivity;
     private String intentName;
     private String intentFuncName;
+
+    private ArrayList<ComponentDTO> components;
 
     private String[] columns;
     private int colCnt;
@@ -83,6 +87,15 @@ public class JavaDTO {
         this.intentFuncName = intentFuncName;
     }
 
+    public void setComponents(ArrayList<ComponentDTO> components){
+        this.components = components;
+    }
+
+    public void setComponent(ComponentDTO component){
+        if(components == null) components = new ArrayList<>();
+        components.add(component);
+    }
+
     public int getNum() {
         return num;
     }
@@ -109,6 +122,10 @@ public class JavaDTO {
 
     public String getIntentFuncName() {
         return intentFuncName;
+    }
+
+    public ComponentDTO getComponent(int index){
+        return components.get(index);
     }
 
     public String getInsertQuery(){

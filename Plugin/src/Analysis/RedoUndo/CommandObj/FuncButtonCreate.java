@@ -6,7 +6,9 @@ import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeBuilder.CodeBuilder;
 import Analysis.RedoUndo.CodeBuilder.Type;
 import Analysis.RedoUndo.CommandKey;
+import Analysis.RedoUndo.Util.ElementFactory;
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
@@ -23,6 +25,8 @@ public class FuncButtonCreate {
 
     private final String funcName = "initFind";
     private final String buttonName = "button" + (num++);
+    private final String packageName = "android.widget";
+
     private PsiJavaFile psiJavaFile;
 
     public void create(){
@@ -42,26 +46,39 @@ public class FuncButtonCreate {
                     new WriteCommandAction.Simple(method.getProject(), method.getContainingFile()) {
                         @Override
                         protected void run() throws Throwable {
+                            ElementFactory elementFactory = new ElementFactory();
+
                             String makeCode = buttonName + " = " + CodeBuilder.Component(Type.Button).findViewById(CommandKey.LOCALBUTTON.getId()).build();
 
-                            PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(method.getProject());
+                            p.add(elementFactory.makePsiField("private " + Type.Button + " " + buttonName + ";",p));
 
-                            PsiField field = elementFactory.createFieldFromText("private " + Type.Button + " " + buttonName + ";",p);
-                            p.add(field);
-
-                            PsiStatement statement = elementFactory.createStatementFromText(funcName+"();",method);
-                            method.getBody().add(statement);
+                            method.getBody().add(elementFactory.makePsiStatement(funcName+"();",method));
 
                             StringBuilder builder = new StringBuilder("private void "+ funcName + "(){\n");
                             builder.append(makeCode + "\n}\n");
-                            PsiMethod createMethod = elementFactory.createMethodFromText(builder.toString(), p);
+
+                            PsiMethod createMethod = elementFactory.makePsiMethod(builder.toString(), p);
                             p.add(createMethod);
+
                             JavaCodeStyleManager.getInstance(p.getProject()).shortenClassReferences(createMethod);
+
+                            if (!checkImport(packageName)){
+                                PsiImportStatement psiImportStatement = elementFactory.findPsiImportStatement(packageName, Type.Button.name());
+                                if(psiImportStatement != null) psiJavaFile.getImportList().add(psiImportStatement);
+                                else Messages.showInfoMessage("Cannot find import file...","File Search");
+                            }
                         }
                     }.execute();
                 }
             }
         }
+    }
+
+    private boolean checkImport(String packageName) {
+        for(PsiImportStatement psiImportStatement : psiJavaFile.getImportList().getImportStatements()){
+            if(psiImportStatement.getText().equals("import "+packageName+"."+ Type.Button.name()+";")) return true;
+        }
+        return false;
     }
 
     private PsiJavaFile makePsiJavaFile() {

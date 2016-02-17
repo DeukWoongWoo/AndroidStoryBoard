@@ -71,6 +71,5 @@ public class XmlParser implements FileParser {
         for(int i=0;i<str.length;i++)
             strPath += "/" + str[i];
         if(ConstantEtc.PROJECT_JAVA_PATH == null) ConstantEtc.PROJECT_JAVA_PATH = strPath;
-        Messages.showInfoMessage("makeJavaPath : " + ConstantEtc.PROJECT_JAVA_PATH,"test");
     }
 }

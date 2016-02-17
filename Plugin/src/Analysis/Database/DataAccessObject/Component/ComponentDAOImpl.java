@@ -46,21 +46,33 @@ public class ComponentDAOImpl extends SQLiteOpenHelper implements ComponentDAO {
     }
 
     @Override
-    public int select(String col) {
+    public ComponentDTO select(String... col) {
+        String query = null;
+        if(col.length>0) query = QueryBuilder.selectAll().from(tableName).where(col[0]).build();
+        else query = QueryBuilder.selectAll().from(tableName).build();
+
         System.out.println("select Component Table...");
         PreparedStatement prep = null;
         Connection connection = getConnection();
         ResultSet rows = null;
-        int componentId = 0;
+        ComponentDTO componentDTO = null;
         try{
-            prep = connection.prepareStatement(QueryBuilder.selectAll().from(tableName).where("name='"+col+"'").build());
+            prep = connection.prepareStatement(query);
             rows = prep.executeQuery();
-            componentId = rows.getInt(1);
+            componentDTO = new ComponentDTO();
+            componentDTO.setNum(rows.getInt(1));
+            componentDTO.setXmlId(rows.getInt(2));
+            componentDTO.setName(rows.getString(3));
+            componentDTO.setType(rows.getString(4));
+            componentDTO.setMethodName(rows.getString(5));
+            componentDTO.setXmlName(rows.getString(6));
+            componentDTO.setTotalLine(rows.getInt(7));
+            componentDTO.setStartLine(rows.getInt(8));
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
             close(connection, prep, rows);
-            return componentId;
+            return componentDTO;
         }
     }
 }

@@ -5,6 +5,8 @@ import Analysis.Database.DtatTransferObject.EventDTO;
 import Analysis.Database.DtatTransferObject.JavaDTO;
 import Analysis.Database.DtatTransferObject.XmlDTO;
 
+import java.util.ArrayList;
+
 /**
  * Created by woong on 2016-01-24.
  */
@@ -20,9 +22,9 @@ public interface JavaDAO {
     public void insertEvent(EventDTO eventDTO);
 
     public void selectAll();
-    public void selectJava();
+    public ArrayList<JavaDTO> selectJava();
     public void selectXml();
-    public void selectComponent();
+    public ArrayList<JavaDTO> selectComponent(String... col);
     public void selectEvent();
 
     public void updateJava(JavaDTO javaDTO);

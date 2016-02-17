@@ -3,6 +3,7 @@ package Analysis.RedoUndo;
 import Analysis.RedoUndo.Command.CodeCleanCommand;
 import Analysis.RedoUndo.Command.CodeWriteCommand;
 import Analysis.RedoUndo.Command.Command;
+import Analysis.RedoUndo.Command.LocalButtonCreateCommand;
 import Analysis.RedoUndo.CommandObj.Code;
 
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class CommandManager{
     public CommandManager(){
         commandMap.put(CommandKey.WRITE, new CodeWriteCommand(new Code()));
         commandMap.put(CommandKey.CLEAN, new CodeCleanCommand(new Code()));
+        commandMap.put(CommandKey.LOCALBUTTON, new LocalButtonCreateCommand());
     }
 
     public void execute(CommandKey key) {

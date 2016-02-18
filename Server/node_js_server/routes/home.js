@@ -109,17 +109,18 @@ function deleteFiles(dirName) {
     fs.readdir(dirName, function (err, list) {
         if (err) throw err;
         console.log('dir length : ' + list.length);
+        console.log(list);
         async.each(list,
-            function(file, callback){
+            function (file, callback) {
                 fs.unlink(dirName + file, function (err) {
                     if (err) throw err;
-                    else{
+                    else {
                         console.error('unlink ' + dirName + file);
                         callback(null);
                     }
                 });
             },
-            function(err){
+            function (err) {
                 fs.rmdir(dirName, function (err) {
                     if (err) console.error(err);//// throw err;
                     console.log('Removed ' + dirName);
@@ -151,6 +152,20 @@ router.get('/storyboard/:app_name', function (req, res) {
 router.get('/image/:user_id/:app_name/:file_name', function (req, res) {
     //TODO: req.params.user_id -> session.user_id로 변경 해야함
     var fileUrl = './users/' + req.params.user_id + '/' + req.params.app_name + '/' + req.params.file_name;
+    fs.exists(fileUrl, function (exists) {
+        if (exists) {
+            fs.readFile(fileUrl, function (err, data) {
+                res.end(data);
+            });
+        } else {
+            res.end('file is not exists');
+        }
+    })
+});
+
+router.get('/image/:file_name', function (req, res) {
+    console.log("/image/:file_name', function (req, res) {");
+    var fileUrl = './users/' + req.params.file_name;
     fs.exists(fileUrl, function (exists) {
         if (exists) {
             fs.readFile(fileUrl, function (err, data) {
@@ -353,7 +368,14 @@ router.get('/logout', function (req, res, next) {
 
 router.post('/registerapp', function (req, res, next) {
     registerApp(req, res, function (err) {
-        if (err) console.log(err);//TODO:경고 메시지 띄우기
+        if (err) console.log(err);//TODO: 웹에 경고 메시지 띄우기
+        else renderAppPage(req, res);
+    });
+});
+
+router.post('/registerimage', function (req, res, next) {
+    uploadImages(req, function(err){
+        if (err) console.log(err);//TODO: 웹에 경고 메시지 띄우기
         else renderAppPage(req, res);
     });
 });
@@ -382,7 +404,7 @@ function registerApp(req, res, callback) {
                         else callback(null);
                     });
                 }, function (callback) {
-                    fileUpload(req, function (err) {
+                    uploadStoryboard(req, function (err) {
                         if (err) callback(err);
                         else callback(null);
                     });
@@ -420,9 +442,6 @@ function registerStoryboardFile(req, callback) {
         }, function (callback) {
             req.body.user_id = req.session.user_id;
             for (var i in obj.activity) {
-                //req.body.activity_name = obj.activity[i].name;
-                console.log('here');
-                console.log(obj.activity[i].name);
                 addActivityObject(req, obj.activity[i], function (err) {
                 });
             }
@@ -482,11 +501,58 @@ function uploadRequest(req, callback) {
     });
 }
 
-function fileUpload(req, callback) {
+function uploadStoryboard(req, callback) {
     var tmpOfTarget = req.files.storyboard.path;
     var locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
     var target = locationOfTarget + req.body.app_name + '.json';
 
+    saveFile(locationOfTarget, tmpOfTarget, target, callback);
+}
+
+function uploadImages(req, callback) {
+    var tmpOfTarget;
+    var locationOfTarget;
+    var target;
+
+    async.series([
+        function (callback) {
+            async.each(req.files.upload_images, function (file, callback) {
+                var ex = file.name.split('.');
+                var err = null;
+                console.log(ex);
+                for(var i in ex){
+                    if(ex[i] == 'json')
+                        err = 'json 파일은 업로드 할 수 없습니다';
+                }
+                callback(err);
+                console.log('t');
+            }, function (err) {
+                callback(err);
+                console.log('tE');
+            });
+        }, function (callback) {
+            async.each(req.files.upload_images, function (file, callback) {
+                tmpOfTarget = file.path;
+                locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
+                target = locationOfTarget + file.originalFilename;
+                saveFile(locationOfTarget, tmpOfTarget, target, function (err) {
+                    console.log('btt');
+                    callback(err);
+                });
+                console.log('tt');
+            }, function (err) {
+                callback(err);
+                console.log('ttE');
+            });
+        }
+    ], function (err) {
+        callback(err);
+    });
+
+
+}
+
+function saveFile(locationOfTarget, tmpOfTarget, target, callback) {
     async.series([
         function (callback) {
             mkdirp(locationOfTarget, function (err) {

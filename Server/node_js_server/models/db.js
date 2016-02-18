@@ -364,7 +364,7 @@ mysql.addActivityUse = function (param) {
         + 'AND app_info.app_name = \'' + param.body.app_name + '\''
         , function (error, result, fields) {
             if (error) console.error(error);
-            else if (result) {
+            else if (result[0]) {
                 activityUse.activity_num = result[0].activity_num;
                 insertData('activity_use', activityUse)
                 updateTotalTime('activity', activityUse.activity_num, activityUse.during_time_start, activityUse.during_time_end);

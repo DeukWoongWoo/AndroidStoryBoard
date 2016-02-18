@@ -10,32 +10,78 @@
                 "object": [
                     {
                         "name": "a1",
-                        "x": 10,
-                        "y": 10,
-                        "width": 100,
-                        "height": 30,
-                        "color": "red",
+                        "x": 100,
+                        "y": 100,
+                        "width": 300,
+                        "height": 200,
+                        "color": "none",
+                        "textSize": "30",
+			"text" : "test text test text test texttest text",
                         "type" : "radio button"
+                    },
+		    {
+                        "name": "aa",
+                        "x": 100,
+                        "y": 300,
+                        "width": 300,
+                        "height": 200,
+                        "color": "none",
+                        "textSize": "30",
+			"text" : "test text test text test texttest text",
+                        "type" : "checkbox"
+                    },
+		    {
+                        "name": "aaa",
+                        "x": 10,
+                        "y": 800,
+                        "width": 64,
+                        "height": 64,
+                        "color": "none",
+                        "type" : "checkbox"
+                    },
+		    {
+                        "name": "aaaa",
+                        "x": 100,
+                        "y": 800,
+                        "width": 64,
+                        "height": 64,
+                        "color": "none",
+                        "type" : "checkbox"
                     },
                     {
                         "name": "a2",
-                        "x": 100,
-                        "y": 10,
-                        "width": 100,
-                        "height": 30,
+                        "x": 200,
+                        "y": 1000,
+                        "width": 300,
+                        "height": 100,
                         "color": "green",
                         "type" : "button",
-                        "next": "c"
+                        "next": "c",
+			"image" : "ori2.jpg"
                     },
                     {
                         "name": "a3",
-                        "x": 10,
-                        "y": 100,
-                        "width": 100,
-                        "height": 30,
+                        "x": 200,
+                        "y": 500,
+                        "width": 200,
+                        "height": 200,
                         "color": "blue",
                         "type" : "button",
-			"next": "b"
+                        "textSize": "50",
+			"next": "b",
+			"text" : "test text test text test texttest text"
+                    },
+                    {
+                        "name": "a4",
+                        "x": 500,
+                        "y": 500,
+                        "width": 300,
+                        "height": 300,
+                        "color": "yellow",
+                        "textColor": "blue",
+                        "textSize": "50",
+                        "type" : "text",
+			"text" : "text object text object text object text object"
                     }
                 ]
             },
@@ -50,28 +96,41 @@
                         "name": "c9",
                         "x": 100,
                         "y": 100,
-                        "width": 100,
-                        "height": 30,
+                        "width": 400,
+                        "height": 100,
                         "color": "black",
-                        "type" : "button"
+                        "type" : "button",
+			"image" : "ori2.jpg"
+                    },
+		    {
+                        "name": "bb",
+                        "x": 100,
+                        "y": 500,
+                        "width": 300,
+                        "height": 200,
+                        "color": "black",
+                        "type" : "image",
+			"image" : "ori2.jpg"
                     },
                     {
                         "name": "a2",
-                        "x": 50,
-                        "y": 50,
-                        "width": 100,
-                        "height": 30,
+                        "x": 500,
+                        "y": 500,
+                        "width": 200,
+                        "height": 150,
                         "color": "green",
-                        "type" : "radio button"
+                        "type" : "radio button",
+			"image" : ""
                     },
                     {
                         "name": "c8",
-                        "x": 50,
-                        "y": 150,
-                        "width": 100,
-                        "height": 30,
+                        "x": 100,
+                        "y": 800,
+                        "width": 300,
+                        "height": 200,
                         "color": "yellow",
-                        "type" : "button"
+                        "type" : "button",
+			"image" : ""
                     }
                 ]
             },
@@ -90,7 +149,8 @@
                         "height": 30,
                         "color": "black",
                         "type" : "button",
-                        "next": "a"
+                        "next": "a",
+			"image" : ""
                     },
                     {
                         "name": "c8",
@@ -100,7 +160,8 @@
                         "height": 30,
                         "color": "green",
                         "type" : "button",
-                        "next": "b"
+                        "next": "b",
+			"image" : ""
                     },
                     {
                         "name": "c7",
@@ -109,7 +170,8 @@
                         "width": 100,
                         "height": 30,
                         "color": "yellow",
-                        "type" : "button"
+                        "type" : "button",
+			"image" : ""
 
                     }
                 ]

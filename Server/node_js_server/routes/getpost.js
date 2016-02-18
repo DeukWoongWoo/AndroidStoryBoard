@@ -46,6 +46,7 @@ router.post('/app/activity/object/use', function (req, res) {
 });
 
 router.post('/app/activity/object/error/use', function (req, res) {
+    console.log(req.body);
     db.addErrorUse(req);
     addErrorLog(req);
     res.send('success');

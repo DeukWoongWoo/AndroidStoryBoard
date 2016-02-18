@@ -364,7 +364,7 @@ mysql.addActivityUse = function (param) {
         + 'AND app_info.app_name = \'' + param.body.app_name + '\''
         , function (error, result, fields) {
             if (error) console.error(error);
-            else if (result) {
+            else if (result[0]) {
                 activityUse.activity_num = result[0].activity_num;
                 insertData('activity_use', activityUse)
                 updateTotalTime('activity', activityUse.activity_num, activityUse.during_time_start, activityUse.during_time_end);
@@ -524,15 +524,11 @@ function updateFrequency(type, object_num) {
 
 function calDuringTime(start, end) {
     var time = NumOfDate(end) - NumOfDate(start);
-    console.log(time);
+
     return time;
 }
 
 function NumOfDate(date) {
-    /**
-     *  날짜, 시간에 문자열을 숫자로 표현된 값으로 반환
-     */
-    console.log(date);
     var piece = date.split(" ");
     var standardYears = 2015 * 60 * 30 * 12;
     var years = piece[0].split("/")[0] * 60 * 24 * 30 * 12 - standardYears;
@@ -540,13 +536,6 @@ function NumOfDate(date) {
     var days = piece[0].split("/")[2] * 60 * 24;
     var hours = piece[1].split(":")[0] * 60;
     var minutes = piece[1].split(":")[1];
-
-    console.log(years);
-    console.log(month);
-    console.log(days);
-    console.log(hours);
-    console.log(minutes);
-    console.log(years + month + days + hours + minutes);
 
     return years + month + days + hours + minutes;
 }

@@ -10,6 +10,11 @@ function Activity() {
     var numOfObjects = 0;
     var color = 'white';
     var own;
+    var image = null;
+
+    var textSize = 10;
+    var textColor = 'black';
+    var textContent = '';
 
     this.create = function (target) {
         if (isDefined(target)) {
@@ -103,8 +108,39 @@ function Activity() {
     this.nextActivity = function(arg){
         if (isDefined(arg)) {
             nextActivities = arg;
-            return this;
+                return this;
         } else return nextActivities;
+    }
+
+    this.setImage = function(arg){
+            image = arg;
+            return this;
+    }
+    this.getImage = function(){
+        return image;
+    }
+
+    this.textSize = function(arg){
+        if (isDefined(arg)) {
+            textSize = arg;
+            return this;
+        } else return textSize;
+    }
+
+    this.textColor = function(arg){
+        if (isDefined(arg)) {
+            textColor = arg;
+            return this;
+        } else return textColor;
+    }
+
+    this.setText = function(arg){
+            textContent = arg;
+            return this;
+    }
+
+    this.getText = function(arg){
+        return textContent;
     }
 }
 

@@ -53,8 +53,7 @@
                         "width": 100,
                         "height": 30,
                         "color": "black",
-                        "type" : "button",
-			"image" : "ori2.jpg"
+                        "type" : "button"
                     },
                     {
                         "name": "a2",
@@ -72,7 +71,7 @@
                         "width": 100,
                         "height": 30,
                         "color": "yellow",
-                        "type" : "checkbox"
+                        "type" : "button"
                     }
                 ]
             },

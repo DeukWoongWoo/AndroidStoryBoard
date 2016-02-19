@@ -39,26 +39,23 @@ router.get('/delete/:app_name', function (req, res) {
             });
         }, function (appNum, activityNums, callback) {
             var objectNums = [];
-            var imageNums = [];
             var cnt = 0;
             for (var i in activityNums) {
                 db.getObjectNumByActivityNum(activityNums[i], function (err, result) {
                     if (err) callback(err);
                     else if (isDefined(result)) {
-                        console.log(result);
                         for (var j in result) {
                             if (isDefined(result[j])) {
                                 objectNums.push(result[j].object_num);
-                                imageNums.push(result[j].image_num);
                             }
                         }
                     }
                     cnt++;
                     if (cnt == activityNums.length)
-                        callback(null, appNum, activityNums, objectNums, imageNums);
+                        callback(null, appNum, activityNums, objectNums);
                 });
             }
-        }, function (appNum, activityNums, objectNums, imageNums, callback) {
+        }, function (appNum, activityNums, objectNums, callback) {
             db.deleteObjectUseByObjectNum(objectNums, function (err) {
                 if (err) callback(err);
                 else {
@@ -67,28 +64,29 @@ router.get('/delete/:app_name', function (req, res) {
                         else {
                             db.deleteActivityUseByActivityNum(activityNums, function (err) {
                                 if (err) callback(err);
-                                else callback(null, appNum, activityNums, objectNums, imageNums);
+                                else callback(null, appNum, activityNums, objectNums);
                             });
                         }
                     });
                 }
             });
 
-        }, function (appNum, activityNums, objectNums, imageNums, callback) {
+        }, function (appNum, activityNums, objectNums, callback) {
             db.deleteObjectByActivityNum(activityNums, function (err) {
                 if (err) callback(err);
                 else {
-                    db.deleteImageByImageNum(imageNums, function (err) {
+                    db.deleteActivityByAppNum(appNum, function (err) {
                         if (err) callback(err);
                         else {
-                            db.deleteActivityByAppNum(appNum, function (err) {
-                                if (err) callback(err);
-                                else {
-                                    callback(null, appNum);
-                                }
-                            });
+                            callback(null, appNum);
                         }
                     });
+                    //db.deleteImageByImageNum(imageNums, function (err) {
+                    //    if (err) callback(err);
+                    //    else {
+                    //
+                    //    }
+                    //});
                 }
             });
         }
@@ -374,8 +372,8 @@ router.post('/registerapp', function (req, res, next) {
 });
 
 router.post('/registerimage', function (req, res, next) {
-    uploadImages(req, function(err){
-        if (err) console.log(err);//TODO: 웹에 경고 메시지 띄우기
+    uploadImages(req, function (err) {
+        if (err) res.send(err);//console.log(err);//TODO: 웹에 경고 메시지 띄우기
         else renderAppPage(req, res);
     });
 });
@@ -516,40 +514,54 @@ function uploadImages(req, callback) {
 
     async.series([
         function (callback) {
-            async.each(req.files.upload_images, function (file, callback) {
-                var ex = file.name.split('.');
-                var err = null;
-                console.log(ex);
-                for(var i in ex){
-                    if(ex[i] == 'json')
-                        err = 'json 파일은 업로드 할 수 없습니다';
-                }
-                callback(err);
-                console.log('t');
-            }, function (err) {
-                callback(err);
-                console.log('tE');
-            });
+            if (isDefined(req.files.upload_images.name) || req.files.upload_images.length > 1)
+                callback(null);
+            else callback("파일이 없습니다");
         }, function (callback) {
-            async.each(req.files.upload_images, function (file, callback) {
-                tmpOfTarget = file.path;
-                locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
-                target = locationOfTarget + file.originalFilename;
-                saveFile(locationOfTarget, tmpOfTarget, target, function (err) {
-                    console.log('btt');
+            if (req.files.upload_images.length > 1) {
+                async.each(req.files.upload_images, function (file, callback) {
+                    var err = confirmJson(file.name.split('.'));
+                    callback(err);
+                }, function (err) {
                     callback(err);
                 });
-                console.log('tt');
-            }, function (err) {
+            } else {
+                var err = confirmJson(req.files.upload_images.name.split('.'));
                 callback(err);
-                console.log('ttE');
-            });
+            }
+        }, function (callback) {
+            if (req.files.upload_images.length > 1) {
+                async.each(req.files.upload_images, function (file, callback) {
+                    tmpOfTarget = file.path;
+                    renameAndSaveFile(file.originalFilename, tmpOfTarget, callback);
+                }, function (err) {
+                    callback(err);
+                });
+            } else {
+                tmpOfTarget = req.files.upload_images.path;
+                renameAndSaveFile(req.files.upload_images.originalFilename, tmpOfTarget, callback);
+            }
         }
     ], function (err) {
         callback(err);
     });
 
+    function confirmJson(ex) {
+        var err = null;
+        for (var i in ex) {
+            if (ex[i] == 'json')
+                err = 'json 파일은 업로드 할 수 없습니다';
+        }
+        return err;
+    }
 
+    function renameAndSaveFile(uploadFileName, tmpOfTarget, callback) {
+        locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
+        target = locationOfTarget + uploadFileName;
+        saveFile(locationOfTarget, tmpOfTarget, target, function (err) {
+            callback(err);
+        });
+    }
 }
 
 function saveFile(locationOfTarget, tmpOfTarget, target, callback) {

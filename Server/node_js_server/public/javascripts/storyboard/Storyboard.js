@@ -2,6 +2,7 @@ document.write("<script src='javascripts/storyboard/Activity.js'></script>");
 
 function Storyboard() {
     var appName;
+    var userId;
     var activities = new Array();
     var numOfActivities = 0;
     var target;
@@ -43,6 +44,11 @@ function Storyboard() {
         storyboardData = arg;
     }
 
+    this.setUserIdAppName = function(id, app){
+        userId = id;
+        appName = app;
+    }
+
     this.drawActivityObject = function () {
         for (var i in storyboardData.activity) {
             var activityData = storyboardData.activity[i];
@@ -53,9 +59,10 @@ function Storyboard() {
 
                 var object = activity.addObject().type(objectData.type).name(objectData.name).activityName(activityData.name).width(objectData.width).height(objectData.height).x(objectData.x).y(objectData.y).color(objectData.color);
 
-                if(isDefined(objectData.image))
+                if(isDefined(objectData.image)){
+                    object.imageRoute('/image/' + userId + '/' +  appName + '/' );
                     object.setImage(objectData.image);
-                else
+                }else
                     object.setImage(null);
 
                 if(isDefined(objectData.text)){

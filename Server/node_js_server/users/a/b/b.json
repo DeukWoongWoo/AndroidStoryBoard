@@ -15,6 +15,7 @@
                         "width": 100,
                         "height": 30,
                         "color": "red",
+                        "type" : "button",
                         "type" : "radio button"
                     },
                     {
@@ -47,17 +48,16 @@
                 "height": 500,
                 "object": [
                     {
-                        "name": "c9",
+                        "name": "b1",
                         "x": 100,
                         "y": 100,
                         "width": 100,
                         "height": 30,
                         "color": "black",
-                        "type" : "button",
-			"image" : "ori2.jpg"
+                        "type" : "button"
                     },
                     {
-                        "name": "a2",
+                        "name": "b2",
                         "x": 50,
                         "y": 50,
                         "width": 100,
@@ -66,13 +66,13 @@
                         "type" : "radio button"
                     },
                     {
-                        "name": "c8",
+                        "name": "b3",
                         "x": 50,
                         "y": 150,
                         "width": 100,
                         "height": 30,
                         "color": "yellow",
-                        "type" : "checkbox"
+                        "type" : "button"
                     }
                 ]
             },
@@ -84,7 +84,7 @@
                 "height": 500,
                 "object": [
                     {
-                        "name": "c9",
+                        "name": "c1",
                         "x": 100,
                         "y": 100,
                         "width": 100,
@@ -94,7 +94,7 @@
                         "next": "a"
                     },
                     {
-                        "name": "c8",
+                        "name": "c2",
                         "x": 50,
                         "y": 50,
                         "width": 100,
@@ -104,7 +104,85 @@
                         "next": "b"
                     },
                     {
-                        "name": "c7",
+                        "name": "c3",
+                        "x": 50,
+                        "y": 150,
+                        "width": 100,
+                        "height": 30,
+                        "color": "yellow",
+                        "type" : "button"
+
+                    }
+                ]
+            },
+            {
+                "name": "d",
+                "x": 800,
+                "y": 200,
+                "width": 300,
+                "height": 500,
+                "object": [
+                    {
+                        "name": "d1",
+                        "x": 100,
+                        "y": 100,
+                        "width": 100,
+                        "height": 30,
+                        "color": "black",
+                        "type" : "button",
+                        "next": "a"
+                    },
+                    {
+                        "name": "d2",
+                        "x": 50,
+                        "y": 50,
+                        "width": 100,
+                        "height": 30,
+                        "color": "green",
+                        "type" : "button",
+                        "next": "b"
+                    },
+                    {
+                        "name": "d3",
+                        "x": 50,
+                        "y": 150,
+                        "width": 100,
+                        "height": 30,
+                        "color": "yellow",
+                        "type" : "button"
+
+                    }
+                ]
+            },
+            {
+                "name": "e",
+                "x": 800,
+                "y": 200,
+                "width": 300,
+                "height": 500,
+                "object": [
+                    {
+                        "name": "e1",
+                        "x": 100,
+                        "y": 100,
+                        "width": 100,
+                        "height": 30,
+                        "color": "black",
+                        "type" : "button",
+                        "next": "a"
+                    },
+                    {
+                        "name": "e2",
+                        "x": 50,
+                        "y": 50,
+                        "width": 100,
+                        "height": 30,
+                        "color": "green",
+                        "type" : "button",
+                        "next": "b"
+                    },
+                    {
+                        "name": "e3",
                         "x": 50,
                         "y": 150,
                         "width": 100,

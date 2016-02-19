@@ -230,6 +230,7 @@
 
     function getUserAppStoryboard() {
         var storyboard = new Storyboard();
+        storyboard.setUserIdAppName(user_id, app_name);
         storyboard.targetDiv('#storyboard-svg');
 
         $.get("/storyboard/" + app_name, function (storyboardData) {

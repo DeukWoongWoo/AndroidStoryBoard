@@ -11,6 +11,7 @@ function Activity() {
     var color = 'white';
     var own;
     var image = null;
+    var imageRoute = null;
 
     var textSize = 10;
     var textColor = 'black';
@@ -118,6 +119,13 @@ function Activity() {
     }
     this.getImage = function(){
         return image;
+    }
+
+    this.imageRoute = function(arg){
+        if (isDefined(arg)) {
+            imageRoute = arg;
+            return this;
+        } else return imageRoute;
     }
 
     this.textSize = function(arg){

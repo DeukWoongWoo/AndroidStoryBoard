@@ -239,14 +239,12 @@ mysql.addObject = function (param) {
         size_height: param.body.size_height,
         type: param.body.type ? param.body.type : 'button',
         color: param.body.color ? param.body.color : 'gray',
-        image_num: param.body.image_num ? param.body.image_num : 1,//todo
+        //image_num: param.body.image_num ? param.body.image_num : 1,//todo
         activity_num: param.body.activity_num,
 
         object_frequency: 0,
         error_frequency: 0
     };
-    console.log('mysql.addObject');
-    console.log(param.body.activity_name);
     /**
      * TODO:오프젝트의 위치, 크기, 텍스트, 컬러 설정해줘야함
      * TODO:user_id에 따라서 activity_num, image_num을 찾아서 넣어줘야함
@@ -254,8 +252,6 @@ mysql.addObject = function (param) {
     mysql.getActivityNumByUserIdAppNameActivityName(param, activityName, function (err, result) {
         if (err)console.error(err);
         else {
-            console.log('getActivityNumByUserIdAppNameActivityName');
-            console.log(result[0].activity_num);
             object.activity_num = result[0].activity_num;
             insertData('object', object);
         }
@@ -302,7 +298,7 @@ mysql.getActivityNumByAppNum = function (app_num, callback) {
 }
 
 mysql.getObjectNumByActivityNum = function (activity_num, callback) {
-    mysql.query('SELECT object_num, image_num FROM object_info '
+    mysql.query('SELECT object_num FROM object_info '
         + ' WHERE activity_num = ' + activity_num
         , function (err, result) {
             if (err) callback(err);

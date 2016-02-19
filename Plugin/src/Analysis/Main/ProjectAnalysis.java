@@ -73,6 +73,17 @@ public class ProjectAnalysis {
         if(pattern.equals(ConstantEtc.JAVA_PATTERN)) findDirectories(curPath, psiDirectory, pattern);
     }
 
+    public String[] findResourcePath(){
+        PsiDirectory psiDirectory = currentDirectory(ConstantEtc.PROJECT_XML_PATH + "/res/layout");
+
+        PsiFile[] xmlFiles = psiDirectory.getFiles();
+        String[] path = new String[xmlFiles.length];
+        for(int i = 0; i < xmlFiles.length ; i++){
+            path[i] = psiDirectory.getText() + "/" + xmlFiles[i].getName();
+        }
+        return path;
+    }
+
     private void createTable(){
         DatabaseManager.getInstance().onCreateTable();
     }

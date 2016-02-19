@@ -34,14 +34,13 @@ public class CommandManager{
         commandMap.put(CommandKey.FUNCBUTTON, new FuncButtonCreateCommand());
     }
 
-    public void execute(CommandKey key) {
-        System.out.println("Command Execute...");
-        Command command = commandMap.get(key);
-        command.execute();
-        undo.push(command);
+    public void createButton(CommandKey key, String id){
+        System.out.println("Create " + key.name() + " ... / ID : " + id);
+        key.setId("R.id."+id);
+        execute(key);
     }
 
-    public void execute(CommandKey key, Code code) {
+    public void execute(CommandKey key) {
         System.out.println("Command Execute...");
         Command command = commandMap.get(key);
         command.execute();

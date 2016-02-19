@@ -2,25 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e001467-afda-4d64-899f-df7c96b7dc33" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/StoryBoard.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/StoryBoard.zip" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/Main/ProjectAnalysis.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/Main/ProjectAnalysis.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/MyActionClass$1.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/MyActionClass$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/MyActionClass.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/MyActionClass.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/Parser/JavaParser.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/Parser/JavaParser.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/Parser/XmlParser.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/Parser/XmlParser.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CodeDriver.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CodeDriver.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandManager.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandManager.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/FuncButtonCreate$1.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/FuncButtonCreate$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/FuncButtonCreate.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/FuncButtonCreate.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/LocalButtonCreate$1.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/LocalButtonCreate$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/LocalButtonCreate$2.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/LocalButtonCreate$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/LocalButtonCreate.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/LocalButtonCreate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/MemberButtonCreate$1.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/MemberButtonCreate$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/MemberButtonCreate$2.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/MemberButtonCreate$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/MemberButtonCreate.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/CommandObj/MemberButtonCreate.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/json_simple_1_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/json_simple_1_1_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/Util/ElementFactory.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Analysis/RedoUndo/Util/ElementFactory.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/StoryBoard/Test/Analysis/StringSplitTest.class" afterPath="$PROJECT_DIR$/out/production/StoryBoard/Test/Analysis/StringSplitTest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StoryBoard.iml" afterPath="$PROJECT_DIR$/StoryBoard.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/Main/ProjectAnalysis.java" afterPath="$PROJECT_DIR$/src/Analysis/Main/ProjectAnalysis.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/MyActionClass.java" afterPath="$PROJECT_DIR$/src/Analysis/MyActionClass.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/Parser/XmlParser.java" afterPath="$PROJECT_DIR$/src/Analysis/Parser/XmlParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java" afterPath="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandManager.java" afterPath="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/FuncButtonCreate.java" afterPath="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/FuncButtonCreate.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java" afterPath="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/MemberButtonCreate.java" afterPath="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/MemberButtonCreate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test/Analysis/StringSplitTest.java" afterPath="$PROJECT_DIR$/src/Test/Analysis/StringSplitTest.java" />
     </list>
     <ignored path="StoryBoard.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,7 +54,7 @@
             <entry file="file://$PROJECT_DIR$/src/Analysis/MyActionClass.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+                  <caret line="45" column="51" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="51" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -60,34 +66,55 @@
             <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+                  <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="LocalButtonCreate.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java">
+          <file leaf-file-name="FuncButtonCreate.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/FuncButtonCreate.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="56" />
+                  <caret line="42" column="51" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
                   <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="method#remove#0;class#LocalButtonCreate#0" expanded="false" />
-                    <element signature="method#removePsiElement#0;class#LocalButtonCreate#0" expanded="false" />
+                    <element signature="method#remove#0;class#FuncButtonCreate#0" expanded="false" />
+                    <element signature="method#removePsiElement#0;class#FuncButtonCreate#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="FuncButtonCreate.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/FuncButtonCreate.java">
+          <file leaf-file-name="CommandManager.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandManager.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="1.7133656">
-                  <caret line="73" column="9" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="FuncButtonCreateCommand.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Command/FuncButtonCreateCommand.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.244373">
+                  <caret line="8" column="58" selection-start-line="8" selection-start-column="58" selection-end-line="8" selection-end-column="58" />
                   <folding>
-                    <element signature="method#remove#0;class#FuncButtonCreate#0" expanded="false" />
-                    <element signature="method#removePsiElement#0;class#FuncButtonCreate#0" expanded="false" />
+                    <element signature="e#304#305#0" expanded="true" />
+                    <element signature="e#345#346#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="MemberButtonCreateCommand.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Command/MemberButtonCreateCommand.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#357#358#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -97,9 +124,33 @@
             <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/MemberButtonCreate.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="54" column="28" selection-start-line="54" selection-start-column="28" selection-end-line="58" selection-end-column="29" />
+                  <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
                   <folding>
                     <element signature="method#makePsiJavaFile#0;class#MemberButtonCreate#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="CodeBuilder.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/CodeBuilder.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#206#207#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="FindBuilder.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/FindBuilder.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#193#194#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -108,12 +159,12 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="ElementFactory.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Util/ElementFactory.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.5716586">
-                  <caret line="32" column="34" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
+                <state vertical-scroll-proportion="0.36655948">
+                  <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="method#lookupClass#0;class#ElementFactory#0" expanded="false" />
@@ -179,7 +230,6 @@
         <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Component/ComponentDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Java/JavaDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Database/DtatTransferObject/JavaDTO.java" />
-        <option value="$PROJECT_DIR$/src/Test/Analysis/StringSplitTest.java" />
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/Command/MemberButtonCreateCommand.java" />
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/FindBuilder.java" />
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandKey.java" />
@@ -187,16 +237,17 @@
         <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/palettePanel.java" />
         <option value="$PROJECT_DIR$/src/GUI/StoryBoard/UI/componetTreePanel.java" />
         <option value="$PROJECT_DIR$/src/GUI/StoryBoard/StoryBoard_PlugIn.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandManager.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Parser/XmlParser.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/Util/ElementFactory.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java" />
+        <option value="$PROJECT_DIR$/src/Test/Analysis/StringSplitTest.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Main/ProjectAnalysis.java" />
         <option value="$PROJECT_DIR$/src/Analysis/MyActionClass.java" />
         <option value="$PROJECT_DIR$/src/Analysis/MyActionClass.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java" />
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/MemberButtonCreate.java" />
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/FuncButtonCreate.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/Util/ElementFactory.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java" />
+        <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandManager.java" />
       </list>
     </option>
   </component>
@@ -222,6 +273,18 @@
         <expanded-state>
           <State>
             <id />
+          </State>
+          <State>
+            <id>Android Lint</id>
+          </State>
+          <State>
+            <id>Internationalization issues</id>
+          </State>
+          <State>
+            <id>Internationalization issuesJava</id>
+          </State>
+          <State>
+            <id>Java</id>
           </State>
         </expanded-state>
         <selected-state>
@@ -257,6 +320,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -400,15 +465,35 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StoryBoard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Analysis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Constant" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/sqlite-jdbc-3.8.11.1.jar!/" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -819,34 +904,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="StringSplitTest - 2016.02.16 at 19h 54m 31s.xml">
+    <history-entry file="StringSplitTest - 2016.02.18 at 21h 21m 32s.xml">
       <configuration name="StringSplitTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.16 at 19h 54m 50s.xml">
+    <history-entry file="StringSplitTest - 2016.02.18 at 21h 21m 57s.xml">
       <configuration name="StringSplitTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.16 at 19h 56m 07s.xml">
+    <history-entry file="StringSplitTest - 2016.02.18 at 21h 22m 06s.xml">
       <configuration name="StringSplitTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.16 at 19h 56m 20s.xml">
+    <history-entry file="StringSplitTest - 2016.02.18 at 21h 22m 20s.xml">
       <configuration name="StringSplitTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.16 at 19h 56m 36s.xml">
+    <history-entry file="StringSplitTest - 2016.02.18 at 21h 22m 41s.xml">
       <configuration name="StringSplitTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.17 at 02h 16m 53s.xml">
+    <history-entry file="StringSplitTest - 2016.02.18 at 21h 22m 46s.xml">
       <configuration name="StringSplitTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.17 at 02h 18m 04s.xml">
+    <history-entry file="StringSplitTest - 2016.02.18 at 21h 24m 13s.xml">
       <configuration name="StringSplitTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.17 at 02h 18m 58s.xml">
+    <history-entry file="StringSplitTest - 2016.02.18 at 21h 24m 37s.xml">
       <configuration name="StringSplitTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.17 at 02h 19m 12s.xml">
+    <history-entry file="StringSplitTest - 2016.02.18 at 21h 24m 45s.xml">
       <configuration name="StringSplitTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StringSplitTest - 2016.02.17 at 16h 32m 47s.xml">
+    <history-entry file="StringSplitTest - 2016.02.18 at 21h 25m 01s.xml">
       <configuration name="StringSplitTest" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -860,7 +945,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -873,16 +958,15 @@
       <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35027027" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3495671" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15884861" sideWeight="0.4940476" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12953092" sideWeight="0.50595236" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2965368" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29545453" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -891,6 +975,7 @@
       <window_info id="Tail" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -906,7 +991,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="35" />
+      <option name="time" value="38" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -915,63 +1000,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/storyBoard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.021229051">
-          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Constant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10614525">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/example.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14860335">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Object/Layout_Linear.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14860335">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Object/Layout_Root.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.021229051">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Object/ObjectCustom.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.021229051">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Manifest/ManifestDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DtatTransferObject/ManifestDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.81463414">
-          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Java/JavaDAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1028,13 +1056,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Test/Analysis/StringSplitTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46666667">
-          <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DtatTransferObject/JavaDTO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1045,39 +1066,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Command/MemberButtonCreateCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16983241">
-          <caret line="8" column="49" selection-start-line="8" selection-start-column="49" selection-end-line="8" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/FindBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33966482">
-          <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandKey.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="66" selection-start-line="6" selection-start-column="66" selection-end-line="6" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/vfs/newvfs/ManagingFS.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.785714">
           <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/util.jar!/com/intellij/openapi/util/text/StringUtil.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.0">
-          <caret line="1850" column="0" selection-start-line="1850" selection-start-column="0" selection-end-line="1850" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1141,13 +1133,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="97" column="5" selection-start-line="12" selection-start-column="3" selection-end-line="97" selection-end-column="5" />
-          <folding>
-            <element signature="class#1487:2139" expanded="false" />
-            <element signature="method#mouseClicked#0;class#1487:2139" expanded="false" />
-            <element signature="class#2182:2709" expanded="false" />
-            <element signature="e#2273#2274#0" expanded="false" />
-            <element signature="e#2334#2335#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1155,14 +1140,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="42" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="class#1355:2007" expanded="false" />
-            <element signature="method#mouseClicked#0;class#1355:2007" expanded="false" />
-            <element signature="class#2045:2572" expanded="false" />
-            <element signature="e#2136#2137#0" expanded="false" />
-            <element signature="e#2197#2198#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1172,8 +1149,8 @@
           <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="33" selection-end-column="5" />
           <folding>
             <element signature="method#onCreateTable#0;class#DatabaseManager#0" expanded="false" />
-            <element signature="e#2048#2049#0" expanded="true" />
-            <element signature="e#2086#2087#0" expanded="true" />
+            <element signature="e#2048#2049#0" expanded="false" />
+            <element signature="e#2086#2087#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1183,48 +1160,7 @@
         <state vertical-scroll-proportion="0.6573661">
           <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/MyActionClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/Main/ProjectAnalysis.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="55" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
-          <folding>
-            <element signature="method#ProjectAnalysis#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#findFiles#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#findDirectories#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#currentDirectory#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#checkFileType#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#codeParsing#0;class#ProjectAnalysis#0" expanded="false" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1241,23 +1177,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/CodeBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2571912">
-          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/Parser/XmlParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="60" selection-start-line="39" selection-start-column="60" selection-end-line="39" selection-end-column="60" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1325,32 +1244,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiManager.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#remove#0;class#LocalButtonCreate#0" expanded="false" />
-            <element signature="method#removePsiElement#0;class#LocalButtonCreate#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/MemberButtonCreate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="28" selection-start-line="54" selection-start-column="28" selection-end-line="58" selection-end-column="29" />
-          <folding>
-            <element signature="method#makePsiJavaFile#0;class#MemberButtonCreate#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.343318">
+          <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Util/ElementFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5716586">
-          <caret line="32" column="34" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.36655948">
+          <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#lookupClass#0;class#ElementFactory#0" expanded="false" />
@@ -1358,13 +1263,201 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Test/Analysis/StringSplitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30244756">
+          <caret line="27" column="11" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="44" selection-start-line="13" selection-start-column="44" selection-end-line="13" selection-end-column="44" />
+          <folding>
+            <element signature="method#remove#0;class#LocalButtonCreate#0" expanded="false" />
+            <element signature="method#removePsiElement#0;class#LocalButtonCreate#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/PsiJavaFileBaseImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.678572">
+          <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/PsiMethodImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.535714">
+          <caret line="153" column="0" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/extapi/psi/StubBasedPsiElementBase.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.392857">
+          <caret line="248" column="19" selection-start-line="248" selection-start-column="19" selection-end-line="248" selection-end-column="19" />
+          <folding>
+            <element signature="e#9985#9986#0" expanded="true" />
+            <element signature="e#10045#10046#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/command/WriteCommandAction.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.607143">
+          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Parser/XmlParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="59" column="9" selection-start-line="59" selection-start-column="9" selection-end-line="59" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Constant/ConstantEtc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18327974">
+          <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/util.jar!/com/intellij/openapi/util/text/StringUtil.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.392857">
+          <caret line="1135" column="0" selection-start-line="1135" selection-start-column="0" selection-end-line="1135" selection-end-column="0" />
+          <folding>
+            <element signature="e#54333#54334#0" expanded="true" />
+            <element signature="e#54378#54379#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/vfs/VirtualFile.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.107142">
+          <caret line="183" column="0" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/Main/ProjectAnalysis.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.670418">
+          <caret line="83" column="20" selection-start-line="83" selection-start-column="20" selection-end-line="83" selection-end-column="20" />
+          <folding>
+            <element signature="method#codeParsing#0;class#ProjectAnalysis#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/MyActionClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="45" column="51" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Command/MemberButtonCreateCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding>
+            <element signature="e#357#358#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/FindBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding>
+            <element signature="e#193#194#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeBuilder/CodeBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding>
+            <element signature="e#206#207#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandKey.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding>
+            <element signature="e#307#308#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/FuncButtonCreate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7133656">
-          <caret line="73" column="9" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="51" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
           <folding>
             <element signature="method#remove#0;class#FuncButtonCreate#0" expanded="false" />
             <element signature="method#removePsiElement#0;class#FuncButtonCreate#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/MemberButtonCreate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding>
+            <element signature="method#makePsiJavaFile#0;class#MemberButtonCreate#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Command/FuncButtonCreateCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.244373">
+          <caret line="8" column="58" selection-start-line="8" selection-start-column="58" selection-end-line="8" selection-end-column="58" />
+          <folding>
+            <element signature="e#304#305#0" expanded="true" />
+            <element signature="e#345#346#0" expanded="true" />
           </folding>
         </state>
       </provider>

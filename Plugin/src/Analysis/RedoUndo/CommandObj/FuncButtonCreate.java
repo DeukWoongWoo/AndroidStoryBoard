@@ -48,7 +48,7 @@ public class FuncButtonCreate {
                         protected void run() throws Throwable {
                             ElementFactory elementFactory = new ElementFactory();
 
-                            String makeCode = buttonName + " = " + CodeBuilder.Component(Type.Button).findViewById(CommandKey.LOCALBUTTON.getId()).build();
+                            String makeCode = buttonName + " = " + CodeBuilder.Component(Type.Button).findViewById(CommandKey.FUNCBUTTON.getId()).build();
 
                             p.add(elementFactory.makePsiField("private " + Type.Button + " " + buttonName + ";",p));
 

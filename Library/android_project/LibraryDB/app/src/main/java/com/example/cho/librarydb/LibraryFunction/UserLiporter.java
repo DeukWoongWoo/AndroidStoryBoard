@@ -9,5 +9,5 @@ import android.database.sqlite.SQLiteDatabase;
 public interface UserLiporter {
 
     public void set(Context context);
-    public void get(SQLiteDatabase db);
+    public void get(String objectName);
 }

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.cho.librarydb.ManageTable;
+import com.example.cho.librarydb.Names;
 
 /**
  * Created by cho on 2016-02-12.
@@ -17,7 +18,7 @@ public class ActivityInfo implements ManageTable{
 
     public ActivityInfo(){
     }
-    public ActivityInfo(String _activityName,String _objectName,String appName){
+    public ActivityInfo(String _activityName,String appName){
         this._activityName = _activityName;
         this.appName = appName;
     }
@@ -41,17 +42,29 @@ public class ActivityInfo implements ManageTable{
     public String getTableName(){return this.tableName;}
 
     @Override
-    public void add(SQLiteDatabase db) {
+    public void add(SQLiteDatabase db,String ...arg) {
+
         ContentValues values = new ContentValues();
         values.put("_activityName", getActivityName());
-        values.put("appName",getAppName());
+        values.put("appName", Names.appName);
         db.insert("ActivityInfo", null, values);
-        db.close();
+      //  db.close();
     }
 
     @Override
-    public Object find(SQLiteDatabase db, String field) {
-        return null;
+    public boolean find(SQLiteDatabase db, String field) {
+
+        boolean result = false;
+        String query = "Select * FROM " + getTableName() + " WHERE " +
+                getPrimaryKey() + " =  \"" + field + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            result=true;
+            cursor.close();
+        }
+       // db.close();
+        return result;
     }
 
     @Override
@@ -69,7 +82,12 @@ public class ActivityInfo implements ManageTable{
             cursor.close();
             result = true;
         }
-        db.close();
+       // db.close();
         return result;
+    }
+
+    @Override
+    public boolean postData(SQLiteDatabase db) {
+        return false;
     }
 }

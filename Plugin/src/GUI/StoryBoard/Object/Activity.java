@@ -18,6 +18,7 @@ public class Activity extends JPanel {
     private String id;
     private int activity_width, activity_height;
     private Point activity_position;
+    private String type = "activity";
     JLabel nameLabel = new JLabel();
     JSONObject activityObject;
     HashMap<String, Activity> activitylist;
@@ -41,6 +42,7 @@ public class Activity extends JPanel {
         this.setBorder(new LineBorder(Color.black));
         this.setLayout(null);
         addDragListeners();
+
     }
     public Activity(String name , HashMap<String, Activity> list){
         setId(name);
@@ -50,8 +52,14 @@ public class Activity extends JPanel {
         this.setBorder(new LineBorder(Color.black));
         this.setLayout(null);
         this.setLocation(10,10);
+
+        setActivity_width(Constant.activitySize_X);
+        setActivity_height(Constant.activitySize_Y);
+        setActivity_position(new Point(10,10));
+
         addDragListeners();
         activitylist =list;
+
     }
     public Activity(HashMap<String, Activity> list , JSONObject obj){
         long width, height, x, y ;
@@ -324,6 +332,14 @@ public class Activity extends JPanel {
         }
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 
     //---------------------------------------------
     //---------------------------------------------
@@ -379,6 +395,17 @@ public class Activity extends JPanel {
 
     }
 
+
+    class SettingWindow extends JFrame{
+
+        public SettingWindow( HashMap <String, Activity> list){
+
+
+        }
+
+
+
+    }
 
 
 }

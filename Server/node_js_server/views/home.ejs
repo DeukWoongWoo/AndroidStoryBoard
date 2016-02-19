@@ -16,6 +16,7 @@
     <link href='https://fonts.googleapis.com/css?family=Candal' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" type="text/css" href="stylesheets/mystyle.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/layer-popup.css">
 
 
     <script type="text/javascript" src="javascripts/d3/d3.js"></script>
@@ -53,14 +54,15 @@
             <% app.forEach(function (app) { %>
             <li>
                 <div class="btn-group" style="display: inline-block">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                       <span class="caret"></span>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <a class="app-name" style="display : none;"><%= app.app_name %></a>
                         <li><a class="btn btn-inverse" id="re-register">Re Register</a></li>
-                        <li><a class="btn btn-inverse" id="add-image">Add Image</a></li>
-                        <li><a class="btn btn-inverse delete-app" >Delete</a></li>
+                        <li><a class="btn btn-inverse btn-example" onclick="layer_open('layer2', '<%= app.app_name %>');return false;">Add Image</a></li>
+                        <li><a class="btn btn-inverse delete-app">Delete</a></li>
                     </ul>
                 </div>
                 <div class="btn btn-inverse app_name"><%= app.app_name %></div>
@@ -126,9 +128,36 @@
         <hr class="magin0">
     </div>
 </div>
+
+
+<div class="layer">
+    <div class="bg"></div>
+    <div id="layer2" class="pop-layer">
+        <div class="pop-container">
+            <div class="pop-conts">
+                <form method="post" action="/registerimage" enctype="multipart/form-data">
+                    <label for="exampleInputFile">Image Upload</label><br>
+                    <input type="text" id="upload-app-name" name="app_name" value="a" readonly>
+                    <input type="file" id="upload-files" name="upload_images" multiple>
+                    <p class="help-block">Upload StoryBoard Images</p>
+                    <div class="container-center">
+                        <button type="submit" class="btn btn-primary" id="register-image-confirm">Confirm</button>
+                        <button type="button" class="cbtn btn btn-warning" id="register-image-close">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="javascripts/d3/d3.js"></script>
 <script src="javascripts/storyboard/Storyboard.js"></script>
+<script src="javascripts/layer-popup.js"></script>
+
+
+
 <script>
     var useGraph = new Graph();
     var errGraph = new Graph();
@@ -163,7 +192,7 @@
     var user_id;
     var intervalID;
 
-        $('#storyboard').load("str");
+    $('#storyboard').load("str");
 
     useGraph.setDataColor('#457D97');
     errGraph.setDataColor('#EA3556');
@@ -201,6 +230,7 @@
 
     function getUserAppStoryboard() {
         var storyboard = new Storyboard();
+        storyboard.setUserIdAppName(user_id, app_name);
         storyboard.targetDiv('#storyboard-svg');
 
         $.get("/storyboard/" + app_name, function (storyboardData) {
@@ -342,9 +372,9 @@
         $('.storyboard rect').css("stroke-width", "");
         $('.storyboard circle').css("stroke-width", "");
         $('.storyboard rect' + className + '#' + objectName).css("stroke", "gold");
-        $('.storyboard rect' + className + '#' + objectName).css("stroke-width", "20px");
+        $('.storyboard rect' + className + '#' + objectName).css("stroke-width", "30px");
         $('.storyboard circle' + className + '#' + objectName).css("stroke", "gold");
-        $('.storyboard circle' + className + '#' + objectName).css("stroke-width", "20px");
+        $('.storyboard circle' + className + '#' + objectName).css("stroke-width", "30px");
         $('.graph rect' + className + '#' + objectName).css("fill", "gold");
         $('.graph circle' + className + '#' + objectName).css("fill", "gold");
     }

@@ -239,14 +239,12 @@ mysql.addObject = function (param) {
         size_height: param.body.size_height,
         type: param.body.type ? param.body.type : 'button',
         color: param.body.color ? param.body.color : 'gray',
-        image_num: param.body.image_num ? param.body.image_num : 1,//todo
+        //image_num: param.body.image_num ? param.body.image_num : 1,//todo
         activity_num: param.body.activity_num,
 
         object_frequency: 0,
         error_frequency: 0
     };
-    console.log('mysql.addObject');
-    console.log(param.body.activity_name);
     /**
      * TODO:오프젝트의 위치, 크기, 텍스트, 컬러 설정해줘야함
      * TODO:user_id에 따라서 activity_num, image_num을 찾아서 넣어줘야함
@@ -254,8 +252,6 @@ mysql.addObject = function (param) {
     mysql.getActivityNumByUserIdAppNameActivityName(param, activityName, function (err, result) {
         if (err)console.error(err);
         else {
-            console.log('getActivityNumByUserIdAppNameActivityName');
-            console.log(result[0].activity_num);
             object.activity_num = result[0].activity_num;
             insertData('object', object);
         }
@@ -302,7 +298,7 @@ mysql.getActivityNumByAppNum = function (app_num, callback) {
 }
 
 mysql.getObjectNumByActivityNum = function (activity_num, callback) {
-    mysql.query('SELECT object_num, image_num FROM object_info '
+    mysql.query('SELECT object_num FROM object_info '
         + ' WHERE activity_num = ' + activity_num
         , function (err, result) {
             if (err) callback(err);
@@ -364,7 +360,7 @@ mysql.addActivityUse = function (param) {
         + 'AND app_info.app_name = \'' + param.body.app_name + '\''
         , function (error, result, fields) {
             if (error) console.error(error);
-            else if (result) {
+            else if (result[0]) {
                 activityUse.activity_num = result[0].activity_num;
                 insertData('activity_use', activityUse)
                 updateTotalTime('activity', activityUse.activity_num, activityUse.during_time_start, activityUse.during_time_end);
@@ -524,15 +520,11 @@ function updateFrequency(type, object_num) {
 
 function calDuringTime(start, end) {
     var time = NumOfDate(end) - NumOfDate(start);
-    console.log(time);
+
     return time;
 }
 
 function NumOfDate(date) {
-    /**
-     *  날짜, 시간에 문자열을 숫자로 표현된 값으로 반환
-     */
-    console.log(date);
     var piece = date.split(" ");
     var standardYears = 2015 * 60 * 30 * 12;
     var years = piece[0].split("/")[0] * 60 * 24 * 30 * 12 - standardYears;
@@ -540,13 +532,6 @@ function NumOfDate(date) {
     var days = piece[0].split("/")[2] * 60 * 24;
     var hours = piece[1].split(":")[0] * 60;
     var minutes = piece[1].split(":")[1];
-
-    console.log(years);
-    console.log(month);
-    console.log(days);
-    console.log(hours);
-    console.log(minutes);
-    console.log(years + month + days + hours + minutes);
 
     return years + month + days + hours + minutes;
 }

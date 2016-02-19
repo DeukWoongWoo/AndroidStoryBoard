@@ -6,10 +6,10 @@ import java.util.Date;
 /**
  * Created by cho on 2016-02-14.
  */
-public class TimeInfo {
+public class CurrentTime {
     private String currentTime;
 
-    public TimeInfo(){
+    public CurrentTime(){
         long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat sdfNow = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");

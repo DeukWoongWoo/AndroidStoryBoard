@@ -163,7 +163,8 @@ public class Button_Root extends ObjectCustom {
             }
         }
         if(removeKey!=null) {
-
+            System.out.println(objectJObject);
+            objectJObject.clear();
             checkkey.remove(removeKey);
         }
     }

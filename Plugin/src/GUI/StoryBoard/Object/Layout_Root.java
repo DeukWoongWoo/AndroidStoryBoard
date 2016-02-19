@@ -74,6 +74,16 @@ public class Layout_Root extends ObjectCustom {
         objectArray = (JSONArray)jobj.get("object");
 
         for(int i=0; i<objectArray.size(); i++){
+            JSONObject tempJsonObject;
+            tempJsonObject = (JSONObject)objectArray.get(i);
+            if(tempJsonObject.isEmpty())
+            {
+                System.out.println(objectArray.get(i)+"이 지워졌습니다");
+                objectArray.remove(i);
+                i=-1;
+            }
+        }
+        for(int i=0; i<objectArray.size(); i++){
             String type;
             ObjectCustom temp;
             JSONObject tempJsonObject;

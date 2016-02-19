@@ -53,6 +53,7 @@ public class Activity extends JPanel {
         this.setLayout(null);
         this.setLocation(10,10);
 
+        setId(name);
         setActivity_width(Constant.activitySize_X);
         setActivity_height(Constant.activitySize_Y);
         setActivity_position(new Point(10,10));
@@ -148,6 +149,8 @@ public class Activity extends JPanel {
             if (checkName(tempName) == false) {
                 setId(tempName);
                 nameLabel.setText(tempName);
+                activityObject.put("name", tempName);
+                System.out.println(activityObject);
             } else {
                 JOptionPane.showMessageDialog(null, tempName + "은 이미 중복되어있는 ID 값입니다.");
             }
@@ -163,6 +166,31 @@ public class Activity extends JPanel {
 
         setVisible(false);
 
+
+
+
+
+//        while(buttonKeyList.hasNext()) {
+//            String key = (String) buttonKeyList.next();
+//            Object o = activitylist.get(key);
+//            Activity a = (Activity) o;
+//
+//            if(a.getId().equals(temp)){
+//                removeKey = key;
+//            }
+//        }
+//
+//        if(removeKey!=null) {
+//
+//            activitylist.remove(removeKey);
+//        }
+
+
+    }
+    public void removeActivity_json() {
+        String temp = getId();
+        String removeKey=null;
+        Iterator<String>buttonKeyList = activitylist.keySet().iterator();
         while(buttonKeyList.hasNext()) {
             String key = (String) buttonKeyList.next();
             Object o = activitylist.get(key);
@@ -172,13 +200,14 @@ public class Activity extends JPanel {
                 removeKey = key;
             }
         }
+
         if(removeKey!=null) {
 
             activitylist.remove(removeKey);
         }
-
-
+        setVisible(false);
     }
+
     //-----------새로운 버튼 생성---------------
     public void newButton(){
 
@@ -243,6 +272,7 @@ public class Activity extends JPanel {
                 Point position = new Point(mouseOnScreen.x - parentOnScreen.x - anchorX, mouseOnScreen.y - parentOnScreen.y - anchorY);
 
                 setLocation(position);
+                setActivity_position(position);
 
                 //Change Z-Buffer if it is "overbearing"
                 if (overbearing) {
@@ -275,6 +305,10 @@ public class Activity extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
 
+
+
+                activityObject.put("x", (long)getActivity_position().x);
+                activityObject.put("y", (long)getActivity_position().y);
             }
 
             @Override
@@ -361,8 +395,10 @@ public class Activity extends JPanel {
             anItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+
+                    removeActivity_json();
                     System.out.println("clicked destroy");
-                    removeActivity();
+                    activityObject.clear();
 
                 }
             });
@@ -392,18 +428,6 @@ public class Activity extends JPanel {
             add(Radio_button);
             add(set_name);
         }
-
-    }
-
-
-    class SettingWindow extends JFrame{
-
-        public SettingWindow( HashMap <String, Activity> list){
-
-
-        }
-
-
 
     }
 

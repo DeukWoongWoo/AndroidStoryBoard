@@ -19,7 +19,8 @@ function Button() {
     this.update = function () {
 
         if (this.getImage()) {
-            btnImage.attr("xlink:href", '/image/a/a/ori2.jpg')
+            btnImage
+                .attr("xlink:href", this.imageRoute() + this.getImage())
                 .attr("width", this.width())
                 .attr("height", this.height())
                 .attr('x', this.x())

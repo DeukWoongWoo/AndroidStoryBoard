@@ -49,13 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TableHandler tableHandler  = new TableHandler(this,null,null,1);
-        ManageTable userInfo = new UserInfo(Names.userId);
-        tableHandler.add(userInfo);
-        ManageTable app = new AppInfo(Names.appName,Names.userId);
-        tableHandler.add(app);
-
-
+        final TableHandler tableHandler = new TableHandler(this,null,null,1);
         final TextView textView = (TextView) findViewById(R.id.textView);
         Button bt1 = (Button) findViewById(R.id.button);
 
@@ -77,14 +71,14 @@ public class MainActivity extends AppCompatActivity {
 
                 userLiporterEvent.get("button");
                 //  userLiporterActivity.get("button");
-                startActivity(new Intent(MainActivity.this, Main2Activity.class));
+                //startActivity(new Intent(MainActivity.this, Main2Activity.class));
 
             }
         });
         findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                tableHandler.checkDB();
             }
         });
         findViewById(R.id.button5).setOnClickListener(new View.OnClickListener() {
@@ -107,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        userLiporterEvent.get("button");
+
+        userLiporterActivity.get(null);
 
     }
 

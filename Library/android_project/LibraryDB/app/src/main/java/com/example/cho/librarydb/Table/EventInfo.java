@@ -10,6 +10,8 @@ import com.example.cho.librarydb.LibraryFunction.DataForm;
 import com.example.cho.librarydb.ManageTable;
 import com.example.cho.librarydb.Names;
 
+import org.json.JSONObject;
+
 /**
  * Created by cho on 2016-02-13.
  */
@@ -103,22 +105,27 @@ public class EventInfo implements ManageTable{
 
     @Override
     public boolean postData(SQLiteDatabase db) {
-        HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson();
+        HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson("http://210.118.64.134:3000/getpost/app/activity/object/use");
         String objectName = null;
+        JSONObject[] objects;
         String query = "Select ObjectInfo.activityName , EventInfo.objectInfo , EventInfo._eventTime " +
                 "FROM " + "EventInfo , ObjectInfo" + " WHERE " +
                 "EventInfo.objectInfo = ObjectInfo._objectInfo";
         Cursor cursor = db.rawQuery(query, null);
-
+        int cursorLenth = cursor.getCount()-1;
+        objects = new JSONObject[cursorLenth];
         if(cursor.moveToFirst()){
+            int objectCnt=0;
             while(cursor.moveToNext()){
-                objectName = cursor.getString(1);
-                Log.e("Query~!!", cursor.getString(0) + "   " + cursor.getString(1) + "   " + cursor.getString(2));
-                httpAsyncTaskJson.execute(DataForm.getEventData(
-                        Names.userId, Names.appName, cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+
+              //  Log.e("Query~!!", cursor.getString(0) + "   " + cursor.getString(1) + "   " + cursor.getString(2));
+                objects[objectCnt++] =DataForm.getEventData(
+                        Names.userId, Names.appName, cursor.getString(0), cursor.getString(1), cursor.getString(2));
             }
+            httpAsyncTaskJson.execute(objects);
+
             ObjectInfo obj = new ObjectInfo();
-            obj.delete(db,objectName);
+           // obj.delete(db,objectName);
         }
         return false;
     }

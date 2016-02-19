@@ -24,12 +24,12 @@ public class CatchEvent implements UserLiporter{
     public void getEvent(String objectName){
         CurrentTime timeInfo = new CurrentTime();
         eventTime = timeInfo.getCurrentTime();
-        Log.e("-------------Event", activityName + " EventTime: " + eventTime);
+       // Log.e("-------------Event", activityName + " EventTime: " + eventTime);
         TableHandler tableHandler = new TableHandler(context,null,null,1);
         EventInfo eventInfo = new EventInfo(objectName,eventTime);
 
         if(Network.isNetWork((Activity) context)) {
-            HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson();
+            HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson("http://210.118.64.134:3000/getpost/app/activity/object/use");
             httpAsyncTaskJson.execute(DataForm.getEventData(
                     Names.userId,Names.appName, activityName,objectName,eventTime));
             tableHandler.postDataFromDB(eventInfo);

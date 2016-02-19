@@ -38,34 +38,28 @@ public class UserInfo implements ManageTable {
     public String getTableName(){return this.tableName;}
 
     @Override
-    public void add(SQLiteDatabase db) {
+    public void add(SQLiteDatabase db,String ...arg) {
         ContentValues values = new ContentValues();
         values.put("_userId", getUserId());
         db.insert("UserInfo", null, values);
-        db.close();
+        //db.close();
     }
 
+
     @Override
-    public Object find(SQLiteDatabase db,String field) {
+    public boolean find(SQLiteDatabase db,String field) {
 
-        ManageTable userInfo= new UserInfo();
-        ContentValues contentValues = new ContentValues();
-
-
+        boolean result = false;
         String query = "Select * FROM " + getTableName() + " WHERE " +
                 getPrimaryKey() + " =  \"" + field + "\"";
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
-            cursor.moveToFirst();
-            setUserId(cursor.getString(0));
-            contentValues.put("_userId",cursor.getString(0));
+            result=true;
             cursor.close();
-        } else {
-            userInfo = null;
         }
-        db.close();
-        return userInfo;
+      //  db.close();
+        return result;
     }
 
     @Override
@@ -83,7 +77,12 @@ public class UserInfo implements ManageTable {
             cursor.close();
             result = true;
         }
-        db.close();
+      //  db.close();
         return result;
+    }
+
+    @Override
+    public boolean postData(SQLiteDatabase db) {
+        return false;
     }
 }

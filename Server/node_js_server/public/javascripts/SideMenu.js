@@ -78,9 +78,9 @@ var registerApp = function () {
 var deleteApp = function(){
     $('.delete-app').click(function(){
         var app_name = $(this).parent().siblings('.app-name').text();
-        $.get('/delete/' + app_name, function(){
-
-        });
+        document.location.href="/delete/" + app_name ;
+        //$.get('/delete/' + app_name, function(){
+        //});
     });
 }
 

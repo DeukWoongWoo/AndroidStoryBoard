@@ -8,15 +8,16 @@
 
 <body>
 <div>
-    <image></image>
-    <svg class="storyboard light" currentScale="1" viewBox="0 0 1000 1000" id="storyboard-svg"
+
+
+    <svg class="storyboard light" currentScale="1" viewBox="0 0 2000 2000" id="storyboard-svg"
          style="background: white;">
+
         <rect id="storyboard-background" x="-5000" y="-5000" width="10000" height="10000"
               style="fill: #8BC5B7; stroke: black;  stroke-width: 100px;" onmousedown="startDrag(event)"/>
 
         <svg onmousedown="startDrag(event, this)">
-            <rect x="400" y="300" width="200" height="200" fill=""></rect>
-            <image x="400" y="300" height="200" width="200" xlink:href="https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"></image><!--/image/a/a/ori2.jpg-->
+            <image x="400" y="300" height="200" width="200" xlink:href="/image/a/a/ori2.jpg"></image>
         </svg>
         <svg onmousedown="startDrag(event, this)">
             <rect class="test-class" x="10" y="10" width="300" height="200"
@@ -24,7 +25,7 @@
             </rect>
 
             <circle cx="50" cy="100" r="25" style="stroke: black; fill: white;"/>
-            <text  x="10" y="10" stroke="black" height="100px">
+            <text font-size="20" x="10" y="10" stroke="black" height="100px">
 
                 <tspan x="10" y="70">Second line.</tspan>
             </text>
@@ -38,22 +39,22 @@
 <!--<script type="text/javascript" src="javascripts/d3/d3.js"></script>-->
 <!--<script src="javascripts/storyboard/Storyboard.js"></script>-->
 <script>
-//    var storyboard = new Storyboard();
-//    storyboard.targetDiv('#storyboard-svg');
-//
-//    $.get("/storyboard/" + app_name, function (storyboardData) {
-//        storyboard.removeStoryboard();
-//        storyboard.addBackBoard();
-//        storyboard.storyboardData(storyboardData);
-//
-//        storyboard.drawActivityObject();
-//
-//        storyboard.initLine();
-//        storyboard.drawNextActivityLine();
-//
-//        storyboard.removeActivityObject();
-//        storyboard.drawActivityObject();
-//    });
+    //    var storyboard = new Storyboard();
+    //    storyboard.targetDiv('#storyboard-svg');
+    //
+    //    $.get("/storyboard/" + app_name, function (storyboardData) {
+    //        storyboard.removeStoryboard();
+    //        storyboard.addBackBoard();
+    //        storyboard.storyboardData(storyboardData);
+    //
+    //        storyboard.drawActivityObject();
+    //
+    //        storyboard.initLine();
+    //        storyboard.drawNextActivityLine();
+    //
+    //        storyboard.removeActivityObject();
+    //        storyboard.drawActivityObject();
+    //    });
 
     /**
      *  위
@@ -86,7 +87,7 @@
     });
 
     $("#storyboard-svg").on("mousewheel", function (event) {
-        var baeyul = 5;
+        var baeyul = 12;
         var zoomValue = event.originalEvent.wheelDelta;
         if (box.width + zoomValue * baeyul > 0 && box.height + zoomValue * baeyul > 0
                 && box.width + zoomValue < backWidth && box.height + zoomValue < backHeight) {
@@ -94,6 +95,14 @@
             box.y -= zoomValue / 2;
             box.width += zoomValue;
             box.height += zoomValue;
+
+
+            d3.selectAll('text').attr('font-size', function (d, i) {
+//                console.log('d3.selectAll text');
+//                console.log(i);
+//                console.log(d3.select(this).attr('font-size'));
+                return d3.select(this).attr('font-size') * 1 - zoomValue * 0.05;
+            });
         }
     });
 

@@ -3,23 +3,29 @@ package com.example.cho.librarydb.Table;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import com.example.cho.librarydb.HttpAsyncTaskJson;
+import com.example.cho.librarydb.LibraryFunction.DataForm;
 import com.example.cho.librarydb.ManageTable;
+import com.example.cho.librarydb.Names;
 
 /**
  * Created by cho on 2016-02-13.
  */
 public class TimeInfo implements ManageTable{
-    private String _useTime;
+    private String _activityStartTime;
+    private String activityEndTime;
     private String activityName;
-    private String primaryKey="_useTime";
+    private String primaryKey="_activityStartTime";
     private String tableName = getClass().getSimpleName();
 
     public TimeInfo(){
 
     }
-    public TimeInfo(String _useTime,String activityName){
-        this._useTime = _useTime;
+    public TimeInfo(String activityName,String _activityStartTime,String activityEndTime){
+        this._activityStartTime = _activityStartTime;
+        this.activityEndTime = activityEndTime;
         this.activityName = activityName;
     }
     public void setActivityName(String activityName){
@@ -29,11 +35,16 @@ public class TimeInfo implements ManageTable{
         return this.activityName;
     }
 
-    public void setUseTime(String _useTime){
-        this._useTime=_useTime;
+    public void setTime(String _activityStartTime,String activityEndTime){
+        this._activityStartTime = _activityStartTime;
+        this.activityEndTime=activityEndTime;
     }
-    public  String getUseTime(){
-        return this._useTime;
+    public  String getActivityStartTime(){
+        return this._activityStartTime;
+    }
+
+    public String getActivityEndTime() {
+        return this.activityEndTime;
     }
 
     public String getPrimaryKey(){
@@ -42,17 +53,31 @@ public class TimeInfo implements ManageTable{
     public String getTableName(){return this.tableName;}
 
     @Override
-    public void add(SQLiteDatabase db) {
+    public void add(SQLiteDatabase db,String ...arg) {
+
         ContentValues values = new ContentValues();
-        values.put("_useTime", getUseTime());
+        values.put("_activityStartTime", getActivityStartTime());
+        values.put("activityEndTime",getActivityEndTime());
         values.put("activityName",getActivityName());
         db.insert("TimeInfo", null, values);
-        db.close();
+     //  db.close();
     }
 
+
     @Override
-    public Object find(SQLiteDatabase db, String field) {
-        return null;
+    public boolean find(SQLiteDatabase db, String field) {
+
+        boolean result = false;
+        String query = "Select * FROM " + getTableName() + " WHERE " +
+                getPrimaryKey() + " =  \"" + field + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            result=true;
+            cursor.close();
+        }
+       // db.close();
+        return result;
     }
 
     @Override
@@ -70,7 +95,29 @@ public class TimeInfo implements ManageTable{
             cursor.close();
             result = true;
         }
-        db.close();
+      //  db.close();
         return result;
+    }
+
+    @Override
+    public boolean postData(SQLiteDatabase db) {
+        HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson();
+        String actName=null;
+        String query = "Select TimeInfo.activityName , TimeInfo._activityStartTime , TimeInfo.activityEndTime " +
+                "FROM " + "TimeInfo , ActivityInfo" + " WHERE " +
+                "TimeInfo.activityName = ActivityInfo._activityName";
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            while(cursor.moveToNext()){
+                Log.e("Query~!!",cursor.getString(0)+"   "+cursor.getString(1)+"   "+cursor.getString(2));
+                actName = cursor.getString(0);
+                httpAsyncTaskJson.execute(DataForm.getEventData(
+                        Names.userId, Names.appName, cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+            }
+            ActivityInfo act = new ActivityInfo();
+            act.delete(db,actName);
+        }
+
+        return false;
     }
 }

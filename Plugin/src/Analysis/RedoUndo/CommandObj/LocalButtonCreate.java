@@ -1,23 +1,18 @@
 package Analysis.RedoUndo.CommandObj;
 
-import Analysis.Constant.ConstantEtc;
 import Analysis.Constant.SharedPreference;
 import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeBuilder.CodeBuilder;
 import Analysis.RedoUndo.CodeBuilder.Type;
 import Analysis.RedoUndo.CommandKey;
+import Analysis.RedoUndo.Util.ElementFactory;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.refactoring.PackageWrapper;
-import com.intellij.refactoring.util.RefactoringUtil;
-import com.intellij.util.IncorrectOperationException;
 
 import java.io.*;
 import java.util.regex.Matcher;
@@ -30,6 +25,7 @@ public class LocalButtonCreate {
     private static int num = 1;
 
     private final String buttonName = "button";
+    private final String packageName = "android.widget";
     private PsiJavaFile psiJavaFile;
     private Project project;
     VirtualFile virtualFile;
@@ -51,7 +47,7 @@ public class LocalButtonCreate {
     }
 
     private void syncProject() {
-        ProjectAnalysis.getInstance(null,null).execute("src/Activity", ConstantEtc.JAVA_PATTERN,true);
+        ProjectAnalysis.getInstance(null,null).executeAll();
     }
 
     private void insertPsiElement() {
@@ -61,13 +57,17 @@ public class LocalButtonCreate {
                     new WriteCommandAction.Simple(method.getProject(), method.getContainingFile()) {
                         @Override
                         protected void run() throws Throwable {
-                            String makeCode = Type.Button + " " + buttonName + (num++) +" = " +CodeBuilder.Component(Type.Button).findViewById(CommandKey.LOCALBUTTON.getId()).build();
-                            PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(method.getProject());
-                            PsiStatement statement = elementFactory.createStatementFromText(makeCode,method);
-                            method.getBody().add(statement);
+                            ElementFactory elementFactory = new ElementFactory();
 
-                            // TODO: 2016-02-17 import 중복체크해서 있으면 추가 하지 않기
-                            psiJavaFile.getImportList().add(elementFactory.createImportStatement(makeImportClass("android.widget",Type.Button.name())));
+                            String makeCode = Type.Button + " " + buttonName + (num++) +" = " +CodeBuilder.Component(Type.Button).findViewById(CommandKey.LOCALBUTTON.getId()).build();
+
+                            method.getBody().add(elementFactory.makePsiStatement(makeCode,method));
+
+                            if (!checkImport(packageName)){
+                                PsiImportStatement psiImportStatement = elementFactory.findPsiImportStatement(packageName, Type.Button.name());
+                                if(psiImportStatement != null) psiJavaFile.getImportList().add(psiImportStatement);
+                                else Messages.showInfoMessage("Cannot find import file...","File Search");
+                            }
                         }
                     }.execute();
                 }
@@ -75,34 +75,11 @@ public class LocalButtonCreate {
         }
     }
 
-    private PsiClass makeImportClass(String packageName, String className) {
-        final PackageWrapper packageWrapper = new PackageWrapper(psiJavaFile.getManager(), packageName);
-        ProjectRootManager rootManager = ProjectRootManager.getInstance(project);
-        return getBoundaryClass(project, packageName, rootManager, virtualFile, packageWrapper, className);
-    }
-
-    private PsiClass getBoundaryClass(Project project, String newPackage, ProjectRootManager rootManager, VirtualFile virtualFile, PackageWrapper packageWrapper, String className) {
-        PsiClass boundaryClass = lookupClass(project,newPackage, className);
-        if (boundaryClass == null) {
-            boundaryClass = createClass(rootManager, virtualFile, packageWrapper, className);
+    private boolean checkImport(String packageName) {
+        for(PsiImportStatement psiImportStatement : psiJavaFile.getImportList().getImportStatements()){
+            if(psiImportStatement.getText().equals("import "+packageName+"."+ Type.Button.name()+";")) return true;
         }
-        return boundaryClass;
-    }
-
-    private PsiClass createClass(ProjectRootManager rootManager, VirtualFile virtualFile, PackageWrapper packageWrapper, String className) {
-        try {
-            ProjectFileIndex fileIndex = rootManager.getFileIndex();
-            final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(virtualFile);
-            PsiDirectory packageDirectoryInSourceRoot = RefactoringUtil.createPackageDirectoryInSourceRoot(packageWrapper, sourceRootForFile);
-            return JavaDirectoryService.getInstance().createInterface(packageDirectoryInSourceRoot, className);
-        } catch (IncorrectOperationException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private PsiClass lookupClass(Project project, String boundaryPackage, String newClassName) {
-        GlobalSearchScope globalsearchscope = GlobalSearchScope.allScope(project);
-        return JavaPsiFacade.getInstance(project).findClass(boundaryPackage + "." + newClassName, globalsearchscope);
+        return false;
     }
 
     private PsiJavaFile makePsiJavaFile() {

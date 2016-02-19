@@ -16,6 +16,9 @@ public class CodeDriver {
         CommandKey.MEMBERBUTTON.setId("R.id.button2");
         commandManager.execute(CommandKey.MEMBERBUTTON);
 
+        CommandKey.FUNCBUTTON.setId("R.id.button3");
+        commandManager.execute(CommandKey.FUNCBUTTON);
+
 //        commandManager.undo();
 //        commandManager.redo();
 //        commandManager.execute(CommandKey.WRITE);

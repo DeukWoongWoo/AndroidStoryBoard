@@ -1,16 +1,15 @@
 package Analysis.RedoUndo.CommandObj;
 
-import Analysis.Constant.ConstantEtc;
 import Analysis.Constant.SharedPreference;
 import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeBuilder.CodeBuilder;
 import Analysis.RedoUndo.CodeBuilder.Type;
 import Analysis.RedoUndo.CommandKey;
+import Analysis.RedoUndo.Util.ElementFactory;
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.psi.*;
 
 import java.io.File;
@@ -24,6 +23,8 @@ public class MemberButtonCreate {
     private static int num = 1;
 
     private final String buttonName = "button" + (num++);
+    private final String packageName = "android.widget";
+
     private PsiJavaFile psiJavaFile;
 
     public void create(){
@@ -33,7 +34,7 @@ public class MemberButtonCreate {
     }
 
     private void syncProject() {
-        ProjectAnalysis.getInstance(null,null).execute("src/Activity", ConstantEtc.JAVA_PATTERN,true);
+        ProjectAnalysis.getInstance(null,null).executeAll();
     }
 
     private void insertPsiElement() {
@@ -43,19 +44,31 @@ public class MemberButtonCreate {
                     new WriteCommandAction.Simple(method.getProject(), method.getContainingFile()) {
                         @Override
                         protected void run() throws Throwable {
+                            ElementFactory elementFactory = new ElementFactory();
+
+                            p.add(elementFactory.makePsiField("private " + Type.Button + " " + buttonName + ";",p));
+
                             String makeCode = buttonName + " = " + CodeBuilder.Component(Type.Button).findViewById(CommandKey.LOCALBUTTON.getId()).build();
-                            PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(method.getProject());
 
-                            PsiField field = elementFactory.createFieldFromText("private " + Type.Button + " " + buttonName + ";",p);
-                            p.add(field);
+                            method.getBody().add(elementFactory.makePsiStatement(makeCode,method));
 
-                            PsiStatement statement = elementFactory.createStatementFromText(makeCode,method);
-                            method.getBody().add(statement);
+                            if (!checkImport(packageName)){
+                                PsiImportStatement psiImportStatement = elementFactory.findPsiImportStatement(packageName, Type.Button.name());
+                                if(psiImportStatement != null) psiJavaFile.getImportList().add(psiImportStatement);
+                                else Messages.showInfoMessage("Cannot find import file...","File Search");
+                            }
                         }
                     }.execute();
                 }
             }
         }
+    }
+
+    private boolean checkImport(String packageName) {
+        for(PsiImportStatement psiImportStatement : psiJavaFile.getImportList().getImportStatements()){
+            if(psiImportStatement.getText().equals("import "+packageName+"."+ Type.Button.name()+";")) return true;
+        }
+        return false;
     }
 
     private PsiJavaFile makePsiJavaFile() {
@@ -69,6 +82,7 @@ public class MemberButtonCreate {
     }
 
     private void removePsiElement() {
+        // TODO: 2016-02-18 구현하기
         for(PsiClass p : psiJavaFile.getClasses()){
             for(PsiMethod method : p.getMethods()){
                 if(method.getName().equals("onCreate")){

@@ -42,17 +42,29 @@ public class AppInfo implements ManageTable{
     public String getTableName(){return this.tableName;}
 
     @Override
-    public void add(SQLiteDatabase db) {
+    public void add(SQLiteDatabase db,String ...arg) {
         ContentValues values = new ContentValues();
         values.put("_appName", getAppName());
         values.put("userId",getUserId());
         db.insert("AppInfo", null, values);
-        db.close();
+     //   db.close();
     }
 
+
     @Override
-    public Object find(SQLiteDatabase db, String field) {
-        return null;
+    public boolean find(SQLiteDatabase db, String field) {
+
+        boolean result = false;
+        String query = "Select * FROM " + getTableName() + " WHERE " +
+                getPrimaryKey() + " =  \"" + field + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            result=true;
+            cursor.close();
+        }
+    //    db.close();
+        return result;
     }
 
     @Override
@@ -70,7 +82,12 @@ public class AppInfo implements ManageTable{
             cursor.close();
             result = true;
         }
-        db.close();
+     //   db.close();
         return result;
+    }
+
+    @Override
+    public boolean postData(SQLiteDatabase db) {
+        return false;
     }
 }

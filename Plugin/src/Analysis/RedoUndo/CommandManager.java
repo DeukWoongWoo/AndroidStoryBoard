@@ -31,6 +31,7 @@ public class CommandManager{
         commandMap.put(CommandKey.CLEAN, new CodeCleanCommand(new Code()));
         commandMap.put(CommandKey.LOCALBUTTON, new LocalButtonCreateCommand());
         commandMap.put(CommandKey.MEMBERBUTTON, new MemberButtonCreateCommand());
+        commandMap.put(CommandKey.FUNCBUTTON, new FuncButtonCreateCommand());
     }
 
     public void execute(CommandKey key) {

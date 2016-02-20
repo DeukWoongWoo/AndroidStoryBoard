@@ -103,8 +103,12 @@
             <div class="graph light" id="use-graph" style="display: inline-block"></div>
             <div class="graph light" id="use-line-graph" style="display: inline-block"></div>
             <div class="graph light" id="err-graph" style="display: inline-block"></div>
-            <div id="err-log" style="display: inline-block"></div>      <!--TODO:error log 띄우기-->
             <div class="graph light" id="err-line-graph" style="display: inline-block"></div>
+            <br/>
+            <div id="err-log-div" style="display: none">
+                <div id="err-log" style="display: inline-block"></div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -137,8 +141,9 @@
             <div class="pop-conts">
                 <form method="post" action="/registerimage" enctype="multipart/form-data">
                     <label for="exampleInputFile">Image Upload</label><br>
-                    <input type="text" id="upload-app-name" name="app_name" value="a" readonly>
+                    <input type="hidden" id="upload-app-name" name="app_name" value="a" readonly>
                     <input type="file" id="upload-files" name="upload_images" multiple>
+                    <div id="image-upload-alert"></div>
                     <p class="help-block">Upload StoryBoard Images</p>
                     <div class="container-center">
                         <button type="submit" class="btn btn-primary" id="register-image-confirm">Confirm</button>
@@ -150,15 +155,13 @@
     </div>
 </div>
 
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="javascripts/d3/d3.js"></script>
 <script src="javascripts/storyboard/Storyboard.js"></script>
 <script src="javascripts/layer-popup.js"></script>
 
-
-
 <script>
+
     var useGraph = new Graph();
     var errGraph = new Graph();
     var useLineGraph = new Graph();
@@ -208,6 +211,12 @@
         $('#search-div').css('visibility', 'visible');
 
         getUserAppStoryboard();
+
+        $('#err-log-div').css('display', '');
+        $.get('/error/log/' + app_name, function(data){
+            var downLink = "<a class='btn btn-danger' href=http://210.118.64.134:3000/error/log/" + app_name + ">Download Error Log</a><br/>"
+            document.getElementById('err-log').innerHTML = downLink + data;
+        });
 
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
                 , function (data) {

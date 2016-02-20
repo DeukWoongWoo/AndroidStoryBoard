@@ -81,12 +81,6 @@ router.get('/delete/:app_name', function (req, res) {
                             callback(null, appNum);
                         }
                     });
-                    //db.deleteImageByImageNum(imageNums, function (err) {
-                    //    if (err) callback(err);
-                    //    else {
-                    //
-                    //    }
-                    //});
                 }
             });
         }
@@ -100,7 +94,6 @@ router.get('/delete/:app_name', function (req, res) {
         } else if (err)console.log(err);
         res.redirect('/');
     });
-
 });
 
 function deleteFiles(dirName) {
@@ -157,6 +150,20 @@ router.get('/image/:user_id/:app_name/:file_name', function (req, res) {
             });
         } else {
             res.end('file is not exists');
+        }
+    })
+});
+
+router.get('/error/log/:app_name', function(req, res){
+    var fileUrl = './users/' + req.session.user_id + '/' + req.params.app_name + '/error.log';
+    console.log(fileUrl);
+    fs.exists(fileUrl, function (exists) {
+        if (exists) {
+            fs.readFile(fileUrl, function (err, data) {
+                res.send(data);
+            });
+        } else {
+            res.send('no error');
         }
     })
 });
@@ -279,7 +286,6 @@ router.post('/makedata/object/use', function (req, res) {
     var dt = new Date();
     var d = dt.toFormat('YYYY-MM-DD HH24:MI:SS');
 
-    console.log('[' + d + '] ' + '현재 시간');
     var use = {
         object_num: req.body.object_num,
         occur_time: d,
@@ -316,9 +322,6 @@ router.post('/date-search', function (req, res) {
 
     } else {
         db.getUserAppObject(req, function (err, result) {
-            console.log(req.body);
-            console.log(err);
-            console.log(result);
             if (err) console.log(err);
             else res.send(result);
         });
@@ -366,7 +369,7 @@ router.get('/logout', function (req, res, next) {
 
 router.post('/registerapp', function (req, res, next) {
     registerApp(req, res, function (err) {
-        if (err) console.log(err);//TODO: 웹에 경고 메시지 띄우기
+        if (err) console.log(err);//TODO: 웹에 경고 메시지 띄우기res.send(err);//
         else renderAppPage(req, res);
     });
 });
@@ -443,9 +446,6 @@ function registerStoryboardFile(req, callback) {
                 addActivityObject(req, obj.activity[i], function (err) {
                 });
             }
-            callback(null);
-        }, function (callback) {
-
             callback(null);
         }
     ], function (err) {
@@ -533,13 +533,17 @@ function uploadImages(req, callback) {
             if (req.files.upload_images.length > 1) {
                 async.each(req.files.upload_images, function (file, callback) {
                     tmpOfTarget = file.path;
-                    renameAndSaveFile(file.originalFilename, tmpOfTarget, callback);
+                    renameAndSaveFile(file.originalFilename, tmpOfTarget, function(err){
+                        callback(err);
+                    });
                 }, function (err) {
                     callback(err);
                 });
             } else {
                 tmpOfTarget = req.files.upload_images.path;
-                renameAndSaveFile(req.files.upload_images.originalFilename, tmpOfTarget, callback);
+                renameAndSaveFile(req.files.upload_images.originalFilename, tmpOfTarget, function(err){
+                    callback(err);
+                });
             }
         }
     ], function (err) {

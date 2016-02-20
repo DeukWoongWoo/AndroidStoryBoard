@@ -17,7 +17,6 @@ function layer_open(el, app_name) {
     else temp.css('left', '0px');
 
     temp.find('button.cbtn').click(function (e) {
-
         if (bg) {
             $('.layer').fadeOut(); //'bg' 클래스가 존재하면 레이어를 사라지게 한다.
         } else {
@@ -27,8 +26,7 @@ function layer_open(el, app_name) {
     });
 
     $('#register-image-confirm').click(function(err){
-        console.log(document.getElementById('upload-files').files);
-            console.log();
+        document.getElementById('image-upload-alert').innerHTML = "<b><%= app%></b>";
             //document.location.href="/delete/" + app_name ;
     });
 

@@ -21,7 +21,7 @@ function Storyboard() {
     }
 
     this.addBackBoard = function(){
-        document.getElementById(target.replace(/\#/g,'')).innerHTML = "<rect id='storyboard-background' x='-5000' y='-5000' width='10000' height='10000' style='fill: #8BC5B7; stroke: black;  stroke-width: 100px;' onmousedown='startDrag(event)'/>";
+        document.getElementById(target.replace(/\#/g,'')).innerHTML = "<rect id='storyboard-background' x='-5000' y='-5000' width='10000' height='10000' style='fill: white; stroke: white;  stroke-width: 100px;' onmousedown='startDrag(event)'/>";
     }
 
     this.addActivity = function () {

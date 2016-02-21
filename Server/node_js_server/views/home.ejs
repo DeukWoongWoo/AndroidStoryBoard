@@ -96,7 +96,7 @@
             </a>
         </div>
         <div class="container-center">
-            <button id="activity-location-test">save activity</button>
+            <button id="activity-location-test" style="display: none">save activity</button>
         </div>
         <div class="main-body container-center" id="graphs">
             <div id="storyboard"></div>
@@ -186,7 +186,7 @@
     var searchTime = null;
     var occur_time = null;
 
-    var oneDay = 86400000; // onday = 86400000 msec
+    var oneDay = 86400000; // oneday = 86400000 msec
     var startDate;
     var endDate;
     var xAxisSize = 100;
@@ -218,46 +218,45 @@
             document.getElementById('err-log').innerHTML = downLink + data;
         });
 
-//        $.post("/get/object_info", {app_name: app_name, user_id: user_id}
-//                , function (data) {
-//                    initDataToArray();
-//                    for (var i = 0; i < data.length; i++) {
-//                        setObjectData(i, data);
-//                    }
-//                    initSearchDate();
-//                    createUseTimeGraph();
-//
-//                    createFrequencyGraphs();
-//                    /**
-//                     * 타이머
-//                     * clearInterval(intervalID);
-//                     * intervalID = setInterval(updateFrequencyGraph, 2000);
-//                     */
-//                    rectMouseOver();
-//                });
-    });
+        $.post("/get/object_info", {app_name: app_name, user_id: user_id}
+                , function (data) {
+                    initDataToArray();
+                    for (var i = 0; i < data.length; i++) {
+                        setObjectData(i, data);
+                    }
+                    initSearchDate();
+                    createUseTimeGraph();
 
+                    createFrequencyGraphs();
+                    /**
+                     * 타이머
+                     * clearInterval(intervalID);
+                     * intervalID = setInterval(updateFrequencyGraph, 2000);
+                     */
+                    rectMouseOver();
+                });
+
+        $('#activity-location-test').css('display', '');
+    });
 
     $('#activity-location-test').click(function(){
         $.get("/storyboard/" + app_name, function (storyboardData) {
             var activities = $('svg.activity');
             for(var i=0; i < activities.length; i++){
-                var activityName = activities[i].getAttribute('id');
-                var x = activities[i].getAttribute('x');
-                var y = activities[i].getAttribute('y');
                 for(var j in storyboardData.activity){
-                    if(storyboardData.activity[j].name == activityName){
-                        storyboardData.activity[j].x = x;
-                        storyboardData.activity[j].y = y;
+                    if(storyboardData.activity[j].name == activities[i].getAttribute('id')){
+                        storyboardData.activity[j].x = activities[i].getAttribute('x');
+                        storyboardData.activity[j].y = activities[i].getAttribute('y');
                     }
                 }
             }
-            var testjson = JSON.stringify(storyboardData);
-            $.post('/update/storyboard', {storyboard_data : testjson, app_name : app_name}, function(err){
+
+            $.post('/update/storyboard', {storyboard_data : JSON.stringify(storyboardData), app_name : app_name}, function(err){
                 console.log(err);
             });
         });
     });
+
     function getUserAppStoryboard() {
         var storyboard = new Storyboard();
         storyboard.setUserIdAppName(user_id, app_name);

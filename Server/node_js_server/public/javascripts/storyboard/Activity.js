@@ -1,5 +1,4 @@
 document.write("<script src='javascripts/storyboard/EObject.js'></script>");
-document.write("<script src='javascripts/storyboard/ObjectType/Button.js'></script>");
 
 function Activity() {
     var name;
@@ -19,9 +18,9 @@ function Activity() {
 
     this.create = function (target) {
         if (isDefined(target)) {
-            this.svg = d3.select(target).append("svg").attr('class', 'activity');;//.attr('x', 300).attr('y', 300);
+            this.svg = d3.select(target).append("svg").attr('class', 'activity');//.attr('x', 300).attr('y', 300);
             this.svg.attr('onmousedown', 'startDrag(event, this)');
-            own = this.svg.append('rect')
+            own = this.svg.append('rect');
             this.update();
 
             return this;
@@ -39,7 +38,7 @@ function Activity() {
         return this;
     }
 
-    this.addObject = function (objectData) {
+    this.addObject = function () {
         var num = numOfObjects;
         objects[num] = new EObject();
         objects[num].target(this.svg);
@@ -106,13 +105,6 @@ function Activity() {
         } else return activityName;
     }
 
-    this.nextActivity = function(arg){
-        if (isDefined(arg)) {
-            nextActivities = arg;
-                return this;
-        } else return nextActivities;
-    }
-
     this.setImage = function(arg){
             image = arg;
             return this;
@@ -147,7 +139,7 @@ function Activity() {
             return this;
     }
 
-    this.getText = function(arg){
+    this.getText = function(){
         return textContent;
     }
 }

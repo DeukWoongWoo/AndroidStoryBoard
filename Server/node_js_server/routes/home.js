@@ -247,7 +247,6 @@ function getActivityAndRender(req, res) {
     });
 }
 
-
 router.post('/makedata/object', function (req, res) {
     getObjectAndRender(req, res);
 });
@@ -301,6 +300,7 @@ router.post('/makedata/object/use', function (req, res) {
 
     getObjectAndRender(req, res);
 });
+
 router.post('/makedata/object/err', function (req, res) {
     //console.log(req.body);
     var use = {
@@ -507,6 +507,22 @@ function uploadStoryboard(req, callback) {
     saveFile(locationOfTarget, tmpOfTarget, target, callback);
 }
 
+router.post('/update/storyboard', function(req, res){
+    updateStoryboard(req, function(err){
+        console.log(err);
+        res.send('test');
+    });
+});
+
+function updateStoryboard(req, callback) {
+    var locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
+    var target = locationOfTarget + req.body.app_name + '.json';
+    fs.writeFile(target, req.body.storyboard_data, function(err) {
+        callback(err);
+        console.log('File write completed');
+    });
+}
+
 function uploadImages(req, callback) {
     var tmpOfTarget;
     var locationOfTarget;
@@ -567,6 +583,18 @@ function uploadImages(req, callback) {
         });
     }
 }
+
+router.post('/update/activity', function (req, res) {
+    db.getActivityNumByUserIdAppNameActivityName(req, activityName, function (err, result) {
+        if (err)console.error(err);
+        else if(result[0]){
+            db.updateActivityXY(result[0].activity_num, req.body.x, req.body.y, function(err){
+                console.error(err);
+            });
+        }
+    });
+});
+
 
 function saveFile(locationOfTarget, tmpOfTarget, target, callback) {
     async.series([

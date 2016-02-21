@@ -46,13 +46,6 @@ function EObject() {
         target = arg;
     }
 
-    this.text = function (arg) {
-        own.append('text').attr('x', 100).attr('y', 100).attr('fill', 'blue').attr('stroke', 'red').text('text');
-    }
-
-    this.strokeWidth = function(){
-        return 50;
-    }
-};
+}
 
 EObject.prototype = new Activity();

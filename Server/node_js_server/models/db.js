@@ -485,6 +485,12 @@ mysql.deleteAppByAppNum = function (appNum, callback) {
 //    mysql.query('SELECT ' + column + ' FROM ' + table + ' WHERE ' + '\'' + ref + '\'', ref, throwError);
 //}
 
+mysql.updateActivityXY = function(activityNum,x , y, callback){
+    mysql.query('UPDATE activity_info SET x=' + x
+    + ', y=' + y + ' WHERE activity_num=' + activity_num, function(err){
+        callback(err);
+    });
+}
 
 function recordUseAndUpdateFrequency(type, param, dataUse) {
     mysql.query('SELECT object_info.object_num FROM user_info '

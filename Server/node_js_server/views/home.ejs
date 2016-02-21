@@ -96,7 +96,7 @@
             </a>
         </div>
         <div class="container-center">
-
+            <button id="activity-location-test">save activity</button>
         </div>
         <div class="main-body container-center" id="graphs">
             <div id="storyboard"></div>
@@ -214,29 +214,50 @@
 
         $('#err-log-div').css('display', '');
         $.get('/error/log/' + app_name, function(data){
-            var downLink = "<a class='btn btn-danger' href=http://210.118.64.134:3000/error/log/" + app_name + ">Download Error Log</a><br/>"
+            var downLink = "<a class='btn btn-danger' href=/error/log/" + app_name + ">Download Error Log</a><br/>"
             document.getElementById('err-log').innerHTML = downLink + data;
         });
 
-        $.post("/get/object_info", {app_name: app_name, user_id: user_id}
-                , function (data) {
-                    initDataToArray();
-                    for (var i = 0; i < data.length; i++) {
-                        setObjectData(i, data);
-                    }
-                    initSearchDate();
-                    createUseTimeGraph();
-
-                    createFrequencyGraphs();
-                    /**
-                     * 타이머
-                     * clearInterval(intervalID);
-                     * intervalID = setInterval(updateFrequencyGraph, 2000);
-                     */
-                    rectMouseOver();
-                });
+//        $.post("/get/object_info", {app_name: app_name, user_id: user_id}
+//                , function (data) {
+//                    initDataToArray();
+//                    for (var i = 0; i < data.length; i++) {
+//                        setObjectData(i, data);
+//                    }
+//                    initSearchDate();
+//                    createUseTimeGraph();
+//
+//                    createFrequencyGraphs();
+//                    /**
+//                     * 타이머
+//                     * clearInterval(intervalID);
+//                     * intervalID = setInterval(updateFrequencyGraph, 2000);
+//                     */
+//                    rectMouseOver();
+//                });
     });
 
+
+    $('#activity-location-test').click(function(){
+        $.get("/storyboard/" + app_name, function (storyboardData) {
+            var activities = $('svg.activity');
+            for(var i=0; i < activities.length; i++){
+                var activityName = activities[i].getAttribute('id');
+                var x = activities[i].getAttribute('x');
+                var y = activities[i].getAttribute('y');
+                for(var j in storyboardData.activity){
+                    if(storyboardData.activity[j].name == activityName){
+                        storyboardData.activity[j].x = x;
+                        storyboardData.activity[j].y = y;
+                    }
+                }
+            }
+            var testjson = JSON.stringify(storyboardData);
+            $.post('/update/storyboard', {storyboard_data : testjson, app_name : app_name}, function(err){
+                console.log(err);
+            });
+        });
+    });
     function getUserAppStoryboard() {
         var storyboard = new Storyboard();
         storyboard.setUserIdAppName(user_id, app_name);

@@ -98,9 +98,6 @@
 
 
             d3.selectAll('text').attr('font-size', function (d, i) {
-//                console.log('d3.selectAll text');
-//                console.log(i);
-//                console.log(d3.select(this).attr('font-size'));
                 return d3.select(this).attr('font-size') * 1 - zoomValue * 0.05;
             });
         }

@@ -35,6 +35,10 @@ function Storyboard() {
         return activities[num];
     }
 
+    this.allActivitys = function(){
+        return activities;
+    }
+
     this.activity = function (index) {
         if (isDefined(index)) return activities[index];
         else return activities[numOfActivities - 1];

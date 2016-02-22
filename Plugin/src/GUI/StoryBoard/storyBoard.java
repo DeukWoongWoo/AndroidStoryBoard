@@ -2,6 +2,7 @@ package GUI.StoryBoard;
 
 import GUI.StoryBoard.Object.Activity;
 import GUI.StoryBoard.Object.Layout_Relative_Root;
+import GUI.StoryBoard.UI.palettePanel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,9 +25,11 @@ public class storyBoard extends JPanel {
     JPanel jpan;
     JScrollPane scroll;
     listner li;
-    AffineTransform newTransform = new AffineTransform();
     JSONObject jobjRoot;
+
     JSONArray activityArrayData;
+
+    palettePanel parlPanel = new palettePanel();
     private Point prePoint;
     private int zoom = 0;
     private String appName;
@@ -35,10 +38,15 @@ public class storyBoard extends JPanel {
     // 생성자----------------------------------------------------------------
     public storyBoard() throws IOException {
         createActivityB = new JButton("push");
+
+
         li = new listner();
         jpan = new JPanel();
         jpan.setLayout(null);
         scroll = new JScrollPane(jpan , JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        System.out.println(parlPanel);
+
         jpan.setPreferredSize(new Dimension(3000,3000));
         this.setLayout(new BorderLayout());
         this.add(createActivityB, "North" );
@@ -85,6 +93,14 @@ public class storyBoard extends JPanel {
                     menu.show(e.getComponent(), e.getX(), e.getY());
 
                 }
+
+                else if(parlPanel.getChoice()==1)
+                {
+                    NewWindow a = new  NewWindow();
+
+                    revalidate();       // 무효화 선언된 화면을 알려줌
+                    repaint();          // 다시 그려준다.
+                }
             }
 
             @Override
@@ -115,6 +131,8 @@ public class storyBoard extends JPanel {
             }
         });
         // 전부 그린다.
+        add(parlPanel,"West");
+
         drawActivity();
         System.out.println("StroyBoard Add");
     }
@@ -180,7 +198,7 @@ public class storyBoard extends JPanel {
         for(int i=0; i<activityArrayData.size();i++){
             JSONObject activity_jobj;
             activity_jobj=(JSONObject)activityArrayData.get(i);
-            Activity a = new Activity(activity_list, activity_jobj);
+            Activity a = new Activity(activity_list, activity_jobj, parlPanel);
             activity_list.put((String)activity_jobj.get("name"),a);
             a.setOverbearing(true);
             jpan.add(a);
@@ -210,7 +228,7 @@ public class storyBoard extends JPanel {
             JSONObject activity_jobj;
             activity_jobj=(JSONObject)activityArrayData.get(i);
 
-            Activity a = new Activity(activity_list, activity_jobj);
+            Activity a = new Activity(activity_list, activity_jobj, parlPanel);
             activity_list.put((String)activity_jobj.get("name"),a);
             a.setOverbearing(true);
             jpan.add(a);
@@ -242,25 +260,6 @@ public class storyBoard extends JPanel {
             repaint_window();
         }
     }
-    // 새로운 JsonFile을 만드는 함순
-  /*  public void makeSendData(JSONArray jobj, Constant.JsonFileStruct file , boolean newfix) {
-        JSONArray temp = jobj;
-        JSONArray array = new JSONArray();
-        JSONObject newone = new JSONObject();
-            newone.put("name", file.name);
-            newone.put("x", (long)file.x);
-            newone.put("y", (long)file.y);
-            newone.put("width", (long)file.width);
-            newone.put("height", (long)file.height);
-        if(newfix) {
-            newone.put("object", array);
-            temp.add(newone);
-        }
-        else
-        {
-
-        }
-    }*/
 
     public void sendData(){
         System.out.println(jobjRoot);
@@ -278,10 +277,8 @@ public class storyBoard extends JPanel {
     //------- 새로운 것을 만들기 위한 창--------------------------------------
     class NewWindow extends JFrame{
 
-        JLabel name_label = new JLabel("name :");
         JLabel id_label = new JLabel("id :");
         JTextField id_field = new JTextField();
-        JTextField name_field =new JTextField();
         JButton okbutton = new JButton("OK");
 
         public NewWindow() {
@@ -291,7 +288,7 @@ public class storyBoard extends JPanel {
             int standard_y =Constant.activitySize_Y;
             int standard_scale = standard_y/250;
 
-            this.setSize(standard_x+standard_x/10, standard_y/3);          //창 사이즈
+            this.setSize(standard_x+standard_x/10, standard_y/4);          //창 사이즈
             this.setUndecorated(true);      //title bar 제거
             this.setLocation(100,100);
             this.setVisible(true);
@@ -303,27 +300,19 @@ public class storyBoard extends JPanel {
             okbutton.setMargin(new Insets(0, 0, 0, 0));
 
             id_field.setFont(new Font("Serif", Font.PLAIN, standard_scale*18 ));
-            name_field.setFont(new Font("Serif", Font.PLAIN, standard_scale*18 ));
             id_label.setFont(new Font("Serif", Font.PLAIN, standard_scale*18 ));
-            name_label.setFont(new Font("Serif", Font.PLAIN, standard_scale*18 ));
 
 
-            name_label.setLocation(standard_scale*5, standard_scale*5);
-            id_label.setLocation(standard_scale*5, standard_scale*30);
-            name_field.setLocation(standard_scale*55, standard_scale*5);
-            id_field.setLocation(standard_scale*55, standard_scale*30);
-            okbutton.setLocation(standard_scale*100, standard_scale*55);
+            id_label.setLocation(standard_scale*5, standard_scale*5);
+            id_field.setLocation(standard_scale*55, standard_scale*5);
+            okbutton.setLocation(standard_scale*100, standard_scale*35);
 
-            name_label.setSize(standard_scale*50, standard_scale*20);
             id_label.setSize(standard_scale*50, standard_scale*20);
-            name_field.setSize(standard_scale*100, standard_scale*20);
             id_field.setSize(standard_scale*100, standard_scale*20);
             okbutton.setSize(standard_scale*50, standard_scale*20);
 
-            this.add(name_label);
             this.add(id_label);
 
-            this.add(name_field);
             this.add(id_field);
             this.add(okbutton);
 
@@ -366,28 +355,10 @@ public class storyBoard extends JPanel {
 
                 }
             });
-            name_field.addKeyListener(new KeyListener() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-
-                }
-
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        makeNewActivity(id_field.getText(), activity_list);
-                        dispose();
-                    }
-                }
-
-                @Override
-                public void keyReleased(KeyEvent e) {
-
-                }
-            });
-
         }
 
+        public NewWindow(Point p){
+        }
 
     }
 

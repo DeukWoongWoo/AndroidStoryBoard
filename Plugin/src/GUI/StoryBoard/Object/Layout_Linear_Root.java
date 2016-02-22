@@ -1,6 +1,7 @@
 package GUI.StoryBoard.Object;
 
 import GUI.StoryBoard.Constant;
+import GUI.StoryBoard.UI.palettePanel;
 import org.json.simple.JSONObject;
 
 import java.awt.*;
@@ -13,6 +14,16 @@ public class Layout_Linear_Root extends Layout_Linear {
 
     public Layout_Linear_Root(HashMap<String, ObjectCustom> list , JSONObject obj) {
         super(list, obj);
+
+        //--------- 변수 값 지정---------------
+        setPosition(new Point(isPosition().x, isPosition().y+getObject_height()/10));
+        //----------창 구성--------------------
+        this.setLocation(isPosition().x, isPosition().y);
+        this.setBackground(Color.white);
+        this.setOpaque(true);
+    }
+    public Layout_Linear_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan) {
+        super(list, obj,pan);
 
         //--------- 변수 값 지정---------------
         setPosition(new Point(isPosition().x, isPosition().y+getObject_height()/10));

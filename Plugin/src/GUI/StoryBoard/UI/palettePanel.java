@@ -3,6 +3,8 @@ package GUI.StoryBoard.UI;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -16,11 +18,21 @@ public class palettePanel extends JPanel {
     JPanel rightCenterPanel = new JPanel();
     JButton palettelToggleB = new JButton("palette");
     JButton hideButton = new JButton("hide");
-    MouseListener li;
+
+    JButton activity_b = new JButton("Activity");
+    JButton linear_b = new JButton("Linear Layout");
+    JButton relative_b = new JButton("Relative Layout");
+    JButton button_b = new JButton("Button");
+    JButton radio_b = new JButton("Radio Button");
+    JButton none_b = new JButton("none");
+
+    public int choice = 0;
 
     public palettePanel() {
         //기존의 jPanel setting
         setLayout(new BorderLayout());
+
+
 
             add(leftPanel,"West");
                 leftPanel.setBorder(new LineBorder(Color.black));
@@ -37,6 +49,51 @@ public class palettePanel extends JPanel {
                     rightTopPanel.add(hideButton);
                         hideButton.setSize(50,50);
                 CenterPanel.add(rightCenterPanel, "Center");
+                        rightCenterPanel.setLayout(new GridLayout(20,1));
+                        rightCenterPanel.add(activity_b);
+                        rightCenterPanel.add(linear_b);
+                        rightCenterPanel.add(relative_b);
+                        rightCenterPanel.add(button_b);
+                        rightCenterPanel.add(radio_b);
+                        rightCenterPanel.add(none_b);
+
+        activity_b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice=1;
+            }
+        });
+        linear_b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice=2;
+            }
+        });
+        relative_b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice=3;
+            }
+        });
+        button_b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice=4;
+            }
+        });
+        radio_b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice=5;
+            }
+        });
+        none_b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice=0;
+            }
+        });
+
 
 
         palettelToggleB.addMouseListener(new MouseListener() {
@@ -98,4 +155,12 @@ public class palettePanel extends JPanel {
     }
 
 
+
+    public int getChoice() {
+        return choice;
+    }
+
+    public void setChoice(int choice) {
+        this.choice = choice;
+    }
 }

@@ -12,14 +12,9 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlDocument;
-import com.sun.jna.platform.win32.COM.COMUtils;
-import org.w3c.dom.*;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,18 +81,15 @@ public class GenerateAction extends AnAction {
         Messages.showInfoMessage("TestParsing","TestParsing");
 
         try{
-            String Filepath="C:/Users/cho/Desktop/android_project/MyApplication4/app/src/main/res/layout/content_main.xml";
-
-/*
-
+            //String Filepath="C:/Users/cho/Desktop/android_project/MyApplication4/app/src/main/res/layout/content_main.xml";
+            String Filepath = "C:/Users/cho/Desktop/AndroidStoryboard/Library/android_project/XmlParserActivity/app/src/main/res/layout/testlayout.xml";
+            /*
             DocumentBuilderFactory f= DocumentBuilderFactory.newInstance();
             DocumentBuilder parser = f.newDocumentBuilder();
             org.w3c.dom.Document  XmlDoc= parser.parse(Filepath);
             Element root = XmlDoc.getDocumentElement();
             XmlDoc.getDocumentElement().normalize();
-
-
-*/
+            */
             File ff = new File(Filepath);
             XmlPullParserFactory xppf = XmlPullParserFactory.newInstance();
             xppf.setNamespaceAware(true);
@@ -108,6 +100,10 @@ public class GenerateAction extends AnAction {
             ComponentManager componentManager=new ComponentManager();
             int padding []=new int[]{0,0,0,0,0,0};
             int type = xpp.getEventType();
+            int layoutCount=0;
+            int allLayoutCount=0;
+            String parentId=null;
+            Push(0);
             while(type != XmlPullParser.END_DOCUMENT){
 
                 if(type == XmlPullParser.START_TAG) {
@@ -115,9 +111,32 @@ public class GenerateAction extends AnAction {
                     Component component = new Component();
                     component.setAttributes(xpp);
                     component.setPadding(padding);
+                    if(xpp.getName().equals("RelativeLayout")){//layout
+                        component.parentId="RelativeLayout"+isTop();
+                        Push(++layoutCount);
+                        parentId ="RelativeLayout"+isTop();
+                        component.setComponentId(parentId);
+                        if(component.getId().equals(component.tagName)){
+                            component.setId(parentId);
+                        }
+                    }else{//component
+                        component.parentId=parentId;
+                        component.setComponentId(component.getId());
+                    }
+
+
                     componentManager.addComponent(component);
                 }
                 else  if(type == XmlPullParser.END_TAG) {
+                   // Messages.showInfoMessage("EndTag : "+xpp.getName(),"EndTag");
+                    if(xpp.getName().equals("RelativeLayout")){
+                        Pop();
+                        parentId ="RelativeLayout"+isTop();
+                    }
+
+
+
+
                     String paddingArr[] ={
                             "paddingTop",
                             "paddingBottom",
@@ -132,7 +151,7 @@ public class GenerateAction extends AnAction {
                                 if(xpp.getAttributeName(i).equals(paddingArr[j]))
                                     padding[j] = changeDpToInt(xpp.getAttributeValue(i))*2;
                 }
-                    type = xpp.next();
+                type = xpp.next();
             }
 
             for(int i=0;i<componentManager.size();i++){
@@ -141,23 +160,36 @@ public class GenerateAction extends AnAction {
                 for(int j=0;j<componentManager.getComponent(i).getAttributeCount();j++){
                     str+=componentManager.getComponent(i).getAttributes(j)+" : "+componentManager.getComponent(i).getAttributesValue(j)+"\n";
                 }
-                Messages.showInfoMessage("TagNme : " + componentManager.getComponent(i).getTagName()+"\n"+str+" ","Attribute");
+                //Messages.showInfoMessage("TagNme : " + componentManager.getComponent(i).getTagName()+"\n"+str+" ","Attribute");
+/*
+                Messages.showInfoMessage("TagNme : " + componentManager.getComponent(i).getTagName()+"\n" +
+                        "Id: "+componentManager.getComponent(i).componentId+"\n"+
+                        "parentId: "+componentManager.getComponent(i).parentId,"Attribute");*/
+
             }
 
 
             for(int i=0;i<componentManager.size();i++){
-                if(componentManager.getComponent(i).getTagName().equals("Button"))
-               Messages.showInfoMessage("TagNme : " + componentManager.getComponent(i).getTagName()+"\n"+
-                        "Axis:"+getHeightRealValue(componentManager,componentManager.getComponent(i).getId())+" \n","Axis");
-               // Messages.showInfoMessage("TagNme : " + componentManager.getComponent(i).getTagName()+"\n"+
-                //"Width:"+componentManager.getComponent(i).getWidth()+" \n","Axis");
+
+                Messages.showInfoMessage("Id"+componentManager.getComponent(i).getId()+"\n"+
+                        "width: "+getComponentWidthPoint(componentManager,componentManager.getComponent(i).getId(),"left")
+                        +" Height: "+getComponentHeightPoint(componentManager,componentManager.getComponent(i).getId(),"top")
+                        ,"Axis");
+/*
+                Messages.showInfoMessage("Id: "+componentManager.getComponent(i).componentId+"\n"+
+                                " width: "+(getComponentWidthPoint(componentManager,componentManager.getComponent(i).getId(),"left"))
+                        +" width length: "+componentManager.getComponent(i).getWidth()
+                        ,"Axis");*/
+/*
+                Messages.showInfoMessage("Id"+componentManager.getComponent(i).componentId+"\n"+
+                                "height: "+(getComponentHeightPoint(componentManager,componentManager.getComponent(i).getId(),"top"))
+                                +"height length: "+componentManager.getComponent(i).getHeight()
+                        ,"Axis");*/
             }
-
-
-
 
         }catch(Exception e2){
             Messages.showInfoMessage("error1","error1");
+
         }
         StringBuilder sourceRootsList = new StringBuilder();
         VirtualFile[] vFiles = ProjectRootManager.getInstance(project).getContentSourceRoots();
@@ -171,127 +203,200 @@ public class GenerateAction extends AnAction {
             generateComparable(psiClass, dlg.getFields());
         }
     }
-    public int getRealValue(ComponentManager componentManager,String id){
-        int stdValue=0;
-        int dp =0;
-        int margin =0;
+
+    public int getComponentWidthPoint(ComponentManager componentManager, String id, String point){//width를 반환한다(크기도 저장한다)
+
+        int leftPoint=0;
+        int rightPoint=0;
+        int stdWidth=0;
+        int parentLeftPoint=-1;
+        int parentRightPoint=-1;
+
         Component component = new Component();
-        for(int i=1;i<componentManager.size();i++){
+        for(int i=0;i<componentManager.size();i++){
+            if(componentManager.getComponent(i).getId().equals(id)){
+                component = componentManager.getComponent(i);
+                break;
+            }
+        }
+        if(component.parentId.equals("RelativeLayout0")) {//최상위 레이아웃
+            component.leftPoint = 0;
+            component.rightPoint= 768;
+            return component.leftPoint;
+        }else{
+            for(int i=0;i<componentManager.size();i++){
+                if(componentManager.getComponent(i).componentId.equals(component.parentId)){
+                    parentLeftPoint=componentManager.getComponent(i).leftPoint;
+                    parentRightPoint=componentManager.getComponent(i).rightPoint;
+
+                }
+            }
+        }
+
+        if(component.leftId.equals("Parent")){//parent
+
+            leftPoint=parentLeftPoint;
+            leftPoint+=component.marginLeft;
+
+        }else if(component.left.equals("layout_alignLeft")) {
+            leftPoint = getComponentWidthPoint(componentManager,component.leftId,"left");
+            leftPoint+=component.marginLeft;
+        }else if(component.left.equals("layout_toRightOf")){
+            leftPoint = getComponentWidthPoint(componentManager,component.leftId,"right");
+            leftPoint+=component.marginLeft;
+        }
+
+        if(component.rightId.equals("Parent")){
+
+            rightPoint=parentRightPoint;
+            rightPoint-=component.marginRight;
+        }else if(component.right.equals("layout_alignRight")){
+            rightPoint= getComponentWidthPoint(componentManager,component.rightId,"right");
+            rightPoint-=component.marginRight;
+        }else if(component.right.equals("layout_toLeftOf")){
+            rightPoint= getComponentWidthPoint(componentManager,component.rightId,"left");
+            rightPoint-=component.marginRight;
+        }
+
+        if((!component.rightId.equals("null"))&&(!component.leftId.equals("null")))//양쪽으로 물려 있는 경우
+        {
+            stdWidth = rightPoint - leftPoint;
+
+        }else if(component.rightId.equals("null") || component.leftId.equals("null")){//한쪽으로 물린경우
+            stdWidth = component.textWidth;
+            if(!component.rightId.equals("null")){//right에 물린경우
+                if(component.tagName.equals("RelativeLayout")){
+                    leftPoint=parentLeftPoint;
+                    if(component.isMarginLeft)
+                        leftPoint+=component.marginLeft;
+                }
+
+                else
+                    leftPoint = rightPoint-stdWidth;
+            }else{//left에 물린경우
+                if(component.tagName.equals("RelativeLayout")){
+                    rightPoint=parentRightPoint;
+                    if(component.isMarginRight)
+                        rightPoint-=component.marginRight;
+                }
+
+                else
+                    rightPoint = leftPoint+stdWidth;
+            }
+        }
+        component.setWidth(stdWidth);
+
+        if(component.tagName.equals("RelativeLayout")){
+            component.leftPoint=leftPoint;
+            component.rightPoint=rightPoint;
+        }
+        if(point.equals("left"))
+            return leftPoint;
+        else
+            return rightPoint;
+    }
+
+    public int getComponentHeightPoint(ComponentManager componentManager, String id, String point){//width를 반환한다(크기도 저장한다)
+
+        int topPoint=0;
+        int bottomPoint=0;
+        int stdHeight=0;
+        int parentTopPoint=-1;
+        int parentBottomPoint=-1;
+
+        Component component = new Component();
+        for(int i=0;i<componentManager.size();i++){
             if(componentManager.getComponent(i).getId().equals(id)){
                 component = componentManager.getComponent(i);
                 break;
             }
         }
 
-        for(int i=0;i<component.getAttributeCount();i++){
-            if(layout_ParentOption[2].equals(component.getAttributes(i)))
-                stdValue=0;
-            else if(layout_ParentOption[4].equals(component.getAttributes(i)))
-                stdValue=768;
-        }
+        if(component.parentId.equals("RelativeLayout0")) {//최상위 레이아웃
+            component.topPoint = 48;
+            component.bottomPoint= 1184;
+            return component.topPoint;
+        }else{
+            for(int i=0;i<componentManager.size();i++){
+                if(componentManager.getComponent(i).componentId.equals(component.parentId)){
+                    parentTopPoint=componentManager.getComponent(i).topPoint;
+                    parentBottomPoint=componentManager.getComponent(i).bottomPoint;
 
-        for(int i=0;i<component.getAttributeCount();i++){
-            if(layout_alignOption[2].equals(component.getAttributes(i))){
-                String getId = component.getAttributesValue(i);
-                stdValue=getRealValue(componentManager,getId);
-            }
-            else if(layout_alignOption[4].equals(component.getAttributes(i))){
-                String getId = component.getAttributesValue(i);
-                stdValue=getRealValue(componentManager,getId);
-
-                for(int j=1;j<componentManager.size();j++){
-                    if(componentManager.getComponent(j).getId().equals(getId)){
-                        stdValue=stdValue+componentManager.getComponent(j).getWidth();
-                        break;
-                    }
                 }
             }
         }
 
-        for(int i=0;i<component.getAttributeCount();i++){
-            if(layout_toOption[2].equals(component.getAttributes(i))){
-                String getId = component.getAttributesValue(i);
-                stdValue=getRealValue(componentManager,getId);
-            }
-            else if(layout_toOption[4].equals(component.getAttributes(i))){
-                String getId = component.getAttributesValue(i);
-                stdValue=getRealValue(componentManager,getId);
+        if(component.topId.equals("Parent")){//parent
+            topPoint=parentTopPoint;
+            topPoint+=component.marginTop;
 
-                for(int j=1;j<componentManager.size();j++){
-                    if(componentManager.getComponent(j).getId().equals(getId)){
-                        stdValue=stdValue+componentManager.getComponent(j).getWidth();
-                        break;
-                    }
+        }else if(component.top.equals("layout_alignTop")) {
+            topPoint = getComponentHeightPoint(componentManager,component.topId,"top");
+            topPoint+=component.marginTop;
+        }else if(component.top.equals("layout_below")){
+            topPoint= getComponentHeightPoint(componentManager,component.topId,"bottom");
+            topPoint+=component.marginTop;
+        }
+
+        if(component.bottomId.equals("Parent")){
+            bottomPoint=parentBottomPoint;
+            bottomPoint-=component.marginBottom;
+        }else if(component.bottom.equals("layout_alignBottom")){//
+            bottomPoint= getComponentHeightPoint(componentManager,component.bottomId,"bottom");
+            bottomPoint-=component.marginBottom;
+        } else if(component.bottom.equals("layout_above")){//
+            bottomPoint = getComponentHeightPoint(componentManager,component.bottomId,"top");
+            bottomPoint-=component.marginBottom;
+        }
+
+        if((!component.bottomId.equals("null"))&&(!component.topId.equals("null")))//양쪽으로 물려 있는 경우
+        {
+            stdHeight = bottomPoint - topPoint;
+
+        }else if(component.bottomId.equals("null") || component.topId.equals("null")){//한쪽으로 물린경우
+            stdHeight = component.textHeight;
+            if(!component.bottomId.equals("null")){//bottom에 물린경우
+                if(component.tagName.equals("RelativeLayout")){
+                    topPoint = parentTopPoint;
+                    if(component.isMarginTop)
+                        topPoint+=component.marginTop;
                 }
+                else
+                    topPoint = bottomPoint-stdHeight;
+            }else{//top에 물린경우
+                if(component.tagName.equals("RelativeLayout")){
+                    bottomPoint=parentBottomPoint;
+                    if(component.isMarginBottom)
+                        bottomPoint-=component.marginBottom;
+                }
+                else
+                    bottomPoint = topPoint+stdHeight;
             }
         }
-
-
-        for(int i=0;i<component.getAttributeCount();i++){
-            if(layout_Margin[2].equals(component.getAttributes(i))){
-                margin = changeDpToInt(component.getAttributesValue(i))*2;
-            }
-            if(layout_Margin[4].equals(component.getAttributes(i))){
-                margin = (changeDpToInt(component.getAttributesValue(i))*2)+component.getWidth();
-                margin = -1*margin;
-            }
+        component.setHeight(stdHeight);
+        if(component.tagName.equals("RelativeLayout")){
+            component.topPoint=topPoint;
+            component.bottomPoint=bottomPoint;
         }
-        dp = stdValue+margin;
-        return dp;
+        if(point.equals("top"))
+            return topPoint;
+        else
+            return bottomPoint;
     }
 
-
-    public int getHeightRealValue(ComponentManager componentManager,String id){
-        int stdValue=0;
-        int dp =0;
-        int margin =0;
-        Component component = new Component();
-        for(int i=1;i<componentManager.size();i++){
-            if(componentManager.getComponent(i).getId().equals(id)){
-                component = componentManager.getComponent(i);
-                break;
-            }
-        }
-
-        for(int i=0;i<component.getAttributeCount();i++){
-                if(layout_ParentOption[0].equals(component.getAttributes(i)))
-                    stdValue=0;
-                else if(layout_ParentOption[1].equals(component.getAttributes(i)))
-                    stdValue=1280;
-        }
-
-        for(int i=0;i<component.getAttributeCount();i++){
-            if(layout_HeigtOption[0].equals(component.getAttributes(i))
-                    || layout_alignOption[0].equals(component.getAttributes(i))){//above & alignTop
-                String getId = component.getAttributesValue(i);
-                stdValue=getRealValue(componentManager,getId);
-
-            }else if(layout_HeigtOption[1].equals(component.getAttributes(i))
-                    || layout_alignOption[1].equals(component.getAttributes(i))){//below & alignBottom
-                String getId = component.getAttributesValue(i);
-                stdValue=getRealValue(componentManager,getId);
-                for(int j=1;j<componentManager.size();j++){
-                    if(componentManager.getComponent(j).getId().equals(getId)){
-                        stdValue=stdValue+componentManager.getComponent(j).getHeight();
-                        break;
-                    }
-                }
-            }
-        }
-
-
-        for(int i=0;i<component.getAttributeCount();i++){
-                if(layout_Margin[0].equals(component.getAttributes(i))){
-                    margin = changeDpToInt(component.getAttributesValue(i))*2;
-                }
-                if(layout_Margin[1].equals(component.getAttributes(i))){
-                    margin = (changeDpToInt(component.getAttributesValue(i))*2)+component.getHeight();
-                    margin = -1*margin;
-                }
-        }
-        dp = stdValue+margin;
-        return dp;
+    private int top=0;
+    private int[] stack =new int[255];
+    private void Push(int data){
+        stack[top++]=data;
     }
+    private int Pop(){
+        top--;
+        return stack[top];
+    }
+    private int isTop(){
+        return stack[top-1];
+    }
+
     public static int changeDpToInt(String value){
         int dp=0;
         char val[] = value.toCharArray();

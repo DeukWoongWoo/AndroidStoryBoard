@@ -21,74 +21,50 @@
     <favorites_list name="StoryBoard" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
+    <splitter split-orientation="horizontal" split-proportion="0.49517685">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="MyActionClass.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/Analysis/MyActionClass.java">
+          <file leaf-file-name="Component.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/Xml/Component.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-                  <folding>
-                    <marker date="1455753557569" expanded="true" signature="26:73" placeholder="..." />
-                    <marker date="1455753557569" expanded="true" signature="4803:4805" placeholder="//..." />
-                    <marker date="1455753557569" expanded="true" signature="4803:4811" placeholder="{...}" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="CodeDriver.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.96604216">
+                  <caret line="164" column="13" selection-start-line="164" selection-start-column="13" selection-end-line="164" selection-end-column="13" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="LocalButtonCreate.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java">
+          <file leaf-file-name="GenerateAction.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Xml/GenerateAction.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="56" />
+                  <caret line="166" column="94" selection-start-line="166" selection-start-column="94" selection-end-line="166" selection-end-column="94" />
                   <folding>
-                    <element signature="e#1041#1042#0" expanded="false" />
-                    <element signature="e#1063#1064#0" expanded="false" />
-                    <element signature="e#1548#1549#0" expanded="false" />
-                    <element signature="e#1615#1616#0" expanded="false" />
-                    <element signature="method#remove#0;class#LocalButtonCreate#0" expanded="false" />
-                    <element signature="method#removePsiElement#0;class#LocalButtonCreate#0" expanded="false" />
+                    <element signature="e#15446#15447#0" expanded="true" />
+                    <element signature="e#15479#15480#0" expanded="true" />
+                    <element signature="e#15575#15576#0" expanded="true" />
+                    <element signature="e#15610#15611#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="FuncButtonCreate.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/FuncButtonCreate.java">
+          <file leaf-file-name="ComponentManager.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Xml/ComponentManager.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.9742389">
-                  <caret line="73" column="9" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
-                  <folding>
-                    <element signature="method#remove#0;class#FuncButtonCreate#0" expanded="false" />
-                    <element signature="method#removePsiElement#0;class#FuncButtonCreate#0" expanded="false" />
-                  </folding>
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+                  <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="MemberButtonCreate.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/MemberButtonCreate.java">
+          <file leaf-file-name="JsonMaker.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Xml/JsonMaker.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="54" column="28" selection-start-line="54" selection-start-column="28" selection-end-line="58" selection-end-column="29" />
-                  <folding>
-                    <element signature="imports" expanded="false" />
-                    <element signature="e#1058#1059#0" expanded="false" />
-                    <element signature="e#1125#1126#0" expanded="false" />
-                    <element signature="method#makePsiJavaFile#0;class#MemberButtonCreate#0" expanded="false" />
-                  </folding>
+                  <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -97,15 +73,12 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-          <file leaf-file-name="ElementFactory.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Util/ElementFactory.java">
+          <file leaf-file-name="GenerateAction.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/Xml/GenerateAction.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.20960188">
-                  <caret line="17" column="48" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="method#lookupClass#0;class#ElementFactory#0" expanded="false" />
-                  </folding>
+                <state vertical-scroll-proportion="0.586651">
+                  <caret line="144" column="41" selection-start-line="144" selection-start-column="29" selection-end-line="144" selection-end-column="41" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -134,14 +107,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Xml/XmlDAO.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Xml/XmlDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Event/EventDAO.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DtatTransferObject/EventDTO.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Event/EventDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/Update/UpdateWhereBuilder.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/Update/UpdateSetBuilder.java" />
-        <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/QueryBuilder.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Database/QueryBuilder/Update/UpdateBuilder.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Database/DatabaseManager/DBManager.java" />
         <option value="$PROJECT_DIR$/src/Analysis/Database/DatabaseManager/DatabaseManager.java" />
@@ -185,6 +150,14 @@
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/MemberButtonCreate.java" />
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/FuncButtonCreate.java" />
         <option value="$PROJECT_DIR$/src/Analysis/RedoUndo/Util/ElementFactory.java" />
+        <option value="$PROJECT_DIR$/src/Xml/Object.java" />
+        <option value="$PROJECT_DIR$/src/Xml/Layout.java" />
+        <option value="$PROJECT_DIR$/src/Xml/ComponentManager.java" />
+        <option value="$PROJECT_DIR$/src/Xml/Button.java" />
+        <option value="$PROJECT_DIR$/src/Xml/JsonMaker.java" />
+        <option value="$PROJECT_DIR$/src/Xml/LayoutObject.java" />
+        <option value="$PROJECT_DIR$/src/Xml/GenerateAction.java" />
+        <option value="$PROJECT_DIR$/src/Xml/Component.java" />
       </list>
     </option>
   </component>
@@ -245,7 +218,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -278,22 +251,8 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="StoryBoard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Plugin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Analysis" />
+              <option name="myItemId" value="Xml" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -310,12 +269,22 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Analysis" />
+              <option name="myItemId" value="StoryBoard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Plugin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="RedoUndo" />
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="META-INF" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -329,19 +298,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RedoUndo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Util" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -355,48 +312,18 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Parser" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="StoryBoard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Plugin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Main" />
+              <option name="myItemId" value=".idea" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -859,7 +786,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15862808" sideWeight="0.4940476" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18488745" sideWeight="0.4940476" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -871,14 +798,14 @@
       <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Tail" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2965368" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2581736" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2185501" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35027027" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34949267" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32694477" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -894,117 +821,27 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="35" />
+      <option name="time" value="95" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+        <watch expression="component" language="JAVA" custom="" />
+        <watch expression="parentLeftPoint" language="JAVA" custom="" />
+        <watch expression="parentRightPoint" language="JAVA" custom="" />
+        <watch expression="componentManager.getComponent(i).leftPoint" language="JAVA" custom="" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/storyBoard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.021229051">
-          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Constant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10614525">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/example.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14860335">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Object/Layout_Linear.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14860335">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Object/Layout_Root.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.021229051">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/StoryBoard/Object/ObjectCustom.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.021229051">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Manifest/ManifestDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DtatTransferObject/ManifestDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.81463414">
-          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Java/JavaDAO.java">
+    <entry file="file://$PROJECT_DIR$/src/Xml/Component.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="59" selection-start-line="26" selection-start-column="59" selection-end-line="26" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Component/ComponentDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Component/ComponentDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="96" selection-start-line="50" selection-start-column="96" selection-end-line="50" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/Database/DataAccessObject/Java/JavaDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="134" column="9" selection-start-line="134" selection-start-column="9" selection-end-line="134" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Command/CodeCleanCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21626016">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Command/CodeWriteCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21626016">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Test/Analysis/StringSplitTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46666667">
-          <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1012,9 +849,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-          <folding>
-            <element signature="method#JavaDTO#1;class#JavaDTO#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1036,7 +870,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="66" selection-start-line="6" selection-start-column="66" selection-end-line="6" selection-end-column="66" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1128,11 +961,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3983871">
           <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="33" selection-end-column="5" />
-          <folding>
-            <element signature="method#onCreateTable#0;class#DatabaseManager#0" expanded="false" />
-            <element signature="e#2048#2049#0" expanded="true" />
-            <element signature="e#2086#2087#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1147,27 +975,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/MyActionClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-          <folding>
-            <marker date="1455753557569" expanded="true" signature="26:73" placeholder="..." />
-            <marker date="1455753557569" expanded="true" signature="4803:4805" placeholder="//..." />
-            <marker date="1455753557569" expanded="true" signature="4803:4811" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1175,14 +982,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="55" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
-          <folding>
-            <element signature="method#ProjectAnalysis#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#findFiles#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#findDirectories#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#currentDirectory#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#checkFileType#0;class#ProjectAnalysis#0" expanded="false" />
-            <element signature="method#codeParsing#0;class#ProjectAnalysis#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1204,7 +1003,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2571912">
           <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1212,7 +1010,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="60" selection-start-line="39" selection-start-column="60" selection-end-line="39" selection-end-column="60" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1220,11 +1017,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.53640413">
           <caret line="32" column="44" selection-start-line="32" selection-start-column="44" selection-end-line="32" selection-end-column="44" />
-          <folding>
-            <element signature="method#findPattern#0;class#JavaParser#0" expanded="false" />
-            <element signature="method#makeXmlDTO#0;class#JavaParser#0" expanded="false" />
-            <element signature="method#makeComponentDTO#0;class#JavaParser#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1232,9 +1024,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.028231798">
           <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-          <folding>
-            <element signature="method#JavaDTO#1;class#JavaDTO#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1266,53 +1055,170 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java">
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Util/ElementFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="56" />
-          <folding>
-            <element signature="e#1041#1042#0" expanded="false" />
-            <element signature="e#1063#1064#0" expanded="false" />
-            <element signature="e#1548#1549#0" expanded="false" />
-            <element signature="e#1615#1616#0" expanded="false" />
-            <element signature="method#remove#0;class#LocalButtonCreate#0" expanded="false" />
-            <element signature="method#removePsiElement#0;class#LocalButtonCreate#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.16320474">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/MemberButtonCreate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.03709199">
           <caret line="54" column="28" selection-start-line="54" selection-start-column="28" selection-end-line="58" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1058#1059#0" expanded="false" />
-            <element signature="e#1125#1126#0" expanded="false" />
-            <element signature="method#makePsiJavaFile#0;class#MemberButtonCreate#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/FuncButtonCreate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9742389">
-          <caret line="73" column="9" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.41839764">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CommandObj/LocalButtonCreate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.03709199">
+          <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/CodeDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4065282">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Analysis/MyActionClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Xml/layoutAlign.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Xml/layoutParent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Xml/layoutToOf.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Plugin.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.5344418">
+          <caret line="29" column="15" selection-start-line="29" selection-start-column="15" selection-end-line="29" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StoryBoard.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.5384616">
+          <caret line="14" column="36" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Xml/GenerateDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6733021">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Xml/Attribution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43911007">
+          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
           <folding>
-            <element signature="method#remove#0;class#FuncButtonCreate#0" expanded="false" />
-            <element signature="method#removePsiElement#0;class#FuncButtonCreate#0" expanded="false" />
+            <element signature="e#181#182#0" expanded="true" />
+            <element signature="e#212#213#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Analysis/RedoUndo/Util/ElementFactory.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/xpp3-1.1.4-min.jar!/org/xmlpull/v1/XmlPullParser.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20960188">
-          <caret line="17" column="48" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.34634146">
+          <caret line="77" column="8" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Xml/LayoutObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.4298093">
+          <caret line="72" column="67" selection-start-line="72" selection-start-column="67" selection-end-line="72" selection-end-column="67" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#lookupClass#0;class#ElementFactory#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#4786#4787#0" expanded="false" />
+            <element signature="e#4845#4846#0" expanded="false" />
+            <element signature="e#4894#4895#0" expanded="false" />
+            <element signature="e#4949#4950#0" expanded="false" />
+            <element signature="e#4976#4977#0" expanded="false" />
+            <element signature="e#5001#5002#0" expanded="false" />
+            <element signature="e#5037#5038#0" expanded="false" />
+            <element signature="e#5074#5075#0" expanded="false" />
+            <element signature="e#5106#5107#0" expanded="false" />
+            <element signature="e#5136#5137#0" expanded="false" />
+            <element signature="e#5257#5258#0" expanded="false" />
+            <element signature="e#5289#5290#0" expanded="false" />
+            <element signature="e#5328#5329#0" expanded="false" />
+            <element signature="e#5362#5363#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Xml/ComponentManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Xml/JsonMaker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Xml/GenerateAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.586651">
+          <caret line="144" column="41" selection-start-line="144" selection-start-column="29" selection-end-line="144" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Xml/Component.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.96604216">
+          <caret line="164" column="13" selection-start-line="164" selection-start-column="13" selection-end-line="164" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>

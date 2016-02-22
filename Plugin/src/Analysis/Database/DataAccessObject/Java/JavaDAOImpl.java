@@ -21,8 +21,7 @@ import java.util.ArrayList;
  * Created by woong on 2016-01-21.
  */
 public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
-    private final String javaTableName = "Java";
-    private final String xmlTableName = "Xml";
+    private final String tableName = "Java";
 
     private final XmlDAO xmlDAO = new XmlDAOImpl();
     private final ComponentDAO componentDAO = new ComponentDAOImpl();
@@ -38,7 +37,7 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
         Connection connection = getConnection();
         try {
             statement = connection.createStatement();
-            statement.executeUpdate(DatabaseQuery.dropTable + javaTableName);
+            statement.executeUpdate(DatabaseQuery.dropTable + tableName);
             statement.executeUpdate(DatabaseQuery.createJavaTable);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,7 +71,7 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
         try{
             statement = connection.createStatement();
             statement.executeUpdate(javaDTO.getInsertQuery());
-            prep = connection.prepareStatement(QueryBuilder.selectAll().from(javaTableName).where("name='"+javaDTO.getName()+"'").build());
+            prep = connection.prepareStatement(QueryBuilder.selectAll().from(tableName).where("name='"+javaDTO.getName()+"'").build());
             rows = prep.executeQuery();
             currentJavaId = rows.getInt(1);
         }catch (SQLException e){
@@ -107,13 +106,13 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
     }
 
     @Override
-    public ArrayList<JavaDTO> selectJava() {
+    public ArrayList<JavaDTO> selectJava(String... col) {
         PreparedStatement prep = null;
         Connection connection = getConnection();
         ResultSet rows = null;
         ArrayList<JavaDTO> items = new ArrayList<>();
         try {
-            prep = connection.prepareStatement(QueryBuilder.selectAll().from(javaTableName).where("name='MainActivity'").build());
+            prep = connection.prepareStatement(QueryBuilder.selectAll().from(tableName).where(col[0]).build());
             rows = prep.executeQuery();
             while(rows.next()){
                 JavaDTO javaDTO = new JavaDTO();
@@ -136,8 +135,12 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
     }
 
     @Override
-    public void selectXml() {
-
+    public ArrayList<JavaDTO> selectXml(String... col) {
+        JavaDTO javaDTO = new JavaDTO();
+        javaDTO.setXml(xmlDAO.select(col));
+        ArrayList<JavaDTO> list = new ArrayList<>();
+        list.add(javaDTO);
+        return list;
     }
 
     @Override
@@ -150,8 +153,12 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
     }
 
     @Override
-    public void selectEvent() {
-
+    public ArrayList<JavaDTO> selectEvent(String... col) {
+        JavaDTO javaDTO = new JavaDTO();
+        javaDTO.setEvent(eventDAO.select(col));
+        ArrayList<JavaDTO> list = new ArrayList<>();
+        list.add(javaDTO);
+        return list;
     }
 
     @Override
@@ -161,7 +168,7 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
         Connection connection = getConnection();
         try {
             statement = connection.createStatement();
-            statement.executeUpdate(QueryBuilder.update(javaTableName).set("nextActivity='"+javaDTO.getNextActivity()+"'","intentName='"+javaDTO.getIntentName()+"'","intentFuncName='"+javaDTO.getIntentFuncName()+"'").where("num="+currentJavaId).build());
+            statement.executeUpdate(QueryBuilder.update(tableName).set("nextActivity='"+javaDTO.getNextActivity()+"'","intentName='"+javaDTO.getIntentName()+"'","intentFuncName='"+javaDTO.getIntentFuncName()+"'").where("num="+currentJavaId).build());
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {

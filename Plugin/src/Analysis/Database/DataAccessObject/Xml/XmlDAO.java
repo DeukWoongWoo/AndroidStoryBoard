@@ -8,5 +8,5 @@ import Analysis.Database.DtatTransferObject.XmlDTO;
 public interface XmlDAO {
     public void create();
     public int insert(XmlDTO xmlDTO);
-    public void select();
+    public XmlDTO select(String... col);
 }

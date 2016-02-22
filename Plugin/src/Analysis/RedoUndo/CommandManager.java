@@ -1,6 +1,7 @@
 package Analysis.RedoUndo;
 
 import Analysis.RedoUndo.Command.*;
+import Analysis.RedoUndo.CommandObj.ActivityLink;
 import Analysis.RedoUndo.CommandObj.Code;
 
 import java.util.HashMap;
@@ -33,6 +34,11 @@ public class CommandManager{
         commandMap.put(CommandKey.MEMBERBUTTON, new MemberButtonCreateCommand());
         commandMap.put(CommandKey.FUNCBUTTON, new FuncButtonCreateCommand());
         commandMap.put(CommandKey.ACTIVITY, new ActivityCreateCommand());
+    }
+
+    public void linkActivity(String id, String from, String to){
+        commandMap.put(CommandKey.LINK, new ActivityLinkCommand(new ActivityLink(id, from, to)));
+        execute(CommandKey.LINK);
     }
 
     public void createActivity(String className){

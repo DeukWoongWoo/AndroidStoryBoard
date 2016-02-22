@@ -20,6 +20,8 @@ public class JavaDTO {
     private String intentFuncName;
 
     private ArrayList<ComponentDTO> components;
+    private ArrayList<XmlDTO> xmls;
+    private ArrayList<EventDTO> events;
 
     private String[] columns;
     private int colCnt;
@@ -96,6 +98,24 @@ public class JavaDTO {
         components.add(component);
     }
 
+    public void setXmls(ArrayList<XmlDTO> xmls){
+        this.xmls = xmls;
+    }
+
+    public void setXml(XmlDTO xml){
+        if(xmls == null) xmls = new ArrayList<>();
+        xmls.add(xml);
+    }
+
+    public void setEvents(ArrayList<EventDTO> events){
+        this.events = events;
+    }
+
+    public void setEvent(EventDTO event){
+        if(events == null) events = new ArrayList<>();
+        events.add(event);
+    }
+
     public int getNum() {
         return num;
     }
@@ -126,6 +146,12 @@ public class JavaDTO {
 
     public ComponentDTO getComponent(int index){
         return components.get(index);
+    }
+
+    public XmlDTO getXml(int index) { return xmls.get(index); }
+
+    public EventDTO getEvent(int index){
+        return events.get(index);
     }
 
     public String getInsertQuery(){

@@ -79,8 +79,14 @@ var deleteApp = function(){
     $('.delete-app').click(function(){
         var app_name = $(this).parent().siblings('.app-name').text();
         document.location.href="/delete/" + app_name ;
-        //$.get('/delete/' + app_name, function(){
-        //});
+    });
+}
+
+var deleteImage = function(){
+    $('.delete-image').click(function(){
+        var app_name = $(this).parent().siblings('.app-name').text();
+        document.location.href="/delete/image/" + app_name ;
+
     });
 }
 
@@ -88,6 +94,7 @@ var main = function () {
     sideMenu();
     registerApp();
     deleteApp();
+    deleteImage();
     $('#rect-info-close').click(function () {
         $(this).parent().parent().css("visibility", "hidden");
     });

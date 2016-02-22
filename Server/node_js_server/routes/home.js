@@ -14,6 +14,32 @@ router.get('/err', function (req, res) {
     });
 });
 
+router.get('/delete/image/:app_name', function (req, res) {
+    if(!(isDefined(req.session.user_id) && isDefined(req.params.app_name)))
+        res.redirect('/');
+
+    var locationOfTarget = './users/' + req.session.user_id + '/' + req.params.app_name + '/';
+    fs.readdir(locationOfTarget, function (err, list) {
+        if (err) console.error(err);
+        async.each(list,
+            function (file, callback) {
+                if (file == req.params.app_name + '.json') {
+                    callback(null);
+                } else {
+                    fs.unlink(locationOfTarget + file, function (err) {
+                        if (err) callback(err);
+                        else callback(null);
+                    });
+                }
+            },
+            function (err) {
+                if (err) console.error(err);
+                res.redirect('/');
+            }
+        );
+    });
+});
+
 router.get('/delete/:app_name', function (req, res) {
     req.body.user_id = req.session.user_id;
     req.body.app_name = req.params.app_name;
@@ -154,7 +180,7 @@ router.get('/image/:user_id/:app_name/:file_name', function (req, res) {
     })
 });
 
-router.get('/error/log/:app_name', function(req, res){
+router.get('/error/log/:app_name', function (req, res) {
     var fileUrl = './users/' + req.session.user_id + '/' + req.params.app_name + '/error.log';
     console.log(fileUrl);
     fs.exists(fileUrl, function (exists) {
@@ -507,8 +533,8 @@ function uploadStoryboard(req, callback) {
     saveFile(locationOfTarget, tmpOfTarget, target, callback);
 }
 
-router.post('/update/storyboard', function(req, res){
-    updateStoryboard(req, function(err){
+router.post('/update/storyboard', function (req, res) {
+    updateStoryboard(req, function (err) {
         console.log(err);
         res.send('test');
     });
@@ -517,15 +543,16 @@ router.post('/update/storyboard', function(req, res){
 function updateStoryboard(req, callback) {
     var locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
     var target = locationOfTarget + req.body.app_name + '.json';
-    fs.writeFile(target, req.body.storyboard_data, function(err) {
+    fs.writeFile(target, req.body.storyboard_data, function (err) {
         callback(err);
         console.log('File write completed');
     });
 }
 
 function uploadImages(req, callback) {
+    var maxFileSize = 1000000;
     var tmpOfTarget;
-    var locationOfTarget;
+    var locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
     var target;
 
     async.series([
@@ -533,6 +560,38 @@ function uploadImages(req, callback) {
             if (isDefined(req.files.upload_images.name) || req.files.upload_images.length > 1)
                 callback(null);
             else callback("파일이 없습니다");
+        }, function (callback) {
+            fs.readdir(locationOfTarget, function (err, files) {
+                var dirSize = 0;
+                if (err) callback(err);
+                else {
+                    async.each(files, function (file, callback) {
+                        fs.stat(locationOfTarget + file, function (err, stats) {
+                            dirSize += stats.size;
+                            if (dirSize > maxFileSize * 100)
+                                callback('서버에 파일 용량을 초과하였습니다.');
+                            else callback(null);
+                        });
+                    }, function (err) {
+                        callback(err);
+                    });
+                }
+            });
+        }, function (callback) {
+            if (req.files.upload_images.length > 1) {
+                async.each(req.files.upload_images, function (file, callback) {
+                    if (file.size > maxFileSize)
+                        callback('파일 크기가 너무 큽니다');
+                    else callback(null);
+                    console.log(file.size);
+                }, function (err) {
+                    callback(err);
+                });
+            } else {
+                if (req.files.upload_images.size > maxFileSize)
+                    callback('파일 크기가 너무 큽니다');
+                else callback(null);
+            }
         }, function (callback) {
             if (req.files.upload_images.length > 1) {
                 async.each(req.files.upload_images, function (file, callback) {
@@ -549,7 +608,7 @@ function uploadImages(req, callback) {
             if (req.files.upload_images.length > 1) {
                 async.each(req.files.upload_images, function (file, callback) {
                     tmpOfTarget = file.path;
-                    renameAndSaveFile(file.originalFilename, tmpOfTarget, function(err){
+                    renameAndSaveFile(file.originalFilename, tmpOfTarget, function (err) {
                         callback(err);
                     });
                 }, function (err) {
@@ -557,7 +616,7 @@ function uploadImages(req, callback) {
                 });
             } else {
                 tmpOfTarget = req.files.upload_images.path;
-                renameAndSaveFile(req.files.upload_images.originalFilename, tmpOfTarget, function(err){
+                renameAndSaveFile(req.files.upload_images.originalFilename, tmpOfTarget, function (err) {
                     callback(err);
                 });
             }
@@ -576,7 +635,7 @@ function uploadImages(req, callback) {
     }
 
     function renameAndSaveFile(uploadFileName, tmpOfTarget, callback) {
-        locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
+        //locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
         target = locationOfTarget + uploadFileName;
         saveFile(locationOfTarget, tmpOfTarget, target, function (err) {
             callback(err);
@@ -587,8 +646,8 @@ function uploadImages(req, callback) {
 router.post('/update/activity', function (req, res) {
     db.getActivityNumByUserIdAppNameActivityName(req, activityName, function (err, result) {
         if (err)console.error(err);
-        else if(result[0]){
-            db.updateActivityXY(result[0].activity_num, req.body.x, req.body.y, function(err){
+        else if (result[0]) {
+            db.updateActivityXY(result[0].activity_num, req.body.x, req.body.y, function (err) {
                 console.error(err);
             });
         }

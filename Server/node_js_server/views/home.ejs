@@ -60,9 +60,9 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <a class="app-name" style="display : none;"><%= app.app_name %></a>
-                        <li><a class="btn btn-inverse" id="re-register">Re Register</a></li>
                         <li><a class="btn btn-inverse btn-example" onclick="layer_open('layer2', '<%= app.app_name %>');return false;">Add Image</a></li>
-                        <li><a class="btn btn-inverse delete-app">Delete</a></li>
+                        <li><a class="btn btn-inverse delete-image" id="delete-image">Delete Image</a></li>
+                        <li><a class="btn btn-inverse delete-app">Delete App</a></li>
                     </ul>
                 </div>
                 <div class="btn btn-inverse app_name"><%= app.app_name %></div>
@@ -105,8 +105,9 @@
             <div class="graph light" id="err-graph" style="display: inline-block"></div>
             <div class="graph light" id="err-line-graph" style="display: inline-block"></div>
             <br/>
-            <div id="err-log-div" style="display: none">
-                <div id="err-log" style="display: inline-block"></div>
+            <div id="err-log-div" class="container-center" style="display: none; width : 80%;">
+                <div id="err-log-button"></div>
+                <div id="err-log" style="width : 100%;"></div>
             </div>
 
         </div>
@@ -212,10 +213,11 @@
 
         getUserAppStoryboard();
 
-        $('#err-log-div').css('display', '');
+        $('#err-log-div').css('display', 'inline-block');
         $.get('/error/log/' + app_name, function(data){
             var downLink = "<a class='btn btn-danger' href=/error/log/" + app_name + ">Download Error Log</a><br/>"
-            document.getElementById('err-log').innerHTML = downLink + data;
+            document.getElementById('err-log-button').innerHTML = downLink;
+            document.getElementById('err-log').innerHTML = data;
         });
 
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
@@ -258,6 +260,9 @@
     });
 
     function getUserAppStoryboard() {
+        $('#storyboard-svg').css('border', 'solid grey');
+//    .css('border-width','1px')
+
         var storyboard = new Storyboard();
         storyboard.setUserIdAppName(user_id, app_name);
         storyboard.targetDiv('#storyboard-svg');

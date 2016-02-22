@@ -160,6 +160,17 @@ svg {
     /*color : white;*/
 }
 
+/*#warring-div{*/
+    /*position: absolute;*/
+    /*left:20px;*/
+    /*top:20px;*/
+    /*background-color: #68606A;*/
+    /*height: auto;*/
+    /*position: fixed;*/
+    /*width: 200px;*/
+    /*color : white;*/
+/*}*/
+
 .axis path,
 .axis line{
     fill:#938172;

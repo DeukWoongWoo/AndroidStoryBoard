@@ -27,6 +27,11 @@
     <script src="javascripts/drag.js"></script>
     <script src="javascripts/SideMenu.js"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/d3/d3.js"></script>
+    <script src="javascripts/storyboard/Storyboard.js"></script>
+    <script src="javascripts/layer-popup.js"></script>
+
 </head>
 <body>
 <div class="sidebar">
@@ -60,9 +65,10 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <a class="app-name" style="display : none;"><%= app.app_name %></a>
-                        <li><a class="btn btn-inverse" id="re-register">Re Register</a></li>
-                        <li><a class="btn btn-inverse btn-example" onclick="layer_open('layer2', '<%= app.app_name %>');return false;">Add Image</a></li>
-                        <li><a class="btn btn-inverse delete-app">Delete</a></li>
+                        <li><a class="btn btn-inverse btn-example"
+                               onclick="layer_open('layer2', '<%= app.app_name %>');return false;">Add Image</a></li>
+                        <li><a class="btn btn-inverse delete-image" id="delete-image">Delete Image</a></li>
+                        <li><a class="btn btn-inverse delete-app">Delete App</a></li>
                     </ul>
                 </div>
                 <div class="btn btn-inverse app_name"><%= app.app_name %></div>
@@ -105,8 +111,9 @@
             <div class="graph light" id="err-graph" style="display: inline-block"></div>
             <div class="graph light" id="err-line-graph" style="display: inline-block"></div>
             <br/>
-            <div id="err-log-div" style="display: none">
-                <div id="err-log" style="display: inline-block"></div>
+            <div id="err-log-div" class="container-center" style="display: none; width : 80%;">
+                <div id="err-log-button"></div>
+                <div id="err-log" style="width : 100%;"></div>
             </div>
 
         </div>
@@ -133,13 +140,31 @@
     </div>
 </div>
 
+<% if(locals.warring_result){ %>
+<div class="layer">
+    <div class="bg"></div>
+    <div id="warring-layer" class="pop-layer">
+        <div class="pop-container">
+            <div class="pop-conts">
+                <div class="container-center" id="warring-div">
+                <%= warring_result %>
+                    <script>
+                        layer_war('warring-layer');
+                    </script>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<% } %>
 
 <div class="layer">
     <div class="bg"></div>
     <div id="layer2" class="pop-layer">
         <div class="pop-container">
             <div class="pop-conts">
-                <form method="post" action="/registerimage" enctype="multipart/form-data">
+                <form method="post" id="register-image-form" action="/registerimage" enctype="multipart/form-data">
+                    <!--<form method="post" id="register-image-form" action="/registerimage" enctype="multipart/form-data">-->
                     <label for="exampleInputFile">Image Upload</label><br>
                     <input type="hidden" id="upload-app-name" name="app_name" value="a" readonly>
                     <input type="file" id="upload-files" name="upload_images" multiple>
@@ -155,12 +180,12 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="javascripts/d3/d3.js"></script>
-<script src="javascripts/storyboard/Storyboard.js"></script>
-<script src="javascripts/layer-popup.js"></script>
-
 <script>
+
+    function warring() {
+//        alert("test");
+        $('#warring-div').fadeIn();
+    }
 
     var useGraph = new Graph();
     var errGraph = new Graph();
@@ -212,10 +237,11 @@
 
         getUserAppStoryboard();
 
-        $('#err-log-div').css('display', '');
-        $.get('/error/log/' + app_name, function(data){
+        $('#err-log-div').css('display', 'inline-block');
+        $.get('/error/log/' + app_name, function (data) {
             var downLink = "<a class='btn btn-danger' href=/error/log/" + app_name + ">Download Error Log</a><br/>"
-            document.getElementById('err-log').innerHTML = downLink + data;
+            document.getElementById('err-log-button').innerHTML = downLink;
+            document.getElementById('err-log').innerHTML = data;
         });
 
         $.post("/get/object_info", {app_name: app_name, user_id: user_id}
@@ -239,25 +265,31 @@
         $('#activity-location-test').css('display', '');
     });
 
-    $('#activity-location-test').click(function(){
+    $('#activity-location-test').click(function () {
         $.get("/storyboard/" + app_name, function (storyboardData) {
             var activities = $('svg.activity');
-            for(var i=0; i < activities.length; i++){
-                for(var j in storyboardData.activity){
-                    if(storyboardData.activity[j].name == activities[i].getAttribute('id')){
+            for (var i = 0; i < activities.length; i++) {
+                for (var j in storyboardData.activity) {
+                    if (storyboardData.activity[j].name == activities[i].getAttribute('id')) {
                         storyboardData.activity[j].x = activities[i].getAttribute('x');
                         storyboardData.activity[j].y = activities[i].getAttribute('y');
                     }
                 }
             }
 
-            $.post('/update/storyboard', {storyboard_data : JSON.stringify(storyboardData), app_name : app_name}, function(err){
+            $.post('/update/storyboard', {
+                storyboard_data: JSON.stringify(storyboardData),
+                app_name: app_name
+            }, function (err) {
                 console.log(err);
             });
         });
     });
 
     function getUserAppStoryboard() {
+        $('#storyboard-svg').css('border', 'solid grey');
+//    .css('border-width','1px')
+
         var storyboard = new Storyboard();
         storyboard.setUserIdAppName(user_id, app_name);
         storyboard.targetDiv('#storyboard-svg');

@@ -1,6 +1,7 @@
 package GUI.StoryBoard.Object;
 
 import GUI.StoryBoard.Constant;
+import GUI.StoryBoard.UI.palettePanel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -20,6 +21,7 @@ public class Layout_Root extends ObjectCustom {
     int buttonNum =1;
     int radiobuttonNum=1;
     int linearlayoutNum=1;
+    palettePanel panel;
     public Layout_Root() {
 
     }
@@ -52,9 +54,37 @@ public class Layout_Root extends ObjectCustom {
         addMouseListner();
         makeAllObject(objectJObject);
     }
+    public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan) {
+        long width, height, x, y ;
+        String name;
+        JSONArray objectArray;
+        panel = pan;
+        objectJObject=obj;
+        objectList =list;
+        System.out.println(panel);
+        name =(String) objectJObject.get("name");
+        height=(long) objectJObject.get("height");
+        width=(long) objectJObject.get("width");
+        x=(long) objectJObject.get("x");
+        y=(long) objectJObject.get("y");
 
-    public Layout_Root(String name_, HashMap<String, ObjectCustom> list , JSONObject obj)
-    {
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setPosition(new Point((int)x, (int)y));
+        setObject_height((int)height);
+        setObject_width((int)width);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height);
+        this.setLocation((int)x, (int)y);
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setOpaque(false);
+        addMouseListner();
+        makeAllObject(objectJObject);
+    }
+
+    public Layout_Root(String name_, HashMap<String, ObjectCustom> list , JSONObject obj) {
         long width, height, x, y ;
         JSONArray objarr =new JSONArray();
         String name, text, color;
@@ -94,10 +124,9 @@ public class Layout_Root extends ObjectCustom {
         addMouseListner();
         repaint();
     }
-
     public ObjectCustom CreateObjectCustom(String type, JSONObject jobj){
         if(type.equals("linear layout")){
-            Layout_Linear linear = new Layout_Linear(objectList, jobj);
+            Layout_Linear linear = new Layout_Linear(objectList, jobj, panel);
             return linear;
         }
         else if(type.equals("button")){
@@ -218,6 +247,9 @@ public class Layout_Root extends ObjectCustom {
                     PopUpMenu menu = new PopUpMenu();
                     menu.show(e.getComponent(), e.getX(), e.getY());
 
+                }
+                else if(panel.getChoice()==4){
+                    newButton();
                 }
             }
 

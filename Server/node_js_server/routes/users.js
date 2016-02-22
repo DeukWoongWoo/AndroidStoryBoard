@@ -16,7 +16,7 @@ router.post('/join', function (req, res) {
 
 router.get('/login', function (req, res, next) {
     isLogin(req, function (err) {
-        if (err) res.render('login', {login_result: ' '});
+        if (err) res.render('login');//, {login_result: ' '});
         else res.redirect('/');
     });
 });

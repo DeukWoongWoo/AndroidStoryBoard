@@ -13,7 +13,7 @@
     <svg class="storyboard light" currentScale="1" viewBox="0 0 2000 2000" id="storyboard-svg"
          style="background: white;">
 
-        <rect id="storyboard-background" x="-5000" y="-5000" width="10000" height="10000"
+        <rect id="storyboard-background" x="-50000" y="-50000" width="100000" height="100000"
               style="fill: white; stroke: white;  stroke-width: 100px;" onmousedown="startDrag(event)"/>
 
         <!--<svg onmousedown="startDrag(event, this)">-->
@@ -70,7 +70,7 @@
 
     var storyboardSvg = document.getElementById('storyboard-svg');
     storyboardSvg.setAttribute('height', window.innerHeight * 0.4);
-    storyboardSvg.setAttribute('width', window.innerWidth * 0.4);
+    storyboardSvg.setAttribute('width', window.innerWidth * 0.8);
 
     var box = storyboardSvg.viewBox.baseVal;
     var storyboardBack = document.getElementById('storyboard-background');

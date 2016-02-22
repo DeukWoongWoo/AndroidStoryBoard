@@ -1,6 +1,7 @@
 package GUI.StoryBoard.Object;
 
 import GUI.StoryBoard.Constant;
+import GUI.StoryBoard.UI.palettePanel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -23,6 +24,8 @@ public class Activity extends JPanel {
     JSONObject activityObject;
     HashMap<String, Activity> activitylist;
     HashMap <String, ObjectCustom> objectList = new HashMap();
+
+    palettePanel panel;
 
     private boolean draggable = true;
     protected Point anchorPoint;
@@ -47,6 +50,7 @@ public class Activity extends JPanel {
         String layout_type ="linear layout";
         activityObject =obj;
         JSONArray array = new JSONArray();
+
 
         setId(name);
         this.setName(name);
@@ -88,6 +92,45 @@ public class Activity extends JPanel {
         long width, height, x, y ;
         String name;
 
+        activityObject =obj;
+        activitylist =list;
+        addDragListeners();
+
+
+        name =(String) activityObject.get("name");
+        height=(long) activityObject.get("height");
+        width=(long) activityObject.get("width");
+        x=(long) activityObject.get("x");
+        y=(long) activityObject.get("y");
+
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setActivity_position(new Point((int)x, (int)y));
+        setActivity_height((int)height+(int)height/10);
+        setActivity_width((int)width);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height+(int)height/10);
+        this.setLocation((int)x, (int)y);
+        this.setBorder(new LineBorder(Color.black));
+        this.setLayout(null);
+        this.setBackground(Color.black);
+
+        nameLabel.setText(getId());
+        nameLabel.setLocation((int)width/10,0);
+        nameLabel.setSize(getActivity_width()-(int)width/10, getActivity_height()/10);
+        nameLabel.setForeground(Color.white);
+        nameLabel.setFont(new Font("Serif", Font.PLAIN, getActivity_height()/15 ));
+        add(nameLabel);
+
+
+        makeAllObject(activityObject);
+
+    }
+    public Activity(HashMap<String, Activity> list , JSONObject obj, palettePanel pan){
+        long width, height, x, y ;
+        String name;
+        panel=pan;
         activityObject =obj;
         activitylist =list;
         addDragListeners();
@@ -339,7 +382,7 @@ public class Activity extends JPanel {
     public ObjectCustom createObjectCusthom(String type , JSONObject jobj) {
 
         if(type.equals("linear layout")){
-            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj);
+            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel);
             return linear;
         }
         else if(type.equals("relative layout")){

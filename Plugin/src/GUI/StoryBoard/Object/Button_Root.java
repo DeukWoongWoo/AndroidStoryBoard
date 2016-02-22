@@ -1,5 +1,6 @@
 package GUI.StoryBoard.Object;
 
+import GUI.StoryBoard.Constant;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -26,15 +27,53 @@ public class Button_Root extends ObjectCustom {
         addMouseListener();
         setLocation(10,10);
     }
-    public Button_Root(String name , HashMap<String,  ObjectCustom> hash) {
-        setText("NEW BUTTON");
+    public Button_Root(String name_ , HashMap<String,  ObjectCustom> list, JSONObject obj) {
+        long width, height, x, y ;
+        String name, text, color;
+
+        System.out.println(obj);
+        name = "button"+ name_;
+        text = "NEW BUTTON";
+        width = Constant.buttonWidth;
+        height = Constant.buttonHeight;
+        x = 10;
+        y = 10;
+        color = "gray";
+
+        setId(name);
+        setText(text);
+
+        setPosition(new Point((int)x, (int)y));
+        setObject_height((int)height);
+        setObject_width((int)width);
+        setColor(color);
+
+        this.setSize((int)width, (int)height);
+        this.setLocation((int)x, (int)y);
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setBackground(Color.LIGHT_GRAY);
+
+        obj.put("name",getId());
+        obj.put("x",x);
+        obj.put("y",y);
+        obj.put("width",width);
+        obj.put("height",height);
+        obj.put("color",color);
+        obj.put("text", getText());
+        obj.put("type","Button");
+
         setId("button"+name);
-        checkkey=hash;
+        objectJObject=obj;
+
+        checkkey=list;
+        addMouseListener();
+
+        repaint();
    }
     public Button_Root(HashMap<String, ObjectCustom> list , JSONObject obj){
         long width, height, x, y ;
         String name, text, color;
-        JSONArray objectArray;
 
         objectJObject=obj;
         objectList =list;
@@ -123,6 +162,7 @@ public class Button_Root extends ObjectCustom {
     public void setting_Id_Text(String id_, String text_){
         setId(id_);
         setText(text_);
+        setName(id_);
         repaint();
     }
     //-------버튼 아이디 중복 확인--------
@@ -207,6 +247,7 @@ public class Button_Root extends ObjectCustom {
         JTextField name_field;
         JTextField id_field;
         JButton okbutton;
+        int scale_size;
 
         public Change_Window(String id_, String text, Point screenPosition, Point mouse) {
             name_label = new JLabel("name :");
@@ -214,8 +255,10 @@ public class Button_Root extends ObjectCustom {
             id_field = new JTextField(getId());
             name_field = new JTextField(getText());
             okbutton = new JButton("OK");
+            scale_size=getObject_width()/20;
 
-            this.setSize(160, 80);          //창 사이즈
+            this.setSize(350, 150);          //창 사이즈
+
             this.setUndecorated(true);      //title bar 제거
             this.setLocation(screenPosition.x - mouse.x, screenPosition.y - mouse.y);   // 현재 버튼의 위에 덮기 위한 것
             this.setVisible(true);
@@ -224,17 +267,29 @@ public class Button_Root extends ObjectCustom {
 
             okbutton.setMargin(new Insets(0, 0, 0, 0));
 
-            name_label.setLocation(5, 5);
-            id_label.setLocation(5, 30);
-            name_field.setLocation(55, 5);
-            id_field.setLocation(55, 30);
-            okbutton.setLocation(100, 55);
+            name_label.setLocation(10, 10);
+            id_label.setLocation(10, 60);
+            name_field.setLocation(100, 10);
+            id_field.setLocation(100, 60);
+            okbutton.setLocation(200, 100);
 
-            name_label.setSize(50, 20);
-            id_label.setSize(50, 20);
-            name_field.setSize(100, 20);
-            id_field.setSize(100, 20);
-            okbutton.setSize(50, 20);
+//            name_label.setLocation(scale_size, scale_size);
+//            id_label.setLocation(scale_size, scale_size*6);
+//            name_field.setLocation(scale_size*10, scale_size);
+//            id_field.setLocation(scale_size*10, scale_size*6);
+//            okbutton.setLocation(scale_size*20, scale_size*10);
+
+            name_label.setSize(100, 40);
+            id_label.setSize(100, 40);
+            name_field.setSize(200, 40);
+            id_field.setSize(200, 40);
+            okbutton.setSize(100, 40);
+
+//            name_label.setSize(scale_size*10, scale_size*4);
+//            id_label.setSize(scale_size*10, scale_size*4);
+//            name_field.setSize(scale_size*20, scale_size*4);
+//            id_field.setSize(scale_size*20, scale_size*4);
+//            okbutton.setSize(scale_size*10, scale_size*4);
 
             this.add(name_label);
             this.add(id_label);
@@ -309,6 +364,8 @@ public class Button_Root extends ObjectCustom {
             }
             else {
                 setting_Id_Text(id_field.getText(), name_field.getText());
+                objectJObject.put("name", getId() );
+                objectJObject.put("text", getText());
                 dispose();
             }
         }

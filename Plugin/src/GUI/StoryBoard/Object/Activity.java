@@ -30,8 +30,7 @@ public class Activity extends JPanel {
     protected boolean overbearing = false;
 
 
-    int buttonNum =1;
-    int radiobuttonNum=1;
+
 
     //--------------- 생성자들 -----------------
     public Activity(String name) {
@@ -208,27 +207,7 @@ public class Activity extends JPanel {
         setVisible(false);
     }
 
-    //-----------새로운 버튼 생성---------------
-    public void newButton(){
 
-        Button_Click b = new Button_Click(""+buttonNum, objectList);
-
-        add(b);
-        objectList.put(""+buttonNum , b);
-        revalidate();       // 무효화 선언된 화면을 알려줌
-        repaint();          // 다시 그려준다.
-        buttonNum++;
-
-    }
-    //-----------새로운 Radio 버튼 생성---------
-    public void newRadioButton(){
-        Button_Radio b = new Button_Radio(""+radiobuttonNum, objectList);
-        add(b);
-
-        revalidate();       // 무효화 선언된 화면을 알려줌
-        repaint();          // 다시 그려준다.
-        radiobuttonNum++;
-    }
     //-------------id 중복 확인 -----------------
     public boolean checkName(String id_) {
         String temp = this.getId();
@@ -382,14 +361,10 @@ public class Activity extends JPanel {
     //-----------------팝업 메뉴 클레스----------
     class PopUpMenu extends JPopupMenu{
         JMenuItem anItem;
-        JMenuItem button;
-        JMenuItem Radio_button;
         JMenuItem set_name;
 
         public PopUpMenu() {
             anItem = new JMenuItem("Remove");
-            button = new JMenuItem("New Button");
-            Radio_button = new JMenuItem("New RadioButton");
             set_name = new JMenuItem("Set Name");
 
             anItem.addActionListener(new ActionListener() {
@@ -403,20 +378,6 @@ public class Activity extends JPanel {
                 }
             });
 
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    newButton();
-                }
-            });
-
-            Radio_button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    newRadioButton();
-                }
-            });
-
             set_name.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -424,8 +385,6 @@ public class Activity extends JPanel {
                 }
             });
             add(anItem);
-            add(button);
-            add(Radio_button);
             add(set_name);
         }
 

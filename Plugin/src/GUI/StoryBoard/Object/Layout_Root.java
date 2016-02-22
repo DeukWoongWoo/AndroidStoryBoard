@@ -3,13 +3,21 @@ package GUI.StoryBoard.Object;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 
 /**
  * Created by 우철 on 2016-02-16.
  */
 public class Layout_Root extends ObjectCustom {
+
+    int buttonNum =1;
+    int radiobuttonNum=1;
 
     public Layout_Root() {
 
@@ -40,7 +48,7 @@ public class Layout_Root extends ObjectCustom {
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
-
+        addMouseListner();
         makeAllObject(objectJObject);
     }
 
@@ -96,6 +104,125 @@ public class Layout_Root extends ObjectCustom {
 
         }
     }
+
+    //-----------새로운 버튼 생성---------------
+    public void newButton(){
+        JSONArray tempArray;
+        JSONObject tempObj;
+        tempArray = (JSONArray)objectJObject.get("object");
+        tempObj = new JSONObject();
+        System.out.println(objectJObject);
+        System.out.println(tempArray);
+
+        Button_Click b = new Button_Click(""+buttonNum, objectList,tempObj);
+
+        tempArray.add(tempObj);
+
+        System.out.println(tempArray);
+
+        add(b);
+        objectList.put(""+buttonNum , b);
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();          // 다시 그려준다.
+        buttonNum++;
+
+    }
+    //-----------새로운 Radio 버튼 생성---------
+    public void newRadioButton(){
+        JSONArray tempArray;
+        JSONObject tempObj;
+        tempArray = (JSONArray)objectJObject.get("object");
+        tempObj = new JSONObject();
+        System.out.println(objectJObject);
+        System.out.println(tempArray);
+
+        Button_Radio b = new Button_Radio(""+radiobuttonNum, objectList,tempObj);
+
+        tempArray.add(tempObj);
+
+        add(b);
+
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();          // 다시 그려준다.
+        radiobuttonNum++;
+    }
+
+
+    public void addMouseListner(){
+        addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getModifiers() == MouseEvent.BUTTON3_MASK)
+                {
+                    PopUpMenu menu = new PopUpMenu();
+                    menu.show(e.getComponent(), e.getX(), e.getY());
+
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+    }
+
+    class PopUpMenu extends JPopupMenu {
+        JMenuItem anItem;
+        JMenuItem button;
+        JMenuItem Radio_button;
+        JMenuItem set_name;
+
+        public PopUpMenu() {
+            button = new JMenuItem("New Button");
+            Radio_button = new JMenuItem("New RadioButton");
+            set_name = new JMenuItem("Set Name");
+
+
+
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    newButton();
+                }
+            });
+
+            Radio_button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    newRadioButton();
+                }
+            });
+
+            set_name.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //settingName();
+                }
+            });
+            add(button);
+            add(Radio_button);
+            add(set_name);
+        }
+
+    }
+
+
 
 
 

@@ -1,5 +1,6 @@
 package GUI.StoryBoard.Object;
 
+import GUI.StoryBoard.Constant;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -13,18 +14,16 @@ public class Button_Click extends Button_Root {
 
     JLabel content = new JLabel();
 
-    public Button_Click(String name , HashMap<String, ObjectCustom> hash) {
+    public Button_Click(String name , HashMap<String, ObjectCustom> list, JSONObject obj) {
 
+        super(name, list, obj);
         setText("NEW BUTTON");
         setId("button"+name);
-        checkkey=hash;
-        content.setText(getText());
-        setObject_height(30);
-        setObject_width(150);
-
-        setBackground(Color.lightGray);
-        setSize(getObject_width(), getObject_height());
+        checkkey=list;
+        init_text();
+        obj.put("type", "button");
         add(content);
+
 
     }
 

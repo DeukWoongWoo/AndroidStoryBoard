@@ -167,8 +167,6 @@ mysql.addApp = function (param) {
 }
 
 mysql.addActivity = function (param, callback) {
-    console.log('mysql.addActivity');
-    console.log(param.body);
     var activity = {
         activity_name: param.body.activity_name,
         total_time: 0,
@@ -263,14 +261,9 @@ mysql.getActivityNumByUserIdAppNameActivityName = function (param, activityName,
         if (err) callback(err);
         else {
             param.body.app_num = result[0].app_num;
-            console.log('getAppNumByUserIdAppName');
-            console.log(result[0].app_num);
-            console.log(param.body.activity_name);
             mysql.getActivityNumByAppNumActivityName(param, activityName, function (err, result) {
                 if (err) callback(err);
                 else {
-                    console.log('getActivityNumByAppNumActivityName');
-                    console.log(result[0].activity_num);
                     callback(null, result);
                 }
             });

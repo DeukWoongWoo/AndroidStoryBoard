@@ -116,17 +116,17 @@ router.get('/delete/:app_name', function (req, res) {
                 if (err) console.log(err);
             });
             var dirName = './users/' + req.session.user_id + '/' + req.params.app_name + '/';
-            deleteFiles(dirName);
+            deleteFiles(dirName, function(err){
+                if(err) console.log(err);
+            });
         } else if (err)console.log(err);
         res.redirect('/');
     });
 });
 
-function deleteFiles(dirName) {
+function deleteFiles(dirName, callback) {
     fs.readdir(dirName, function (err, list) {
-        if (err) throw err;
-        console.log('dir length : ' + list.length);
-        console.log(list);
+        if (err) callback(err);
         async.each(list,
             function (file, callback) {
                 fs.unlink(dirName + file, function (err) {
@@ -138,8 +138,12 @@ function deleteFiles(dirName) {
                 });
             },
             function (err) {
+                if(err)callback(err);
                 fs.rmdir(dirName, function (err) {
-                    if (err) console.error(err);//// throw err;
+                    if (err) {
+                        console.error(err);
+                        callback(err);
+                    }//// throw err;
                     console.log('Removed ' + dirName);
                 });
             }
@@ -241,10 +245,14 @@ router.post('/makedata/app/add', function (req, res) {
     getAppAndRender(req, res);
 });
 
-function getAppAndRender(req, res) {
+function getAppAndRender(req, res, msg) {
     db.getAppByUserId(req, function (err, result) {
         if (err)res.send(err);
-        else res.render('makedataapp', {app: result, user_id: req.body.user_id});
+        else {
+            var page_data = {app: result, user_id: req.body.user_id};
+            if(isDefined(msg)) page_data.push({warring_result : msg});
+            res.render('makedataapp', page_data);
+        }
     });
 }
 
@@ -395,19 +403,26 @@ router.get('/logout', function (req, res, next) {
 
 router.post('/registerapp', function (req, res, next) {
     registerApp(req, res, function (err) {
-        if (err) console.log(err);//TODO: 웹에 경고 메시지 띄우기res.send(err);//
-        else renderAppPage(req, res);
+        //if (err) console.log(err);//TODO: 웹에 경고 메시지 띄우기res.send(err);//
+        //else
+            renderAppPage(req, res, err);
     });
 });
 
 router.post('/registerimage', function (req, res, next) {
+    console.error("ajax test");
+    console.log(req.body);
+    console.log(req.session.user_id);
+    console.log(req.files);
+
     uploadImages(req, function (err) {
-        if (err) res.send(err);//console.log(err);//TODO: 웹에 경고 메시지 띄우기
-        else renderAppPage(req, res);
+        //if (err) res.send(err);//console.log(err);//TODO: 웹에 경고 메시지 띄우기
+        //else
+            renderAppPage(req, res, err);
     });
 });
 
-function renderAppPage(req, res) {
+function renderAppPage(req, res, msg) {
     isLogin(req, function (err) {
         if (err) res.redirect('/login');
         else
@@ -415,6 +430,7 @@ function renderAppPage(req, res) {
                 res.render('home', {
                     user_id: req.session.user_id,
                     app: appList,
+                    warring_result : msg,
                 });
             });
     });
@@ -687,7 +703,7 @@ function checkFile(req, callback) {
 
 function isExistAppName(req, callback) {
     var err = null;
-    db.getAppList(req, function (appList) {
+    db.getAppList(req, function (err, appList) {
         if (isDefined(appList)) {
             for (var i = 0; i < appList.length; i++) {
                 if (req.body.app_name == appList[i].app_name) {

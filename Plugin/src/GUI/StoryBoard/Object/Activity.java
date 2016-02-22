@@ -43,11 +43,15 @@ public class Activity extends JPanel {
         addDragListeners();
 
     }
-    public Activity(String name , HashMap<String, Activity> list){
+    public Activity(String name , HashMap<String, Activity> list, JSONObject obj){
+        String layout_type ="linear layout";
+        activityObject =obj;
+        JSONArray array = new JSONArray();
+
         setId(name);
         this.setName(name);
         this.setSize(Constant.activitySize_X, Constant.activitySize_Y);
-        this.setBackground(Color.WHITE);
+        this.setBackground(Color.BLACK);
         this.setBorder(new LineBorder(Color.black));
         this.setLayout(null);
         this.setLocation(10,10);
@@ -56,6 +60,25 @@ public class Activity extends JPanel {
         setActivity_width(Constant.activitySize_X);
         setActivity_height(Constant.activitySize_Y);
         setActivity_position(new Point(10,10));
+
+        obj.put("name",getId());
+        obj.put("x", (long)getActivity_position().x);
+        obj.put("y", (long)getActivity_position().y);
+        obj.put("width", (long)getActivity_width());
+        obj.put("height", (long)getActivity_height());
+        obj.put("object", array);
+
+
+        if(layout_type.equals("linear layout")){
+            JSONObject tempobj= new JSONObject();
+            Layout_Linear_Root a =  new Layout_Linear_Root(getId(), objectList , tempobj);
+            array.add(tempobj);
+        }
+        else{
+            JSONObject tempobj= new JSONObject();
+            Layout_Relative_Root a =  new Layout_Relative_Root(getId(), objectList , tempobj);
+            array.add(tempobj);
+        }
 
         addDragListeners();
         activitylist =list;
@@ -132,7 +155,12 @@ public class Activity extends JPanel {
     public void setActivity_height(int activity_height) {
         this.activity_height = activity_height;
     }
-
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
     //---------------------------------------------
     //          Method 들
     //---------------------------------------------
@@ -344,18 +372,6 @@ public class Activity extends JPanel {
 
         }
     }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-
-    //---------------------------------------------
-    //---------------------------------------------
 
 
     //-----------------팝업 메뉴 클레스----------

@@ -10,6 +10,8 @@ public interface Constant  {
     int activitySize_Y = 500;
     int buttonWidth = 100;
     int buttonHeight = 30;
+    int layoutWidth = 200;
+    int layoutHeight = 200;
 
      String FILE_ROUTE ="C:/Users/우철/Documents/AndroidStoryBoard/Plugin/jsonfile.txt";
     Dimension MENUBUTTONSIZE = new Dimension(50,50);

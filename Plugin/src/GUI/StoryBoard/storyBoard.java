@@ -1,6 +1,7 @@
 package GUI.StoryBoard;
 
 import GUI.StoryBoard.Object.Activity;
+import GUI.StoryBoard.Object.Layout_Relative_Root;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -227,27 +228,22 @@ public class storyBoard extends JPanel {
         }
         else {
             System.out.println(resultStr +"Activity 가 생성되었습니다.");
-            Constant.JsonFileStruct file = new Constant.JsonFileStruct();
+            JSONObject obj = new JSONObject();
 
-            Activity a = new Activity(resultStr, list);
+            Activity a = new Activity(resultStr, list, obj);
+
             a.setOverbearing(true);
             list.put(resultStr, a);
             jpan.add(a);
 
-            file.height=a.getActivity_height();
-            file.width =a.getActivity_width();
-            file.x = a.getActivity_position().x;
-            file.y = a.getActivity_position().y;
-            file.name=a.getName();
-            file.type=a.getType();
-            makeSendData(activityArrayData, file , Constant.NEWFILE);
-
+            activityArrayData.add(obj);
+            System.out.println(activityArrayData);
             sendData();
             repaint_window();
         }
     }
     // 새로운 JsonFile을 만드는 함순
-    public void makeSendData(JSONArray jobj, Constant.JsonFileStruct file , boolean newfix) {
+  /*  public void makeSendData(JSONArray jobj, Constant.JsonFileStruct file , boolean newfix) {
         JSONArray temp = jobj;
         JSONArray array = new JSONArray();
         JSONObject newone = new JSONObject();
@@ -264,11 +260,13 @@ public class storyBoard extends JPanel {
         {
 
         }
-    }
+    }*/
 
     public void sendData(){
         System.out.println(jobjRoot);
     }
+
+
     //-----------private 접근 함수------------------------------------------
     public String getAppName() {
         return appName;

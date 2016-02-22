@@ -1,5 +1,6 @@
 package GUI.StoryBoard.Object;
 
+import GUI.StoryBoard.Constant;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -18,7 +19,7 @@ public class Layout_Root extends ObjectCustom {
 
     int buttonNum =1;
     int radiobuttonNum=1;
-
+    int linearlayoutNum=1;
     public Layout_Root() {
 
     }
@@ -52,6 +53,47 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
 
+    public Layout_Root(String name_, HashMap<String, ObjectCustom> list , JSONObject obj)
+    {
+        long width, height, x, y ;
+        JSONArray objarr =new JSONArray();
+        String name, text, color;
+
+        System.out.println(obj);
+        name = "Layout"+ name_;
+        width = Constant.layoutWidth;
+        height = Constant.layoutHeight;
+        x = 10;
+        y = 10;
+        color = "gray";
+
+        setId(name);
+
+        setPosition(new Point((int)x, (int)y));
+        setObject_height((int)height);
+        setObject_width((int)width);
+        setColor(color);
+
+        this.setSize((int)width, (int)height);
+        this.setLocation((int)x, (int)y);
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setOpaque(false);
+
+        obj.put("name",getId());
+        obj.put("x",x);
+        obj.put("y",y);
+        obj.put("width",width);
+        obj.put("height",height);
+        obj.put("color",color);
+        obj.put("type","layout");
+        obj.put("object", objarr );
+
+        setId("layout"+name);
+        objectJObject=obj;
+        addMouseListner();
+        repaint();
+    }
 
     public ObjectCustom CreateObjectCustom(String type, JSONObject jobj){
         if(type.equals("linear layout")){
@@ -147,6 +189,25 @@ public class Layout_Root extends ObjectCustom {
         radiobuttonNum++;
     }
 
+    public void newLInearLayout(){
+        JSONArray tempArray;
+        JSONObject tempObj;
+        tempArray = (JSONArray)objectJObject.get("object");
+        tempObj = new JSONObject();
+        System.out.println(objectJObject);
+        System.out.println(tempArray);
+
+        Layout_Linear b = new Layout_Linear(""+linearlayoutNum, objectList,tempObj);
+
+        tempArray.add(tempObj);
+        System.out.println(tempArray);
+        add(b);
+
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();          // 다시 그려준다.
+        linearlayoutNum++;
+    }
+
 
     public void addMouseListner(){
         addMouseListener(new MouseListener() {
@@ -183,15 +244,15 @@ public class Layout_Root extends ObjectCustom {
     }
 
     class PopUpMenu extends JPopupMenu {
-        JMenuItem anItem;
+
         JMenuItem button;
         JMenuItem Radio_button;
-        JMenuItem set_name;
+        JMenuItem linear_layout;
 
         public PopUpMenu() {
             button = new JMenuItem("New Button");
             Radio_button = new JMenuItem("New RadioButton");
-            set_name = new JMenuItem("Set Name");
+            linear_layout = new JMenuItem("New linear_layout");
 
 
 
@@ -209,15 +270,15 @@ public class Layout_Root extends ObjectCustom {
                 }
             });
 
-            set_name.addActionListener(new ActionListener() {
+            linear_layout.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //settingName();
+                    newLInearLayout();
                 }
             });
             add(button);
             add(Radio_button);
-            add(set_name);
+            add(linear_layout);
         }
 
     }

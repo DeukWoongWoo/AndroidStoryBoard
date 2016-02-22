@@ -32,6 +32,12 @@ public class CommandManager{
         commandMap.put(CommandKey.LOCALBUTTON, new LocalButtonCreateCommand());
         commandMap.put(CommandKey.MEMBERBUTTON, new MemberButtonCreateCommand());
         commandMap.put(CommandKey.FUNCBUTTON, new FuncButtonCreateCommand());
+        commandMap.put(CommandKey.ACTIVITY, new ActivityCreateCommand());
+    }
+
+    public void createActivity(String className){
+        CommandKey.ACTIVITY.setId(className);
+        execute(CommandKey.ACTIVITY);
     }
 
     public void createButton(CommandKey key, String id){
@@ -40,7 +46,7 @@ public class CommandManager{
         execute(key);
     }
 
-    public void execute(CommandKey key) {
+    private void execute(CommandKey key) {
         System.out.println("Command Execute...");
         Command command = commandMap.get(key);
         command.execute();

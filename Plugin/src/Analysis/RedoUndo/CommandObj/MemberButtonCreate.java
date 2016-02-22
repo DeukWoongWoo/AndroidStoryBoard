@@ -46,11 +46,11 @@ public class MemberButtonCreate {
                         protected void run() throws Throwable {
                             ElementFactory elementFactory = new ElementFactory();
 
-                            p.add(elementFactory.makePsiField("private " + Type.Button + " " + buttonName + ";",p));
+                            p.add(elementFactory.createPsiField("private " + Type.Button + " " + buttonName + ";",p));
 
                             String makeCode = buttonName + " = " + CodeBuilder.Component(Type.Button).findViewById(CommandKey.MEMBERBUTTON.getId()).build();
 
-                            method.getBody().add(elementFactory.makePsiStatement(makeCode,method));
+                            method.getBody().add(elementFactory.createPsiStatement(makeCode,method));
 
                             if (!checkImport(packageName)){
                                 PsiImportStatement psiImportStatement = elementFactory.findPsiImportStatement(packageName, Type.Button.name());

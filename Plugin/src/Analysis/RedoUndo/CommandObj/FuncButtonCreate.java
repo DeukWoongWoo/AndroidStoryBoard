@@ -50,14 +50,14 @@ public class FuncButtonCreate {
 
                             String makeCode = buttonName + " = " + CodeBuilder.Component(Type.Button).findViewById(CommandKey.FUNCBUTTON.getId()).build();
 
-                            p.add(elementFactory.makePsiField("private " + Type.Button + " " + buttonName + ";",p));
+                            p.add(elementFactory.createPsiField("private " + Type.Button + " " + buttonName + ";",p));
 
-                            method.getBody().add(elementFactory.makePsiStatement(funcName+"();",method));
+                            method.getBody().add(elementFactory.createPsiStatement(funcName+"();",method));
 
                             StringBuilder builder = new StringBuilder("private void "+ funcName + "(){\n");
                             builder.append(makeCode + "\n}\n");
 
-                            PsiMethod createMethod = elementFactory.makePsiMethod(builder.toString(), p);
+                            PsiMethod createMethod = elementFactory.createPsiMethod(builder.toString(), p);
                             p.add(createMethod);
 
                             JavaCodeStyleManager.getInstance(p.getProject()).shortenClassReferences(createMethod);

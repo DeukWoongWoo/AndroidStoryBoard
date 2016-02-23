@@ -60,7 +60,7 @@ public class EventDAOImpl extends SQLiteOpenHelper implements EventDAO {
         try{
             prep = connection.prepareStatement(query);
             rows = prep.executeQuery();
-            if(rows.getRow() > 0) {
+            if(rows.next()){
                 eventDTO = new EventDTO();
                 eventDTO.setNum(rows.getInt(1));
                 eventDTO.setComponentId(rows.getInt(2));

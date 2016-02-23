@@ -26,26 +26,26 @@ router.post('/login', function (req, res) {
 });
 
 router.get('/profile', function (req, res, next) {
-    async.waterfall([
-        function (callback) {
-            req.body.user_id = req.session.user_id;
-            db.getUserInfo(req, function (err, result) {
-                callback(err, result);
-            });
-        }
-    ], function (err, result) {
-        if (!err && result) {
-            isLogin(req, function (err) {
-                if (err) res.redirect('/login');
-                else res.render('profile', {
+    isLogin(req, function (err) {
+        if (err) res.redirect('/login');
+        async.waterfall([
+            function (callback) {
+                req.body.user_id = req.session.user_id;
+                db.getUserInfo(req, function (err, result) {
+                    callback(err, result);
+                });
+            }
+        ], function (err, result) {
+            if (!err && result) {
+                res.render('profile', {
                     user_id: req.session.user_id,
                     name: result.name,
                     password: result.password,
                     email: result.email,
                     update_result: ''
                 });
-            });
-        }
+            }
+        });
     });
 });
 
@@ -93,13 +93,18 @@ function updateProfile(req, res) {
     req.body.user_id = req.session.user_id;
     isInputWrong(req, function (err) {
         if (err) {
-            res.render('profile', {user_id: req.session.user_id, update_result: err});
+            res.render('profile', {
+                user_id: req.session.user_id,
+                name: req.body.name,
+                email: req.body.email,
+                update_result: err
+            });
         } else {
             db.getUserId(req, function (err) {
                 if (err) res.redirect('/');
                 else {
                     db.updateUser(req);
-                    res.render('profile', {user_id: req.session.user_id, update_result: 'success'});
+                    res.redirect('/');
                 }
             });
         }

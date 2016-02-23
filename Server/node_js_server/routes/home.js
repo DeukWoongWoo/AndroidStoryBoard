@@ -707,7 +707,7 @@ function isExistAppName(req, callback) {
         if (isDefined(appList)) {
             for (var i = 0; i < appList.length; i++) {
                 if (req.body.app_name == appList[i].app_name) {
-                    err = '같은 이름이 있습니다';
+                    err = '같은 이름의 앱이 있습니다';
                 }
             }
         }

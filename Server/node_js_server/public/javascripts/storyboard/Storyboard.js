@@ -61,7 +61,9 @@ function Storyboard() {
             for (var j in storyboardData.activity[i].object) {
                 var objectData = storyboardData.activity[i].object[j];
 
-                var object = activity.addObject().type(objectData.type).name(objectData.name).activityName(activityData.name).width(objectData.width).height(objectData.height).x(objectData.x).y(objectData.y).color(objectData.color);
+                var object = activity.addObject().type(objectData.type).name(objectData.name)
+                    .activityName(activityData.name).width(objectData.width).height(objectData.height)
+                    .x(objectData.x).y(objectData.y).color(objectData.color);
 
                 if(isDefined(objectData.image)){
                     object.imageRoute('/image/' + userId + '/' +  appName + '/' );
@@ -88,18 +90,17 @@ function Storyboard() {
     this.initLine = function () {
         line = new Array();
         for (var i in storyboardData.activity) {
-            var activityData = storyboardData.activity[i];
-            for (var j in storyboardData.activity[i].object) {
-                var objectData = storyboardData.activity[i].object[j];
-                if (isDefined(objectData.next)) {
+            console.log('storyboardData.activity[i].next.length : ' + storyboardData.activity[i].next.length);
+            console.log('storyboardData.activity[i].next[0] : ' + storyboardData.activity[i].next[0]);
+            if(isDefined(storyboardData.activity[i].next)){
+                for(var j in storyboardData.activity[i].next){
                     line[count] = new Array(6);
-                    line[count]['start'] = activityData.name;
-                    line[count]['end'] = objectData.next;
+                    line[count]['start'] = storyboardData.activity[i].name;
+                    line[count]['end'] = storyboardData.activity[i].next[j];
                     count++;
                 }
             }
         }
-
     }
 
     this.drawNextActivityLine = function () {

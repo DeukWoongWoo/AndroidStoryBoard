@@ -147,14 +147,17 @@
         <div class="pop-container">
             <div class="pop-conts">
                 <div class="container-center" id="warring-div">
-                <%= warring_result %>
-                    <script>
-                        layer_war('warring-layer');
-                    </script>
+                    <b style="font-size:30px;"><%= warring_result %></b>
+                </div>
+                <div class="container-center">
+                    <button type="button" class="btn btn-info" id="error-confirm-btn">확인</button>
+                </div>
+                <script>
+                    layer_war('warring-layer');
+                </script>
             </div>
         </div>
     </div>
-</div>
 </div>
 <% } %>
 

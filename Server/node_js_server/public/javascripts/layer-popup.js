@@ -64,4 +64,9 @@ function layer_war(el) {
         e.preventDefault();
     });
 
+    $('#error-confirm-btn').click(function(e){
+        $('.layer').fadeOut();
+        e.preventDefault();
+    });
+
 }

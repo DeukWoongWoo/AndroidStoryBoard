@@ -7,10 +7,7 @@ import org.json.simple.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.HashMap;
 
 /**
@@ -22,6 +19,11 @@ public class Layout_Root extends ObjectCustom {
     int radiobuttonNum=1;
     int linearlayoutNum=1;
     palettePanel panel;
+
+    private boolean isButton;
+    private boolean isRadioButton;
+    private int x,y;
+
     public Layout_Root() {
 
     }
@@ -61,7 +63,7 @@ public class Layout_Root extends ObjectCustom {
         panel = pan;
         objectJObject=obj;
         objectList =list;
-        System.out.println(panel);
+
         name =(String) objectJObject.get("name");
         height=(long) objectJObject.get("height");
         width=(long) objectJObject.get("width");
@@ -81,7 +83,27 @@ public class Layout_Root extends ObjectCustom {
         this.setVisible(true);
         this.setOpaque(false);
         addMouseListner();
+
+        addMouseactionListner(this.getGraphics());
         makeAllObject(objectJObject);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if(isButton){
+            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();          // 다시 그려준다.
+        }
+        else if(isRadioButton){
+            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();          // 다시 그려준다.
+        }
+
+
+
     }
 
     public Layout_Root(String name_, HashMap<String, ObjectCustom> list , JSONObject obj) {
@@ -89,7 +111,7 @@ public class Layout_Root extends ObjectCustom {
         JSONArray objarr =new JSONArray();
         String name, text, color;
 
-        System.out.println(obj);
+
         name = "Layout"+ name_;
         width = Constant.layoutWidth;
         height = Constant.layoutHeight;
@@ -145,7 +167,6 @@ public class Layout_Root extends ObjectCustom {
         }
 
     }
-
     //jobj 는 layout들이 들어있는 obj
     public void makeAllObject(JSONObject jobj){
 
@@ -157,7 +178,6 @@ public class Layout_Root extends ObjectCustom {
             tempJsonObject = (JSONObject)objectArray.get(i);
             if(tempJsonObject.isEmpty())
             {
-                System.out.println(objectArray.get(i)+"이 지워졌습니다");
                 objectArray.remove(i);
                 i=-1;
             }
@@ -175,21 +195,32 @@ public class Layout_Root extends ObjectCustom {
 
         }
     }
-
     //-----------새로운 버튼 생성---------------
     public void newButton(){
         JSONArray tempArray;
         JSONObject tempObj;
         tempArray = (JSONArray)objectJObject.get("object");
         tempObj = new JSONObject();
-        System.out.println(objectJObject);
-        System.out.println(tempArray);
 
         Button_Click b = new Button_Click(""+buttonNum, objectList,tempObj);
 
         tempArray.add(tempObj);
+        add(b);
+        objectList.put(""+buttonNum , b);
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();          // 다시 그려준다.
+        buttonNum++;
 
-        System.out.println(tempArray);
+    }
+    public void newButton(Point point){
+        JSONArray tempArray;
+        JSONObject tempObj;
+        tempArray = (JSONArray)objectJObject.get("object");
+        tempObj = new JSONObject();
+
+        Button_Click b = new Button_Click(""+buttonNum, objectList,tempObj, point);
+
+        tempArray.add(tempObj);
 
         add(b);
         objectList.put(""+buttonNum , b);
@@ -204,8 +235,6 @@ public class Layout_Root extends ObjectCustom {
         JSONObject tempObj;
         tempArray = (JSONArray)objectJObject.get("object");
         tempObj = new JSONObject();
-        System.out.println(objectJObject);
-        System.out.println(tempArray);
 
         Button_Radio b = new Button_Radio(""+radiobuttonNum, objectList,tempObj);
 
@@ -217,27 +246,38 @@ public class Layout_Root extends ObjectCustom {
         repaint();          // 다시 그려준다.
         radiobuttonNum++;
     }
+    public void newRadioButton(Point point){
+        JSONArray tempArray;
+        JSONObject tempObj;
+        tempArray = (JSONArray)objectJObject.get("object");
+        tempObj = new JSONObject();
 
+        Button_Radio b = new Button_Radio(""+radiobuttonNum, objectList,tempObj, point);
+
+        tempArray.add(tempObj);
+
+        add(b);
+
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();          // 다시 그려준다.
+        radiobuttonNum++;
+    }
     public void newLInearLayout(){
         JSONArray tempArray;
         JSONObject tempObj;
         tempArray = (JSONArray)objectJObject.get("object");
         tempObj = new JSONObject();
-        System.out.println(objectJObject);
-        System.out.println(tempArray);
+
 
         Layout_Linear b = new Layout_Linear(""+linearlayoutNum, objectList,tempObj);
 
         tempArray.add(tempObj);
-        System.out.println(tempArray);
         add(b);
 
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         linearlayoutNum++;
     }
-
-
     public void addMouseListner(){
         addMouseListener(new MouseListener() {
             @Override
@@ -249,7 +289,26 @@ public class Layout_Root extends ObjectCustom {
 
                 }
                 else if(panel.getChoice()==4){
-                    newButton();
+                    newButton(e.getPoint());
+                    panel.setChoice(0);
+                    isButton=false;
+                    isRadioButton=false;
+                }
+                else if(panel.getChoice()==5){
+                    newRadioButton(e.getPoint());
+                    panel.setChoice(0);
+                    isButton=false;
+                    isRadioButton=false;
+                }
+                else if(panel.getChoice()==2){
+                    newLInearLayout();
+                    panel.setChoice(0);
+                }
+                else{
+                    isButton=false;
+                    isRadioButton=false;
+                    panel.setChoice(0);
+
                 }
             }
 
@@ -270,11 +329,34 @@ public class Layout_Root extends ObjectCustom {
 
             @Override
             public void mouseExited(MouseEvent e) {
-
+                isButton=false;
+                isRadioButton=false;
             }
         });
     }
+    public void addMouseactionListner(Graphics g){
+        addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
 
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                if(panel.getChoice()==4){
+                    x = e.getX(); y = e.getY();
+                    isButton=true;
+                }
+                else if(panel.getChoice()==5){
+                    x = e.getX(); y = e.getY();
+                    isRadioButton=true;
+                }
+                else if(panel.getChoice()==2){
+
+                }
+            }
+        });
+    }
     class PopUpMenu extends JPopupMenu {
 
         JMenuItem button;
@@ -314,10 +396,6 @@ public class Layout_Root extends ObjectCustom {
         }
 
     }
-
-
-
-
 
 
 }

@@ -26,7 +26,26 @@ public class Button_Click extends Button_Root {
 
 
     }
+    public Button_Click(String name , HashMap<String, ObjectCustom> list, JSONObject obj, Point pos) {
 
+        super(name, list, obj);
+
+        setText("NEW BUTTON");
+        setId("button"+name);
+
+
+        setPosition(pos);
+        obj.put("x",(long)isPosition().x);
+        obj.put("y",(long)isPosition().y);
+
+        setLocation(isPosition().x, isPosition().y);
+        checkkey=list;
+        init_text();
+        obj.put("type", "button");
+        add(content);
+
+
+    }
     public Button_Click(HashMap<String, ObjectCustom> list, JSONObject obj) {
         super(list, obj);
         init_text();

@@ -1,5 +1,4 @@
 package Xml;
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
@@ -15,6 +14,8 @@ import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -133,6 +134,11 @@ public class GenerateAction extends AnAction {
             String fp = "C:/Users/cho/Desktop/xml/test2.xml";
             appendXmlCode(componentArrayList,fp);
 
+            String jp = "C:/Users/cho/Desktop/json/uuuu.json";
+            ArrayList<Component> newComponentArrayList=new ArrayList<Component>();
+            JsonToComponent(jp,newComponentArrayList);
+            String d;
+            d="asd";
         }catch(Exception e2){
             Messages.showInfoMessage("error1","error1");
 
@@ -150,6 +156,100 @@ public class GenerateAction extends AnAction {
         }
     }
 
+    private void JsonToAttribute(JSONObject jsonObject,Component component){
+
+        Iterator iterator = jsonObject.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry entry = (Map.Entry) iterator.next();
+            String attr = (String) entry.getKey();
+            String value = (String) entry.getValue();
+            component.setAttributes(attr,value);
+        }
+    }
+
+    private void JsonToObject(JSONArray jsonArray,ArrayList <Component> componentArrayList){
+        JSONObject jsonObject;
+        JSONArray jsonLayout = null;
+        JSONObject jsonAttr;
+        String tagName = null;
+        Component component;
+        for(int i = 0; i<jsonArray.size();i++){
+            component = new Component();
+            jsonObject = (JSONObject) jsonArray.get(i);
+            Iterator iterator = jsonObject.entrySet().iterator();
+            while(iterator.hasNext()){
+                Map.Entry entry = (Map.Entry) iterator.next();
+                String key = (String) entry.getKey();
+
+                if(key.equals("type")){
+                    tagName=(String) entry.getValue();
+                    component.tagName=tagName;
+                }
+                else if(key.equals("attribute")){
+                    jsonAttr = (JSONObject) entry.getValue();
+                    JsonToAttribute(jsonAttr,component);
+                }
+                else if(key.equals("object")){//오브젝트있으면 레이아웃이다.
+                     jsonLayout= (JSONArray) entry.getValue();
+                }
+            }
+            componentArrayList.add(component);
+            if(tagName.equals("RelativeLayout")){
+                JsonToObject(jsonLayout,componentArrayList);
+                //EndTag넣을곳
+                Component component1 = new Component();
+                component1.tagName="EndTag";
+                componentArrayList.add(component1);
+            }
+        }
+    }
+
+    private void JsonToActivity(JSONArray jsonArray,ArrayList <Component> componentArrayList){
+        JSONObject jsonObject;
+        for(int i =0;i<jsonArray.size();i++){
+            jsonObject= (JSONObject) jsonArray.get(i);
+            Iterator iterator = jsonObject.entrySet().iterator();
+            while(iterator.hasNext()){
+                Map.Entry entry = (Map.Entry) iterator.next();
+                String key = (String) entry.getKey();
+                if(key.equals("name")){
+                    //// TODO: 2016-02-24 xmlName은 여기서 받는다
+                    String XmlName = (String) entry.getValue();
+                }
+                else if(key.equals("object")){
+                    JSONArray jsonObjectArray = (JSONArray) entry.getValue();
+                    JsonToObject(jsonObjectArray,componentArrayList);
+                }
+            }
+
+        }
+    }
+    private void JsonToComponent(String filePath,ArrayList <Component> componentArrayList){
+
+        try {
+            FileReader reader = new FileReader(filePath);
+            JSONParser jsonParser = new JSONParser();
+            JSONArray jsonLayout = new JSONArray();
+            JSONObject jsonObject =(JSONObject) jsonParser.parse(reader);
+            Iterator iterator = jsonObject.entrySet().iterator();
+            String key;
+            String value;
+            while(iterator.hasNext()) {
+                Map.Entry entry = (Map.Entry) iterator.next();
+                if(entry.getKey().equals("activity")){
+                    jsonLayout = (JSONArray) entry.getValue();
+                    JsonToActivity(jsonLayout,componentArrayList);
+                }
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+         }
+    }
 
     private int xmlTop=0;
     private Element[] xmlStack= new Element[255];
@@ -342,8 +442,13 @@ public class GenerateAction extends AnAction {
                 jsonObjectArray.add(jsonObject);
             }
         }
-        jsonActivity.put("object",jsonObject);
-        json.put("activity",jsonActivity);
+
+        JSONArray ucherSibal = new JSONArray();
+        ucherSibal.add(jsonObject);
+        jsonActivity.put("object",ucherSibal);
+        ucherSibal = new JSONArray();
+        ucherSibal.add(jsonActivity);
+        json.put("activity",ucherSibal);
         return json;
     }
 

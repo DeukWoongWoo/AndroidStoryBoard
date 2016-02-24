@@ -61,7 +61,6 @@ public class Component {
     Component(){
         Attributes =new ArrayList<Attribution>();
         AttributeCount=0;
-
     }
     public void setComponentId(String id){
         this.componentId = id;
@@ -270,6 +269,9 @@ public class Component {
         return dp;
     }
     public int getSize(){return AttributeCount;}
-
+    public void setAttributes(String attr,String value){
+        Attribution attribution = new Attribution(attr,value);
+        Attributes.add(attribution);
+    }
 }
 

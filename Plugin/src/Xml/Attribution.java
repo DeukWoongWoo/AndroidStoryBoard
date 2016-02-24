@@ -7,7 +7,13 @@ public class Attribution {
 
     private String Attribute;
     private String Value;
+    public Attribution(){
 
+    }
+    public Attribution(String attr,String value){
+        this.Attribute = attr;
+        this.Value = value;
+    }
     public void setAttribute(String attr){
         Attribute =attr;
     }

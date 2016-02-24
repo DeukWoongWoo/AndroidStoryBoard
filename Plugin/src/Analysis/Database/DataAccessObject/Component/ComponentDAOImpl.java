@@ -3,6 +3,7 @@ package Analysis.Database.DataAccessObject.Component;
 import Analysis.Constant.DatabaseQuery;
 import Analysis.Database.DtatTransferObject.ComponentDTO;
 import Analysis.Database.QueryBuilder.QueryBuilder;
+import Analysis.Database.QueryBuilder.StringUtils;
 import Analysis.Database.SQLiteOpenHelper;
 
 import java.sql.*;
@@ -48,7 +49,7 @@ public class ComponentDAOImpl extends SQLiteOpenHelper implements ComponentDAO {
     @Override
     public ComponentDTO select(String... col) {
         String query = null;
-        if(col.length>0) query = QueryBuilder.selectAll().from(tableName).where(col[0]).build();
+        if(col.length>0) query = QueryBuilder.selectAll().from(tableName).where(StringUtils.join(" AND ",col)).build();
         else query = QueryBuilder.selectAll().from(tableName).build();
 
         System.out.println("select Component Table...");

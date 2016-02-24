@@ -22,10 +22,10 @@ public interface JavaDAO {
     public void insertEvent(EventDTO eventDTO);
 
     public void selectAll();
-    public ArrayList<JavaDTO> selectJava();
-    public void selectXml();
+    public ArrayList<JavaDTO> selectJava(String... col);
+    public ArrayList<JavaDTO> selectXml(String... col);
     public ArrayList<JavaDTO> selectComponent(String... col);
-    public void selectEvent();
+    public ArrayList<JavaDTO> selectEvent(String... col);
 
     public void updateJava(JavaDTO javaDTO);
 }

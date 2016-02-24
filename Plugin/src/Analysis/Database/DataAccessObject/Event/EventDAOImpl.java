@@ -1,12 +1,13 @@
 package Analysis.Database.DataAccessObject.Event;
 
 import Analysis.Constant.DatabaseQuery;
+import Analysis.Database.DtatTransferObject.ComponentDTO;
 import Analysis.Database.DtatTransferObject.EventDTO;
+import Analysis.Database.QueryBuilder.QueryBuilder;
+import Analysis.Database.QueryBuilder.StringUtils;
 import Analysis.Database.SQLiteOpenHelper;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Created by Windows on 2016-02-01.
@@ -46,7 +47,33 @@ public class EventDAOImpl extends SQLiteOpenHelper implements EventDAO {
     }
 
     @Override
-    public void select() {
+    public EventDTO select(String... col) {
+        String query = null;
+        if(col.length>0) query = QueryBuilder.selectAll().from(tableName).where(StringUtils.join(" AND ",col)).build();
+        else query = QueryBuilder.selectAll().from(tableName).build();
 
+        System.out.println("select Component Table...");
+        PreparedStatement prep = null;
+        Connection connection = getConnection();
+        ResultSet rows = null;
+        EventDTO eventDTO = null;
+        try{
+            prep = connection.prepareStatement(query);
+            rows = prep.executeQuery();
+            if(rows.next()){
+                eventDTO = new EventDTO();
+                eventDTO.setNum(rows.getInt(1));
+                eventDTO.setComponentId(rows.getInt(2));
+                eventDTO.setMethodName(rows.getString(3));
+                eventDTO.setType(rows.getInt(4));
+                eventDTO.setTotalLine(rows.getInt(5));
+                eventDTO.setStartLine(rows.getInt(6));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(connection, prep, rows);
+            return eventDTO;
+        }
     }
 }

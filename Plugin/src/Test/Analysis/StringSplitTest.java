@@ -1,5 +1,6 @@
-package Test.Analysis;
+package Analysis;
 
+import Analysis.Database.QueryBuilder.StringUtils;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.Ignore;
@@ -43,6 +44,7 @@ public class StringSplitTest {
 
     }
 
+    @Ignore
     @Test
     public void intentSplit(){
         String str = "Intent intent = new Intent(this, NextActivity.class);";
@@ -61,6 +63,11 @@ public class StringSplitTest {
         String content = intentStr.substring(intentStr.indexOf("(")+1,intentStr.indexOf(")"));
         System.out.println("content : " + content);
         System.out.println("nextActivity : " + content.split(",")[1].split("\\.")[0]);
+    }
+
+    @Test
+    public void StringUtilTest(){
+        System.out.println(StringUtils.join(" AND ","test1"));
     }
 
 }

@@ -59,7 +59,7 @@ function addErrorLog(req) {
     fs.open(file, 'a', function (err, fd) {
         if (err) console.log(err);
         else {
-            fs.appendFile(file, req.body.error_log + '\n', function (err) {
+            fs.appendFile(file, req.body.error_log + '<br/>\n', function (err) {
                 if (err)  console.log(err);
             });
         }

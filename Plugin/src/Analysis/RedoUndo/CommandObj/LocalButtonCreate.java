@@ -8,10 +8,8 @@ import Analysis.RedoUndo.CodeBuilder.Type;
 import Analysis.RedoUndo.CommandKey;
 import Analysis.RedoUndo.Util.ElementFactory;
 import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 
 import java.io.*;
@@ -26,19 +24,8 @@ public class LocalButtonCreate {
 
     private final String buttonName = "button";
     private final String packageName = "android.widget";
+
     private PsiJavaFile psiJavaFile;
-    private Project project;
-    VirtualFile virtualFile;
-
-    public LocalButtonCreate(){
-        init();
-    }
-
-    private void init() {
-        project = SharedPreference.ACTIONEVENT.getData().getProject();
-        File inFile = new File(DatabaseManager.getInstance().selectToJava(table->table.selectJava()).get(0).getPath());
-        virtualFile = LocalFileSystem.getInstance().findFileByIoFile(inFile);
-    }
 
     public void create(){
         if(psiJavaFile == null) psiJavaFile = makePsiJavaFile();
@@ -61,7 +48,7 @@ public class LocalButtonCreate {
 
                             String makeCode = Type.Button + " " + buttonName + (num++) +" = " +CodeBuilder.Component(Type.Button).findViewById(CommandKey.LOCALBUTTON.getId()).build();
 
-                            method.getBody().add(elementFactory.makePsiStatement(makeCode,method));
+                            method.getBody().add(elementFactory.createPsiStatement(makeCode,method));
 
                             if (!checkImport(packageName)){
                                 PsiImportStatement psiImportStatement = elementFactory.findPsiImportStatement(packageName, Type.Button.name());
@@ -83,7 +70,8 @@ public class LocalButtonCreate {
     }
 
     private PsiJavaFile makePsiJavaFile() {
-        return (PsiJavaFile) PsiManager.getInstance(project).findFile(virtualFile);
+        File inFile = new File(DatabaseManager.getInstance().selectToJava(table->table.selectJava()).get(0).getPath());
+        return (PsiJavaFile) PsiManager.getInstance(SharedPreference.ACTIONEVENT.getData().getProject()).findFile(LocalFileSystem.getInstance().findFileByIoFile(inFile));
     }
 
     public void remove(){

@@ -2,6 +2,7 @@ document.write("<script src='javascripts/storyboard/Activity.js'></script>");
 
 function Storyboard() {
     var appName;
+    var userId;
     var activities = new Array();
     var numOfActivities = 0;
     var target;
@@ -20,7 +21,7 @@ function Storyboard() {
     }
 
     this.addBackBoard = function(){
-        document.getElementById(target.replace(/\#/g,'')).innerHTML = "<rect id='storyboard-background' x='-5000' y='-5000' width='10000' height='10000' style='fill: #8BC5B7; stroke: black;  stroke-width: 100px;' onmousedown='startDrag(event)'/>";
+        document.getElementById(target.replace(/\#/g,'')).innerHTML = "<rect id='storyboard-background' x='-5000' y='-5000' width='10000' height='10000' style='fill: white; stroke: white;  stroke-width: 100px;' onmousedown='startDrag(event)'/>";
     }
 
     this.addActivity = function () {
@@ -34,6 +35,10 @@ function Storyboard() {
         return activities[num];
     }
 
+    this.allActivitys = function(){
+        return activities;
+    }
+
     this.activity = function (index) {
         if (isDefined(index)) return activities[index];
         else return activities[numOfActivities - 1];
@@ -41,6 +46,11 @@ function Storyboard() {
 
     this.storyboardData = function (arg) {
         storyboardData = arg;
+    }
+
+    this.setUserIdAppName = function(id, app){
+        userId = id;
+        appName = app;
     }
 
     this.drawActivityObject = function () {
@@ -53,9 +63,10 @@ function Storyboard() {
 
                 var object = activity.addObject().type(objectData.type).name(objectData.name).activityName(activityData.name).width(objectData.width).height(objectData.height).x(objectData.x).y(objectData.y).color(objectData.color);
 
-                if(isDefined(objectData.image))
+                if(isDefined(objectData.image)){
+                    object.imageRoute('/image/' + userId + '/' +  appName + '/' );
                     object.setImage(objectData.image);
-                else
+                }else
                     object.setImage(null);
 
                 if(isDefined(objectData.text)){

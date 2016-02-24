@@ -19,7 +19,6 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
     private JPanel totalPanel;
     private JPanel centerPanel;
     private JPanel eastPanel;
-    private JPanel westPanel;
     private JPanel northPanel;
 
     private ToolWindow mainViewWindow;
@@ -28,14 +27,13 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
         totalPanel = new JPanel();
         centerPanel = new storyBoard();
         northPanel = new menuPanel();
-        westPanel = new palettePanel();
         eastPanel = new componetTreePanel();
         totalPanel.setLayout(new BorderLayout());
 
         totalPanel.add(centerPanel,"Center");
         totalPanel.add(northPanel,"North");
-        totalPanel.add(westPanel,"West");
         totalPanel.add(eastPanel,"East");
+
     }
 
     @Override
@@ -45,5 +43,7 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         Content content = contentFactory.createContent(totalPanel, "", false);
         toolWindow.getContentManager().addContent(content);
+
     }
+
 }

@@ -29,7 +29,8 @@
 <body>
 <div class="navigation">
     <div class="container-fluid">
-        <div class="left" id="menu-button" style="display: inline-block; width:20%;"><i style="visibility: hidden">여백</i></div>
+        <div class="left" id="menu-button" style="display: inline-block; width:20%;"><i
+                    style="visibility: hidden">여백</i></div>
         <div style="display: inline-block;">
             <a href="/" class="main-logo">AndroidStoryBoard</a>
         </div>
@@ -50,12 +51,11 @@
             </form>
         </div>
         <div class="warring-message">
+            <%if(locals.login_result){%>
             <%= login_result %>
+            <%}%>
         </div>
     </div>
 </div>
-<footer>
-    <!---->
-</footer>
 </body>
 </html>

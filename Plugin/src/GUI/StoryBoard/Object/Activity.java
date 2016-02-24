@@ -1,6 +1,7 @@
 package GUI.StoryBoard.Object;
 
 import GUI.StoryBoard.Constant;
+import GUI.StoryBoard.UI.palettePanel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -18,10 +19,13 @@ public class Activity extends JPanel {
     private String id;
     private int activity_width, activity_height;
     private Point activity_position;
+    private String type = "activity";
     JLabel nameLabel = new JLabel();
     JSONObject activityObject;
     HashMap<String, Activity> activitylist;
     HashMap <String, ObjectCustom> objectList = new HashMap();
+
+    palettePanel panel;
 
     private boolean draggable = true;
     protected Point anchorPoint;
@@ -29,8 +33,7 @@ public class Activity extends JPanel {
     protected boolean overbearing = false;
 
 
-    int buttonNum =1;
-    int radiobuttonNum=1;
+
 
     //--------------- 생성자들 -----------------
     public Activity(String name) {
@@ -41,22 +44,93 @@ public class Activity extends JPanel {
         this.setBorder(new LineBorder(Color.black));
         this.setLayout(null);
         addDragListeners();
+
     }
-    public Activity(String name , HashMap<String, Activity> list){
+    public Activity(String name , HashMap<String, Activity> list, JSONObject obj){
+        String layout_type ="linear layout";
+        activityObject =obj;
+        JSONArray array = new JSONArray();
+
+
         setId(name);
         this.setName(name);
         this.setSize(Constant.activitySize_X, Constant.activitySize_Y);
-        this.setBackground(Color.WHITE);
+        this.setBackground(Color.BLACK);
         this.setBorder(new LineBorder(Color.black));
         this.setLayout(null);
         this.setLocation(10,10);
+
+        setId(name);
+        setActivity_width(Constant.activitySize_X);
+        setActivity_height(Constant.activitySize_Y);
+        setActivity_position(new Point(10,10));
+
+        obj.put("name",getId());
+        obj.put("x", (long)getActivity_position().x);
+        obj.put("y", (long)getActivity_position().y);
+        obj.put("width", (long)getActivity_width());
+        obj.put("height", (long)getActivity_height());
+        obj.put("object", array);
+
+
+        if(layout_type.equals("linear layout")){
+            JSONObject tempobj= new JSONObject();
+            Layout_Linear_Root a =  new Layout_Linear_Root(getId(), objectList , tempobj);
+            array.add(tempobj);
+        }
+        else{
+            JSONObject tempobj= new JSONObject();
+            Layout_Relative_Root a =  new Layout_Relative_Root(getId(), objectList , tempobj);
+            array.add(tempobj);
+        }
+
         addDragListeners();
         activitylist =list;
+
     }
     public Activity(HashMap<String, Activity> list , JSONObject obj){
         long width, height, x, y ;
         String name;
 
+        activityObject =obj;
+        activitylist =list;
+        addDragListeners();
+
+
+        name =(String) activityObject.get("name");
+        height=(long) activityObject.get("height");
+        width=(long) activityObject.get("width");
+        x=(long) activityObject.get("x");
+        y=(long) activityObject.get("y");
+
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setActivity_position(new Point((int)x, (int)y));
+        setActivity_height((int)height+(int)height/10);
+        setActivity_width((int)width);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height+(int)height/10);
+        this.setLocation((int)x, (int)y);
+        this.setBorder(new LineBorder(Color.black));
+        this.setLayout(null);
+        this.setBackground(Color.black);
+
+        nameLabel.setText(getId());
+        nameLabel.setLocation((int)width/10,0);
+        nameLabel.setSize(getActivity_width()-(int)width/10, getActivity_height()/10);
+        nameLabel.setForeground(Color.white);
+        nameLabel.setFont(new Font("Serif", Font.PLAIN, getActivity_height()/15 ));
+        add(nameLabel);
+
+
+        makeAllObject(activityObject);
+
+    }
+    public Activity(HashMap<String, Activity> list , JSONObject obj, palettePanel pan){
+        long width, height, x, y ;
+        String name;
+        panel=pan;
         activityObject =obj;
         activitylist =list;
         addDragListeners();
@@ -124,7 +198,12 @@ public class Activity extends JPanel {
     public void setActivity_height(int activity_height) {
         this.activity_height = activity_height;
     }
-
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
     //---------------------------------------------
     //          Method 들
     //---------------------------------------------
@@ -140,6 +219,8 @@ public class Activity extends JPanel {
             if (checkName(tempName) == false) {
                 setId(tempName);
                 nameLabel.setText(tempName);
+                activityObject.put("name", tempName);
+                System.out.println(activityObject);
             } else {
                 JOptionPane.showMessageDialog(null, tempName + "은 이미 중복되어있는 ID 값입니다.");
             }
@@ -155,6 +236,31 @@ public class Activity extends JPanel {
 
         setVisible(false);
 
+
+
+
+
+//        while(buttonKeyList.hasNext()) {
+//            String key = (String) buttonKeyList.next();
+//            Object o = activitylist.get(key);
+//            Activity a = (Activity) o;
+//
+//            if(a.getId().equals(temp)){
+//                removeKey = key;
+//            }
+//        }
+//
+//        if(removeKey!=null) {
+//
+//            activitylist.remove(removeKey);
+//        }
+
+
+    }
+    public void removeActivity_json() {
+        String temp = getId();
+        String removeKey=null;
+        Iterator<String>buttonKeyList = activitylist.keySet().iterator();
         while(buttonKeyList.hasNext()) {
             String key = (String) buttonKeyList.next();
             Object o = activitylist.get(key);
@@ -164,34 +270,15 @@ public class Activity extends JPanel {
                 removeKey = key;
             }
         }
+
         if(removeKey!=null) {
 
             activitylist.remove(removeKey);
         }
-
-
+        setVisible(false);
     }
-    //-----------새로운 버튼 생성---------------
-    public void newButton(){
 
-        Button_Click b = new Button_Click(""+buttonNum, objectList);
 
-        add(b);
-        objectList.put(""+buttonNum , b);
-        revalidate();       // 무효화 선언된 화면을 알려줌
-        repaint();          // 다시 그려준다.
-        buttonNum++;
-
-    }
-    //-----------새로운 Radio 버튼 생성---------
-    public void newRadioButton(){
-        Button_Radio b = new Button_Radio(""+radiobuttonNum, objectList);
-        add(b);
-
-        revalidate();       // 무효화 선언된 화면을 알려줌
-        repaint();          // 다시 그려준다.
-        radiobuttonNum++;
-    }
     //-------------id 중복 확인 -----------------
     public boolean checkName(String id_) {
         String temp = this.getId();
@@ -235,6 +322,7 @@ public class Activity extends JPanel {
                 Point position = new Point(mouseOnScreen.x - parentOnScreen.x - anchorX, mouseOnScreen.y - parentOnScreen.y - anchorY);
 
                 setLocation(position);
+                setActivity_position(position);
 
                 //Change Z-Buffer if it is "overbearing"
                 if (overbearing) {
@@ -267,6 +355,10 @@ public class Activity extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
 
+
+
+                activityObject.put("x", (long)getActivity_position().x);
+                activityObject.put("y", (long)getActivity_position().y);
             }
 
             @Override
@@ -290,7 +382,7 @@ public class Activity extends JPanel {
     public ObjectCustom createObjectCusthom(String type , JSONObject jobj) {
 
         if(type.equals("linear layout")){
-            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj);
+            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel);
             return linear;
         }
         else if(type.equals("relative layout")){
@@ -325,43 +417,23 @@ public class Activity extends JPanel {
     }
 
 
-    //---------------------------------------------
-    //---------------------------------------------
-
-
     //-----------------팝업 메뉴 클레스----------
     class PopUpMenu extends JPopupMenu{
         JMenuItem anItem;
-        JMenuItem button;
-        JMenuItem Radio_button;
         JMenuItem set_name;
 
         public PopUpMenu() {
             anItem = new JMenuItem("Remove");
-            button = new JMenuItem("New Button");
-            Radio_button = new JMenuItem("New RadioButton");
             set_name = new JMenuItem("Set Name");
 
             anItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+
+                    removeActivity_json();
                     System.out.println("clicked destroy");
-                    removeActivity();
+                    activityObject.clear();
 
-                }
-            });
-
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    newButton();
-                }
-            });
-
-            Radio_button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    newRadioButton();
                 }
             });
 
@@ -372,13 +444,10 @@ public class Activity extends JPanel {
                 }
             });
             add(anItem);
-            add(button);
-            add(Radio_button);
             add(set_name);
         }
 
     }
-
 
 
 }

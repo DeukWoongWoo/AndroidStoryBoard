@@ -1,5 +1,6 @@
 package GUI.StoryBoard.Object;
 
+import GUI.StoryBoard.Constant;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -12,31 +13,25 @@ import java.util.HashMap;
 public class Button_Radio extends Button_Root {
 
     JLabel content =new JLabel();
-    public Button_Radio(String name, HashMap<String, ObjectCustom> hash) {
+    public Button_Radio(String name, HashMap<String, ObjectCustom> list, JSONObject obj) {
 
+        super(name,list,obj);
 
-        checkkey=hash;
+        content = new JLabel(getText());
+        checkkey=list;
         setText("NEW RadioButton");
         setId("Radio button"+name);
 
-        content = new JLabel(getText());
 
-        setLayout(null);
+        obj.put("name", getId());
+        obj.put("text", getText());
+        obj.put("type", "radio button");
 
-        setObject_height(30);
-        setObject_width(150);
-
-        content.setLocation(30,0);
-        content.setSize(100,30);
+        init_text();
 
         setBackground(Color.white);
-        setSize(getObject_width(), getObject_height());
         add(content);
-
-
-        System.out.println("RadioButton");
-        System.out.println(isPosition());
-
+        objectJObject=obj;
     }
 
     public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj) {
@@ -45,6 +40,7 @@ public class Button_Radio extends Button_Root {
         init_text();
 
         add(content);
+        setBackground(Color.white);
         repaint();
     }
 

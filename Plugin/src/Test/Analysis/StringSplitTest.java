@@ -1,6 +1,13 @@
 package Test.Analysis;
 
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.junit.Ignore;
 import org.junit.Test;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Created by woong on 2016-02-16.
@@ -35,11 +42,9 @@ public class StringSplitTest {
         System.out.println("id : " + findStr.substring(findStr.lastIndexOf("(")+1,findStr.lastIndexOf(")")));
 
     }
-    String tt;
+
     @Test
     public void intentSplit(){
-        System.out.println(">>>> " + tt);
-
         String str = "Intent intent = new Intent(this, NextActivity.class);";
 
         String[] strSplit = str.split("=");
@@ -57,4 +62,5 @@ public class StringSplitTest {
         System.out.println("content : " + content);
         System.out.println("nextActivity : " + content.split(",")[1].split("\\.")[0]);
     }
+
 }

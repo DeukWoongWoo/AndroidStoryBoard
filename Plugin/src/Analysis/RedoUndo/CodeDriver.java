@@ -10,14 +10,11 @@ public class CodeDriver {
 //        CommandKey.LOCALBUTTON.setId("R.id.button");
 //        commandManager.execute(CommandKey.LOCALBUTTON);
 
-        CommandKey.LOCALBUTTON.setId("R.id.button1");
-        commandManager.execute(CommandKey.LOCALBUTTON);
+        commandManager.createActivity("TestActivity");
 
-        CommandKey.MEMBERBUTTON.setId("R.id.button2");
-        commandManager.execute(CommandKey.MEMBERBUTTON);
-
-        CommandKey.FUNCBUTTON.setId("R.id.button3");
-        commandManager.execute(CommandKey.FUNCBUTTON);
+//        commandManager.createButton(CommandKey.LOCALBUTTON,"button1");
+//        commandManager.createButton(CommandKey.MEMBERBUTTON, "button2");
+//        commandManager.createButton(CommandKey.FUNCBUTTON, "button3");
 
 //        commandManager.undo();
 //        commandManager.redo();

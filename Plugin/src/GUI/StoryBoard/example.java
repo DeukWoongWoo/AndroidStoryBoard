@@ -10,7 +10,7 @@ import java.io.IOException;
 public class example extends JFrame {
 
     public example() throws IOException {
-        palettePanel a = new palettePanel();
+        storyBoard a = new storyBoard();
         this.setSize(1000, 1000);
         this.add(a);
         this.setVisible(true);

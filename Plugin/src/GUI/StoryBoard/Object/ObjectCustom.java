@@ -73,6 +73,13 @@ public class ObjectCustom extends JPanel {
                     repaint();
                 }
 
+                //-------------------------------------
+
+
+                objectJObject.put("x", (long)isPosition().x);
+                objectJObject.put("y", (long)isPosition().y);
+
+                //----------이동을 위한 뷰-------------
 
             }
 

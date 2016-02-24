@@ -26,16 +26,14 @@ import java.util.ArrayList;
  * Created by woong on 2015-12-22.
  */
 public class MyActionClass extends AnAction {
-    private String intellijPath = "/src";
-
     @Override
     public void actionPerformed(AnActionEvent e) {
         SharedPreference.ACTIONEVENT.setData(e);
 
 //        codeMakeTest(e);
 
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, intellijPath);
-        projectAnalysis.execute(intellijPath+"/Activity", ConstantEtc.JAVA_PATTERN);
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.INTELLIJ_PATH);
+        projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
 //        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
 //        projectAnalysis.execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
 
@@ -73,27 +71,4 @@ public class MyActionClass extends AnAction {
 
 //        PluginTest test = new PluginTest(e);
     }
-
-    private void codeMakeTest(AnActionEvent e) {
-        PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
-        Editor editor = e.getData(PlatformDataKeys.EDITOR);
-        int offset = editor.getCaretModel().getOffset();
-        PsiElement elementAt = psiFile.findElementAt(offset);
-        PsiClass psiClass = PsiTreeUtil.getParentOfType(elementAt, PsiClass.class);
-
-        new WriteCommandAction.Simple(psiClass.getProject(), psiClass.getContainingFile()){
-            @Override
-            protected void run() throws Throwable {
-                StringBuilder builder = new StringBuilder("public int compareTo(");
-                builder.append(psiClass.getName()).append(" that) {\n");
-                builder.append("return " + "" + ".start()");
-                builder.append(".result();\n}");
-                PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(psiClass.getProject());
-                PsiMethod compareTo = elementFactory.createMethodFromText(builder.toString(), psiClass);
-                PsiElement el = psiClass.add(compareTo);
-                JavaCodeStyleManager.getInstance(psiClass.getProject()).shortenClassReferences(el);
-            }
-        }.execute();
-    }
-
 }

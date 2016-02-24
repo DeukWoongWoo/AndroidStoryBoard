@@ -1,7 +1,10 @@
 package Analysis.RedoUndo;
 
 import Analysis.RedoUndo.Command.*;
-import Analysis.RedoUndo.CommandObj.Code;
+import Analysis.RedoUndo.CommandObj.ActivityLibCreate;
+import Analysis.RedoUndo.CommandObj.ActivityLink;
+import Analysis.RedoUndo.CommandObj.ErrorLibCreate;
+import Analysis.RedoUndo.CommandObj.EventLibCreate;
 
 import java.util.HashMap;
 import java.util.Stack;
@@ -16,6 +19,7 @@ public class CommandManager{
 
     private Stack<Command> redo = new Stack<>();
     private Stack<Command> undo = new Stack<>();
+    private Stack<Command> lib = new Stack<>();
 
     public static CommandManager getInstance(){
         if(instance == null) {
@@ -27,12 +31,37 @@ public class CommandManager{
     }
 
     public CommandManager(){
-        commandMap.put(CommandKey.WRITE, new CodeWriteCommand(new Code()));
-        commandMap.put(CommandKey.CLEAN, new CodeCleanCommand(new Code()));
         commandMap.put(CommandKey.LOCALBUTTON, new LocalButtonCreateCommand());
         commandMap.put(CommandKey.MEMBERBUTTON, new MemberButtonCreateCommand());
         commandMap.put(CommandKey.FUNCBUTTON, new FuncButtonCreateCommand());
         commandMap.put(CommandKey.ACTIVITY, new ActivityCreateCommand());
+    }
+
+    public void addLibError(String id, String xml){
+        Command command = new ErrorLibCreateCommand(new ErrorLibCreate(id, xml));
+        command.execute();
+        lib.add(command);
+    }
+
+    public void addLibEvent(String id, String xml){
+        Command command = new EventLibCreateCommand(new EventLibCreate(id, xml));
+        command.execute();
+        lib.add(command);
+    }
+
+    public void addLibActivity(String xml){
+        Command command = new ActivityLibCreateCommand(new ActivityLibCreate(xml));
+        command.execute();
+        lib.add(command);
+    }
+
+    public void deleteLib(){
+        lib.forEach(Command::undo);
+    }
+
+    public void linkActivity(String id, String from, String to){
+        commandMap.put(CommandKey.LINK, new ActivityLinkCommand(new ActivityLink(id, from, to)));
+        execute(CommandKey.LINK);
     }
 
     public void createActivity(String className){

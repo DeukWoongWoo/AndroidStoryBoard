@@ -8,5 +8,5 @@ import Analysis.Database.DtatTransferObject.EventDTO;
 public interface EventDAO {
     public void create();
     public void insert(EventDTO eventDTO);
-    public void select();
+    public EventDTO select(String... col);
 }

@@ -72,7 +72,7 @@ public class MemberButtonCreate {
     }
 
     private PsiJavaFile makePsiJavaFile() {
-        File inFile = new File(DatabaseManager.getInstance().selectToJava(table->table.selectJava()).get(0).getPath());
+        File inFile = new File(DatabaseManager.getInstance().selectToJava(table->table.selectJava("name='MainActivity'")).get(0).getPath());
         return (PsiJavaFile) PsiManager.getInstance(SharedPreference.ACTIONEVENT.getData().getProject()).findFile(LocalFileSystem.getInstance().findFileByIoFile(inFile));
     }
 

@@ -4,7 +4,7 @@ package Analysis.RedoUndo;
  * Created by woong on 2016. 2. 11..
  */
 public enum CommandKey{
-    WRITE(null), CLEAN(null), LOCALBUTTON(null), MEMBERBUTTON(null), FUNCBUTTON(null), ACTIVITY(null);
+   LOCALBUTTON(null), MEMBERBUTTON(null), FUNCBUTTON(null), ACTIVITY(null), LINK(null), LIB_EVENT(null), LIB_ERROR(null), LIB_ACTIVITY(null);
 
     String id;
     CommandKey(String id){

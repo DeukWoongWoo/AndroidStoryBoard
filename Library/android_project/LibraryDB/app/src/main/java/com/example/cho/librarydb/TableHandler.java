@@ -10,6 +10,8 @@ import android.util.Log;
 import com.example.cho.librarydb.LibraryFunction.DataForm;
 import com.example.cho.librarydb.Table.ActivityInfo;
 import com.example.cho.librarydb.Table.AppInfo;
+import com.example.cho.librarydb.Table.ObjectInfo;
+import com.example.cho.librarydb.Table.TableList;
 import com.example.cho.librarydb.Table.UserInfo;
 
 /**
@@ -19,7 +21,7 @@ public class TableHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION=1;
     private static final String DATABASE_NAME = "LibraryDB.db";
     private String activityName;
-    public String dbPath ;
+
 
 
     public TableHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -29,9 +31,8 @@ public class TableHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        dbPath = db.getPath();
-        //Table Create
-        String[]  CREATE_PRODUCTS_TABLE = tableList();
+
+        String[]  CREATE_PRODUCTS_TABLE = TableList.tableList();
         for(int i=0;i<CREATE_PRODUCTS_TABLE.length;i++)
             db.execSQL(CREATE_PRODUCTS_TABLE[i]);
     }
@@ -47,75 +48,9 @@ public class TableHandler extends SQLiteOpenHelper {
         db.execSQL("PRAGMA foreign_keys = ON");
     }
 
-    private String[] tableList(){
-        String[] table = new String[7];
-        table[0] =
-                createTableName("UserInfo")
-                +setField("_userId", "TEXT")+","
-                +setPrimaryKey("_userId")
-                +")";
-        table[1] =
-                createTableName("AppInfo")
-                +setField("_appName","TEXT")+","
-                +setField("userId","TEXT")+","
-                +setPrimaryKey("_appName")+","
-                +setForeignKey("userId", "UserInfo", "_userId")
-                +setForeignKeyOption("DELETE CASCADE")
-                +")";
-        table[2] =
-                createTableName("ActivityInfo")
-                +setField("_activityName", "TEXT")+","
-                +setField("appName","TEXT")+","
-                +setPrimaryKey("_activityName")+","
-                +setForeignKey("appName","AppInfo","_appName")
-                +setForeignKeyOption("DELETE CASCADE")
-                +")";
-
-        table[3]=
-                createTableName("TimeInfo")
-                +setField("_activityStartTime", "TEXT")+","
-                +setField("activityEndTime", "TEXT")+","
-                +setField("activityName","TEXT")+","
-                +setField("idx","INTEGER")+","
-                +setPrimaryKey("idx")+","
-                +setForeignKey("activityName","ActivityInfo","_activityName")
-                +setForeignKeyOption("DELETE CASCADE")
-                +")";
-
-        table[4]=
-                createTableName("ObjectInfo")
-                +setField("_objectInfo","TEXT")+","
-                +setField("activityName","TEXT")+","
-                +setPrimaryKey("_objectInfo")+","
-                +setForeignKey("activityName", "ActivityInfo", "_activityName")
-                +setForeignKeyOption("DELETE CASCADE")
-                +")";
-
-        table[5]=
-                createTableName("ErrorInfo")
-                +setField("_errorTime","TEXT")+","
-                +setField("errorLog","TEXT")+","
-                +setField("objectInfo","TEXT")+","
-                +setPrimaryKey("_errorTime")+","
-                +setForeignKey("objectInfo","ObjectInfo","_objectInfo")
-                +setForeignKeyOption("DELETE CASCADE")
-                +")";
-
-        table[6]=
-                createTableName("EventInfo")
-                +setField("_eventTime","TEXT")+","
-                +setField("objectInfo","TEXT")+","
-                +setField("idx","INTEGER")+","
-                +setPrimaryKey("idx")+","
-                +setForeignKey("objectInfo","ObjectInfo","_objectInfo")
-                +setForeignKeyOption("DELETE CASCADE")
-                +")";
-
-        return table;
-    }
-
     public void add(ManageTable manageTable,String ...activityName){
         SQLiteDatabase db = this.getWritableDatabase();
+        setUserIdAndAppName(db);
         addable(db, this.activityName);
         if(activityName.length!=0)
             manageTable.add(db,activityName[0]);
@@ -123,9 +58,13 @@ public class TableHandler extends SQLiteOpenHelper {
             manageTable.add(db);
         db.close();
     }
-    public boolean find(ManageTable manageTable,String field){
-        SQLiteDatabase db = this.getWritableDatabase();
-        return manageTable.find(db, field);
+    private void setUserIdAndAppName(SQLiteDatabase db){
+        UserInfo userInfo = new UserInfo(Names.userId);
+        AppInfo appInfo = new AppInfo(Names.appName,Names.userId);
+        if(!userInfo.find(db,Names.userId))
+            userInfo.add(db);
+        if(!appInfo.find(db,Names.appName))
+            appInfo.add(db);
     }
 
     public void delete(ManageTable manageTable,String field){
@@ -140,6 +79,20 @@ public class TableHandler extends SQLiteOpenHelper {
             activityInfo.add(db);
         }
     }
+    public void checkDB(){
+        SQLiteDatabase db =this.getWritableDatabase();
+        String query = "Select ObjectInfo.activityName , EventInfo.objectInfo , EventInfo._eventTime " +
+                "FROM " + "EventInfo , ObjectInfo" + " WHERE " +
+                "EventInfo.objectInfo = ObjectInfo._objectInfo";
+        Cursor cursor = db.rawQuery(query, null);
+        Log.e("data size","SIZE!! : "+cursor.getCount());
+        if(cursor.moveToFirst()){
+            while(cursor.moveToNext()){
+                Log.e("Query~!!", cursor.getString(0) + "   " + cursor.getString(1) + "   " + cursor.getString(2));
+                }
+                   }
+    }
+
 
 
     public boolean postDataFromDB(ManageTable manageTable) {
@@ -148,23 +101,4 @@ public class TableHandler extends SQLiteOpenHelper {
         db.close();
         return true;
     }
-
-
-
-    private String createTableName(String tableName){
-        return "CREATE TABLE "+tableName+"(";
-    }
-    private String setField(String field,String type){
-        return field+" "+type;
-    }
-    private String setPrimaryKey(String field){
-        return "PRIMARY KEY ("+field+")";
-    }
-    private String setForeignKey(String foreignkey,String referenceTable,String referenceField){
-        return "FOREIGN KEY("+foreignkey+") REFERENCES "+referenceTable+"("+referenceField+")";
-    }
-    private String setForeignKeyOption(String option){
-        return "ON "+option;
-    }
-
 }

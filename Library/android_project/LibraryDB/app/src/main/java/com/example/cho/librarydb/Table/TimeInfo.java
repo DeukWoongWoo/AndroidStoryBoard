@@ -101,7 +101,7 @@ public class TimeInfo implements ManageTable{
 
     @Override
     public boolean postData(SQLiteDatabase db) {
-        HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson();
+        HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson("http://210.118.64.134:3000/getpost/app/activity/use");
         String actName=null;
         String query = "Select TimeInfo.activityName , TimeInfo._activityStartTime , TimeInfo.activityEndTime " +
                 "FROM " + "TimeInfo , ActivityInfo" + " WHERE " +

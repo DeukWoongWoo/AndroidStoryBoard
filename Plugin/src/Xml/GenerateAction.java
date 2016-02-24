@@ -1,4 +1,5 @@
 package Xml;
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
@@ -12,13 +13,19 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
 
 
 /**
@@ -83,13 +90,15 @@ public class GenerateAction extends AnAction {
         try{
             //String Filepath="C:/Users/cho/Desktop/android_project/MyApplication4/app/src/main/res/layout/content_main.xml";
             String Filepath = "C:/Users/cho/Desktop/AndroidStoryboard/Library/android_project/XmlParserActivity/app/src/main/res/layout/testlayout.xml";
-            /*
+
             DocumentBuilderFactory f= DocumentBuilderFactory.newInstance();
             DocumentBuilder parser = f.newDocumentBuilder();
             org.w3c.dom.Document  XmlDoc= parser.parse(Filepath);
-            Element root = XmlDoc.getDocumentElement();
+            org.w3c.dom.Element root = XmlDoc.getDocumentElement();
             XmlDoc.getDocumentElement().normalize();
-            */
+
+
+
             File ff = new File(Filepath);
             XmlPullParserFactory xppf = XmlPullParserFactory.newInstance();
             xppf.setNamespaceAware(true);
@@ -98,19 +107,26 @@ public class GenerateAction extends AnAction {
             xpp.setInput(fis,null);
 
             ComponentManager componentManager=new ComponentManager();
-            int padding []=new int[]{0,0,0,0,0,0};
             int type = xpp.getEventType();
             int layoutCount=0;
-            int allLayoutCount=0;
             String parentId=null;
             Push(0);
+            int componentCount=0;
+            ArrayList<Component> key =new ArrayList<Component>();
+            HashMap<String, ArrayList<Component>> map = new HashMap<String ,ArrayList<Component>>();
+            ArrayList<Component> componentArrayList = new ArrayList<>();
+
             while(type != XmlPullParser.END_DOCUMENT){
 
                 if(type == XmlPullParser.START_TAG) {
 
                     Component component = new Component();
                     component.setAttributes(xpp);
-                    component.setPadding(padding);
+                    if(component.contentWidth<0)
+                        component.setContentWidthSize();
+                    if(component.contentHeight<0)
+                        component.setContentHeightSize();
+
                     if(xpp.getName().equals("RelativeLayout")){//layout
                         component.parentId="RelativeLayout"+isTop();
                         Push(++layoutCount);
@@ -122,70 +138,45 @@ public class GenerateAction extends AnAction {
                     }else{//component
                         component.parentId=parentId;
                         component.setComponentId(component.getId());
+                        setHashMap(map,component,parentId);
                     }
-
-
                     componentManager.addComponent(component);
+                    componentCount++;
+                    componentArrayList.add(component);
                 }
                 else  if(type == XmlPullParser.END_TAG) {
-                   // Messages.showInfoMessage("EndTag : "+xpp.getName(),"EndTag");
                     if(xpp.getName().equals("RelativeLayout")){
-                        Pop();
+                        int pop = Pop();
                         parentId ="RelativeLayout"+isTop();
+
+                        Component component = new Component();
+                        String Id = "End"+"RelativeLayout"+pop;
+                        component.tagName="EndTag";
+                        component.setId(Id);
+                        component.setComponentId(Id);
+                        component.parentId=parentId;
+                        componentArrayList.add(component);
                     }
-
-
-
-
-                    String paddingArr[] ={
-                            "paddingTop",
-                            "paddingBottom",
-                            "paddingLeft",
-                            "paddingStart",
-                            "paddingRight",
-                            "paddingEnd"
-                    };
-                    if(xpp.getName().equals("RelativeLayout"))
-                        for(int i=0;i<xpp.getAttributeCount();i++)
-                            for(int j=0;j<6;j++)
-                                if(xpp.getAttributeName(i).equals(paddingArr[j]))
-                                    padding[j] = changeDpToInt(xpp.getAttributeValue(i))*2;
                 }
                 type = xpp.next();
             }
 
             for(int i=0;i<componentManager.size();i++){
-                String str="";
-
-                for(int j=0;j<componentManager.getComponent(i).getAttributeCount();j++){
-                    str+=componentManager.getComponent(i).getAttributes(j)+" : "+componentManager.getComponent(i).getAttributesValue(j)+"\n";
-                }
-                //Messages.showInfoMessage("TagNme : " + componentManager.getComponent(i).getTagName()+"\n"+str+" ","Attribute");
-/*
-                Messages.showInfoMessage("TagNme : " + componentManager.getComponent(i).getTagName()+"\n" +
-                        "Id: "+componentManager.getComponent(i).componentId+"\n"+
-                        "parentId: "+componentManager.getComponent(i).parentId,"Attribute");*/
-
-            }
-
-
-            for(int i=0;i<componentManager.size();i++){
-
                 Messages.showInfoMessage("Id"+componentManager.getComponent(i).getId()+"\n"+
                         "width: "+getComponentWidthPoint(componentManager,componentManager.getComponent(i).getId(),"left")
                         +" Height: "+getComponentHeightPoint(componentManager,componentManager.getComponent(i).getId(),"top")
                         ,"Axis");
-/*
-                Messages.showInfoMessage("Id: "+componentManager.getComponent(i).componentId+"\n"+
-                                " width: "+(getComponentWidthPoint(componentManager,componentManager.getComponent(i).getId(),"left"))
-                        +" width length: "+componentManager.getComponent(i).getWidth()
-                        ,"Axis");*/
-/*
-                Messages.showInfoMessage("Id"+componentManager.getComponent(i).componentId+"\n"+
-                                "height: "+(getComponentHeightPoint(componentManager,componentManager.getComponent(i).getId(),"top"))
-                                +"height length: "+componentManager.getComponent(i).getHeight()
-                        ,"Axis");*/
             }
+           // makeFile(makeWebJson(map,componentManager));
+            makeFile(makePluginJson(componentArrayList));
+
+            /*
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(XmlDoc);
+            StreamResult result = new StreamResult(new File(Filepath));
+            transformer.transform(source,result);
+*/
 
         }catch(Exception e2){
             Messages.showInfoMessage("error1","error1");
@@ -203,6 +194,172 @@ public class GenerateAction extends AnAction {
             generateComparable(psiClass, dlg.getFields());
         }
     }
+
+    private void setHashMap(HashMap<String, ArrayList<Component>> map,Component component,String parentId){
+        Iterator iterator = map.entrySet().iterator();
+        while(iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            if (entry.getKey().equals(parentId)) {//존재하면
+                ArrayList<Component> value = (ArrayList<Component>) entry.getValue();
+                value.add(component);
+                map.put(entry.getKey().toString(), value);
+                return ;
+            }
+        }
+        //존재하지 않으면
+        ArrayList <Component> value = new ArrayList<Component>();
+        value.add(component);
+        map.put(parentId,value);
+    }
+
+    private JSONObject makeWebJson(HashMap<String, ArrayList<Component>> map, ComponentManager componentManager){
+        JSONObject jsonActivity;
+        JSONObject jsonObject;
+        JSONArray jsonArrayObject;
+        JSONArray jsonArrayActivity=new JSONArray();
+        JSONObject jsonApp=new JSONObject();
+
+        Iterator iterator = map.entrySet().iterator();
+        jsonApp.put("appName","test");
+        while(iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            ArrayList<Component> values = (ArrayList<Component>) entry.getValue();
+            String parentId = entry.getKey().toString();
+            Component component = new Component();
+
+            for(int i=0;i<componentManager.size();i++){
+                if(componentManager.getComponent(i).componentId.equals(parentId))
+                    component = componentManager.getComponent(i);
+            }
+
+            jsonActivity=new JSONObject();
+            jsonActivity.put("name",parentId);
+            jsonActivity.put("x",component.leftPoint);
+            jsonActivity.put("y",component.topPoint);
+            jsonActivity.put("width",component.getWidth());
+            jsonActivity.put("height",component.getHeight());
+            jsonArrayObject = new JSONArray();
+            for(int i=0;i<values.size();i++){
+                component=values.get(i);
+                jsonObject = new JSONObject();
+                jsonObject.put("name",component.getId());
+                jsonObject.put("x",component.leftPoint);
+                jsonObject.put("y",component.topPoint);
+                jsonObject.put("height",component.getHeight());
+                jsonObject.put("width",component.getWidth());
+                jsonObject.put("text",component.text);
+                jsonObject.put("textSize",component.textSize);
+                jsonObject.put("type",component.tagName);
+               //jsonObject.put("next","null");
+                //jsonObject.put("image","null");
+                jsonArrayObject.add(jsonObject);
+            }
+            jsonActivity.put("object",jsonArrayObject);
+            jsonArrayActivity.add(jsonActivity);
+        }
+        jsonApp.put("activity",jsonArrayActivity);
+        return jsonApp;
+    }
+
+    private JSONObject makePluginJson(ArrayList<Component> componentArrayList){
+        JSONObject json=new JSONObject();//전체
+        JSONArray jsonObjectArray = new JSONArray();
+        JSONObject jsonObject=null;
+        JSONArray jsonActiArray = new JSONArray();
+        JSONArray jsonArray = new JSONArray();
+
+        json.put("appName","test");
+        String xmlName = "test.xml";
+        //todo : 여기는 xml파일 대로 xmlName이 바뀐다.
+        JSONObject jsonActivity = new JSONObject();
+        jsonActivity.put("name",xmlName);
+        jsonActivity.put("x",0);
+        jsonActivity.put("y",0);
+        jsonActivity.put("width",768);
+        jsonActivity.put("height",1280);
+
+        for(int i=0;i<componentArrayList.size();i++){
+            Component component = componentArrayList.get(i);
+
+            if(!component.getTagName().equals("EndTag")){
+                jsonObject= new JSONObject();//Object;
+
+                jsonObject.put("name",component.componentId);
+                jsonObject.put("x",component.leftPoint);
+                jsonObject.put("y",component.topPoint);
+                jsonObject.put("width",component.getWidth());
+                jsonObject.put("height",component.getHeight());
+                jsonObject.put("type",component.tagName);
+                JSONObject jsonAttribute = new JSONObject();
+                for(int j = 0;j<component.getSize();j++){
+                    jsonAttribute.put(component.getAttributes(j),
+                            component.getAttributesValue(j));
+                }
+                jsonObject.put("attribute",jsonAttribute);
+                if(component.tagName.equals("RelativeLayout")){//레이아웃!
+                    pushJsonArray(jsonObjectArray);
+                    pushJson(jsonObject);
+                    jsonObjectArray= new JSONArray();
+                }else{//컴포넌트!
+                    jsonObjectArray.add(jsonObject);
+                }
+            }
+            else{//endTag!
+
+                //endTag의 앞부분 속성
+                //jsonObjectArray endTag가 걸린 컴포넌트들
+                jsonObject =popJson();
+                jsonObject.put("object",jsonObjectArray);
+                //jsonObject는 이번 ObjectArray에 에드를 해야할듯?
+                jsonObjectArray = popJsonArray();
+                jsonObjectArray.add(jsonObject);
+            }
+        }
+        jsonActivity.put("object",jsonObject);
+        json.put("activity",jsonActivity);
+        return json;
+    }
+
+
+    private int jsonArrayTop=0;
+    private JSONArray[] jsonArrayStack = new JSONArray[255];
+    private void pushJsonArray(JSONArray jsonArray){
+        jsonArrayStack[jsonArrayTop++] = jsonArray;
+    }
+    private JSONArray popJsonArray(){
+        return jsonArrayStack[--jsonArrayTop];
+    }
+    private JSONArray currentJsonArray(){
+        return jsonArrayStack[jsonArrayTop-1];
+    }
+
+
+
+    private int jsonTop=0;
+    private JSONObject[] jsonStack = new JSONObject[255];
+    private void pushJson(JSONObject jsonObject){
+        jsonStack[jsonTop++] = jsonObject;
+    }
+    private JSONObject popJson(){
+        return jsonStack[--jsonTop];
+    }
+
+    private JSONObject currentJson(){
+        return jsonStack[jsonTop-1];
+    }
+
+    private void makeFile(JSONObject jsonObject){
+        FileWriter file = null;
+        try {
+            file = new FileWriter("C:/Users/cho/Desktop/json/uuuu.json");
+            file.write(jsonObject.toJSONString());
+            file.flush();
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public int getComponentWidthPoint(ComponentManager componentManager, String id, String point){//width를 반환한다(크기도 저장한다)
 
@@ -263,7 +420,7 @@ public class GenerateAction extends AnAction {
             stdWidth = rightPoint - leftPoint;
 
         }else if(component.rightId.equals("null") || component.leftId.equals("null")){//한쪽으로 물린경우
-            stdWidth = component.textWidth;
+            stdWidth = component.contentWidth;
             if(!component.rightId.equals("null")){//right에 물린경우
                 if(component.tagName.equals("RelativeLayout")){
                     leftPoint=parentLeftPoint;
@@ -286,10 +443,10 @@ public class GenerateAction extends AnAction {
         }
         component.setWidth(stdWidth);
 
-        if(component.tagName.equals("RelativeLayout")){
+
             component.leftPoint=leftPoint;
             component.rightPoint=rightPoint;
-        }
+
         if(point.equals("left"))
             return leftPoint;
         else
@@ -354,7 +511,7 @@ public class GenerateAction extends AnAction {
             stdHeight = bottomPoint - topPoint;
 
         }else if(component.bottomId.equals("null") || component.topId.equals("null")){//한쪽으로 물린경우
-            stdHeight = component.textHeight;
+            stdHeight = component.contentHeight;
             if(!component.bottomId.equals("null")){//bottom에 물린경우
                 if(component.tagName.equals("RelativeLayout")){
                     topPoint = parentTopPoint;
@@ -374,10 +531,10 @@ public class GenerateAction extends AnAction {
             }
         }
         component.setHeight(stdHeight);
-        if(component.tagName.equals("RelativeLayout")){
+
             component.topPoint=topPoint;
             component.bottomPoint=bottomPoint;
-        }
+
         if(point.equals("top"))
             return topPoint;
         else

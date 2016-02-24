@@ -49,43 +49,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TableHandler tableHandler = new TableHandler(this,null,null,1);
-        final TextView textView = (TextView) findViewById(R.id.textView);
-        Button bt1 = (Button) findViewById(R.id.button);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                userLiporterEvent.get("button");
-                //  userLiporterActivity.get("button");
-                //startActivity(new Intent(MainActivity.this, Main2Activity.class));
+                userLiporterEvent.get("button");//event기능 사용
+                userLiporterError.get("button");//error기능 사용
 
-            }
-        });
-        findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tableHandler.checkDB();
-            }
-        });
-        findViewById(R.id.button5).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ManageTable obj = new ObjectInfo();
-                tableHandler.delete(obj,"button");
             }
         });
     }
@@ -93,38 +64,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        userLiporterEvent.set(this);
-        userLiporterActivity.set(this);
-
+        userLiporterError.set(this);
+        userLiporterEvent.set(this);//event기능 셋팅
+        userLiporterActivity.set(this);//액티비티 기능셋팅
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
-        userLiporterActivity.get(null);
-
+        userLiporterActivity.get(null);//액티비티기능 사용
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

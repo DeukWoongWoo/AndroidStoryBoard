@@ -56,7 +56,7 @@ public class CommandManager{
     }
 
     public void deleteLib(){
-        
+        lib.forEach(Command::undo);
     }
 
     public void linkActivity(String id, String from, String to){

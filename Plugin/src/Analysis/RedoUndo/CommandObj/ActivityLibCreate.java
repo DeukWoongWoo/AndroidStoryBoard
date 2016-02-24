@@ -19,10 +19,19 @@ import java.util.regex.Pattern;
  * Created by woong on 2016-02-23.
  */
 public class ActivityLibCreate {
+    private final String fieldName = "userLiporterActivity";
+
     private String xml;
+
+    private PsiClass mainClass;
 
     private PsiMethod resumeMethod;
     private PsiMethod pauseMethod;
+
+    private boolean isPauseMethod;
+    private boolean isResumeMethod;
+
+    private ElementFactory elementFactory = new ElementFactory();
 
     public ActivityLibCreate(String xml){
         this.xml = xml;
@@ -33,18 +42,16 @@ public class ActivityLibCreate {
         File file = new File(DatabaseManager.getInstance().selectToJava(table -> table.selectJava("num=" + xmlDTO.getJavaId())).get(0).getPath());
         PsiJavaFile psiJavaFile = (PsiJavaFile) PsiManager.getInstance(SharedPreference.ACTIONEVENT.getData().getProject()).findFile(LocalFileSystem.getInstance().findFileByIoFile(file));
 
-        PsiClass mainClass = psiJavaFile.getClasses()[0];
-
-        ElementFactory elementFactory = new ElementFactory();
+        mainClass = psiJavaFile.getClasses()[0];
 
         new WriteCommandAction.Simple(mainClass.getProject(), mainClass.getContainingFile()) {
             @Override
             protected void run() throws Throwable {
-                mainClass.add(elementFactory.createPsiField("private UserLiporter userLiporterActivity = new CatchActivity();",mainClass));
+                mainClass.add(elementFactory.createPsiField("private UserLiporter "+ fieldName +" = new CatchActivity();",mainClass));
             }
         }.execute();
 
-        for(PsiMethod psiMethod : psiJavaFile.getClasses()[0].getMethods()){
+        for(PsiMethod psiMethod : mainClass.getMethods()){
             if(psiMethod.getName().equals("onResume")) resumeMethod = psiMethod;
             else if(psiMethod.getName().equals("onPause")) pauseMethod = psiMethod;
         }
@@ -61,7 +68,11 @@ public class ActivityLibCreate {
                     builder.append("userLiporterActivity.set(this);\n");
                     builder.append("}\n");
 
-                    mainClass.add(elementFactory.createPsiMethod(builder.toString(),mainClass));
+                    resumeMethod = elementFactory.createPsiMethod(builder.toString(),mainClass);
+
+                    mainClass.add(resumeMethod);
+
+                    isResumeMethod = true;
                 }
 
                 if(pauseMethod != null){
@@ -73,7 +84,11 @@ public class ActivityLibCreate {
                     builder.append("userLiporterActivity.get(null);\n");
                     builder.append("}\n");
 
-                    mainClass.add(elementFactory.createPsiMethod(builder.toString(),mainClass));
+                    pauseMethod = elementFactory.createPsiMethod(builder.toString(),mainClass);
+
+                    mainClass.add(pauseMethod);
+
+                    isPauseMethod = true;
                 }
             }
         }.execute();
@@ -82,7 +97,61 @@ public class ActivityLibCreate {
     }
 
     public void remove(){
+        for(PsiField field : mainClass.getAllFields()){
+            if(field.getName().equals(fieldName)){
+                new WriteCommandAction.Simple(mainClass.getProject(), mainClass.getContainingFile()) {
+                    @Override
+                    protected void run() throws Throwable {
+                        field.delete();
+                    }
+                }.execute();
+            }
+        }
 
+        for(PsiMethod psiMethod : mainClass.getMethods()) {
+            if(psiMethod.getName().equals(pauseMethod.getName())) {
+                if (isPauseMethod) {
+                    new WriteCommandAction.Simple(mainClass.getProject(), mainClass.getContainingFile()) {
+                        @Override
+                        protected void run() throws Throwable {
+                            psiMethod.delete();
+                        }
+                    }.execute();
+                } else {
+                    for (PsiStatement statement : psiMethod.getBody().getStatements()) {
+                        if(statement.getText().equals(fieldName+".get(null);")){
+                            new WriteCommandAction.Simple(mainClass.getProject(), mainClass.getContainingFile()) {
+                                @Override
+                                protected void run() throws Throwable {
+                                    statement.delete();
+                                }
+                            }.execute();
+                        }
+                    }
+                }
+            }else if(psiMethod.getName().equals(resumeMethod.getName())){
+                if (isResumeMethod) {
+                    new WriteCommandAction.Simple(mainClass.getProject(), mainClass.getContainingFile()) {
+                        @Override
+                        protected void run() throws Throwable {
+                            psiMethod.delete();
+                        }
+                    }.execute();
+                } else {
+                    for (PsiStatement statement : psiMethod.getBody().getStatements()) {
+                        if(statement.getText().equals(fieldName+".set(this);")){
+                            new WriteCommandAction.Simple(mainClass.getProject(), mainClass.getContainingFile()) {
+                                @Override
+                                protected void run() throws Throwable {
+                                    statement.delete();
+                                }
+                            }.execute();
+                        }
+                    }
+                }
+            }
+        }
+        syncProject();
     }
 
     private void syncProject() {

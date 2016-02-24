@@ -19,6 +19,8 @@ public class CodeDriver {
         commandManager.addLibError("button","activity_main");
         commandManager.addLibActivity("activity_main");
 
+        commandManager.deleteLib();
+
 //        commandManager.undo();
 //        commandManager.redo();
 //        commandManager.undo();

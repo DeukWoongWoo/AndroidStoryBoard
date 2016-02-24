@@ -428,9 +428,11 @@ public class Activity extends JPanel {
             Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel);
             return linear;
         }
-        else if(type.equals("relative layout")){
-            ObjectCustom obj = new ObjectCustom();
-            return obj;
+        else if(type.equals("RelativeLayout")){
+
+            Layout_Relative_Root relative = new Layout_Relative_Root(objectList,jobj, panel);
+            System.out.println(relative);
+            return relative;
         }
         else
         {

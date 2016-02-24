@@ -1,7 +1,6 @@
 package GUI.StoryBoard;
 
 import GUI.StoryBoard.Object.Activity;
-import GUI.StoryBoard.Object.Layout_Relative_Root;
 import GUI.StoryBoard.UI.palettePanel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -11,7 +10,6 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.AffineTransform;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -33,6 +31,10 @@ public class storyBoard extends JPanel {
     private Point prePoint;
     private int zoom = 0;
     private String appName;
+    private boolean isActivity;
+    private Point scroll_p=new Point(0,0);
+    private int x,y;
+
     HashMap <String, Activity> activity_list = new HashMap();
 
     // 생성자----------------------------------------------------------------
@@ -44,6 +46,7 @@ public class storyBoard extends JPanel {
         jpan = new JPanel();
         jpan.setLayout(null);
         scroll = new JScrollPane(jpan , JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
 
         jpan.setPreferredSize(new Dimension(3000,3000));
         this.setLayout(new BorderLayout());
@@ -58,26 +61,39 @@ public class storyBoard extends JPanel {
         scroll.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged( MouseEvent e) {
+                    int preX = prePoint.x;
+                    int preY = prePoint.y;
+                    int temp_Vertical;
+                    int temp_Horizon;
+                    temp_Vertical = scroll.getVerticalScrollBar().getValue();
+                    temp_Horizon = scroll.getHorizontalScrollBar().getValue();
 
-                int preX = prePoint.x;
-                int preY = prePoint.y;
-                int temp_Vertical;
-                int temp_Horizon;
-                temp_Vertical=scroll.getVerticalScrollBar().getValue();
-                temp_Horizon=scroll.getHorizontalScrollBar().getValue();
 
-                scroll.getVerticalScrollBar().setValue(temp_Vertical+(preY - e.getY()));
-                scroll.getHorizontalScrollBar().setValue(temp_Horizon+(preX - e.getX()));
 
-                setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-                prePoint=e.getPoint();
+                    scroll.getVerticalScrollBar().setValue(temp_Vertical + (preY - e.getY()));
+                    scroll.getHorizontalScrollBar().setValue(temp_Horizon + (preX - e.getX()));
+
+
+                    scroll_p.y = scroll.getVerticalScrollBar().getValue();
+                    scroll_p.x = scroll.getHorizontalScrollBar().getValue();
+                    System.out.println(scroll_p);
+
+
+                    setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                    prePoint = e.getPoint();
+
             }
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                prePoint=e.getPoint();
-                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                if(parlPanel.getChoice()==1){
+                     x= e.getX(); y= e.getY();
+                    isActivity=true;
+                    paintComponent(scroll.getGraphics());
+                }
 
+                prePoint = e.getPoint();
+                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
 
 
@@ -96,9 +112,13 @@ public class storyBoard extends JPanel {
                 {
                     NewWindow a = new  NewWindow(e.getPoint());
 
+                    parlPanel.setChoice(0);
+                    isActivity=false;
                     revalidate();       // 무효화 선언된 화면을 알려줌
                     repaint();          // 다시 그려준다.
+
                 }
+                isActivity=false;
             }
 
             @Override
@@ -121,6 +141,8 @@ public class storyBoard extends JPanel {
 
             }
         });
+
+
         // 버튼 클릭을 위한 마우스 이벤트
         addMouseListener(new MouseAdapter() {
             @Override
@@ -135,6 +157,17 @@ public class storyBoard extends JPanel {
 
 
     }
+
+    public void paintComponent(Graphics g){
+        if(isActivity){
+            g.drawRect(x,y,Constant.activitySize_X,Constant.activitySize_Y);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();          // 다시 그려준다.
+            System.out.println("ABC");
+        }
+    }
+
+
     // 다시 그리기 위한 함수-------------------------------------------------
     public void repaint_window() {
         revalidate();       // 무효화 선언된 화면을 알려줌
@@ -416,7 +449,7 @@ public class storyBoard extends JPanel {
             okbutton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    makeNewActivity(id_field.getText(), activity_list, p);
+                    makeNewActivity(id_field.getText(), activity_list, new Point(p.x+scroll_p.x, p.y+scroll_p.y));
                     dispose();
                 }
             });
@@ -462,4 +495,5 @@ public class storyBoard extends JPanel {
         }
 
     }
+
 }

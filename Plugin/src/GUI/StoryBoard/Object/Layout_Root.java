@@ -103,7 +103,6 @@ public class Layout_Root extends ObjectCustom {
         }
 
 
-
     }
 
     public Layout_Root(String name_, HashMap<String, ObjectCustom> list , JSONObject obj) {
@@ -150,6 +149,14 @@ public class Layout_Root extends ObjectCustom {
         if(type.equals("linear layout")){
             Layout_Linear linear = new Layout_Linear(objectList, jobj, panel);
             return linear;
+        }
+        else if(type.equals("RelativeLayout")){
+            Layout_Relative relative = new Layout_Relative(objectList, jobj, panel);
+            return relative;
+        }
+        else if(type.equals("Button")){
+            Button_Click b = new Button_Click(objectList, jobj);
+            return b;
         }
         else if(type.equals("button")){
             Button_Click b = new Button_Click(objectList, jobj);

@@ -3,8 +3,10 @@ package com.example.cho.librarydb.LibraryFunction;
 import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Looper;
 import android.support.design.widget.TabLayout;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.cho.librarydb.HttpAsyncTaskJson;
 import com.example.cho.librarydb.ManageTable;
@@ -41,18 +43,29 @@ public class CatchError implements UserLiporter{
             CurrentTime timeInfo = new CurrentTime();
             String errorTime = timeInfo.getCurrentTime();
             String errorLog = ex.getMessage();
-            Log.e("--------------Error",activityName+" ErrorTime : "+errorTime);
-            Log.e("--------------Error", activityName + " ErrorLog: " + errorLog);
             TableHandler tableHandler = new TableHandler(context, null, null, 1);
             ErrorInfo errorInfo = new ErrorInfo(errorTime, errorLog, object);
             if(Network.isNetWork((Activity) context)) {
-                HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson();
+                HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson("http://210.118.64.134:3000/getpost/app/activity/object/error/use");
                 httpAsyncTaskJson.execute(DataForm.getErrorData(
-                        Names.userId,Names.appName, activityName,object,errorTime));
-                tableHandler.postDataFromDB(errorInfo);
+                        Names.userId,Names.appName, activityName,object,errorTime,errorLog));
+                //tableHandler.postDataFromDB(errorInfo);
             }else {
-                //DB저장하는 곳(ErroInfo)
                 tableHandler.add(errorInfo,activityName);
+            }
+
+            new Thread(){
+                @Override
+                public void run() {
+                    Looper.prepare();
+                    Toast.makeText(context,"에러가 발생했습니다.",Toast.LENGTH_SHORT).show();
+                    Looper.loop();;
+                }
+            }.start();
+            try{
+                Thread.sleep(2000);
+            }catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
             android.os.Process.killProcess(android.os.Process.myPid());

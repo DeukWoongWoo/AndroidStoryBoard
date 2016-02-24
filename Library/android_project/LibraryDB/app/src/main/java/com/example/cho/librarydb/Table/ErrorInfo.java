@@ -112,9 +112,9 @@ public class ErrorInfo implements ManageTable{
 
     @Override
     public boolean postData(SQLiteDatabase db) {
-        HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson();
+        HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson("http://210.118.64.134:3000/getpost/app/activity/object/error/use");
         String objectName = null;
-        String query = "Select ObjectInfo.activityName , ErrorInfo.objectInfo , ErrorInfo._eventTime " +
+        String query = "Select ObjectInfo.activityName , ErrorInfo.objectInfo , ErrorInfo._eventTime, ErrorInfo.errorLog " +
                 "FROM " + "ErrorInfo , ObjectInfo" + " WHERE " +
                 "ErrorInfo.objectInfo = ObjectInfo._objectInfo";
         Cursor cursor = db.rawQuery(query, null);
@@ -123,7 +123,8 @@ public class ErrorInfo implements ManageTable{
                 objectName = cursor.getString(1);
                 Log.e("Query~!!", cursor.getString(0) + "   " + cursor.getString(1) + "   " + cursor.getString(2));
                 httpAsyncTaskJson.execute(DataForm.getErrorData(
-                        Names.userId, Names.appName, cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+                        Names.userId, Names.appName, cursor.getString(0),
+                        cursor.getString(1), cursor.getString(2),cursor.getString(3)));
             }
             ObjectInfo obj = new ObjectInfo();
             obj.delete(db,objectName);

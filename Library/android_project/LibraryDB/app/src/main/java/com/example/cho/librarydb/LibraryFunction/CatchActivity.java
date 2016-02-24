@@ -31,11 +31,11 @@ public class CatchActivity implements UserLiporter{
         Log.e("----------Activity",activityName+"EndTime: " + activityEndTime);
         TableHandler tableHandler = new TableHandler(context, null, null, 1);
         TimeInfo timeInfo = new TimeInfo(activityName,activitySatrtTime, activityEndTime);
-        if(Network.isNetWork((Activity) context)) {
-            HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson();
+        if (Network.isNetWork((Activity) context)) {
+            HttpAsyncTaskJson httpAsyncTaskJson = new HttpAsyncTaskJson("http://210.118.64.134:3000/getpost/app/activity/use");
             httpAsyncTaskJson.execute(DataForm.getActivityData(
                     Names.userId, Names.appName, activityName, activitySatrtTime, activityEndTime));
-            tableHandler.postDataFromDB(timeInfo);
+           // tableHandler.postDataFromDB(timeInfo);
         }else { //DB저장 부분
 
             tableHandler.add(timeInfo);

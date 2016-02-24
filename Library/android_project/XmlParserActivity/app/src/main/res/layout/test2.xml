@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <Button
         android:id="@+id/button"
@@ -18,7 +17,6 @@
         android:textAllCaps="false" />
 
     <RelativeLayout
-
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,11 +34,9 @@
             android:layout_marginLeft="28dp"
             android:layout_marginStart="28dp"
             android:layout_marginTop="36dp"
-            android:text="New Button"
-            android:textAllCaps="false" />
+            android:text="New Button" />
 
         <RelativeLayout
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/button2"
@@ -55,12 +51,23 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:text="New Button"
-                android:textAllCaps="false" />
+                android:text="New Button" />
         </RelativeLayout>
     </RelativeLayout>
 
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/button"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_toEndOf="@+id/relativeLayout3"
+        android:layout_toRightOf="@+id/relativeLayout3"
+        android:text="New Button" />
+
     <RelativeLayout
+        android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignEnd="@+id/button"
@@ -77,8 +84,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="57dp"
-            android:text="New Button"
-            android:textAllCaps="false" />
+            android:text="New Button" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -96,8 +102,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="45dp"
-                android:text="New Button"
-                android:textAllCaps="false" />
+                android:text="New Button" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -115,14 +120,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="46dp"
-                    android:text="New Button"
-                    android:textAllCaps="false" />
+                    android:text="New Button" />
             </RelativeLayout>
         </RelativeLayout>
-
     </RelativeLayout>
-
 </RelativeLayout>
-
-
-

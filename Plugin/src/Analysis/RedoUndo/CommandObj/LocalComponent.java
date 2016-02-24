@@ -19,14 +19,15 @@ import java.util.regex.Pattern;
 /**
  * Created by woong on 2016-02-24.
  */
-public class LocalButton {
+public class LocalComponent {
     private static int num = 1;
 
-    private final String buttonName = "button" + (num++);
     private final String packageName = "android.widget";
+    private String componentName;
 
     private String id;
     private String xml;
+    private Type type;
 
     private boolean isImprot;
 
@@ -36,9 +37,11 @@ public class LocalButton {
 
     private ElementFactory elementFactory = new ElementFactory();
 
-    public LocalButton(String id, String xml) {
+    public LocalComponent(String id, String xml, Type type) {
         this.id = id;
         this.xml = xml;
+        this.type = type;
+        componentName = type.getValue() + (num++);
     }
 
     public void create() {
@@ -54,21 +57,21 @@ public class LocalButton {
     }
 
     private void insertCode() {
-        insertButton();
+        insertComponent();
         insertImport();
     }
 
-    private void insertButton() {
+    private void insertComponent() {
         PsiMethod createMethod = getPsiMethod("onCreate");
         if (createMethod != null) {
-            String makeCode = Type.Button + " " + buttonName + " = " + CodeBuilder.Component(Type.Button).findViewById("R.id." + id).build();
+            String makeCode = type + " " + componentName + " = " + CodeBuilder.Component(type).findViewById("R.id." + id).build();
             addPsiStatement(createMethod, makeCode);
         }
     }
 
     private void insertImport() {
         if (!checkImport(packageName)) {
-            PsiImportStatement psiImportStatement = elementFactory.findPsiImportStatement(packageName, Type.Button.name());
+            PsiImportStatement psiImportStatement = elementFactory.findPsiImportStatement(packageName, type.name());
             if (psiImportStatement != null) {
                 addPsiImport(psiImportStatement);
                 isImprot = true;
@@ -78,10 +81,10 @@ public class LocalButton {
 
     private void deleteCode() {
         checkXml();
-        findButton();
+        findComponent();
         if(isImprot){
             for (PsiImportStatement psiImportStatement : psiJavaFile.getImportList().getImportStatements()) {
-                if (psiImportStatement.getText().equals("import " + packageName + "." + Type.Button.name() + ";"))
+                if (psiImportStatement.getText().equals("import " + packageName + "." + type.name() + ";"))
                     deleteImport(psiImportStatement);
             }
         }
@@ -96,7 +99,7 @@ public class LocalButton {
         }.execute();
     }
 
-    private void findButton() {
+    private void findComponent() {
         String componentName = DatabaseManager.getInstance().selectToJava(table -> table.selectComponent("xmlId=" + xmlDTO.getNum(), "xmlName='R.id." + id + "'")).get(0).getComponent(0).getName();
 
         PsiMethod createMethod = getPsiMethod("onCreate");
@@ -104,13 +107,13 @@ public class LocalButton {
             for (PsiStatement statement : createMethod.getBody().getStatements()) {
                 Pattern pattern = Pattern.compile(componentName);
                 Matcher matcher = pattern.matcher(statement.getText());
-                if (matcher.find()) deleteButton(statement);
+                if (matcher.find()) deleteComponent(statement);
 
             }
         }
     }
 
-    private void deleteButton(final PsiStatement statement) {
+    private void deleteComponent(final PsiStatement statement) {
         new WriteCommandAction.Simple(psiJavaFile.getProject(), psiJavaFile.getContainingFile()) {
             @Override
             protected void run() throws Throwable {
@@ -161,7 +164,7 @@ public class LocalButton {
 
     private boolean checkImport(String packageName) {
         for (PsiImportStatement psiImportStatement : psiJavaFile.getImportList().getImportStatements()) {
-            if (psiImportStatement.getText().equals("import " + packageName + "." + Type.Button.name() + ";"))
+            if (psiImportStatement.getText().equals("import " + packageName + "." + type.name() + ";"))
                 return true;
         }
         return false;

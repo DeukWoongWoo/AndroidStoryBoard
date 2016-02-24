@@ -1,5 +1,6 @@
 package Analysis.RedoUndo;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
 import Analysis.RedoUndo.Command.*;
 import Analysis.RedoUndo.CommandObj.*;
 
@@ -28,7 +29,7 @@ public class CommandManager{
     }
 
     public CommandManager(){
-//        commandMap.put(CommandKey.LOCALBUTTON, new LocalButtonCreateCommand());
+//        commandMap.put(CommandKey.LOCALBUTTON, new LocalComponentCreateCommand());
         commandMap.put(CommandKey.MEMBERBUTTON, new MemberButtonCreateCommand());
         commandMap.put(CommandKey.FUNCBUTTON, new FuncButtonCreateCommand());
         commandMap.put(CommandKey.ACTIVITY, new ActivityCreateCommand());
@@ -66,12 +67,12 @@ public class CommandManager{
         execute(CommandKey.ACTIVITY);
     }
 
-    public void createLocalButton(String id, String xml){
-        execute(new LocalButtonCreateCommand(new LocalButton(id,xml)));
+    public void createLocalComponent(String id, String xml, Type type){
+        execute(new LocalComponentCreateCommand(new LocalComponent(id,xml, type)));
     }
 
-    public void deleteLocalButton(String id, String xml){
-        execute(new LocalButtonDeleteCommand(new LocalButton(id, xml)));
+    public void deleteLocalComponent(String id, String xml, Type type){
+        execute(new LocalComponentDeleteCommand(new LocalComponent(id, xml, type)));
     }
 
     public void createButton(CommandKey key, String id){

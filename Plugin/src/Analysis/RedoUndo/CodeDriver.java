@@ -1,6 +1,6 @@
 package Analysis.RedoUndo;
 
-import Analysis.RedoUndo.CommandObj.LocalButton;
+import Analysis.RedoUndo.CodeBuilder.Type;
 
 /**
  * Created by woong on 2016. 2. 11..
@@ -9,10 +9,11 @@ public class CodeDriver {
     public CodeDriver(){
         CommandManager commandManager = CommandManager.getInstance();
 
-        commandManager.createLocalButton("button1", "activity_main");
-        commandManager.deleteLocalButton("button1", "activity_main");
-        commandManager.undo();
-        commandManager.redo();
+        commandManager.createLocalComponent("textView1", "activity_main", Type.TextView);
+        commandManager.createLocalComponent("button1", "activity_main", Type.Button);
+        commandManager.deleteLocalComponent("button1", "activity_main", Type.Button);
+//        commandManager.undo();
+//        commandManager.redo();
 
 //        commandManager.createButton(CommandKey.LOCALBUTTON,"button1");
 //        commandManager.createButton(CommandKey.MEMBERBUTTON, "button2");
@@ -33,6 +34,5 @@ public class CodeDriver {
 //        commandManager.undo();
 //        commandManager.undo();
 //        commandManager.redo();
-
     }
 }

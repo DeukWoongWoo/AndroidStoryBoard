@@ -1,8 +1,8 @@
 package Analysis.RedoUndo;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
 import Analysis.RedoUndo.Command.*;
-import Analysis.RedoUndo.CommandObj.ActivityLink;
-import Analysis.RedoUndo.CommandObj.Code;
+import Analysis.RedoUndo.CommandObj.*;
 
 import java.util.HashMap;
 import java.util.Stack;
@@ -17,6 +17,7 @@ public class CommandManager{
 
     private Stack<Command> redo = new Stack<>();
     private Stack<Command> undo = new Stack<>();
+    private Stack<Command> lib = new Stack<>();
 
     public static CommandManager getInstance(){
         if(instance == null) {
@@ -28,12 +29,32 @@ public class CommandManager{
     }
 
     public CommandManager(){
-        commandMap.put(CommandKey.WRITE, new CodeWriteCommand(new Code()));
-        commandMap.put(CommandKey.CLEAN, new CodeCleanCommand(new Code()));
-        commandMap.put(CommandKey.LOCALBUTTON, new LocalButtonCreateCommand());
+//        commandMap.put(CommandKey.LOCALBUTTON, new LocalComponentCreateCommand());
         commandMap.put(CommandKey.MEMBERBUTTON, new MemberButtonCreateCommand());
         commandMap.put(CommandKey.FUNCBUTTON, new FuncButtonCreateCommand());
         commandMap.put(CommandKey.ACTIVITY, new ActivityCreateCommand());
+    }
+
+    public void addLibError(String id, String xml){
+        Command command = new ErrorLibCreateCommand(new ErrorLibCreate(id, xml));
+        command.execute();
+        lib.add(command);
+    }
+
+    public void addLibEvent(String id, String xml){
+        Command command = new EventLibCreateCommand(new EventLibCreate(id, xml));
+        command.execute();
+        lib.add(command);
+    }
+
+    public void addLibActivity(String xml){
+        Command command = new ActivityLibCreateCommand(new ActivityLibCreate(xml));
+        command.execute();
+        lib.add(command);
+    }
+
+    public void deleteLib(){
+        lib.forEach(Command::undo);
     }
 
     public void linkActivity(String id, String from, String to){
@@ -46,6 +67,14 @@ public class CommandManager{
         execute(CommandKey.ACTIVITY);
     }
 
+    public void createLocalComponent(String id, String xml, Type type){
+        execute(new LocalComponentCreateCommand(new LocalComponent(id,xml, type)));
+    }
+
+    public void deleteLocalComponent(String id, String xml, Type type){
+        execute(new LocalComponentDeleteCommand(new LocalComponent(id, xml, type)));
+    }
+
     public void createButton(CommandKey key, String id){
         System.out.println("Create " + key.name() + " ... / ID : " + id);
         key.setId("R.id."+id);
@@ -54,16 +83,17 @@ public class CommandManager{
 
     private void execute(CommandKey key) {
         System.out.println("Command Execute...");
-        Command command = commandMap.get(key);
+        execute(commandMap.get(key));
+    }
+
+    private void execute(Command command){
         command.execute();
         undo.push(command);
     }
 
     public void redo(){
         System.out.println("CommandManager Redo...");
-        Command redoCommand = redo.pop();
-        redoCommand.execute();
-        undo.push(redoCommand);
+        execute(redo.pop());
     }
 
     public void undo() {

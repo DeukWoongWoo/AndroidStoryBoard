@@ -72,7 +72,6 @@ public class ActivityLink {
                 }
             }.execute();
         } else {
-            // TODO: 2016-02-23 기존 event가 있을 때 추가하기
             int type = eventDTO.getType();
             if (type == IMPLEMENT) {
                 for(PsiMethod psiMethod : psiJavaFile.getClasses()[0].getMethods()){

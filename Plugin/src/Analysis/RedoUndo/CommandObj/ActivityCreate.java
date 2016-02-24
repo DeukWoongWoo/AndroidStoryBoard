@@ -6,10 +6,15 @@ import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeBuilder.Type;
 import Analysis.RedoUndo.CommandKey;
 import Analysis.RedoUndo.Util.ElementFactory;
+import com.intellij.application.options.XmlCodeStyleMainPanel;
+import com.intellij.application.options.XmlCodeStyleSettingsProvider;
+import com.intellij.application.options.XmlLanguageCodeStyleSettingsProvider;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.psi.*;
+import com.intellij.psi.codeStyle.CodeStyleManager;
+import com.intellij.psi.formatter.xml.XmlCodeStyleSettings;
 import com.intellij.psi.xml.XmlFile;
 
 import java.io.File;

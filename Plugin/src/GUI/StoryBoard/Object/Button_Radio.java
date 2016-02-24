@@ -33,6 +33,32 @@ public class Button_Radio extends Button_Root {
         add(content);
         objectJObject=obj;
     }
+    public Button_Radio(String name, HashMap<String, ObjectCustom> list, JSONObject obj, Point point) {
+
+        super(name,list,obj);
+
+        content = new JLabel(getText());
+        checkkey=list;
+        setText("NEW RadioButton");
+        setId("Radio button"+name);
+
+        add(content);
+        setPosition(point);
+        setLocation(point.x , point.y);
+        obj.put("x", (long)point.x);
+        obj.put("y", (long)point.y);
+
+
+        obj.put("name", getId());
+        obj.put("text", getText());
+        obj.put("type", "radio button");
+
+        init_text();
+
+        setBackground(Color.white);
+        add(content);
+        objectJObject=obj;
+    }
 
     public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj) {
         super(list, obj);
@@ -43,6 +69,7 @@ public class Button_Radio extends Button_Root {
         setBackground(Color.white);
         repaint();
     }
+
 
     @Override
     public void setting_Id_Text(String id_, String text_) {

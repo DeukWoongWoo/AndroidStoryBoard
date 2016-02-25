@@ -1,4 +1,5 @@
 package Xml;
+import Analysis.Main.ProjectAnalysis;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
@@ -19,8 +20,6 @@ import org.json.simple.parser.ParseException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -45,20 +44,18 @@ public class GenerateAction extends AnAction {
         // TODO: insert action logic here
 
         Project project = e.getProject();
-        String projectName = project.getName();
         Messages.showInfoMessage("TestParsing","TestParsing");
 
+        XmlToJson xmlToJson = new XmlToJson();
+        xmlToJson.make();
+
+        JsonToXml jsonToXml = new JsonToXml();
+        jsonToXml.make("C:/Users/cho/Desktop/json/uuuu.json");
+
+/*
         try{
-            //String Filepath="C:/Users/cho/Desktop/android_project/MyApplication4/app/src/main/res/layout/content_main.xml";
+
             String Filepath = "C:/Users/cho/Desktop/AndroidStoryboard/Library/android_project/XmlParserActivity/app/src/main/res/layout/testlayout.xml";
-
-            DocumentBuilderFactory f= DocumentBuilderFactory.newInstance();
-            DocumentBuilder parser = f.newDocumentBuilder();
-            org.w3c.dom.Document  XmlDoc= parser.parse(Filepath);
-            org.w3c.dom.Element root = XmlDoc.getDocumentElement();
-            XmlDoc.getDocumentElement().normalize();
-
-
 
             File ff = new File(Filepath);
             XmlPullParserFactory xppf = XmlPullParserFactory.newInstance();
@@ -128,8 +125,8 @@ public class GenerateAction extends AnAction {
                         +" Height: "+getComponentHeightPoint(componentManager,componentManager.getComponent(i).getId(),"top")
                         ,"Axis");
             }
-           // makeFile(makeWebJson(map,componentManager));
-            makeFile(makePluginJson(componentArrayList));
+           // makeFile(makeWebJsonObject(map,componentManager));
+            //makeFile(makePluginJsonObject(componentArrayList));
 
             String fp = "C:/Users/cho/Desktop/xml/test2.xml";
             appendXmlCode(componentArrayList,fp);
@@ -137,12 +134,11 @@ public class GenerateAction extends AnAction {
             String jp = "C:/Users/cho/Desktop/json/uuuu.json";
             ArrayList<Component> newComponentArrayList=new ArrayList<Component>();
             JsonToComponent(jp,newComponentArrayList);
-            String d;
-            d="asd";
+
         }catch(Exception e2){
             Messages.showInfoMessage("error1","error1");
 
-        }
+        }*/
         StringBuilder sourceRootsList = new StringBuilder();
         VirtualFile[] vFiles = ProjectRootManager.getInstance(project).getContentSourceRoots();
         for (VirtualFile file : vFiles) {
@@ -345,9 +341,10 @@ public class GenerateAction extends AnAction {
         JSONArray jsonArrayObject;
         JSONArray jsonArrayActivity=new JSONArray();
         JSONObject jsonApp=new JSONObject();
+        jsonApp.put("appName","test");
 
         Iterator iterator = map.entrySet().iterator();
-        jsonApp.put("appName","test");
+
         while(iterator.hasNext()) {
             Map.Entry entry = (Map.Entry) iterator.next();
             ArrayList<Component> values = (ArrayList<Component>) entry.getValue();
@@ -480,10 +477,10 @@ public class GenerateAction extends AnAction {
         return jsonStack[jsonTop-1];
     }
 
-    private void makeFile(JSONObject jsonObject){
+    private void makeFile(JSONObject jsonObject,String filePath){
         FileWriter file = null;
         try {
-            file = new FileWriter("C:/Users/cho/Desktop/json/uuuu.json");
+            file = new FileWriter(filePath);
             file.write(jsonObject.toJSONString());
             file.flush();
             file.close();
@@ -491,8 +488,6 @@ public class GenerateAction extends AnAction {
             e.printStackTrace();
         }
     }
-
-
     public int getComponentWidthPoint(ComponentManager componentManager, String id, String point){//width를 반환한다(크기도 저장한다)
 
         int leftPoint=0;
@@ -511,6 +506,7 @@ public class GenerateAction extends AnAction {
         if(component.parentId.equals("RelativeLayout0")) {//최상위 레이아웃
             component.leftPoint = 0;
             component.rightPoint= 768;
+            component.setWidth(768);
             return component.leftPoint;
         }else{
             for(int i=0;i<componentManager.size();i++){
@@ -573,18 +569,18 @@ public class GenerateAction extends AnAction {
                     rightPoint = leftPoint+stdWidth;
             }
         }
-        component.setWidth(stdWidth);
-
-
-            component.leftPoint=leftPoint;
-            component.rightPoint=rightPoint;
+        component.leftPoint=leftPoint;
+        component.rightPoint=rightPoint;
+        if(component.tagName.equals("RelativeLayout")) {
+        stdWidth = rightPoint-leftPoint;
+        }
+            component.setWidth(stdWidth);
 
         if(point.equals("left"))
             return leftPoint;
         else
             return rightPoint;
     }
-
     public int getComponentHeightPoint(ComponentManager componentManager, String id, String point){//width를 반환한다(크기도 저장한다)
 
         int topPoint=0;
@@ -604,6 +600,7 @@ public class GenerateAction extends AnAction {
         if(component.parentId.equals("RelativeLayout0")) {//최상위 레이아웃
             component.topPoint = 48;
             component.bottomPoint= 1184;
+            component.setHeight(1184-48);
             return component.topPoint;
         }else{
             for(int i=0;i<componentManager.size();i++){
@@ -662,10 +659,13 @@ public class GenerateAction extends AnAction {
                     bottomPoint = topPoint+stdHeight;
             }
         }
-        component.setHeight(stdHeight);
 
-            component.topPoint=topPoint;
-            component.bottomPoint=bottomPoint;
+        component.topPoint=topPoint;
+        component.bottomPoint=bottomPoint;
+        if(component.tagName.equals("RelativeLayout")) {
+        stdHeight = bottomPoint-topPoint;
+        }
+        component.setHeight(stdHeight);
 
         if(point.equals("top"))
             return topPoint;

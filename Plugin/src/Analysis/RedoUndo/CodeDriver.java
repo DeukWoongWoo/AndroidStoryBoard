@@ -9,11 +9,15 @@ public class CodeDriver {
     public CodeDriver(){
         CommandManager commandManager = CommandManager.getInstance();
 
-        commandManager.createLocalComponent("textView1", "activity_main", Type.TextView);
-        commandManager.createLocalComponent("button1", "activity_main", Type.Button);
-        commandManager.deleteLocalComponent("button1", "activity_main", Type.Button);
-//        commandManager.undo();
-//        commandManager.redo();
+//        commandManager.createLocalComponent("textView1", "activity_main", Type.TextView);
+//        commandManager.createLocalComponent("button1", "activity_main", Type.Button);
+//        commandManager.deleteLocalComponent("button1", "activity_main", Type.Button);
+
+//        commandManager.createMemberComponent("button1","activity_main", Type.Button);
+//        commandManager.deleteMemberComponent("button1","activity_main", Type.Button);
+
+//        commandManager.createFucnComponent("button1","activity_main", Type.Button);
+//        commandManager.createFucnComponent("textView1","activity_main", Type.TextView);
 
 //        commandManager.createButton(CommandKey.LOCALBUTTON,"button1");
 //        commandManager.createButton(CommandKey.MEMBERBUTTON, "button2");
@@ -26,13 +30,7 @@ public class CodeDriver {
 //        commandManager.addLibEvent("button","activity_main");
 //        commandManager.addLibError("button","activity_main");
 //        commandManager.addLibActivity("activity_main");
-//
-//        commandManager.deleteLib();
 
-//        commandManager.undo();
-//        commandManager.redo();
-//        commandManager.undo();
-//        commandManager.undo();
-//        commandManager.redo();
+//        commandManager.deleteLib();
     }
 }

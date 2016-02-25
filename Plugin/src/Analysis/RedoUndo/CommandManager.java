@@ -30,8 +30,8 @@ public class CommandManager{
 
     public CommandManager(){
 //        commandMap.put(CommandKey.LOCALBUTTON, new LocalComponentCreateCommand());
-        commandMap.put(CommandKey.MEMBERBUTTON, new MemberButtonCreateCommand());
-        commandMap.put(CommandKey.FUNCBUTTON, new FuncButtonCreateCommand());
+//        commandMap.put(CommandKey.MEMBERBUTTON, new MemberComponentCreateCommand());
+//        commandMap.put(CommandKey.FUNCBUTTON, new FuncComponentCreateCommand());
         commandMap.put(CommandKey.ACTIVITY, new ActivityCreateCommand());
     }
 
@@ -71,8 +71,24 @@ public class CommandManager{
         execute(new LocalComponentCreateCommand(new LocalComponent(id,xml, type)));
     }
 
+    public void createMemberComponent(String id, String xml, Type type){
+        execute(new MemberComponentCreateCommand(new MemberComponent(id,xml,type)));
+    }
+
+    public void createFucnComponent(String id, String xml, Type type){
+        execute(new FuncComponentCreateCommand(new FuncComponent(id, xml, type)));
+    }
+
     public void deleteLocalComponent(String id, String xml, Type type){
         execute(new LocalComponentDeleteCommand(new LocalComponent(id, xml, type)));
+    }
+
+    public void deleteMemberComponent(String id, String xml, Type type){
+        execute(new MemberComponentDeleteCommand(new MemberComponent(id, xml, type)));
+    }
+
+    public void deleteFuncComponent(String id, String xml, Type type){
+        execute(new FuncComponentDeleteCommand(new FuncComponent(id, xml, type)));
     }
 
     public void createButton(CommandKey key, String id){

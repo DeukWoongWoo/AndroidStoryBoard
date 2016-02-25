@@ -17,9 +17,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by woong on 2016-02-24.
+ * Created by woong on 2016-02-25.
  */
-public class LocalComponent {
+public class MemberComponent {
     private static int num = 1;
 
     private final String packageName = "android.widget";
@@ -37,7 +37,7 @@ public class LocalComponent {
 
     private ElementFactory elementFactory = new ElementFactory();
 
-    public LocalComponent(String id, String xml, Type type) {
+    public MemberComponent(String id, String xml, Type type) {
         this.id = id;
         this.xml = xml;
         this.type = type;
@@ -57,14 +57,24 @@ public class LocalComponent {
     }
 
     private void insertCode() {
+        insertField();
         insertComponent();
         insertImport();
+    }
+
+    private void insertField(){
+        new WriteCommandAction.Simple(psiJavaFile.getProject(), psiJavaFile.getContainingFile()) {
+            @Override
+            protected void run() throws Throwable {
+                psiJavaFile.getClasses()[0].add(elementFactory.createPsiField("private " + type.name() + " " + componentName + ";",psiJavaFile));
+            }
+        }.execute();
     }
 
     private void insertComponent() {
         PsiMethod createMethod = getPsiMethod("onCreate");
         if (createMethod != null) {
-            String makeCode = type + " " + componentName + " = " + CodeBuilder.Component(type).findViewById("R.id." + id).build();
+            String makeCode = componentName + " = " + CodeBuilder.Component(type).findViewById("R.id." + id).build();
             addPsiStatement(createMethod, makeCode);
         }
     }
@@ -81,11 +91,26 @@ public class LocalComponent {
 
     private void deleteCode() {
         checkXml();
-        findComponent();
+        String componentName = DatabaseManager.getInstance().selectToJava(table -> table.selectComponent("xmlId=" + xmlDTO.getNum(), "xmlName='R.id." + id + "'")).get(0).getComponent(0).getName();
+        findField(componentName);
+        findComponent(componentName);
         if(isImport){
             for (PsiImportStatement psiImportStatement : psiJavaFile.getImportList().getImportStatements()) {
                 if (psiImportStatement.getText().equals("import " + packageName + "." + type.name() + ";"))
                     deleteImport(psiImportStatement);
+            }
+        }
+    }
+
+    private void findField(String componentName){
+        for(PsiField field : psiJavaFile.getClasses()[0].getAllFields()){
+            if(field.getName().equals(componentName)){
+                new WriteCommandAction.Simple(psiJavaFile.getProject(), psiJavaFile.getContainingFile()) {
+                    @Override
+                    protected void run() throws Throwable {
+                        field.delete();
+                    }
+                }.execute();
             }
         }
     }
@@ -99,16 +124,13 @@ public class LocalComponent {
         }.execute();
     }
 
-    private void findComponent() {
-        String componentName = DatabaseManager.getInstance().selectToJava(table -> table.selectComponent("xmlId=" + xmlDTO.getNum(), "xmlName='R.id." + id + "'")).get(0).getComponent(0).getName();
-
+    private void findComponent(String componentName) {
         PsiMethod createMethod = getPsiMethod("onCreate");
         if (createMethod != null) {
             for (PsiStatement statement : createMethod.getBody().getStatements()) {
                 Pattern pattern = Pattern.compile(componentName);
                 Matcher matcher = pattern.matcher(statement.getText());
                 if (matcher.find()) deleteComponent(statement);
-
             }
         }
     }
@@ -173,5 +195,4 @@ public class LocalComponent {
     private void syncProject() {
         ProjectAnalysis.getInstance(null, null).executeAll();
     }
-
 }

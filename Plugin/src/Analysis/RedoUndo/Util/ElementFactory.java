@@ -63,7 +63,7 @@ public class ElementFactory {
     }
 
     public XmlTag createActivityTag(String attr){
-        XmlTag xmlTag = xmlElementFactory.createTagFromText("<activity/>");
+        XmlTag xmlTag = xmlElementFactory.createTagFromText("<activity/>\n");
         xmlTag.setAttribute("android:name","."+attr);
         return xmlTag;
     }

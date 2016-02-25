@@ -1,5 +1,5 @@
 package Xml;
-import com.intellij.icons.AllIcons;
+import Analysis.Main.ProjectAnalysis;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
@@ -15,12 +15,18 @@ import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -32,72 +38,24 @@ import java.util.*;
  * Created by cho on 2016-01-10.
  */
 public class GenerateAction extends AnAction {
-    private String xml;
-    List <String >data = new ArrayList<String>();
-    static int depthOfXML = 1;
-    String layout_ParentOption [] = {
-            "layout_alignParentTop",
-            "layout_alignParentBottom",
-            "layout_alignParentLeft",
-            "layout_alignParentStart",
-            "layout_alignParentRight",
-            "layout_alignParentEnd"
-    };
-
-    String layout_alignOption[] = {
-            "layout_alignTop",
-            "layout_alignBottom",
-            "layout_alignLeft",
-            "layout_alignStart",
-            "layout_alignRight",
-            "layout_alignEnd"
-    };
-    String layout_toOption[]={
-            "layout_toTopOf",
-            "layout_toBottomOf",
-            "layout_toLeftOf",
-            "layout_toStartOf",
-            "layout_toRightOf",
-            "layout_toEndOf"
-    };
-    String layout_HeigtOption[] = {
-            "layout_above",
-            "layout_below"
-    };
-
-    String layout_Margin[]={
-            "layout_marginTop",
-            "layout_marginBottom",
-            "layout_marginLeft",
-            "layout_marginStart",
-            "layout_marginRight",
-            "layout_marginEnd"
-    };
-
-    int stdTopMargin = 0;
-    int stdBottomMargin=0;
-    int stdLeftMargin=0;
-    int stdRightMargin=0;
 
     @Override
     public void actionPerformed(AnActionEvent e) {
         // TODO: insert action logic here
 
         Project project = e.getProject();
-        String projectName = project.getName();
         Messages.showInfoMessage("TestParsing","TestParsing");
 
+        XmlToJson xmlToJson = new XmlToJson();
+        xmlToJson.make();
+
+        JsonToXml jsonToXml = new JsonToXml();
+        jsonToXml.make("C:/Users/cho/Desktop/json/uuuu.json");
+
+/*
         try{
-            //String Filepath="C:/Users/cho/Desktop/android_project/MyApplication4/app/src/main/res/layout/content_main.xml";
+
             String Filepath = "C:/Users/cho/Desktop/AndroidStoryboard/Library/android_project/XmlParserActivity/app/src/main/res/layout/testlayout.xml";
-
-            DocumentBuilderFactory f= DocumentBuilderFactory.newInstance();
-            DocumentBuilder parser = f.newDocumentBuilder();
-            org.w3c.dom.Document  XmlDoc= parser.parse(Filepath);
-            org.w3c.dom.Element root = XmlDoc.getDocumentElement();
-            XmlDoc.getDocumentElement().normalize();
-
-
 
             File ff = new File(Filepath);
             XmlPullParserFactory xppf = XmlPullParserFactory.newInstance();
@@ -167,21 +125,20 @@ public class GenerateAction extends AnAction {
                         +" Height: "+getComponentHeightPoint(componentManager,componentManager.getComponent(i).getId(),"top")
                         ,"Axis");
             }
-           // makeFile(makeWebJson(map,componentManager));
-            makeFile(makePluginJson(componentArrayList));
+           // makeFile(makeWebJsonObject(map,componentManager));
+            //makeFile(makePluginJsonObject(componentArrayList));
 
-            /*
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(XmlDoc);
-            StreamResult result = new StreamResult(new File(Filepath));
-            transformer.transform(source,result);
-*/
+            String fp = "C:/Users/cho/Desktop/xml/test2.xml";
+            appendXmlCode(componentArrayList,fp);
+
+            String jp = "C:/Users/cho/Desktop/json/uuuu.json";
+            ArrayList<Component> newComponentArrayList=new ArrayList<Component>();
+            JsonToComponent(jp,newComponentArrayList);
 
         }catch(Exception e2){
             Messages.showInfoMessage("error1","error1");
 
-        }
+        }*/
         StringBuilder sourceRootsList = new StringBuilder();
         VirtualFile[] vFiles = ProjectRootManager.getInstance(project).getContentSourceRoots();
         for (VirtualFile file : vFiles) {
@@ -195,6 +152,172 @@ public class GenerateAction extends AnAction {
         }
     }
 
+    private void JsonToAttribute(JSONObject jsonObject,Component component){
+
+        Iterator iterator = jsonObject.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry entry = (Map.Entry) iterator.next();
+            String attr = (String) entry.getKey();
+            String value = (String) entry.getValue();
+            component.setAttributes(attr,value);
+        }
+    }
+
+    private void JsonToObject(JSONArray jsonArray,ArrayList <Component> componentArrayList){
+        JSONObject jsonObject;
+        JSONArray jsonLayout = null;
+        JSONObject jsonAttr;
+        String tagName = null;
+        Component component;
+        for(int i = 0; i<jsonArray.size();i++){
+            component = new Component();
+            jsonObject = (JSONObject) jsonArray.get(i);
+            Iterator iterator = jsonObject.entrySet().iterator();
+            while(iterator.hasNext()){
+                Map.Entry entry = (Map.Entry) iterator.next();
+                String key = (String) entry.getKey();
+
+                if(key.equals("type")){
+                    tagName=(String) entry.getValue();
+                    component.tagName=tagName;
+                }
+                else if(key.equals("attribute")){
+                    jsonAttr = (JSONObject) entry.getValue();
+                    JsonToAttribute(jsonAttr,component);
+                }
+                else if(key.equals("object")){//오브젝트있으면 레이아웃이다.
+                     jsonLayout= (JSONArray) entry.getValue();
+                }
+            }
+            componentArrayList.add(component);
+            if(tagName.equals("RelativeLayout")){
+                JsonToObject(jsonLayout,componentArrayList);
+                //EndTag넣을곳
+                Component component1 = new Component();
+                component1.tagName="EndTag";
+                componentArrayList.add(component1);
+            }
+        }
+    }
+
+    private void JsonToActivity(JSONArray jsonArray,ArrayList <Component> componentArrayList){
+        JSONObject jsonObject;
+        for(int i =0;i<jsonArray.size();i++){
+            jsonObject= (JSONObject) jsonArray.get(i);
+            Iterator iterator = jsonObject.entrySet().iterator();
+            while(iterator.hasNext()){
+                Map.Entry entry = (Map.Entry) iterator.next();
+                String key = (String) entry.getKey();
+                if(key.equals("name")){
+                    //// TODO: 2016-02-24 xmlName은 여기서 받는다
+                    String XmlName = (String) entry.getValue();
+                }
+                else if(key.equals("object")){
+                    JSONArray jsonObjectArray = (JSONArray) entry.getValue();
+                    JsonToObject(jsonObjectArray,componentArrayList);
+                }
+            }
+
+        }
+    }
+    private void JsonToComponent(String filePath,ArrayList <Component> componentArrayList){
+
+        try {
+            FileReader reader = new FileReader(filePath);
+            JSONParser jsonParser = new JSONParser();
+            JSONArray jsonLayout = new JSONArray();
+            JSONObject jsonObject =(JSONObject) jsonParser.parse(reader);
+            Iterator iterator = jsonObject.entrySet().iterator();
+            String key;
+            String value;
+            while(iterator.hasNext()) {
+                Map.Entry entry = (Map.Entry) iterator.next();
+                if(entry.getKey().equals("activity")){
+                    jsonLayout = (JSONArray) entry.getValue();
+                    JsonToActivity(jsonLayout,componentArrayList);
+                }
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+         }
+    }
+
+    private int xmlTop=0;
+    private Element[] xmlStack= new Element[255];
+    private void xmlPush(Element element){
+        xmlStack[xmlTop++]=element;
+    }
+    private Element xmlPop(){
+        return xmlStack[--xmlTop];
+    }
+    private Element currentXmlStackData(){
+        return xmlStack[xmlTop-1];
+    }
+    private void appendXmlCode(ArrayList<Component> componentArrayList, String xmlPath){
+        try{
+            DocumentBuilderFactory documentBuilderFactory= DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document doc= documentBuilder.newDocument();
+            Element currentlayout=null;
+            doc.setDocumentURI("android");
+
+            for(int i=0;i<componentArrayList.size();i++){
+                Attr attr;
+                Component component = componentArrayList.get(i);
+                if(component.getTagName().equals("RelativeLayout")){
+                    currentlayout = doc.createElement(component.getTagName());
+                    for(int j=0;j<component.getAttributeCount();j++){
+                        attr=doc.createAttributeNS("http://schemas.android.com/apk/res/android",component.getAttributes(j));
+                        attr.setValue(component.getAttributesValue(j));
+                        attr.setPrefix("android");
+                        currentlayout.setAttributeNode(attr);
+                    }
+                    if(xmlTop == 0) {//root
+                        doc.appendChild(currentlayout);
+                    }
+                    else{
+                        Element element = currentXmlStackData();
+                        element.appendChild(currentlayout);
+                    }
+                    xmlPush(currentlayout);
+                }else if(component.getTagName().equals("EndTag")){//endTag
+                    xmlPop();
+                }
+                else{//component
+                    Element element = doc.createElement(component.getTagName());
+                    Element parentElement = currentXmlStackData();
+                    for(int j=0;j<component.getAttributeCount();j++){
+                        attr=doc.createAttributeNS("http://schemas.android.com/apk/res/android",component.getAttributes(j));
+                        attr.setValue(component.getAttributesValue(j));
+                        attr.setPrefix("android");
+                        element.setAttributeNode(attr);
+                    }
+                    parentElement.appendChild(element);
+                }
+            }
+
+
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(xmlPath));
+            transformer.transform(source,result);
+
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+
+    }
     private void setHashMap(HashMap<String, ArrayList<Component>> map,Component component,String parentId){
         Iterator iterator = map.entrySet().iterator();
         while(iterator.hasNext()) {
@@ -218,9 +341,10 @@ public class GenerateAction extends AnAction {
         JSONArray jsonArrayObject;
         JSONArray jsonArrayActivity=new JSONArray();
         JSONObject jsonApp=new JSONObject();
+        jsonApp.put("appName","test");
 
         Iterator iterator = map.entrySet().iterator();
-        jsonApp.put("appName","test");
+
         while(iterator.hasNext()) {
             Map.Entry entry = (Map.Entry) iterator.next();
             ArrayList<Component> values = (ArrayList<Component>) entry.getValue();
@@ -315,8 +439,13 @@ public class GenerateAction extends AnAction {
                 jsonObjectArray.add(jsonObject);
             }
         }
-        jsonActivity.put("object",jsonObject);
-        json.put("activity",jsonActivity);
+
+        JSONArray ucherSibal = new JSONArray();
+        ucherSibal.add(jsonObject);
+        jsonActivity.put("object",ucherSibal);
+        ucherSibal = new JSONArray();
+        ucherSibal.add(jsonActivity);
+        json.put("activity",ucherSibal);
         return json;
     }
 
@@ -348,10 +477,10 @@ public class GenerateAction extends AnAction {
         return jsonStack[jsonTop-1];
     }
 
-    private void makeFile(JSONObject jsonObject){
+    private void makeFile(JSONObject jsonObject,String filePath){
         FileWriter file = null;
         try {
-            file = new FileWriter("C:/Users/cho/Desktop/json/uuuu.json");
+            file = new FileWriter(filePath);
             file.write(jsonObject.toJSONString());
             file.flush();
             file.close();
@@ -359,8 +488,6 @@ public class GenerateAction extends AnAction {
             e.printStackTrace();
         }
     }
-
-
     public int getComponentWidthPoint(ComponentManager componentManager, String id, String point){//width를 반환한다(크기도 저장한다)
 
         int leftPoint=0;
@@ -379,6 +506,7 @@ public class GenerateAction extends AnAction {
         if(component.parentId.equals("RelativeLayout0")) {//최상위 레이아웃
             component.leftPoint = 0;
             component.rightPoint= 768;
+            component.setWidth(768);
             return component.leftPoint;
         }else{
             for(int i=0;i<componentManager.size();i++){
@@ -441,18 +569,18 @@ public class GenerateAction extends AnAction {
                     rightPoint = leftPoint+stdWidth;
             }
         }
-        component.setWidth(stdWidth);
-
-
-            component.leftPoint=leftPoint;
-            component.rightPoint=rightPoint;
+        component.leftPoint=leftPoint;
+        component.rightPoint=rightPoint;
+        if(component.tagName.equals("RelativeLayout")) {
+        stdWidth = rightPoint-leftPoint;
+        }
+            component.setWidth(stdWidth);
 
         if(point.equals("left"))
             return leftPoint;
         else
             return rightPoint;
     }
-
     public int getComponentHeightPoint(ComponentManager componentManager, String id, String point){//width를 반환한다(크기도 저장한다)
 
         int topPoint=0;
@@ -472,6 +600,7 @@ public class GenerateAction extends AnAction {
         if(component.parentId.equals("RelativeLayout0")) {//최상위 레이아웃
             component.topPoint = 48;
             component.bottomPoint= 1184;
+            component.setHeight(1184-48);
             return component.topPoint;
         }else{
             for(int i=0;i<componentManager.size();i++){
@@ -530,10 +659,13 @@ public class GenerateAction extends AnAction {
                     bottomPoint = topPoint+stdHeight;
             }
         }
-        component.setHeight(stdHeight);
 
-            component.topPoint=topPoint;
-            component.bottomPoint=bottomPoint;
+        component.topPoint=topPoint;
+        component.bottomPoint=bottomPoint;
+        if(component.tagName.equals("RelativeLayout")) {
+        stdHeight = bottomPoint-topPoint;
+        }
+        component.setHeight(stdHeight);
 
         if(point.equals("top"))
             return topPoint;

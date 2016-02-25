@@ -1,10 +1,8 @@
 package Analysis.RedoUndo;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
 import Analysis.RedoUndo.Command.*;
-import Analysis.RedoUndo.CommandObj.ActivityLibCreate;
-import Analysis.RedoUndo.CommandObj.ActivityLink;
-import Analysis.RedoUndo.CommandObj.ErrorLibCreate;
-import Analysis.RedoUndo.CommandObj.EventLibCreate;
+import Analysis.RedoUndo.CommandObj.*;
 
 import java.util.HashMap;
 import java.util.Stack;
@@ -31,9 +29,9 @@ public class CommandManager{
     }
 
     public CommandManager(){
-        commandMap.put(CommandKey.LOCALBUTTON, new LocalButtonCreateCommand());
-        commandMap.put(CommandKey.MEMBERBUTTON, new MemberButtonCreateCommand());
-        commandMap.put(CommandKey.FUNCBUTTON, new FuncButtonCreateCommand());
+//        commandMap.put(CommandKey.LOCALBUTTON, new LocalComponentCreateCommand());
+//        commandMap.put(CommandKey.MEMBERBUTTON, new MemberComponentCreateCommand());
+//        commandMap.put(CommandKey.FUNCBUTTON, new FuncComponentCreateCommand());
         commandMap.put(CommandKey.ACTIVITY, new ActivityCreateCommand());
     }
 
@@ -69,6 +67,30 @@ public class CommandManager{
         execute(CommandKey.ACTIVITY);
     }
 
+    public void createLocalComponent(String id, String xml, Type type){
+        execute(new LocalComponentCreateCommand(new LocalComponent(id,xml, type)));
+    }
+
+    public void createMemberComponent(String id, String xml, Type type){
+        execute(new MemberComponentCreateCommand(new MemberComponent(id,xml,type)));
+    }
+
+    public void createFucnComponent(String id, String xml, Type type){
+        execute(new FuncComponentCreateCommand(new FuncComponent(id, xml, type)));
+    }
+
+    public void deleteLocalComponent(String id, String xml, Type type){
+        execute(new LocalComponentDeleteCommand(new LocalComponent(id, xml, type)));
+    }
+
+    public void deleteMemberComponent(String id, String xml, Type type){
+        execute(new MemberComponentDeleteCommand(new MemberComponent(id, xml, type)));
+    }
+
+    public void deleteFuncComponent(String id, String xml, Type type){
+        execute(new FuncComponentDeleteCommand(new FuncComponent(id, xml, type)));
+    }
+
     public void createButton(CommandKey key, String id){
         System.out.println("Create " + key.name() + " ... / ID : " + id);
         key.setId("R.id."+id);
@@ -77,16 +99,17 @@ public class CommandManager{
 
     private void execute(CommandKey key) {
         System.out.println("Command Execute...");
-        Command command = commandMap.get(key);
+        execute(commandMap.get(key));
+    }
+
+    private void execute(Command command){
         command.execute();
         undo.push(command);
     }
 
     public void redo(){
         System.out.println("CommandManager Redo...");
-        Command redoCommand = redo.pop();
-        redoCommand.execute();
-        undo.push(redoCommand);
+        execute(redo.pop());
     }
 
     public void undo() {

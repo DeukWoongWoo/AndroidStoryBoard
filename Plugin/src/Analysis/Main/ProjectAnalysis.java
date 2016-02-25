@@ -73,15 +73,22 @@ public class ProjectAnalysis {
         if(pattern.equals(ConstantEtc.JAVA_PATTERN)) findDirectories(curPath, psiDirectory, pattern);
     }
 
-    public String[] findResourcePath(){
+    public String[][] findResourcePath(){
         PsiDirectory psiDirectory = currentDirectory(ConstantEtc.PROJECT_XML_PATH + "/res/layout");
 
         PsiFile[] xmlFiles = psiDirectory.getFiles();
-        String[] path = new String[xmlFiles.length];
+        String[][] path = new String[xmlFiles.length][2];
         for(int i = 0; i < xmlFiles.length ; i++){
-            path[i] = psiDirectory.getText() + "/" + xmlFiles[i].getName();
+            path[i][0] = psiDirectory.getText() + "/" + xmlFiles[i].getName();
+            path[i][1] = xmlFiles[i].getName();
         }
         return path;
+    }
+    public String makeResourcePath(String xmlName){
+        String xmlPath;
+        PsiDirectory psiDirectory = currentDirectory(ConstantEtc.PROJECT_XML_PATH + "/res/layout");
+        xmlPath=psiDirectory.getText() + "/" + xmlName;
+        return xmlPath;
     }
 
     private void createTable(){

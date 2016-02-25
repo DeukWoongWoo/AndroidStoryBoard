@@ -1,7 +1,6 @@
 package GUI.StoryBoard.Object;
 
 import GUI.StoryBoard.Constant;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -257,13 +256,13 @@ public class Button_Root extends ObjectCustom {
     //
     //------- 팝업 메뉴 ------------------
     class PopUpMenu extends JPopupMenu{
-        JMenuItem anItem;
+        JMenuItem connect;
         JMenuItem remove;
         public PopUpMenu() {
-            anItem = new JMenuItem("Connect");
+            connect = new JMenuItem("Connect");
             remove = new JMenuItem("Remove");
 
-            anItem.addActionListener(new ActionListener() {
+            connect.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println(getId()+" "+isPosition());
@@ -277,7 +276,7 @@ public class Button_Root extends ObjectCustom {
                 }
             });
 
-            add(anItem);
+            add(connect);
             add(remove);
         }
 

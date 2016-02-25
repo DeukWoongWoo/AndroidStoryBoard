@@ -5,6 +5,8 @@ import GUI.StoryBoard.UI.palettePanel;
 import org.json.simple.JSONObject;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -66,5 +68,9 @@ public class Layout_Relative_Root extends Layout_Relative {
     @Override
     public void addDragListeners() {
 
+    }
+
+    @Override
+    public void addmouseClickEvent() {
     }
 }

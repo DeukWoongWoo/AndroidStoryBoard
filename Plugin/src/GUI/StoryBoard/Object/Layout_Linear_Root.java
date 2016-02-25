@@ -57,4 +57,8 @@ public class Layout_Linear_Root extends Layout_Linear {
     public void addDragListeners() {
 
     }
+    @Override
+    public void addmouseClickEvent() {
+
+    }
 }

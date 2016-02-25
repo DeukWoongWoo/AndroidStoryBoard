@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -20,7 +21,7 @@ import java.util.Iterator;
  */
 public class storyBoard extends JPanel {
     JButton createActivityB;
-    JPanel jpan;
+    CustomJpanel jpan;
     JScrollPane scroll;
     listner li;
     JSONObject jobjRoot;
@@ -34,7 +35,6 @@ public class storyBoard extends JPanel {
     private boolean isActivity;
     private Point scroll_p=new Point(0,0);
     private int x,y;
-
     HashMap <String, Activity> activity_list = new HashMap();
 
     // 생성자----------------------------------------------------------------
@@ -43,10 +43,11 @@ public class storyBoard extends JPanel {
 
 
         li = new listner();
-        jpan = new JPanel();
+        jpan = new CustomJpanel();
         jpan.setLayout(null);
         scroll = new JScrollPane(jpan , JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
+        System.out.println(scroll.getGraphics());
 
         jpan.setPreferredSize(new Dimension(3000,3000));
         this.setLayout(new BorderLayout());
@@ -56,11 +57,13 @@ public class storyBoard extends JPanel {
         createActivityB.addActionListener(li);
 
         this.setVisible(true);
-
         // 이동을 위한 마우스 이벤트
         scroll.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged( MouseEvent e) {
+                    isActivity=false;
+                    scroll.repaint();
+
                     int preX = prePoint.x;
                     int preY = prePoint.y;
                     int temp_Vertical;
@@ -68,15 +71,13 @@ public class storyBoard extends JPanel {
                     temp_Vertical = scroll.getVerticalScrollBar().getValue();
                     temp_Horizon = scroll.getHorizontalScrollBar().getValue();
 
-
-
                     scroll.getVerticalScrollBar().setValue(temp_Vertical + (preY - e.getY()));
                     scroll.getHorizontalScrollBar().setValue(temp_Horizon + (preX - e.getX()));
 
 
                     scroll_p.y = scroll.getVerticalScrollBar().getValue();
                     scroll_p.x = scroll.getHorizontalScrollBar().getValue();
-                    System.out.println(scroll_p);
+
 
 
                     setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
@@ -89,11 +90,13 @@ public class storyBoard extends JPanel {
                 if(parlPanel.getChoice()==1){
                      x= e.getX(); y= e.getY();
                     isActivity=true;
-                    paintComponent(scroll.getGraphics());
+                    scroll.revalidate();       // 무효화 선언된 화면을 알려줌
+                    scroll.repaint();          // 다시 그려준다.
                 }
 
                 prePoint = e.getPoint();
                 setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+
             }
 
 
@@ -114,8 +117,8 @@ public class storyBoard extends JPanel {
 
                     parlPanel.setChoice(0);
                     isActivity=false;
-                    revalidate();       // 무효화 선언된 화면을 알려줌
-                    repaint();          // 다시 그려준다.
+                    scroll.revalidate();       // 무효화 선언된 화면을 알려줌
+                    scroll.repaint();          // 다시 그려준다.
 
                 }
                 isActivity=false;
@@ -138,11 +141,12 @@ public class storyBoard extends JPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
+                isActivity=false;
+                scroll.revalidate();       // 무효화 선언된 화면을 알려줌
+                scroll.repaint();          // 다시 그려준다.
 
             }
         });
-
-
         // 버튼 클릭을 위한 마우스 이벤트
         addMouseListener(new MouseAdapter() {
             @Override
@@ -150,21 +154,11 @@ public class storyBoard extends JPanel {
 
             }
         });
+
         // 전부 그린다.
         add(parlPanel,"West");
 
         drawActivity();
-
-
-    }
-
-    public void paintComponent(Graphics g){
-        if(isActivity){
-            g.drawRect(x,y,Constant.activitySize_X,Constant.activitySize_Y);
-            revalidate();       // 무효화 선언된 화면을 알려줌
-            repaint();          // 다시 그려준다.
-            System.out.println("ABC");
-        }
     }
 
 
@@ -496,4 +490,47 @@ public class storyBoard extends JPanel {
 
     }
 
+
+    class CustomJpanel extends JPanel{
+
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            drawNextLine(g);
+
+            if(isActivity) {
+                g.drawRect(scroll_p.x+x, scroll_p.y+y, Constant.activitySize_X, Constant.activitySize_Y);
+            }
+        }
+    }
+
+    public void drawNextLine(Graphics g){
+        Iterator<String> activityKeyList = activity_list.keySet().iterator();
+        while(activityKeyList.hasNext()){
+            ArrayList tempList;
+            String key = (String) activityKeyList.next();
+            Object o = activity_list.get(key);
+            Activity a = (Activity) o;
+
+            tempList=a.getNextActivitylist();
+
+
+            for(int i=0; i<tempList.size(); i++){
+                if(activity_list.containsKey(tempList.get(i))){
+                    drawline(a, activity_list.get(tempList.get(i)),g);
+                }
+            }
+
+        }
+
+    }
+
+    public void drawline(Activity start, Activity end, Graphics g){
+    //     System.out.println(start.getId() +" -> " + end.getId());
+
+         g.drawLine((start.getActivity_position().x+ start.getActivity_width()/2)  , (start.getActivity_position().y+ start.getActivity_height()/2),  (end.getActivity_position().x+end.getActivity_width()/2),(end.getActivity_position().y+ end.getActivity_height()/2));
+
+    }
 }

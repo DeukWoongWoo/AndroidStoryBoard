@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -23,7 +24,7 @@ public class ObjectCustom extends JPanel {
 
     public JSONObject objectJObject;
     public HashMap<String, ObjectCustom> objectList;
-
+    public ArrayList nextActivitylist;
 
     public ObjectCustom() {
         addDragListeners();

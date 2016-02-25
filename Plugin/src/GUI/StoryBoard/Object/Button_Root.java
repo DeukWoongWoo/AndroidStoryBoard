@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -71,6 +72,7 @@ public class Button_Root extends ObjectCustom {
 
         repaint();
    }
+
     public Button_Root(HashMap<String, ObjectCustom> list , JSONObject obj){
         long width, height, x, y ;
         String name, text, color;
@@ -86,6 +88,47 @@ public class Button_Root extends ObjectCustom {
         width=(long) objectJObject.get("width");
         x=(long) objectJObject.get("x");
         y=(long) objectJObject.get("y");
+
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setText(text);
+        setPosition(new Point((int)x, (int)y));
+        setObject_height((int)height);
+        setObject_width((int)width);
+        setColor(color);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height);
+        this.setLocation((int)x, (int)y);
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setBackground(Color.LIGHT_GRAY);
+
+        //---------메소드----------------------
+        addMouseListener();
+
+    }
+    public Button_Root(HashMap<String, ObjectCustom> list , JSONObject obj, ArrayList nextlist){
+        long width, height, x, y ;
+        String name, text, color;
+
+        nextActivitylist=nextlist;
+        objectJObject=obj;
+        objectList =list;
+        checkkey=list;
+
+        name =(String) objectJObject.get("name");
+        text = (String)objectJObject.get("text");
+        color = (String)objectJObject.get("color");
+        height=(long) objectJObject.get("height");
+        width=(long) objectJObject.get("width");
+        x=(long) objectJObject.get("x");
+        y=(long) objectJObject.get("y");
+
+        if(objectJObject.containsKey("next")){
+            nextActivitylist.add(objectJObject.get("next"));
+        }
+
 
         //--------- 변수 값 지정---------------
         setId(name);

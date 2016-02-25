@@ -5,6 +5,7 @@ import GUI.StoryBoard.UI.palettePanel;
 import org.json.simple.JSONObject;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -26,9 +27,21 @@ public class Layout_Relative_Root extends Layout_Relative {
 
         System.out.println(this);
         setPosition(new Point(0,0));
-        setObject_width(768);
-        setObject_height(1280);
 
+        setSize(getObject_width(),getObject_height());
+
+        //--------- 변수 값 지정---------------
+        setPosition(new Point(isPosition().x, isPosition().y+getObject_height()/10));
+        //----------창 구성--------------------
+        this.setLocation(isPosition().x, isPosition().y);
+        this.setBackground(Color.white);
+        this.setOpaque(true);
+    }
+    public Layout_Relative_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist) {
+        super(list, obj,pan,nextlist);
+
+        System.out.println(this);
+        setPosition(new Point(0,0));
 
         setSize(getObject_width(),getObject_height());
 

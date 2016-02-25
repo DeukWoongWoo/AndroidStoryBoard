@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -14,6 +15,7 @@ public class Button_Click extends Button_Root {
 
     JLabel content = new JLabel();
 
+    // 버튼 생성을 위해서 필요한 값들
     public Button_Click(String name , HashMap<String, ObjectCustom> list, JSONObject obj) {
 
         super(name, list, obj);
@@ -46,8 +48,15 @@ public class Button_Click extends Button_Root {
 
 
     }
+
+    // 버튼 json에서 받아와서 하는 것들
     public Button_Click(HashMap<String, ObjectCustom> list, JSONObject obj) {
         super(list, obj);
+        init_text();
+        add(content);
+    }
+    public Button_Click(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist) {
+        super(list, obj,nextlist);
         init_text();
         add(content);
     }

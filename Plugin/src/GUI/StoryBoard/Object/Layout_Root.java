@@ -8,6 +8,7 @@ import org.json.simple.JSONObject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -63,6 +64,38 @@ public class Layout_Root extends ObjectCustom {
         panel = pan;
         objectJObject=obj;
         objectList =list;
+
+        name =(String) objectJObject.get("name");
+        height=(long) objectJObject.get("height");
+        width=(long) objectJObject.get("width");
+        x=(long) objectJObject.get("x");
+        y=(long) objectJObject.get("y");
+
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setPosition(new Point((int)x, (int)y));
+        setObject_height((int)height);
+        setObject_width((int)width);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height);
+        this.setLocation((int)x, (int)y);
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setOpaque(false);
+        addMouseListner();
+
+        addMouseactionListner(this.getGraphics());
+        makeAllObject(objectJObject);
+    }
+    public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist) {
+        long width, height, x, y ;
+        String name;
+        JSONArray objectArray;
+        panel = pan;
+        objectJObject=obj;
+        objectList =list;
+        nextActivitylist = nextlist;
 
         name =(String) objectJObject.get("name");
         height=(long) objectJObject.get("height");
@@ -147,23 +180,23 @@ public class Layout_Root extends ObjectCustom {
     }
     public ObjectCustom CreateObjectCustom(String type, JSONObject jobj){
         if(type.equals("linear layout")){
-            Layout_Linear linear = new Layout_Linear(objectList, jobj, panel);
+            Layout_Linear linear = new Layout_Linear(objectList, jobj, panel, nextActivitylist);
             return linear;
         }
         else if(type.equals("RelativeLayout")){
-            Layout_Relative relative = new Layout_Relative(objectList, jobj, panel);
+            Layout_Relative relative = new Layout_Relative(objectList, jobj, panel, nextActivitylist);
             return relative;
         }
         else if(type.equals("Button")){
-            Button_Click b = new Button_Click(objectList, jobj);
+            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist);
             return b;
         }
         else if(type.equals("button")){
-            Button_Click b = new Button_Click(objectList, jobj);
+            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist);
             return b;
         }
         else if(type.equals("radio button")){
-            Button_Radio b= new Button_Radio(objectList, jobj);
+            Button_Radio b= new Button_Radio(objectList, jobj,nextActivitylist);
             return b;
         }
         else

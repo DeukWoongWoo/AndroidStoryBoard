@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -24,6 +25,7 @@ public class Activity extends JPanel {
     JSONObject activityObject;
     HashMap<String, Activity> activitylist;
     HashMap <String, ObjectCustom> objectList = new HashMap();
+    ArrayList nextActivitylist = new ArrayList();
 
     palettePanel panel;
 
@@ -247,6 +249,9 @@ public class Activity extends JPanel {
     public void setType(String type) {
         this.type = type;
     }
+    public ArrayList getNextActivitylist(){
+        return nextActivitylist;
+    }
     //---------------------------------------------
     //          Method 들
     //---------------------------------------------
@@ -353,11 +358,12 @@ public class Activity extends JPanel {
             public void mouseMoved(MouseEvent e) {
                 anchorPoint = e.getPoint();
                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
+                getParent().repaint();
             }
 
             @Override
             public void mouseDragged(MouseEvent e) {
+                getParent().repaint();
                 int anchorX = anchorPoint.x;
                 int anchorY = anchorPoint.y;
                 Point parentOnScreen = getParent().getLocationOnScreen();
@@ -425,12 +431,12 @@ public class Activity extends JPanel {
     public ObjectCustom createObjectCusthom(String type , JSONObject jobj) {
 
         if(type.equals("linear layout")){
-            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel);
+            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel, nextActivitylist);
             return linear;
         }
         else if(type.equals("RelativeLayout")){
 
-            Layout_Relative_Root relative = new Layout_Relative_Root(objectList,jobj, panel);
+            Layout_Relative_Root relative = new Layout_Relative_Root(objectList,jobj, panel, nextActivitylist);
             System.out.println(relative);
             return relative;
         }

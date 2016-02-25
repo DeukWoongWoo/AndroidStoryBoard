@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -60,8 +61,17 @@ public class Button_Radio extends Button_Root {
         objectJObject=obj;
     }
 
-    public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj) {
+     public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj) {
         super(list, obj);
+
+        init_text();
+
+        add(content);
+        setBackground(Color.white);
+        repaint();
+    }
+    public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist) {
+        super(list, obj, nextlist);
 
         init_text();
 

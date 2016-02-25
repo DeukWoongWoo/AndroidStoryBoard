@@ -36,7 +36,7 @@
                         		"height": 30,
                         		"color": "green",
                         		"type" : "button",
-                        		"next": "c"
+                        		"next": "WOOTOOL"
                     		},
                     		{
                         		"name": "a3",
@@ -77,7 +77,7 @@
                                     "height": 30,
                                     "color": "black",
                                     "type" : "button",
-                                    "next": "c"
+                                    "next": "WOOTOOL"
                                 },
                                 {
                                     "name": "a2",
@@ -128,7 +128,7 @@
                                 "height": 30,
                                 "color": "black",
                                 "type" : "button",
-                                "next": "a"
+                                "next": "A"
                             },
                             {
                                 "name": "a2",
@@ -139,7 +139,7 @@
                                 "height": 30,
                                 "color": "green",
                                 "type" : "button",
-                                "next": "b"
+                                "next": "B"
                             },
                             {
                                 "name": "a3",
@@ -169,7 +169,7 @@
                                                "height": 30,
                                                "color": "black",
                                                "type" : "button",
-                                               "next": "a"
+                                               "next": "A"
                                            },
                                            {
                                                "name": "tool",
@@ -180,7 +180,7 @@
                                                "height": 30,
                                                "color": "green",
                                                "type" : "button",
-                                               "next": "b"
+                                               "next": "B"
                                            }
                                            ]
 

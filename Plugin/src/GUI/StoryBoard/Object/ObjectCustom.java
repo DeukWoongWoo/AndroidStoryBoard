@@ -30,6 +30,7 @@ public class ObjectCustom extends JPanel {
 
     public JSONObject objectJObject;
     public HashMap<String, ObjectCustom> objectList;
+    public HashMap<String, Activity> activityList;
     public ArrayList nextActivitylist;
 
 
@@ -298,7 +299,6 @@ public class ObjectCustom extends JPanel {
         });
     }
     public void addFocusEvent(){
-
         addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {

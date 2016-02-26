@@ -431,12 +431,12 @@ public class Activity extends JPanel {
     public ObjectCustom createObjectCusthom(String type , JSONObject jobj) {
 
         if(type.equals("linear layout")){
-            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel, nextActivitylist);
+            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel, nextActivitylist, activitylist);
             return linear;
         }
         else if(type.equals("RelativeLayout")){
 
-            Layout_Relative_Root relative = new Layout_Relative_Root(objectList,jobj, panel, nextActivitylist);
+            Layout_Relative_Root relative = new Layout_Relative_Root(objectList,jobj, panel, nextActivitylist, activitylist);
             System.out.println(relative);
             return relative;
         }

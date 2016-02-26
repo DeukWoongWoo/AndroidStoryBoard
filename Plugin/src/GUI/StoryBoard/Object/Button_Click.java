@@ -60,6 +60,11 @@ public class Button_Click extends Button_Root {
         init_text();
         add(content);
     }
+    public Button_Click(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actList) {
+        super(list, obj,nextlist, actList);
+        init_text();
+        add(content);
+    }
 
     @Override
     public void setting_Id_Text(String id_, String text_) {

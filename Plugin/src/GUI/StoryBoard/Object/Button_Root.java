@@ -17,7 +17,7 @@ import java.util.Iterator;
 public class Button_Root extends ObjectCustom {
 
     private String text;
-
+    private Point mousep;
     protected HashMap<String, ObjectCustom> checkkey;
 
     /////////////////////////////////
@@ -148,6 +148,48 @@ public class Button_Root extends ObjectCustom {
         addMouseListener();
 
     }
+    public Button_Root(HashMap<String, ObjectCustom> list , JSONObject obj, ArrayList nextlist , HashMap<String, Activity> actList) {
+        long width, height, x, y ;
+        String name, text, color;
+
+        nextActivitylist=nextlist;
+        objectJObject=obj;
+        objectList =list;
+        checkkey=list;
+        activityList=actList;
+
+        name =(String) objectJObject.get("name");
+        text = (String)objectJObject.get("text");
+        color = (String)objectJObject.get("color");
+        height=(long) objectJObject.get("height");
+        width=(long) objectJObject.get("width");
+        x=(long) objectJObject.get("x");
+        y=(long) objectJObject.get("y");
+
+        if(objectJObject.containsKey("next")){
+            nextActivitylist.add(objectJObject.get("next"));
+        }
+
+
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setText(text);
+        setPosition(new Point((int)x, (int)y));
+        setObject_height((int)height);
+        setObject_width((int)width);
+        setColor(color);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height);
+        this.setLocation((int)x, (int)y);
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setBackground(Color.LIGHT_GRAY);
+
+        //---------메소드----------------------
+        addMouseListener();
+
+    }
 
 
     //------private 변수 접근함수-------
@@ -174,6 +216,7 @@ public class Button_Root extends ObjectCustom {
                     Change_Window c = new Change_Window(getId(),getText(),e.getLocationOnScreen(), e.getPoint());
                     e.consume();
                 }
+                mousep = e.getLocationOnScreen();
 
             }
 
@@ -265,7 +308,7 @@ public class Button_Root extends ObjectCustom {
             connect.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println(getId()+" "+isPosition());
+                    Connect_NextActivity activity = new Connect_NextActivity();
                 }
             });
 
@@ -412,7 +455,98 @@ public class Button_Root extends ObjectCustom {
             }
         }
     }
+    class Connect_NextActivity extends JFrame {
+
+        JLabel next_label;
+
+        JButton okbutton;
+        JButton cancelButton;
+        JComboBox<String> combo = new JComboBox<String>();
+        int scale_size;
+
+        public Connect_NextActivity(){
+
+            this.setUndecorated(true);      //title bar 제거
+            this.setSize(350, 150);          //창 사이즈
+            this.setVisible(true);
+            this.setLayout(null);
+            this.setLocation(mousep.x,mousep.y);   // 현재 버튼의 위에 덮기 위한 것
+            okbutton = new JButton("OK");
+            cancelButton = new JButton("NO");
+            next_label = new JLabel("Next Activity");
+
+            okbutton.setMargin(new Insets(0, 0, 0, 0));
+            okbutton.setLocation(100, 100);
+            okbutton.setSize(100, 40);
+
+            cancelButton.setMargin(new Insets(0, 0, 0, 0));
+            cancelButton.setLocation(220, 100);
+            cancelButton.setSize(100, 40);
+
+            combo.setSize(300,40);
+            combo.setLocation(50,50);
+
+            next_label.setSize(100,20);
+            next_label.setLocation(10,10);
+
+            okbutton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                }
+            });
+            cancelButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                }
+            });
+
+            Iterator<String> activeKeyList = activityList.keySet().iterator();
+
+            while(activeKeyList.hasNext()){
+                String key = (String) activeKeyList.next();
+                Object o = activityList.get(key);
+                Activity a = (Activity) o;
+
+                combo.addItem(a.getId());
+            }
+            combo.addItem("NONE");
+
+            if(objectJObject.containsKey("next")){
+                if(activityList.containsKey(objectJObject.get("next")))
+                    combo.setSelectedItem(objectJObject.get("next"));
+                else
+                    combo.setSelectedItem("NONE");
+            }
+            else
+                combo.setSelectedItem("NONE");
 
 
+            add(okbutton);
+            add(cancelButton);
+            add(combo);
+            add(next_label);
+            this.addWindowFocusListener(new WindowFocusListener() {
+                @Override
+                public void windowGainedFocus(WindowEvent e) {
 
+                }
+
+                @Override
+                public void windowLostFocus(WindowEvent e) {
+                    if(combo.getSelectedItem().equals("NONE")){
+                        objectJObject.remove("next");
+                    }
+                    else
+                    {
+                        objectJObject.put("next", combo.getSelectedItem());
+                    }
+                    dispose();
+                }
+            });
+        }
+
+
+    }
 }

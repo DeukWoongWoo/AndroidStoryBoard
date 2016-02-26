@@ -489,8 +489,6 @@ public class storyBoard extends JPanel {
         }
 
     }
-
-
     class CustomJpanel extends JPanel{
 
 
@@ -505,7 +503,6 @@ public class storyBoard extends JPanel {
             }
         }
     }
-
     public void drawNextLine(Graphics g){
         Iterator<String> activityKeyList = activity_list.keySet().iterator();
         while(activityKeyList.hasNext()){
@@ -526,7 +523,6 @@ public class storyBoard extends JPanel {
         }
 
     }
-
     public void drawline(Activity start, Activity end, Graphics g){
     //     System.out.println(start.getId() +" -> " + end.getId());
 

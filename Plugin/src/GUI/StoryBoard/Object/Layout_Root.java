@@ -120,6 +120,39 @@ public class Layout_Root extends ObjectCustom {
         addMouseactionListner(this.getGraphics());
         makeAllObject(objectJObject);
     }
+    public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList) {
+        long width, height, x, y ;
+        String name;
+        JSONArray objectArray;
+        panel = pan;
+        objectJObject=obj;
+        objectList =list;
+        nextActivitylist = nextlist;
+        activityList=actList;
+
+        name =(String) objectJObject.get("name");
+        height=(long) objectJObject.get("height");
+        width=(long) objectJObject.get("width");
+        x=(long) objectJObject.get("x");
+        y=(long) objectJObject.get("y");
+
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setPosition(new Point((int)x, (int)y));
+        setObject_height((int)height);
+        setObject_width((int)width);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height);
+        this.setLocation((int)x, (int)y);
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setOpaque(false);
+        addMouseListner();
+
+        addMouseactionListner(this.getGraphics());
+        makeAllObject(objectJObject);
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -180,23 +213,23 @@ public class Layout_Root extends ObjectCustom {
     }
     public ObjectCustom CreateObjectCustom(String type, JSONObject jobj){
         if(type.equals("linear layout")){
-            Layout_Linear linear = new Layout_Linear(objectList, jobj, panel, nextActivitylist);
+            Layout_Linear linear = new Layout_Linear(objectList, jobj, panel, nextActivitylist, activityList);
             return linear;
         }
         else if(type.equals("RelativeLayout")){
-            Layout_Relative relative = new Layout_Relative(objectList, jobj, panel, nextActivitylist);
+            Layout_Relative relative = new Layout_Relative(objectList, jobj, panel, nextActivitylist, activityList);
             return relative;
         }
         else if(type.equals("Button")){
-            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist);
+            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist,activityList);
             return b;
         }
         else if(type.equals("button")){
-            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist);
+            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist, activityList);
             return b;
         }
         else if(type.equals("radio button")){
-            Button_Radio b= new Button_Radio(objectList, jobj,nextActivitylist);
+            Button_Radio b= new Button_Radio(objectList, jobj,nextActivitylist, activityList);
             return b;
         }
         else

@@ -26,6 +26,9 @@ public class Layout_Relative extends Layout_Root {
     public Layout_Relative(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist) {
         super(list,obj,pan, nextlist);
     }
+    public Layout_Relative(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList) {
+        super(list,obj,pan, nextlist,actList);
+    }
 
 
 }

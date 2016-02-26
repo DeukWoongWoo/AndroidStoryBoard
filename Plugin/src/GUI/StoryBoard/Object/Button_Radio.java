@@ -80,6 +80,16 @@ public class Button_Radio extends Button_Root {
         repaint();
     }
 
+    public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actlist) {
+        super(list, obj, nextlist, actlist);
+
+        init_text();
+
+        add(content);
+        setBackground(Color.white);
+        repaint();
+    }
+
 
     @Override
     public void setting_Id_Text(String id_, String text_) {

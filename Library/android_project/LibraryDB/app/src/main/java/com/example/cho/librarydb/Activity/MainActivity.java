@@ -54,8 +54,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                userLiporterEvent.get("button");//event기능 사용
-                userLiporterError.get("button");//error기능 사용
+                //userLiporterEvent.get("button");//event기능 사용
+                //userLiporterError.get("button");//error기능 사용
+                Intent intent=new Intent(MainActivity.this,Main2Activity.class);
+
+                intent.putExtra("text","b");
+                startActivity(intent);
 
             }
         });
@@ -64,15 +68,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        userLiporterError.set(this);
-        userLiporterEvent.set(this);//event기능 셋팅
-        userLiporterActivity.set(this);//액티비티 기능셋팅
+       // userLiporterError.set(this);
+       // userLiporterEvent.set(this);//event기능 셋팅
+       // userLiporterActivity.set(this);//액티비티 기능셋팅
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        userLiporterActivity.get(null);//액티비티기능 사용
+        //userLiporterActivity.get("asd");//액티비티기능 사용
     }
 
 

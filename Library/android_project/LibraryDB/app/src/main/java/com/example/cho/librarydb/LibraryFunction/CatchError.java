@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Looper;
 import android.support.design.widget.TabLayout;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.cho.librarydb.HttpAsyncTaskJson;
@@ -79,4 +80,5 @@ public class CatchError implements UserLiporter{
         this.object = objectName;
 
     }
+
 }

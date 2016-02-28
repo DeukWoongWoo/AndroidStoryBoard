@@ -58,6 +58,9 @@ public class Component {
     public String text="null";
     public String textSize="14";
 
+    public int parentLeftPoint;
+    public int parentTopPoint;
+
     Component(){
         Attributes =new ArrayList<Attribution>();
         AttributeCount=0;
@@ -99,6 +102,14 @@ public class Component {
                     contentHeight=changeDpToInt(xpp.getAttributeValue(i))*2;
                 }
             }
+            if(xpp.getAttributeName(i).equals("layout_centerHorizontal")){
+                leftId = "Center";
+                left=xpp.getAttributeName(i);
+            }else if(xpp.getAttributeName(i).equals("layout_centerVertical")){
+                topId="Center";
+                top = xpp.getAttributeName(i);
+            }
+
 
             if(xpp.getAttributeName(i).equals("layout_alignRight")){
                 right=xpp.getAttributeName(i);

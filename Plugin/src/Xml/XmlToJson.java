@@ -219,8 +219,8 @@ public class XmlToJson {
                 jsonObject= new JSONObject();//Object;
 
                 jsonObject.put("name",component.componentId);
-                jsonObject.put("x",component.leftPoint);
-                jsonObject.put("y",component.topPoint);
+                jsonObject.put("x",component.leftPoint-component.parentLeftPoint);
+                jsonObject.put("y",component.topPoint-component.parentTopPoint);
                 jsonObject.put("width",component.getWidth());
                 jsonObject.put("height",component.getHeight());
                 jsonObject.put("type",component.tagName);
@@ -332,7 +332,6 @@ public class XmlToJson {
         }
 
         if(component.leftId.equals("Parent")){//parent
-
             leftPoint=parentLeftPoint;
             leftPoint+=component.marginLeft;
 
@@ -345,7 +344,6 @@ public class XmlToJson {
         }
 
         if(component.rightId.equals("Parent")){
-
             rightPoint=parentRightPoint;
             rightPoint-=component.marginRight;
         }else if(component.right.equals("layout_alignRight")){
@@ -355,6 +353,8 @@ public class XmlToJson {
             rightPoint= getComponentWidthPoint(componentManager,component.rightId,"left");
             rightPoint-=component.marginRight;
         }
+
+
 
         if((!component.rightId.equals("null"))&&(!component.leftId.equals("null")))//양쪽으로 물려 있는 경우
         {

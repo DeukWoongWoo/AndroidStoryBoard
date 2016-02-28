@@ -60,11 +60,13 @@ function Storyboard() {
                 //.width(activityData.width).height(activityData.height).update();
             for (var j in storyboardData.activity[i].object) {
                 var objectData = storyboardData.activity[i].object[j];
-
+                if(!isDefined(objectData.color))
+                    objectData.color = 'grey';
                 var object = activity.addObject().type(objectData.type).name(objectData.name)
                     .activityName(activityData.name).width(objectData.width).height(objectData.height)
                     .x(objectData.x).y(objectData.y).color(objectData.color);
 
+                console.log(objectData.image);
                 if(isDefined(objectData.image)){
                     object.imageRoute('/image/' + userId + '/' +  appName + '/' );
                     object.setImage(objectData.image);
@@ -73,7 +75,7 @@ function Storyboard() {
 
                 if(isDefined(objectData.text)){
                     object.textColor(objectData.textColor ? objectData.textColor : 'black');
-                    object.textSize(objectData.textSize ? objectData.textSize : 10);
+                    object.textSize(objectData.textSize ? objectData.textSize : 5);
                     object.setText(objectData.text);
                 }else
                     object.setText(null);
@@ -90,8 +92,6 @@ function Storyboard() {
     this.initLine = function () {
         line = new Array();
         for (var i in storyboardData.activity) {
-            console.log('storyboardData.activity[i].next.length : ' + storyboardData.activity[i].next.length);
-            console.log('storyboardData.activity[i].next[0] : ' + storyboardData.activity[i].next[0]);
             if(isDefined(storyboardData.activity[i].next)){
                 for(var j in storyboardData.activity[i].next){
                     line[count] = new Array(6);

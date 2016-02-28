@@ -48,14 +48,20 @@ function Button() {
                 .attr('x', this.x() + 10)
                 .attr('y', this.y() + 10);
 
-            var textLine = this.height() / this.textSize();
+            var textLine = this.getText().length / (this.width() / (this.textSize()));
+            textLine = Math.round(textLine);
             var w = this.width();
+            var h = this.height();
             textSize = this.textSize();
 
+            console.log('textLine');
+            console.log(textLine);
+            //console.log(this.getText());
+            //console.log(this.getText().length);
             textSvg.append('path').attr('id', this.name() + '-text').attr('d', function () {
                 var d = '';
                 for (var i = 0; i < textLine; i++) {
-                    d += 'M10,' + (textSize * i + 30) + ' H' + w + ' ';
+                    d += 'M0,' + ((h/(textLine+1))* (i+1)) + ' H' + w + ' ';
                 }
                 return d;
             });

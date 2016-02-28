@@ -7,10 +7,6 @@
                 "y": 100,
                 "width": 300,
                 "height": 500,
-                "next": [
-			"b",
-			"c"
-		],
                 "object": [
                     {
                         "name": "a1",
@@ -60,6 +56,7 @@
                         "height": 100,
                         "color": "green",
                         "type" : "button",
+                        "next": "c",
 			"image" : "ori2.jpg"
                     },
                     {
@@ -71,6 +68,7 @@
                         "color": "blue",
                         "type" : "button",
                         "textSize": "50",
+			"next": "b",
 			"text" : "test text test text test texttest text"
                     },
                     {
@@ -93,7 +91,6 @@
                 "y": 600,
                 "width": 300,
                 "height": 500,
-                "next": "a",
                 "object": [
                     {
                         "name": "c9",
@@ -143,7 +140,6 @@
                 "y": 200,
                 "width": 300,
                 "height": 500,
-                "next": "b",
                 "object": [
                     {
                         "name": "c9",
@@ -153,6 +149,7 @@
                         "height": 30,
                         "color": "black",
                         "type" : "button",
+                        "next": "a",
 			"image" : ""
                     },
                     {
@@ -163,6 +160,7 @@
                         "height": 30,
                         "color": "green",
                         "type" : "button",
+                        "next": "b",
 			"image" : ""
                     },
                     {

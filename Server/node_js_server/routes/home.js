@@ -551,8 +551,7 @@ function uploadStoryboard(req, callback) {
 
 router.post('/update/storyboard', function (req, res) {
     updateStoryboard(req, function (err) {
-        console.log(err);
-        res.send('test');
+        res.send(err);
     });
 });
 

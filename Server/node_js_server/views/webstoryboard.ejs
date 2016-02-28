@@ -87,7 +87,7 @@
     });
 
     $("#storyboard-svg").on("mousewheel", function (event) {
-        var baeyul = 12;
+        var baeyul = 5;
         var zoomValue = event.originalEvent.wheelDelta;
         if (box.width + zoomValue * baeyul > 0 && box.height + zoomValue * baeyul > 0
                 && box.width + zoomValue < backWidth && box.height + zoomValue < backHeight) {
@@ -96,9 +96,8 @@
             box.width += zoomValue;
             box.height += zoomValue;
 
-
-            d3.selectAll('text').attr('font-size', function (d, i) {
-                return d3.select(this).attr('font-size') * 1 - zoomValue * 0.05;
+            d3.selectAll('#storyboard-svg text').attr('font-size', function (d, i) {
+                return d3.select(this).attr('font-size') * 1 - zoomValue * 0.02;
             });
         }
     });

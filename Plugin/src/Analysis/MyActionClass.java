@@ -2,6 +2,7 @@ package Analysis;
 
 import Analysis.Constant.ConstantEtc;
 import Analysis.Constant.SharedPreference;
+import Analysis.Database.DataAccessObject.Java.JavaDAO;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
 import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Database.DtatTransferObject.ActivityDTO;
@@ -33,10 +34,27 @@ public class MyActionClass extends AnAction {
 //        codeMakeTest(e);
 
 //        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.INTELLIJ_PATH);
+<<<<<<< HEAD
  //       projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
         ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
         projectAnalysis.execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
 //
+=======
+//        projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
+        projectAnalysis.execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
+
+//        DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll).forEach(java ->{
+//            System.out.println("Name : " + java.getName());
+//            System.out.println("NextActivity : " + java.getNextActivity());
+//            java.getXmls().forEach(xml->{
+//                System.out.println();
+//            });
+//        });
+
+//        Messages.showInfoMessage(DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll).size()+"", "Test");
+
+>>>>>>> 4c0884cc36848c53ff18a489d48726ae72a55143
 //        new CodeDriver();
 //        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);
 

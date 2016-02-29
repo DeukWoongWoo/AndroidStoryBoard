@@ -6,7 +6,9 @@ import Analysis.Database.DataAccessObject.Java.JavaDAO;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
 import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Database.DtatTransferObject.ActivityDTO;
+import Analysis.Database.DtatTransferObject.JavaDTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
+import Analysis.Database.DtatTransferObject.XmlDTO;
 import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeDriver;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -34,12 +36,8 @@ public class MyActionClass extends AnAction {
 //        codeMakeTest(e);
 
 //        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.INTELLIJ_PATH);
-<<<<<<< HEAD
- //       projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
-        projectAnalysis.execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
-//
-=======
+
+
 //        projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
         ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
         projectAnalysis.execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
@@ -52,9 +50,20 @@ public class MyActionClass extends AnAction {
 //            });
 //        });
 
+        ArrayList<JavaDTO> javaDTOArray = DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll);
+        for(int i=0;i<javaDTOArray.size();i++ ){
+             JavaDTO javaDTO=javaDTOArray.get(i);
+            javaDTO.getName();//activity
+            javaDTO.getNextActivity();//next
+            for(int j=0;j<javaDTO.getXmls().size();j++){
+                XmlDTO xmlDTO = javaDTO.getXmls().get(j);
+                xmlDTO.getName();//xml
+            }
+        }
+
 //        Messages.showInfoMessage(DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll).size()+"", "Test");
 
->>>>>>> 4c0884cc36848c53ff18a489d48726ae72a55143
+
 //        new CodeDriver();
 //        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);
 

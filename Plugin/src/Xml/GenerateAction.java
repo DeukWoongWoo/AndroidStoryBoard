@@ -1,4 +1,8 @@
 package Xml;
+import Analysis.Database.DataAccessObject.Java.JavaDAO;
+import Analysis.Database.DatabaseManager.DatabaseManager;
+import Analysis.Database.DtatTransferObject.JavaDTO;
+import Analysis.Database.DtatTransferObject.XmlDTO;
 import Analysis.Main.ProjectAnalysis;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -13,6 +17,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.sun.jna.platform.win32.Netapi32Util;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,6 +25,8 @@ import org.json.simple.parser.ParseException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -46,6 +53,28 @@ public class GenerateAction extends AnAction {
         Project project = e.getProject();
         Messages.showInfoMessage("TestParsing","TestParsing");
 
+        String acName;
+        String neName;
+        String xmlName;
+/*
+        ArrayList<JavaDTO> javaDTOArray = DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll);
+        for(int i=0;i<javaDTOArray.size();i++ ){
+            JavaDTO javaDTO=javaDTOArray.get(i);
+            acName=javaDTO.getName();//activity
+            neName=javaDTO.getNextActivity();//next
+            for(int j=0;j<javaDTO.getXmls().size();j++){
+                xmlName=  javaDTO.getXmls().get(j).getXmlName();;//xml
+                String n = xmlName;
+            }
+        }*/
+
+        UseLibraryParser useLibraryParser=new UseLibraryParser("C:/Users/cho/Desktop/TestActivity/app/src/main/assets/userLib.xml");
+        useLibraryParser.parse();
+        useLibraryParser.append("activity","x.ml","x.xml");
+        useLibraryParser.append("event","z.ml","buttonXXXX");
+        useLibraryParser.append("error","v.ml","buttonZZZZZ");
+        useLibraryParser.delete("event","a.xml","button3");
+
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 
@@ -54,6 +83,12 @@ public class GenerateAction extends AnAction {
 
 /*
         try{
+            String xmlp="C:/Users/cho/Desktop/AndroidStoryboard/Library/android_project/LibraryDB/app/src/main/res/values/usedLibrary.xml";
+            UseLibraryParser useLibraryParser = new UseLibraryParser(xmlp);
+            useLibraryParser.parse();
+            String a =useLibraryParser.getXmlName(0);
+            useLibraryParser.append("c.xml","textView1");
+
 
             String Filepath = "C:/Users/cho/Desktop/AndroidStoryboard/Library/android_project/XmlParserActivity/app/src/main/res/layout/testlayout.xml";
 
@@ -122,12 +157,14 @@ public class GenerateAction extends AnAction {
             for(int i=0;i<componentManager.size();i++){
                 Messages.showInfoMessage("Id"+componentManager.getComponent(i).getId()+"\n"+
                         "width: "+getComponentWidthPoint(componentManager,componentManager.getComponent(i).getId(),"left")
-                        +" Height: "+getComponentHeightPoint(componentManager,componentManager.getComponent(i).getId(),"top")
+                        +" Height: "+getComponentHeightPoint(componentManager,componentManager.getComponent(i).getId(),"top")+"\n"
+                        +"parentLeftPoint: "+componentManager.getComponent(i).parentLeftPoint
+                        +" parentTopPoint: "+componentManager.getComponent(i).parentTopPoint
                         ,"Axis");
             }
            // makeFile(makeWebJsonObject(map,componentManager));
-            //makeFile(makePluginJsonObject(componentArrayList));
-
+            makeFile(makePluginJson(componentArrayList),"C:/Users/cho/Desktop/json/ucehr.json");
+/*
             String fp = "C:/Users/cho/Desktop/xml/test2.xml";
             appendXmlCode(componentArrayList,fp);
 
@@ -409,8 +446,8 @@ public class GenerateAction extends AnAction {
                 jsonObject= new JSONObject();//Object;
 
                 jsonObject.put("name",component.componentId);
-                jsonObject.put("x",component.leftPoint);
-                jsonObject.put("y",component.topPoint);
+                jsonObject.put("x",component.leftPoint-component.parentLeftPoint );
+                jsonObject.put("y",component.topPoint-component.parentTopPoint );
                 jsonObject.put("width",component.getWidth());
                 jsonObject.put("height",component.getHeight());
                 jsonObject.put("type",component.tagName);
@@ -513,10 +550,10 @@ public class GenerateAction extends AnAction {
                 if(componentManager.getComponent(i).componentId.equals(component.parentId)){
                     parentLeftPoint=componentManager.getComponent(i).leftPoint;
                     parentRightPoint=componentManager.getComponent(i).rightPoint;
-
                 }
             }
         }
+
 
         if(component.leftId.equals("Parent")){//parent
 
@@ -532,7 +569,6 @@ public class GenerateAction extends AnAction {
         }
 
         if(component.rightId.equals("Parent")){
-
             rightPoint=parentRightPoint;
             rightPoint-=component.marginRight;
         }else if(component.right.equals("layout_alignRight")){
@@ -542,6 +578,8 @@ public class GenerateAction extends AnAction {
             rightPoint= getComponentWidthPoint(componentManager,component.rightId,"left");
             rightPoint-=component.marginRight;
         }
+
+
 
         if((!component.rightId.equals("null"))&&(!component.leftId.equals("null")))//양쪽으로 물려 있는 경우
         {
@@ -555,7 +593,6 @@ public class GenerateAction extends AnAction {
                     if(component.isMarginLeft)
                         leftPoint+=component.marginLeft;
                 }
-
                 else
                     leftPoint = rightPoint-stdWidth;
             }else{//left에 물린경우
@@ -575,6 +612,8 @@ public class GenerateAction extends AnAction {
         stdWidth = rightPoint-leftPoint;
         }
             component.setWidth(stdWidth);
+        component.parentLeftPoint = parentLeftPoint;
+
 
         if(point.equals("left"))
             return leftPoint;
@@ -666,7 +705,7 @@ public class GenerateAction extends AnAction {
         stdHeight = bottomPoint-topPoint;
         }
         component.setHeight(stdHeight);
-
+        component.parentTopPoint=parentTopPoint;
         if(point.equals("top"))
             return topPoint;
         else

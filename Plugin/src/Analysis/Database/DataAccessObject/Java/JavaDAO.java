@@ -21,7 +21,7 @@ public interface JavaDAO {
     public void insertComponent(ComponentDTO componentDTO);
     public void insertEvent(EventDTO eventDTO);
 
-    public void selectAll();
+    public ArrayList<JavaDTO>  selectAll();
     public ArrayList<JavaDTO> selectJava(String... col);
     public ArrayList<JavaDTO> selectXml(String... col);
     public ArrayList<JavaDTO> selectComponent(String... col);

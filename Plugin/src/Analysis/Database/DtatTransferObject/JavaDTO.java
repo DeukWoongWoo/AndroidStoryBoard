@@ -150,6 +150,10 @@ public class JavaDTO {
 
     public XmlDTO getXml(int index) { return xmls.get(index); }
 
+    public ArrayList<XmlDTO> getXmls() {
+        return xmls;
+    }
+
     public EventDTO getEvent(int index){
         return events.get(index);
     }

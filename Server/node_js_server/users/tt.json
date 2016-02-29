@@ -1,0 +1,47 @@
+{    "activity":[
+        {
+            "name":"RelativeLayout2",
+            "x":285,
+            "width":0,
+            "y":450,
+            "height":0,
+            "object":[
+		{
+                        "name": "a1",
+                        "x": 100,
+                        "y": 100,
+                        "width": 300,
+                        "height": 200,
+                        "color": "none",
+                        "textSize": "30",
+			"text" : "test text test text test texttest text",
+                        "type" : "radio button"
+                 },
+                {
+	                "textSize":"14",
+	                "name":"button4",
+        	        "x":341,
+	                "width":195,
+        	        "y":602,
+	                "text":"New Button",
+	                "type":"button",
+	                "height":96,
+			"color" : "red"
+                },
+                {
+	                "textSize":"14",
+			"name":"button6",
+	                    "x":525,
+        	            "width":195,
+                	    "y":950,
+	                    "text":"New Button",
+	                    "type":"button",
+	                    "height":96,
+			"color" : "grey"
+                    
+                }
+            ]
+        
+        }
+        ]
+}

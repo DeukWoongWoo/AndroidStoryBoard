@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Looper;
 import android.support.design.widget.TabLayout;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.cho.librarydb.HttpAsyncTaskJson;
@@ -26,15 +27,6 @@ public class CatchError implements UserLiporter{
     public String object;
     public CatchError(){
 
-    }
-
-
-    @Override
-    public void set(Context context) {
-        Log.e("--------------Error","Error Set!!!!");
-        this.context = context;
-        activityName = this.context.getClass().getSimpleName();
-        Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
     }
 
     public class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
@@ -73,10 +65,25 @@ public class CatchError implements UserLiporter{
 
         }
     }
+
     @Override
-    public void get(String objectName) {
+    public void set(Context context) {
+        Log.e("--------------Error","Error Set!!!!");
+        this.context = context;
+        activityName = this.context.getClass().getSimpleName();
+        Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
+    }
+
+    @Override
+    public void set(Context context,int layoutId) {
+
+    }
+
+    @Override
+    public void get(int layoutId,String objectName) {
         Log.e("--------------Error","Error Get!!!!");
         this.object = objectName;
 
     }
+
 }

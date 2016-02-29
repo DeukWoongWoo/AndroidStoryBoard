@@ -3,6 +3,7 @@ package com.example.cho.librarydb.LibraryFunction;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
 import com.example.cho.librarydb.HttpAsyncTaskJson;
 import com.example.cho.librarydb.Names;
@@ -51,7 +52,13 @@ public class CatchActivity implements UserLiporter{
     }
 
     @Override
-    public void get(String objectName) {
+    public void set(Context context,int layoutId) {
+
+    }
+
+    @Override
+    public void get(int layoutId,String xmlName) {
         getCatchActivity();
     }
+
 }

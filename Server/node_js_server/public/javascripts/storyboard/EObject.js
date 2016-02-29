@@ -22,19 +22,22 @@ function EObject() {
     }
 
     this.type = function (objectType) {
-        if (objectType == 'button') {
+        if (objectType == 'Button') {
             type = new Button();
             return this;
-        } else if (objectType == 'radio button') {
+        } else if (objectType == 'RadioButton') {
             type = new RadioButton();
             return this;
-        } else if (objectType == 'checkbox') {
+        } else if (objectType == 'CheckBox') {
             type = new CheckBox();
             return this;
-        } else if (objectType == 'text') {
+        } else if (objectType == 'TextView') {
             type = new Text();
             return this;
-        }else if (objectType == 'image') {
+        }else if (objectType == 'ImageView') {
+            type = new Image();
+            return this;
+        }else if(objectType == 'TextEdit'){
             type = new Image();
             return this;
         }

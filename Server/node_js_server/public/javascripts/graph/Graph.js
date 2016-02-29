@@ -45,7 +45,7 @@ Graph.prototype = {
     graphData: function (data) {
         if(isDefined(data[0])){
             this.data = data;
-            this.maxY = Math.max.apply(null, data);
+            this.maxY = Math.max.apply(null, data) == 0 ? 1 : Math.max.apply(null, data);
         }
 
         return this;
@@ -98,9 +98,8 @@ Graph.prototype = {
     },
 
     setGraphType: function (gType) {
-
         this.gType = gType;
-        this.maxY = Math.max.apply(null, this.data);
+        this.maxY = Math.max.apply(null, this.data) == 0 ? 1 : Math.max.apply(null, this.data);
         this.rY = this.svgHeight / this.maxY;
         this.length = this.data.length;
         this.package = {
@@ -115,7 +114,7 @@ Graph.prototype = {
             height: this.svgHeight,
             es: this.ease,
             svg: this.svg,
-            rY: this.rY,
+            rY: this.rY == Infinity ? 1 : this.rY,
             maxY: this.maxY,
             length: this.length
         }
@@ -205,17 +204,6 @@ Graph.prototype = {
     },
 
     drawAxis: function (axis, axisData) {
-        ////축 데이터
-        //console.log("Graph drawAxis axis: ");
-        //console.log(axis);
-        //console.log("Graph drawAxis axisData: ");
-        //console.log(axisData);
-        //console.log("Graph drawAxis axisData domain start : " + axisData.domain.start);
-        //console.log("Graph drawAxis axisData domain end : " + axisData.domain.end);
-        //console.log("Graph drawAxis axisData range start : " + axisData.range.start);
-        //console.log("Graph drawAxis axisData range end : " + axisData.range.end);
-        //console.log("Graph drawAxis axisData x : " + axisData.position.x);
-        //console.log("Graph drawAxis axisData y : " + axisData.position.y);
         var scale = d3.scale.linear().domain([axisData.domain.start, axisData.domain.end]).range([axisData.range.start, axisData.range.end]);
         axis.transition().duration(500).ease(this.ease)
             .attr("transform", "translate(" + axisData.position.x + "," + axisData.position.y + ")")

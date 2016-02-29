@@ -35,12 +35,11 @@
         <h1>Profile Update</h1>
         <div class="center-block" id="profile">
             <form name="profile" method="post" action="/profile">
-                <!--TODO : 현재 유저 정보 표시 해야함-->
                 <p class="form-control-static"><%= user_id %></p>
-                <input class="form-control" type="text" name="name" placeholder="name"/>
+                <input class="form-control" type="text" name="name" placeholder="name" value="<%if(locals.name){%><%= name%><%}%>"/>
                 <input class="form-control" type="password" name="password" placeholder="password"/>
                 <input class="form-control" type="password" name="confirm_password" placeholder="confirm password"/>
-                <input class="form-control" type="text" name="email" placeholder="email"/>
+                <input class="form-control" type="text" name="email" placeholder="email" value="<%if(locals.email){%><%= email%><%}%>"/>
                 <button class="btn btn-info" type="submit">Update</button>
             </form>
         </div>
@@ -50,9 +49,5 @@
     </div>
 </div>
 
-
-<footer>
-    <!---->
-</footer>
 </body>
 </html>

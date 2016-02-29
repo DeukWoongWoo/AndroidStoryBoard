@@ -551,8 +551,7 @@ function uploadStoryboard(req, callback) {
 
 router.post('/update/storyboard', function (req, res) {
     updateStoryboard(req, function (err) {
-        console.log(err);
-        res.send('test');
+        res.send(err);
     });
 });
 
@@ -707,7 +706,7 @@ function isExistAppName(req, callback) {
         if (isDefined(appList)) {
             for (var i = 0; i < appList.length; i++) {
                 if (req.body.app_name == appList[i].app_name) {
-                    err = '같은 이름이 있습니다';
+                    err = '같은 이름의 앱이 있습니다';
                 }
             }
         }

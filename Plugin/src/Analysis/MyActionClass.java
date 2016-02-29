@@ -49,7 +49,7 @@ public class MyActionClass extends AnAction {
 //                System.out.println();
 //            });
 //        });
-
+/*
         ArrayList<JavaDTO> javaDTOArray = DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll);
         for(int i=0;i<javaDTOArray.size();i++ ){
              JavaDTO javaDTO=javaDTOArray.get(i);
@@ -60,7 +60,7 @@ public class MyActionClass extends AnAction {
                 xmlDTO.getName();//xml
             }
         }
-
+*/
 //        Messages.showInfoMessage(DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll).size()+"", "Test");
 
 

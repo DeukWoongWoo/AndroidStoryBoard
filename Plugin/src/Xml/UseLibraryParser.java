@@ -26,79 +26,114 @@ import java.util.HashMap;
  */
 public class UseLibraryParser {
     private String Filepath;
-    private ArrayList<Attribution>attributions;
+    private ArrayList<Attribution> activity;
+    private ArrayList<Attribution> error;
+    private ArrayList<Attribution> event;
 
 
-    UseLibraryParser(String xmlPath){
-        Filepath=xmlPath;
-        attributions=new ArrayList<>();
+    UseLibraryParser(String xmlPath) {
+        Filepath = xmlPath;
+        activity = new ArrayList<>();
+        error = new ArrayList<>();
+        event = new ArrayList<>();
     }
-    public void parse(){
-        try{
+
+    public void parse() {
+        try {
             File ff = new File(Filepath);
             XmlPullParserFactory xppf = XmlPullParserFactory.newInstance();
             xppf.setNamespaceAware(true);
             XmlPullParser xpp = xppf.newPullParser();
             FileInputStream fis = new FileInputStream(ff);
-            xpp.setInput(fis,null);
+            xpp.setInput(fis, null);
 
             int type = xpp.getEventType();
-            while(type != XmlPullParser.END_DOCUMENT){
+            while (type != XmlPullParser.END_DOCUMENT) {
 
-                if(type == XmlPullParser.START_TAG) {
-                    if(xpp.getName().equals("Item")){
-                        for(int i=0;i<xpp.getAttributeCount();i++){
-                            Attribution tempAttr=new Attribution();
-                            tempAttr.setAttribute(xpp.getAttributeName(i));
-                            tempAttr.setValue(xpp.getAttributeValue(i));
-                            attributions.add(tempAttr);
-                        }
+                if (type == XmlPullParser.START_TAG) {
+                    Attribution tempAttr = new Attribution();
+                    for (int i = 0; i < xpp.getAttributeCount(); i++) {
+                        tempAttr.setAttribute(xpp.getAttributeName(i));
+                        tempAttr.setValue(xpp.getAttributeValue(i));
                     }
-                }
-                else  if(type == XmlPullParser.END_TAG) {
+                    if (xpp.getName().equals("activity"))
+                        activity.add(tempAttr);
+                    else if (xpp.getName().equals("error"))
+                        error.add(tempAttr);
+                    else if (xpp.getName().equals("event"))
+                        event.add(tempAttr);
+                } else if (type == XmlPullParser.END_TAG) {
 
                 }
                 type = xpp.next();
             }
-        }catch(Exception e2){
-            Messages.showInfoMessage("error1","error1");
+        } catch (Exception e2) {
+            Messages.showInfoMessage("error1", "error1");
 
         }
     }
-    public String getXmlName(int index){
-        return attributions.get(index).getAttribute();
-    }
-    public String getComponentName(int index){
-        return attributions.get(index).getValue();
-    }
-    public void append(String xmlName,String componentName) {
-        Attribution tempAttr = new Attribution();
-        tempAttr.setAttribute(xmlName);
-        tempAttr.setValue(componentName);
-        attributions.add(tempAttr);
-        Element element=null;
 
-        try{
-            DocumentBuilderFactory documentBuilderFactory= DocumentBuilderFactory.newInstance();
+    public String getXmlName(String libraryFunction, int index) {
+        if (libraryFunction.equals("activity"))
+            return activity.get(index).getAttribute();
+        else if (libraryFunction.equals("error"))
+            return error.get(index).getAttribute();
+        else if (libraryFunction.equals("event"))
+            return event.get(index).getAttribute();
+        else
+            return null;
+    }
+
+    public String getComponentName(String libraryFunction, int index) {
+        if (libraryFunction.equals("activity"))
+            return activity.get(index).getValue();
+        else if (libraryFunction.equals("error"))
+            return error.get(index).getValue();
+        else if (libraryFunction.equals("event"))
+            return event.get(index).getValue();
+        else
+            return null;
+    }
+
+    private void makeXml(){
+
+        try {
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            Document doc= documentBuilder.newDocument();
+            Document doc = documentBuilder.newDocument();
             Element root = doc.createElement("resources");
             doc.appendChild(root);
-            Element item = doc.createElement("Item");
 
-            for(int i=0;i<attributions.size();i++){
+            for (int i = 0; i < activity.size(); i++) {
+                Element act = doc.createElement("activity");
                 Attr attr;
-                attr=doc.createAttribute(attributions.get(i).getAttribute());
-                attr.setValue(attributions.get(i).getValue());
-                item.setAttributeNode(attr);
-
+                attr = doc.createAttribute(activity.get(i).getAttribute());
+                attr.setValue(activity.get(i).getValue());
+                act.setAttributeNode(attr);
+                root.appendChild(act);
             }
-            root.appendChild(item);
+            for (int i = 0; i < event.size(); i++) {
+                Element eve = doc.createElement("event");
+                Attr attr;
+                attr = doc.createAttribute(event.get(i).getAttribute());
+                attr.setValue(event.get(i).getValue());
+                eve.setAttributeNode(attr);
+                root.appendChild(eve);
+            }
+            for (int i = 0; i < error.size(); i++) {
+                Element err = doc.createElement("error");
+                Attr attr;
+                attr = doc.createAttribute(error.get(i).getAttribute());
+                attr.setValue(error.get(i).getValue());
+                err.setAttributeNode(attr);
+                root.appendChild(err);
+            }
+
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File(Filepath));
-            transformer.transform(source,result);
+            transformer.transform(source, result);
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
         } catch (TransformerException e) {
@@ -106,9 +141,53 @@ public class UseLibraryParser {
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
+    }
+
+    public void append(String libraryFunction, String xmlName, String componentName) {
+        Attribution tempAttr = new Attribution();
+        tempAttr.setAttribute(xmlName);
+        tempAttr.setValue(componentName);
+        if (libraryFunction.equals("activity"))
+            activity.add(tempAttr);
+        else if (libraryFunction.equals("error"))
+            error.add(tempAttr);
+        else if (libraryFunction.equals("event"))
+            event.add(tempAttr);
+        makeXml();
 
     }
     //delete
 
+    public void delete(String libraryFunction, String xmlName, String componentName) {
+        if (libraryFunction.equals("activity")) {
+            for (int i = 0; i < activity.size(); i++)
+                if (activity.get(i).getAttribute().equals(xmlName)
+                        && activity.get(i).getValue().equals(componentName))
+                    activity.remove(i);
+        } else if (libraryFunction.equals("error")) {
+            for (int i = 0; i < error.size(); i++)
+                if (error.get(i).getAttribute().equals(xmlName)
+                        && error.get(i).getValue().equals(componentName))
+                    error.remove(i);
+        } else if (libraryFunction.equals("event")) {
+            for (int i = 0; i < event.size(); i++)
+                if (event.get(i).getAttribute().equals(xmlName)
+                        && event.get(i).getValue().equals(componentName))
+                    event.remove(i);
+        }
+        makeXml();
 
+    }
+
+    public void delete(String libraryFunction, int index) {
+        if (libraryFunction.equals("activity"))
+            activity.remove(index);
+        else if (libraryFunction.equals("error"))
+            error.remove(index);
+        else if (libraryFunction.equals("event"))
+            event.remove(index);
+
+        makeXml();
 }
+    }
+

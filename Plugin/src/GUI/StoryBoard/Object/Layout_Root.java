@@ -2,6 +2,7 @@ package GUI.StoryBoard.Object;
 
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.UI.palettePanel;
+import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -20,6 +21,7 @@ public class Layout_Root extends ObjectCustom {
     int radiobuttonNum=1;
     int linearlayoutNum=1;
     palettePanel panel;
+    Point mouse_p;
 
     private boolean isButton;
     private boolean isRadioButton;
@@ -153,6 +155,75 @@ public class Layout_Root extends ObjectCustom {
         addMouseactionListner(this.getGraphics());
         makeAllObject(objectJObject);
     }
+    public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy) {
+        long width, height, x, y ;
+        String name;
+        JSONArray objectArray;
+        panel = pan;
+        objectJObject=obj;
+        objectList =list;
+        nextActivitylist = nextlist;
+        activityList=actList;
+        getStroyBoard(stroy);
+
+        name =(String) objectJObject.get("name");
+        height=(long) objectJObject.get("height");
+        width=(long) objectJObject.get("width");
+        x=(long) objectJObject.get("x");
+        y=(long) objectJObject.get("y");
+
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setPosition(new Point((int)x, (int)y));
+        setObject_height((int)height);
+        setObject_width((int)width);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height);
+        this.setLocation((int)x, (int)y);
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setOpaque(false);
+        addMouseListner();
+
+        addMouseactionListner(this.getGraphics());
+        makeAllObject(objectJObject);
+    }
+    public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
+        long width, height, x, y ;
+        this.activityName = ActivitName;
+        String name;
+        JSONArray objectArray;
+        panel = pan;
+        objectJObject=obj;
+        objectList =list;
+        nextActivitylist = nextlist;
+        activityList=actList;
+        getStroyBoard(stroy);
+
+        name =(String) objectJObject.get("name");
+        height=(long) objectJObject.get("height");
+        width=(long) objectJObject.get("width");
+        x=(long) objectJObject.get("x");
+        y=(long) objectJObject.get("y");
+
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setPosition(new Point((int)x, (int)y));
+        setObject_height((int)height);
+        setObject_width((int)width);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height);
+        this.setLocation((int)x, (int)y);
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setOpaque(false);
+        addMouseListner();
+
+        addMouseactionListner(this.getGraphics());
+        makeAllObject(objectJObject);
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -213,23 +284,28 @@ public class Layout_Root extends ObjectCustom {
     }
     public ObjectCustom CreateObjectCustom(String type, JSONObject jobj){
         if(type.equals("linear layout")){
-            Layout_Linear linear = new Layout_Linear(objectList, jobj, panel, nextActivitylist, activityList);
+            Layout_Linear linear = new Layout_Linear(objectList, jobj, panel, nextActivitylist, activityList,  storyboard,activityName);
+            linear.getStroyBoard(storyboard);
             return linear;
         }
         else if(type.equals("RelativeLayout")){
-            Layout_Relative relative = new Layout_Relative(objectList, jobj, panel, nextActivitylist, activityList);
+            Layout_Relative relative = new Layout_Relative(objectList, jobj, panel, nextActivitylist, activityList,  storyboard,activityName);
+            relative.getStroyBoard(storyboard);
             return relative;
         }
         else if(type.equals("Button")){
-            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist,activityList);
+            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist,activityList,  storyboard,activityName);
+            b.getStroyBoard(storyboard);
             return b;
         }
         else if(type.equals("button")){
-            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist, activityList);
+            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
+            b.getStroyBoard(storyboard);
             return b;
         }
         else if(type.equals("radio button")){
-            Button_Radio b= new Button_Radio(objectList, jobj,nextActivitylist, activityList);
+            Button_Radio b= new Button_Radio(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
+            b.getStroyBoard(storyboard);
             return b;
         }
         else
@@ -383,6 +459,7 @@ public class Layout_Root extends ObjectCustom {
                     panel.setChoice(0);
 
                 }
+                mouse_p = e.getLocationOnScreen();
             }
 
             @Override
@@ -430,45 +507,124 @@ public class Layout_Root extends ObjectCustom {
             }
         });
     }
+
+    public void getAttribute(JSONObject obj){
+
+    }
     class PopUpMenu extends JPopupMenu {
 
-        JMenuItem button;
-        JMenuItem Radio_button;
-        JMenuItem linear_layout;
-
+        JMenuItem library;
+        JMenuItem refresh;
         public PopUpMenu() {
-            button = new JMenuItem("New Button");
-            Radio_button = new JMenuItem("New RadioButton");
-            linear_layout = new JMenuItem("New linear_layout");
+            library = new JMenuItem("Library");
+            refresh = new JMenuItem("refresh");
 
 
-
-            button.addActionListener(new ActionListener() {
+            library.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    newButton();
+                    Libray_Window a = new Libray_Window();
                 }
             });
 
-            Radio_button.addActionListener(new ActionListener() {
+            refresh.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    newRadioButton();
+                    System.out.println(storyboard);
+                    storyboard.drawActivity_temp();
                 }
             });
-
-            linear_layout.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    newLInearLayout();
-                }
-            });
-            add(button);
-            add(Radio_button);
-            add(linear_layout);
+            add(library);
+            add(refresh);
         }
 
     }
 
+    class Libray_Window extends JFrame{
+        JComboBox<String> checklibray;
+        JButton okButton;
+        JButton noButton;
+        JLabel label = new JLabel("라이브러리 설정");
+        public Libray_Window(){
+            label.setSize(100,50);
+            label.setLocation(10,0);
 
+            checklibray = new JComboBox<String>();
+            checklibray.addItem("error");
+            checklibray.addItem("activity");
+            checklibray.addItem("NONE");
+            checklibray.setSize(230,50);
+            checklibray.setLocation(30,45);
+
+            if(objectJObject.containsKey("Library")){
+
+                checklibray.setSelectedItem(objectJObject.get("Library"));
+            }
+            else
+            {
+                checklibray.setSelectedItem("NONE");
+            }
+
+            okButton = new JButton("OK");
+            okButton.setSize(100,25);
+            okButton.setLocation(50,110);
+
+            noButton = new JButton("NO");
+            noButton.setSize(100,25);
+            noButton.setLocation(160,110);
+            this.setUndecorated(true);      //title bar 제거
+            setSize(300,150);
+            setVisible(true);
+            setLayout(null);
+            setLocation(mouse_p.x,mouse_p.y);
+
+
+            okButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(checklibray.getSelectedItem().equals("NONE")){
+                        objectJObject.remove("Library");
+                    }
+                    else
+                    {
+                        objectJObject.put("Library", checklibray.getSelectedItem());
+                    }
+                    sendLibraryData((String)objectJObject.get("Library"));
+                    dispose();
+                }
+            });
+            noButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                }
+            });
+            add(label);
+            add(checklibray);
+            add(okButton);
+            add(noButton);
+
+            this.addWindowFocusListener(new WindowFocusListener() {
+                @Override
+                public void windowGainedFocus(WindowEvent e) {
+
+                }
+
+                @Override
+                public void windowLostFocus(WindowEvent e) {
+                    dispose();
+                }
+            });
+        }
+
+    }
+
+    public void sendLibraryData(String library){
+        String id_, activity_;
+
+        id_=getId();
+        activity_=activityName;
+
+        System.out.println("id :"+id_+"  activity : "+activityName+ " library :" + library);
+    }
 }

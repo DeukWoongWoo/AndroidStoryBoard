@@ -1,4 +1,8 @@
 package Xml;
+import Analysis.Database.DataAccessObject.Java.JavaDAO;
+import Analysis.Database.DatabaseManager.DatabaseManager;
+import Analysis.Database.DtatTransferObject.JavaDTO;
+import Analysis.Database.DtatTransferObject.XmlDTO;
 import Analysis.Main.ProjectAnalysis;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -48,14 +52,36 @@ public class GenerateAction extends AnAction {
 
         Project project = e.getProject();
         Messages.showInfoMessage("TestParsing","TestParsing");
+
+        String acName;
+        String neName;
+        String xmlName;
 /*
+        ArrayList<JavaDTO> javaDTOArray = DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll);
+        for(int i=0;i<javaDTOArray.size();i++ ){
+            JavaDTO javaDTO=javaDTOArray.get(i);
+            acName=javaDTO.getName();//activity
+            neName=javaDTO.getNextActivity();//next
+            for(int j=0;j<javaDTO.getXmls().size();j++){
+                xmlName=  javaDTO.getXmls().get(j).getXmlName();;//xml
+                String n = xmlName;
+            }
+        }*/
+
+        UseLibraryParser useLibraryParser=new UseLibraryParser("C:/Users/cho/Desktop/TestActivity/app/src/main/assets/userLib.xml");
+        useLibraryParser.parse();
+        useLibraryParser.append("activity","x.ml","x.xml");
+        useLibraryParser.append("event","z.ml","buttonXXXX");
+        useLibraryParser.append("error","v.ml","buttonZZZZZ");
+        useLibraryParser.delete("event","a.xml","button3");
+
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 
         JsonToXml jsonToXml = new JsonToXml();
         jsonToXml.make("C:/Users/cho/Desktop/json/uuuu.json");
-*/
 
+/*
         try{
             String xmlp="C:/Users/cho/Desktop/AndroidStoryboard/Library/android_project/LibraryDB/app/src/main/res/values/usedLibrary.xml";
             UseLibraryParser useLibraryParser = new UseLibraryParser(xmlp);
@@ -144,12 +170,12 @@ public class GenerateAction extends AnAction {
 
             String jp = "C:/Users/cho/Desktop/json/uuuu.json";
             ArrayList<Component> newComponentArrayList=new ArrayList<Component>();
-            JsonToComponent(jp,newComponentArrayList);*/
+            JsonToComponent(jp,newComponentArrayList);
 
         }catch(Exception e2){
             Messages.showInfoMessage("error1","error1");
 
-        }
+        }*/
         StringBuilder sourceRootsList = new StringBuilder();
         VirtualFile[] vFiles = ProjectRootManager.getInstance(project).getContentSourceRoots();
         for (VirtualFile file : vFiles) {

@@ -1,6 +1,7 @@
 package GUI.StoryBoard.Object;
 
 import GUI.StoryBoard.Constant;
+import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -82,6 +83,15 @@ public class Button_Radio extends Button_Root {
 
     public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actlist) {
         super(list, obj, nextlist, actlist);
+
+        init_text();
+
+        add(content);
+        setBackground(Color.white);
+        repaint();
+    }
+    public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actlist,    storyBoard stroy,    String ActivitName) {
+        super(list, obj, nextlist, actlist,stroy, ActivitName);
 
         init_text();
 

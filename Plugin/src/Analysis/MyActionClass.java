@@ -36,6 +36,8 @@ public class MyActionClass extends AnAction {
 //        codeMakeTest(e);
 
 //        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.INTELLIJ_PATH);
+
+
 //        projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
         ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
         projectAnalysis.executeAll();
@@ -48,8 +50,20 @@ public class MyActionClass extends AnAction {
 //                System.out.println();
 //            });
 //        });
-
+/*
+        ArrayList<JavaDTO> javaDTOArray = DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll);
+        for(int i=0;i<javaDTOArray.size();i++ ){
+             JavaDTO javaDTO=javaDTOArray.get(i);
+            javaDTO.getName();//activity
+            javaDTO.getNextActivity();//next
+            for(int j=0;j<javaDTO.getXmls().size();j++){
+                XmlDTO xmlDTO = javaDTO.getXmls().get(j);
+                xmlDTO.getName();//xml
+            }
+        }
+*/
 //        Messages.showInfoMessage(DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll).size()+"", "Test");
+
 
 //        new CodeDriver();
 //        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);

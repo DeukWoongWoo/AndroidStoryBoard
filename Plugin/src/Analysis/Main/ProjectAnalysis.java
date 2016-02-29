@@ -50,11 +50,12 @@ public class ProjectAnalysis {
 
     public void executeAll(){
         createTable();
-//        String path = "/src";
-//        execute(path,ConstantEtc.XML_PATTERN);
-//        execute(path,ConstantEtc.JAVA_PATTERN);
 
-        execute(ConstantEtc.PROJECT_XML_PATH,ConstantEtc.XML_PATTERN);
+     //   String path = "/src";
+       // execute(path,ConstantEtc.XML_PATTERN);
+       // execute(path,ConstantEtc.JAVA_PATTERN);
+
+       execute(ConstantEtc.PROJECT_XML_PATH,ConstantEtc.XML_PATTERN);
         execute(ConstantEtc.PROJECT_XML_PATH+ConstantEtc.PROJECT_JAVA_PATH,ConstantEtc.JAVA_PATTERN);
     }
 
@@ -79,7 +80,7 @@ public class ProjectAnalysis {
         PsiFile[] xmlFiles = psiDirectory.getFiles();
         String[][] path = new String[xmlFiles.length][2];
         for(int i = 0; i < xmlFiles.length ; i++){
-//            path[i][0] = psiDirectory.getText() + "/" + xmlFiles[i].getName();
+
             path[i][0] = project.getBasePath() + ConstantEtc.PROJECT_JAVA_PATH + "/res/layout/" + xmlFiles[i].getName();
             path[i][1] = xmlFiles[i].getName();
         }

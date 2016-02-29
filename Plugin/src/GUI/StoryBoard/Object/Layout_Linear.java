@@ -1,6 +1,7 @@
 package GUI.StoryBoard.Object;
 
 import GUI.StoryBoard.UI.palettePanel;
+import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
@@ -30,5 +31,12 @@ public class Layout_Linear extends Layout_Root {
     public Layout_Linear(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist,HashMap<String, Activity> actList) {
         super(list,obj,pan,nextlist,actList);
     }
+    public Layout_Linear(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist,HashMap<String, Activity> actList, storyBoard stroy) {
+        super(list,obj,pan,nextlist,actList,stroy);
+    }
+    public Layout_Linear(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist,HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
+        super(list,obj,pan,nextlist,actList,stroy,ActivitName);
+    }
+
 
 }

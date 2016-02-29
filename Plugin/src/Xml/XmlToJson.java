@@ -48,11 +48,8 @@ public class XmlToJson {
     }
 
     public void make(){
-        Messages.showInfoMessage("openMethod111","filePath");
         ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
-        Messages.showInfoMessage("openMethod222","filePath");
         String[][] filePath=projectAnalysis.findResourcePath();
-        Messages.showInfoMessage("findFIlePath!","filePath");
         XmlToJson xmlToJson = new XmlToJson();
         for(int i=0;i<filePath.length;i++)
         {
@@ -177,6 +174,7 @@ public class XmlToJson {
         jsonActivity.put("y","0");
         jsonActivity.put("width",768);
         jsonActivity.put("height",1280);
+
         jsonArrayObject = new JSONArray();
         for(int i=0;i<componentManager.size();i++){
             component= componentManager.getComponent(i);
@@ -190,6 +188,7 @@ public class XmlToJson {
                 jsonObject.put("text",component.text);
                 jsonObject.put("textSize",component.textSize);
                 jsonObject.put("type",component.tagName);
+                jsonObject.put("color",component.color);
                 //jsonObject.put("next","null");
                 //jsonObject.put("image","null");
                 jsonArrayObject.add(jsonObject);

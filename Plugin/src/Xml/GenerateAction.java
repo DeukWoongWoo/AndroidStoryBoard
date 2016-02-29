@@ -48,14 +48,14 @@ public class GenerateAction extends AnAction {
 
         Project project = e.getProject();
         Messages.showInfoMessage("TestParsing","TestParsing");
-/*
+
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 
         JsonToXml jsonToXml = new JsonToXml();
         jsonToXml.make("C:/Users/cho/Desktop/json/uuuu.json");
-*/
 
+/*
         try{
             String xmlp="C:/Users/cho/Desktop/AndroidStoryboard/Library/android_project/LibraryDB/app/src/main/res/values/usedLibrary.xml";
             UseLibraryParser useLibraryParser = new UseLibraryParser(xmlp);
@@ -144,12 +144,12 @@ public class GenerateAction extends AnAction {
 
             String jp = "C:/Users/cho/Desktop/json/uuuu.json";
             ArrayList<Component> newComponentArrayList=new ArrayList<Component>();
-            JsonToComponent(jp,newComponentArrayList);*/
+            JsonToComponent(jp,newComponentArrayList);
 
         }catch(Exception e2){
             Messages.showInfoMessage("error1","error1");
 
-        }
+        }*/
         StringBuilder sourceRootsList = new StringBuilder();
         VirtualFile[] vFiles = ProjectRootManager.getInstance(project).getContentSourceRoots();
         for (VirtualFile file : vFiles) {

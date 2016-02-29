@@ -32,12 +32,12 @@ public class MyActionClass extends AnAction {
 
 //        codeMakeTest(e);
 
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.INTELLIJ_PATH);
-        projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
-//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
-//        projectAnalysis.execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
-
-        new CodeDriver();
+//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.INTELLIJ_PATH);
+ //       projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
+        projectAnalysis.execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
+//
+//        new CodeDriver();
 //        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);
 
 //        ManifestDTO manifestDTO = new ManifestDTO();

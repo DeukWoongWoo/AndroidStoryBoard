@@ -29,15 +29,6 @@ public class CatchError implements UserLiporter{
 
     }
 
-
-    @Override
-    public void set(Context context) {
-        Log.e("--------------Error","Error Set!!!!");
-        this.context = context;
-        activityName = this.context.getClass().getSimpleName();
-        Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
-    }
-
     public class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
         @Override
         public void uncaughtException(Thread thread, Throwable ex) {
@@ -74,8 +65,22 @@ public class CatchError implements UserLiporter{
 
         }
     }
+
     @Override
-    public void get(String objectName) {
+    public void set(Context context) {
+        Log.e("--------------Error","Error Set!!!!");
+        this.context = context;
+        activityName = this.context.getClass().getSimpleName();
+        Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
+    }
+
+    @Override
+    public void set(Context context,int layoutId) {
+
+    }
+
+    @Override
+    public void get(int layoutId,String objectName) {
         Log.e("--------------Error","Error Get!!!!");
         this.object = objectName;
 

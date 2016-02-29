@@ -9,7 +9,9 @@ import android.view.View;
  */
 public interface UserLiporter {
 
-    public void set(Context context);
-    public void get(String objectName);
+    void set(Context context);
+    void set(Context context,int layoutId);
+    void get(int layoutId,String objectName);
+
 
 }

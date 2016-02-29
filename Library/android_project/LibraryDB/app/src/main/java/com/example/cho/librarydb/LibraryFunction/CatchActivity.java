@@ -52,7 +52,12 @@ public class CatchActivity implements UserLiporter{
     }
 
     @Override
-    public void get(String xmlName) {
+    public void set(Context context,int layoutId) {
+
+    }
+
+    @Override
+    public void get(int layoutId,String xmlName) {
         getCatchActivity();
     }
 

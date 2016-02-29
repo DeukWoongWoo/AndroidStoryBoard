@@ -13,6 +13,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.sun.jna.platform.win32.Netapi32Util;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -56,6 +57,12 @@ public class GenerateAction extends AnAction {
 */
 
         try{
+            String xmlp="C:/Users/cho/Desktop/AndroidStoryboard/Library/android_project/LibraryDB/app/src/main/res/values/usedLibrary.xml";
+            UseLibraryParser useLibraryParser = new UseLibraryParser(xmlp);
+            useLibraryParser.parse();
+            String a =useLibraryParser.getXmlName(0);
+            useLibraryParser.append("c.xml","textView1");
+
 
             String Filepath = "C:/Users/cho/Desktop/AndroidStoryboard/Library/android_project/XmlParserActivity/app/src/main/res/layout/testlayout.xml";
 

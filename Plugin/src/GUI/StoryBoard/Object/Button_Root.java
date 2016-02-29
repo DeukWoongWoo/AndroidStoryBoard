@@ -1,6 +1,7 @@
 package GUI.StoryBoard.Object;
 
 import GUI.StoryBoard.Constant;
+import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -17,9 +18,9 @@ import java.util.Iterator;
 public class Button_Root extends ObjectCustom {
 
     private String text;
-    private Point mousep;
+    private Point mouse_p;
     protected HashMap<String, ObjectCustom> checkkey;
-
+    JSONObject attribute;
     /////////////////////////////////
     //          생성자들
     ////////////////////////////////
@@ -190,7 +191,101 @@ public class Button_Root extends ObjectCustom {
         addMouseListener();
 
     }
+    public Button_Root(HashMap<String, ObjectCustom> list , JSONObject obj, ArrayList nextlist , HashMap<String, Activity> actList, storyBoard stroy) {
+        long width, height, x, y ;
+        String name, text, color;
 
+        nextActivitylist=nextlist;
+        objectJObject=obj;
+        objectList =list;
+        checkkey=list;
+        activityList=actList;
+
+        if(objectJObject.containsKey("attribute")){
+
+        }
+
+        getStroyBoard(stroy);
+        name =(String) objectJObject.get("name");
+        text = (String)objectJObject.get("text");
+        color = (String)objectJObject.get("color");
+        height=(long) objectJObject.get("height");
+        width=(long) objectJObject.get("width");
+        x=(long) objectJObject.get("x");
+        y=(long) objectJObject.get("y");
+
+        if(objectJObject.containsKey("next")){
+            nextActivitylist.add(objectJObject.get("next"));
+        }
+
+
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setText(text);
+        setPosition(new Point((int)x, (int)y));
+        setObject_height((int)height);
+        setObject_width((int)width);
+        setColor(color);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height);
+        this.setLocation((int)x, (int)y);
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setBackground(Color.LIGHT_GRAY);
+
+        //---------메소드----------------------
+        addMouseListener();
+
+    }
+    public Button_Root(HashMap<String, ObjectCustom> list , JSONObject obj, ArrayList nextlist , HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
+        long width, height, x, y ;
+        String name, text, color;
+
+        nextActivitylist=nextlist;
+        objectJObject=obj;
+        objectList =list;
+        checkkey=list;
+        activityList=actList;
+        this.activityName=ActivitName;
+
+        if(objectJObject.containsKey("attribute")){
+
+        }
+
+        getStroyBoard(stroy);
+        name =(String) objectJObject.get("name");
+        text = (String)objectJObject.get("text");
+        color = (String)objectJObject.get("color");
+        height=(long) objectJObject.get("height");
+        width=(long) objectJObject.get("width");
+        x=(long) objectJObject.get("x");
+        y=(long) objectJObject.get("y");
+
+        if(objectJObject.containsKey("next")){
+            nextActivitylist.add(objectJObject.get("next"));
+        }
+
+
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setText(text);
+        setPosition(new Point((int)x, (int)y));
+        setObject_height((int)height);
+        setObject_width((int)width);
+        setColor(color);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height);
+        this.setLocation((int)x, (int)y);
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setBackground(Color.LIGHT_GRAY);
+
+        //---------메소드----------------------
+        addMouseListener();
+
+    }
 
     //------private 변수 접근함수-------
     public String getText() {
@@ -216,7 +311,7 @@ public class Button_Root extends ObjectCustom {
                     Change_Window c = new Change_Window(getId(),getText(),e.getLocationOnScreen(), e.getPoint());
                     e.consume();
                 }
-                mousep = e.getLocationOnScreen();
+                mouse_p = e.getLocationOnScreen();
 
             }
 
@@ -301,9 +396,11 @@ public class Button_Root extends ObjectCustom {
     class PopUpMenu extends JPopupMenu{
         JMenuItem connect;
         JMenuItem remove;
+        JMenuItem library;
         public PopUpMenu() {
             connect = new JMenuItem("Connect");
             remove = new JMenuItem("Remove");
+            library = new JMenuItem("Library");
 
             connect.addActionListener(new ActionListener() {
                 @Override
@@ -319,8 +416,15 @@ public class Button_Root extends ObjectCustom {
                 }
             });
 
+            library.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Libray_Window a = new Libray_Window();
+                }
+            });
             add(connect);
             add(remove);
+            add(library);
         }
 
     }
@@ -470,7 +574,7 @@ public class Button_Root extends ObjectCustom {
             this.setSize(350, 150);          //창 사이즈
             this.setVisible(true);
             this.setLayout(null);
-            this.setLocation(mousep.x,mousep.y);   // 현재 버튼의 위에 덮기 위한 것
+            this.setLocation(mouse_p.x, mouse_p.y);   // 현재 버튼의 위에 덮기 위한 것
             okbutton = new JButton("OK");
             cancelButton = new JButton("NO");
             next_label = new JLabel("Next Activity");
@@ -492,6 +596,14 @@ public class Button_Root extends ObjectCustom {
             okbutton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    if(combo.getSelectedItem().equals("NONE")){
+                        objectJObject.remove("next");
+                    }
+                    else
+                    {
+                        objectJObject.put("next", combo.getSelectedItem());
+                    }
+
                     dispose();
                 }
             });
@@ -522,7 +634,6 @@ public class Button_Root extends ObjectCustom {
             else
                 combo.setSelectedItem("NONE");
 
-
             add(okbutton);
             add(cancelButton);
             add(combo);
@@ -535,18 +646,98 @@ public class Button_Root extends ObjectCustom {
 
                 @Override
                 public void windowLostFocus(WindowEvent e) {
-                    if(combo.getSelectedItem().equals("NONE")){
-                        objectJObject.remove("next");
-                    }
-                    else
-                    {
-                        objectJObject.put("next", combo.getSelectedItem());
-                    }
+
                     dispose();
                 }
             });
         }
 
 
+    }
+    class Libray_Window extends JFrame{
+        JComboBox<String> checklibray;
+        JButton okButton;
+        JButton noButton;
+        JLabel label = new JLabel("라이브러리 설정");
+        public Libray_Window(){
+            label.setSize(100,50);
+            label.setLocation(10,0);
+
+            checklibray = new JComboBox<String>();
+            checklibray.addItem("error");
+            checklibray.addItem("event");
+            checklibray.addItem("NONE");
+            checklibray.setSize(230,50);
+            checklibray.setLocation(30,45);
+
+            if(objectJObject.containsKey("Library")){
+
+                checklibray.setSelectedItem(objectJObject.get("Library"));
+            }
+            else
+            {
+                checklibray.setSelectedItem("NONE");
+            }
+
+            okButton = new JButton("OK");
+            okButton.setSize(100,25);
+            okButton.setLocation(50,110);
+
+            noButton = new JButton("NO");
+            noButton.setSize(100,25);
+            noButton.setLocation(160,110);
+            this.setUndecorated(true);      //title bar 제거
+            setSize(300,150);
+            setVisible(true);
+            setLayout(null);
+            setLocation(mouse_p.x,mouse_p.y);
+
+
+            okButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(checklibray.getSelectedItem().equals("NONE")){
+                        objectJObject.remove("Library");
+                    }
+                    else
+                    {
+                        objectJObject.put("Library", checklibray.getSelectedItem());
+                    }
+                    sendLibraryData((String)objectJObject.get("Library"));
+                    dispose();
+                }
+            });
+            noButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                }
+            });
+            add(label);
+            add(checklibray);
+            add(okButton);
+            add(noButton);
+
+            this.addWindowFocusListener(new WindowFocusListener() {
+                @Override
+                public void windowGainedFocus(WindowEvent e) {
+
+                }
+
+                @Override
+                public void windowLostFocus(WindowEvent e) {
+                    dispose();
+                }
+            });
+        }
+
+    }
+    public void sendLibraryData(String library){
+        String id_, activity_;
+
+        id_=getId();
+        activity_=activityName;
+
+        System.out.println("id :"+id_+"  activity : "+activityName + " library :" + library);
     }
 }

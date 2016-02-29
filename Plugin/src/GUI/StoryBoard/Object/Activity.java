@@ -2,6 +2,7 @@ package GUI.StoryBoard.Object;
 
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.UI.palettePanel;
+import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -26,7 +27,7 @@ public class Activity extends JPanel {
     HashMap<String, Activity> activitylist;
     HashMap <String, ObjectCustom> objectList = new HashMap();
     ArrayList nextActivitylist = new ArrayList();
-
+    storyBoard storyboard;
     palettePanel panel;
 
     private boolean draggable = true;
@@ -210,6 +211,46 @@ public class Activity extends JPanel {
         makeAllObject(activityObject);
 
     }
+    public Activity(HashMap<String, Activity> list , JSONObject obj, palettePanel pan, storyBoard stroy){
+        long width, height, x, y ;
+        String name;
+        panel=pan;
+        activityObject =obj;
+        activitylist =list;
+        getStroyBoard(stroy);
+        addDragListeners();
+
+
+        name =(String) activityObject.get("name");
+        height=(long) activityObject.get("height");
+        width=(long) activityObject.get("width");
+        x=(long) activityObject.get("x");
+        y=(long) activityObject.get("y");
+
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setActivity_position(new Point((int)x, (int)y));
+        setActivity_height((int)height+(int)height/10);
+        setActivity_width((int)width);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height+(int)height/10);
+        this.setLocation((int)x, (int)y);
+        this.setBorder(new LineBorder(Color.black));
+        this.setLayout(null);
+        this.setBackground(Color.black);
+
+        nameLabel.setText(getId());
+        nameLabel.setLocation((int)width/10,0);
+        nameLabel.setSize(getActivity_width()-(int)width/10, getActivity_height()/10);
+        nameLabel.setForeground(Color.white);
+        nameLabel.setFont(new Font("Serif", Font.PLAIN, getActivity_height()/15 ));
+        add(nameLabel);
+
+
+        makeAllObject(activityObject);
+
+    }
 
 
     //---------------private 접근함수 ------------
@@ -268,7 +309,7 @@ public class Activity extends JPanel {
                 setId(tempName);
                 nameLabel.setText(tempName);
                 activityObject.put("name", tempName);
-                System.out.println(activityObject);
+
             } else {
                 JOptionPane.showMessageDialog(null, tempName + "은 이미 중복되어있는 ID 값입니다.");
             }
@@ -431,13 +472,16 @@ public class Activity extends JPanel {
     public ObjectCustom createObjectCusthom(String type , JSONObject jobj) {
 
         if(type.equals("linear layout")){
-            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel, nextActivitylist, activitylist);
+            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel, nextActivitylist, activitylist,storyboard,getId());
+            System.out.println(getId());
+
             return linear;
         }
         else if(type.equals("RelativeLayout")){
 
-            Layout_Relative_Root relative = new Layout_Relative_Root(objectList,jobj, panel, nextActivitylist, activitylist);
-            System.out.println(relative);
+            Layout_Relative_Root relative = new Layout_Relative_Root(objectList,jobj, panel, nextActivitylist, activitylist ,storyboard,getId());
+            System.out.println(getId());
+
             return relative;
         }
         else
@@ -500,5 +544,10 @@ public class Activity extends JPanel {
 
     }
 
+
+    public void getStroyBoard(storyBoard story){
+        storyboard =story;
+
+    }
 
 }

@@ -1,14 +1,9 @@
 package GUI.StoryBoard.Object;
 
-import com.sun.java.swing.plaf.windows.WindowsBorders;
+import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -19,11 +14,21 @@ import java.util.HashMap;
  */
 public class ObjectCustom extends JPanel {
 
+    //--- Json 요소들 -----------------------
     private String id , color;
     private Point object_position;
     private int object_width, object_height;
-    private Point anchorPoint;
+    private String library_string;
+    public String activityName;
+    private boolean librayYN;
+
+
+    //--- json attribute 값 -----------------
+    private String layout_width, layout_height, layout_alignParentStart, layout_marginStart, layout_alignParentTop;
+    private String layout_alignParentLeft, layout_marginLeft, layout_marginTop , textAllCaps;
+
     private boolean overbearing = true;
+    public storyBoard storyboard;
 
     private int cursor;
     private Point startPos = null;
@@ -52,7 +57,7 @@ public class ObjectCustom extends JPanel {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                anchorPoint = e.getPoint();
+
                 if (hasFocus()) {
                     ResizableBorder border = (ResizableBorder) getBorder();
                     setCursor(Cursor.getPredefinedCursor(border.getCursor(e)));
@@ -273,6 +278,7 @@ public class ObjectCustom extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
 
+
                 ResizableBorder border = (ResizableBorder) getBorder();
                 cursor = border.getCursor(e);
                 startPos = e.getPoint();
@@ -284,7 +290,8 @@ public class ObjectCustom extends JPanel {
             public void mouseReleased(MouseEvent e) {
                 startPos = null;
                 repaint();
-                System.out.println("mouse Released");
+
+
             }
 
             @Override
@@ -309,12 +316,10 @@ public class ObjectCustom extends JPanel {
             public void focusLost(FocusEvent e) {
                 startPos = null;
                 repaint();
-                System.out.println("focus out");
-                //setBorder(new EmptyBorder(1,1,1,1));
+
             }
         });
     }
-
 
     public boolean isOverbearing() {
         return overbearing;
@@ -353,6 +358,74 @@ public class ObjectCustom extends JPanel {
     public void setObject_height(int object_height) {
         this.object_height = object_height;
     }
+    public String getLayout_marginTop() {
+        return layout_marginTop;
+    }
+    public void setLayout_marginTop(String layout_marginTop) {
+        this.layout_marginTop = layout_marginTop;
+    }
+    public String getLayout_width() {
+        return layout_width;
+    }
+    public void setLayout_width(String layout_width) {
+        this.layout_width = layout_width;
+    }
+    public String getLayout_height() {
+        return layout_height;
+    }
+    public void setLayout_height(String layout_height) {
+        this.layout_height = layout_height;
+    }
+    public String getLayout_alignParentStart() {
+        return layout_alignParentStart;
+    }
+    public void setLayout_alignParentStart(String layout_alignParentStart) {
+        this.layout_alignParentStart = layout_alignParentStart;
+    }
+    public String getLayout_marginStart() {
+        return layout_marginStart;
+    }
+    public void setLayout_marginStart(String layout_marginStart) {
+        this.layout_marginStart = layout_marginStart;
+    }
+    public String getLayout_alignParentTop() {
+        return layout_alignParentTop;
+    }
+    public void setLayout_alignParentTop(String layout_alignParentTop) {
+        this.layout_alignParentTop = layout_alignParentTop;
+    }
+    public String getLayout_alignParentLeft() {
+        return layout_alignParentLeft;
+    }
+    public void setLayout_alignParentLeft(String layout_alignParentLeft) {
+        this.layout_alignParentLeft = layout_alignParentLeft;
+    }
+    public String getLayout_marginLeft() {
+        return layout_marginLeft;
+    }
+    public void setLayout_marginLeft(String layout_marginLeft) {
+        this.layout_marginLeft = layout_marginLeft;
+    }
+    public String getTextAllCaps() {
+        return textAllCaps;
+    }
+    public void setTextAllCaps(String textAllCaps) {
+        this.textAllCaps = textAllCaps;
+    }
+    public boolean isLibrayYN() {
+        return librayYN;
+    }
+    public void setLibrayYN(boolean librayYN) {
+        this.librayYN = librayYN;
+    }
+    public String getLibrary_string() {
+        return library_string;
+    }
+    public void setLibrary_string(String library_string) {
+        this.library_string = library_string;
+    }
+
+    //--------------------------------------------------------------------------------------------------------------
     private void resize() {
         if (getParent() != null) {
             ((JComponent) getParent()).revalidate();
@@ -366,4 +439,15 @@ public class ObjectCustom extends JPanel {
         job.put("height",(long)h);
 
     }
+
+    public void getStroyBoard(storyBoard story){
+        storyboard =story;
+    }
+
+
+
+
+
+
+
 }

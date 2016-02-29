@@ -5,12 +5,11 @@ import Analysis.Database.DataAccessObject.Component.ComponentDAO;
 import Analysis.Database.DataAccessObject.Component.ComponentDAOImpl;
 import Analysis.Database.DataAccessObject.Event.EventDAO;
 import Analysis.Database.DataAccessObject.Event.EventDAOImpl;
+import Analysis.Database.DataAccessObject.NextActivity.NextActivityDAO;
+import Analysis.Database.DataAccessObject.NextActivity.NextActivityDAOImpl;
 import Analysis.Database.DataAccessObject.Xml.XmlDAO;
 import Analysis.Database.DataAccessObject.Xml.XmlDAOImpl;
-import Analysis.Database.DtatTransferObject.ComponentDTO;
-import Analysis.Database.DtatTransferObject.EventDTO;
-import Analysis.Database.DtatTransferObject.JavaDTO;
-import Analysis.Database.DtatTransferObject.XmlDTO;
+import Analysis.Database.DtatTransferObject.*;
 import Analysis.Database.QueryBuilder.QueryBuilder;
 import Analysis.Database.SQLiteOpenHelper;
 
@@ -23,6 +22,7 @@ import java.util.ArrayList;
 public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
     private final String tableName = "Java";
 
+    private final NextActivityDAO nextActivityDAO = new NextActivityDAOImpl();
     private final XmlDAO xmlDAO = new XmlDAOImpl();
     private final ComponentDAO componentDAO = new ComponentDAOImpl();
     private final EventDAO eventDAO = new EventDAOImpl();
@@ -44,6 +44,11 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
         }finally {
             close(connection,statement);
         }
+    }
+
+    @Override
+    public void createNextActivity() {
+        nextActivityDAO.create();
     }
 
     @Override
@@ -83,6 +88,12 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
     }
 
     @Override
+    public void insertNextActivity(NextActivityDTO nextActivityDTO) {
+        nextActivityDTO.setJavaId(currentJavaId);
+        nextActivityDAO.insert(nextActivityDTO);
+    }
+
+    @Override
     public void insertXml(XmlDTO xmlDTO) {
         xmlDTO.setJavaId(currentJavaId);
         currentXmlId = xmlDAO.insert(xmlDTO);
@@ -116,10 +127,8 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
                 javaDTO.setPath(rows.getString(3));
                 javaDTO.setExtendsValue(rows.getString(4));
                 javaDTO.setImplementsValue(rows.getString(5));
-                javaDTO.setNextActivity(rows.getString(6));
-                javaDTO.setIntentFuncName(rows.getString(7));
-                javaDTO.setIntentFuncName(rows.getString(8));
                 javaDTO.setXml(xmlDAO.select());
+                javaDTO.setNextActivity(nextActivityDAO.select());
                 items.add(javaDTO);
             }
         } catch (SQLException e) {
@@ -146,9 +155,6 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
                 javaDTO.setPath(rows.getString(3));
                 javaDTO.setExtendsValue(rows.getString(4));
                 javaDTO.setImplementsValue(rows.getString(5));
-                javaDTO.setNextActivity(rows.getString(6));
-                javaDTO.setIntentFuncName(rows.getString(7));
-                javaDTO.setIntentFuncName(rows.getString(8));
                 items.add(javaDTO);
             }
         } catch (SQLException e) {
@@ -157,6 +163,15 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
             close(connection,prep,rows);
             return items;
         }
+    }
+
+    @Override
+    public ArrayList<JavaDTO> selectNextActivity(String... col) {
+        JavaDTO javaDTO = new JavaDTO();
+        javaDTO.setNextActivity(nextActivityDAO.select(col));
+        ArrayList<JavaDTO> list = new ArrayList<>();
+        list.add(javaDTO);
+        return list;
     }
 
     @Override
@@ -188,16 +203,16 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
 
     @Override
     public void updateJava(JavaDTO javaDTO) {
-        System.out.println("update Java table ...");
-        Statement statement = null;
-        Connection connection = getConnection();
-        try {
-            statement = connection.createStatement();
-            statement.executeUpdate(QueryBuilder.update(tableName).set("nextActivity='"+javaDTO.getNextActivity()+"'","intentName='"+javaDTO.getIntentName()+"'","intentFuncName='"+javaDTO.getIntentFuncName()+"'").where("num="+currentJavaId).build());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            close(connection,statement);
-        }
+//        System.out.println("update Java table ...");
+//        Statement statement = null;
+//        Connection connection = getConnection();
+//        try {
+//            statement = connection.createStatement();
+//            statement.executeUpdate(QueryBuilder.update(tableName).set("nextActivity='"+javaDTO.getNextActivity()+"'","intentName='"+javaDTO.getIntentName()+"'","intentFuncName='"+javaDTO.getIntentFuncName()+"'").where("num="+currentJavaId).build());
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }finally {
+//            close(connection,statement);
+//        }
     }
 }

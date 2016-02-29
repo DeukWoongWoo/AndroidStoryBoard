@@ -1,10 +1,7 @@
 package Analysis.Parser;
 
 import Analysis.Database.DatabaseManager.DatabaseManager;
-import Analysis.Database.DtatTransferObject.ComponentDTO;
-import Analysis.Database.DtatTransferObject.EventDTO;
-import Analysis.Database.DtatTransferObject.JavaDTO;
-import Analysis.Database.DtatTransferObject.XmlDTO;
+import Analysis.Database.DtatTransferObject.*;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.ui.Messages;
@@ -127,11 +124,12 @@ public class JavaParser implements FileParser {
                 String intentName = null;
                 if (idStr.length > 1) intentName = idStr[idStr.length - 1];
                 else intentName = idStr[0];
-                javaDTO.setIntentName(intentName);
-                javaDTO.setNextActivity(strSplit[1].substring(strSplit[1].indexOf("(") + 1, strSplit[1].indexOf(")")).split(",")[1].split("\\.")[0].split("\\s")[1]);
-                javaDTO.setIntentFuncName(((PsiMethod) statement.getParent().getParent()).getName());
+                NextActivityDTO nextActivityDTO = new NextActivityDTO();
+                nextActivityDTO.setIntentName(intentName);
+                nextActivityDTO.setName(strSplit[1].substring(strSplit[1].indexOf("(") + 1, strSplit[1].indexOf(")")).split(",")[1].split("\\.")[0].split("\\s")[1]);
+                nextActivityDTO.setIntentFuncName(((PsiMethod) statement.getParent().getParent()).getName());
 
-                DatabaseManager.getInstance().updateToJava(table -> table.updateJava(javaDTO));
+                DatabaseManager.getInstance().updateToJava(table -> table.insertNextActivity(nextActivityDTO));
             }
             return true;
         }

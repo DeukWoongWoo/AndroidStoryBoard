@@ -76,9 +76,8 @@ public class JsonToXml {
                 }
                 else if(key.equals("object")){//오브젝트있으면 레이아웃이다.
                     jsonLayout= (JSONArray) entry.getValue();
-                }else if(key.equals("Library")){
-                    String assetPath ="C:/Users/cho/Desktop/TestActivity/app/src/main/assets/userLib.xml";
-                    UseLibraryParser useLibraryParser = new UseLibraryParser(assetPath);
+                }else if(key.equals("library")){
+                    UseLibraryParser useLibraryParser = new UseLibraryParser();
                     useLibraryParser.parse();
                     if(entry.getValue().equals("event"))
                         component.library="event";
@@ -112,13 +111,14 @@ public class JsonToXml {
                     ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
                     xmlName= (String) entry.getValue();
                     xmlPath = projectAnalysis.makeResourcePath(xmlName);
+                    String drawablePath = projectAnalysis.findDrawablePath();
                 }
                 else if(key.equals("object")){
                     JSONArray jsonObjectArray = (JSONArray) entry.getValue();
                     JsonToObject(jsonObjectArray,componentArrayList);
-                }else if(key.equals("Library")){
-                    String assetPath ="C:/Users/cho/Desktop/TestActivity/app/src/main/assets/userLib.xml";
-                    UseLibraryParser useLibraryParser = new UseLibraryParser(assetPath);
+                }else if(key.equals("library")){
+
+                    UseLibraryParser useLibraryParser = new UseLibraryParser();
                     useLibraryParser.parse();
                     useLibraryParser.append("activity",xmlName,xmlName);
                 }
@@ -127,8 +127,8 @@ public class JsonToXml {
             for(int j=0;j<componentArrayList.size();j++){
                 Component component = componentArrayList.get(j);
                 if(!component.library.equals("null")){
-                    String assetPath ="C:/Users/cho/Desktop/TestActivity/app/src/main/assets/userLib.xml";
-                    UseLibraryParser useLibraryParser = new UseLibraryParser(assetPath);
+
+                    UseLibraryParser useLibraryParser = new UseLibraryParser();
                     useLibraryParser.parse();
                     useLibraryParser.append(component.library,xmlName,makeId(component.getId()));
                 }

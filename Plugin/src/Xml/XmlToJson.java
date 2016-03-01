@@ -247,9 +247,7 @@ public class XmlToJson {
     private JSONObject makePluginJsonObject(ArrayList<Component> componentArrayList,String xmlName){
 
 
-
-        String assetPath ="C:/Users/cho/Desktop/TestActivity/app/src/main/assets/userLib.xml";
-        UseLibraryParser useLibraryParser = new UseLibraryParser(assetPath);
+        UseLibraryParser useLibraryParser = new UseLibraryParser();
         useLibraryParser.parse();
 
 

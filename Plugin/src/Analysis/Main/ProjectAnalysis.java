@@ -88,9 +88,16 @@ public class ProjectAnalysis {
     }
     public String makeResourcePath(String xmlName){
         String xmlPath;
-        PsiDirectory psiDirectory = currentDirectory(ConstantEtc.PROJECT_XML_PATH + "/res/layout");
         xmlPath=project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/res/layout/"  + xmlName;
         return xmlPath;
+    }
+    public String makeAssetsPath(String xmlName){
+        String xmlPath;
+        xmlPath=project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/"  + xmlName;
+        return xmlPath;
+    }
+    public String findDrawablePath(){
+        return project.getBasePath() + ConstantEtc.PROJECT_XML_PATH+"/res/drawable";
     }
 
     private void createTable(){

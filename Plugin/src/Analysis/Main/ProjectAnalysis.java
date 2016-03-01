@@ -81,7 +81,7 @@ public class ProjectAnalysis {
         String[][] path = new String[xmlFiles.length][2];
         for(int i = 0; i < xmlFiles.length ; i++){
 
-            path[i][0] = project.getBasePath() + ConstantEtc.PROJECT_JAVA_PATH + "/res/layout/" + xmlFiles[i].getName();
+            path[i][0] = project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/res/layout/" + xmlFiles[i].getName();
             path[i][1] = xmlFiles[i].getName();
         }
         return path;

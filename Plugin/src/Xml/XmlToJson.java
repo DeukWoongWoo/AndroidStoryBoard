@@ -1,7 +1,12 @@
 package Xml;
 
+import Analysis.Database.DataAccessObject.Java.JavaDAO;
+import Analysis.Database.DatabaseManager.DatabaseManager;
+import Analysis.Database.DtatTransferObject.JavaDTO;
+import Analysis.Database.DtatTransferObject.NextActivityDTO;
 import Analysis.Main.ProjectAnalysis;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.util.text.StringHash;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
@@ -21,6 +26,7 @@ public class XmlToJson {
     private JSONArray webJsonArray;
     private JSONObject pluginJsonObject;
     private JSONArray pluginJsonArray;
+    private ArrayList<JavaDTO> javaDTOArray = DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll);
 
     public XmlToJson(){
         webJsonObject=new JSONObject();
@@ -28,7 +34,11 @@ public class XmlToJson {
         webJsonArray=new JSONArray();
         pluginJsonArray=new JSONArray();
         Messages.showInfoMessage("Contructor!!","filePath");
+
+
+
     }
+
     private void addWebObject(JSONObject jsonObject){
         webJsonArray.add(jsonObject);
     }
@@ -138,7 +148,7 @@ public class XmlToJson {
                 getComponentWidthPoint(componentManager,componentManager.getComponent(i).getId(),"left");
                 getComponentHeightPoint(componentManager,componentManager.getComponent(i).getId(),"top");
             }
-            JSONObject webJson = makeWebJsonObject(componentManager);
+            JSONObject webJson = makeWebJsonObject(componentManager,xmlName);
             JSONObject pluginJson = makePluginJsonObject(componentArrayList,xmlName);
             xmlToJsonObject=new XmlToJsonObject(webJson,pluginJson);
         }catch(Exception e2){
@@ -160,7 +170,23 @@ public class XmlToJson {
             e.printStackTrace();
         }
     }
-    private JSONObject makeWebJsonObject(ComponentManager componentManager){
+    private JSONObject makeWebJsonObject(ComponentManager componentManager, String xmlName){
+        ArrayList<String> nextActivity = new ArrayList<>();
+        xmlName="R.layout."+xmlName;
+        String activityName=null;
+        for(int i=0;i<javaDTOArray.size();i++ ){
+            JavaDTO javaDTO=javaDTOArray.get(i);
+            for(int j=0;j<javaDTO.getXmls().size();j++){
+                if(javaDTO.getXmls().get(j).getXmlName().equals(xmlName)){
+                    activityName=javaDTO.getName();
+                    for (NextActivityDTO nextActivityDTO : javaDTO.getNextActivitys()) {
+                        nextActivity.add(nextActivityDTO.getName());
+                    }
+                }
+            }
+        }
+
+
         JSONObject jsonActivity;
         JSONObject jsonObject;
         JSONArray jsonArrayObject;
@@ -174,6 +200,8 @@ public class XmlToJson {
         jsonActivity.put("y","0");
         jsonActivity.put("width",768);
         jsonActivity.put("height",1280);
+        jsonActivity.put("next","asdf");
+
 
         jsonArrayObject = new JSONArray();
         for(int i=0;i<componentManager.size();i++){

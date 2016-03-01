@@ -47,7 +47,7 @@ public class storyBoard extends JPanel {
         jpan.setLayout(null);
         scroll = new JScrollPane(jpan , JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        System.out.println(scroll.getGraphics());
+
 
         jpan.setPreferredSize(new Dimension(3000,3000));
         this.setLayout(new BorderLayout());
@@ -221,7 +221,7 @@ public class storyBoard extends JPanel {
         for(int i=0; i<activityArrayData.size();i++){
             JSONObject activity_jobj;
             activity_jobj=(JSONObject)activityArrayData.get(i);
-            Activity a = new Activity(activity_list, activity_jobj, parlPanel);
+            Activity a = new Activity(activity_list, activity_jobj, parlPanel, this);
             activity_list.put((String)activity_jobj.get("name"),a);
             a.setOverbearing(true);
             jpan.add(a);
@@ -250,7 +250,7 @@ public class storyBoard extends JPanel {
             JSONObject activity_jobj;
             activity_jobj=(JSONObject)activityArrayData.get(i);
 
-            Activity a = new Activity(activity_list, activity_jobj, parlPanel);
+            Activity a = new Activity(activity_list, activity_jobj, parlPanel,this);
             activity_list.put((String)activity_jobj.get("name"),a);
             a.setOverbearing(true);
             jpan.add(a);
@@ -270,6 +270,8 @@ public class storyBoard extends JPanel {
             JSONObject obj = new JSONObject();
 
             Activity a = new Activity(resultStr, list, obj);
+
+            a.getStroyBoard(this);
 
             a.setOverbearing(true);
             list.put(resultStr, a);
@@ -291,6 +293,7 @@ public class storyBoard extends JPanel {
             JSONObject obj = new JSONObject();
 
             Activity a = new Activity(resultStr, list, obj, pos);
+            activityArrayData.add(obj);
 
             a.setOverbearing(true);
             list.put(resultStr, a);
@@ -529,4 +532,5 @@ public class storyBoard extends JPanel {
          g.drawLine((start.getActivity_position().x+ start.getActivity_width()/2)  , (start.getActivity_position().y+ start.getActivity_height()/2),  (end.getActivity_position().x+end.getActivity_width()/2),(end.getActivity_position().y+ end.getActivity_height()/2));
 
     }
+
 }

@@ -1,6 +1,7 @@
 package GUI.StoryBoard.Object;
 
 import GUI.StoryBoard.Constant;
+import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -65,6 +66,17 @@ public class Button_Click extends Button_Root {
         init_text();
         add(content);
     }
+    public Button_Click(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actList,    storyBoard stroy) {
+        super(list, obj,nextlist, actList,stroy);
+        init_text();
+        add(content);
+    }
+    public Button_Click(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actList,    storyBoard stroy, String ActivitName) {
+        super(list, obj,nextlist, actList,stroy, ActivitName);
+        init_text();
+        add(content);
+    }
+
 
     @Override
     public void setting_Id_Text(String id_, String text_) {

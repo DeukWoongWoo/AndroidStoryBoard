@@ -2,10 +2,13 @@ package Analysis;
 
 import Analysis.Constant.ConstantEtc;
 import Analysis.Constant.SharedPreference;
+import Analysis.Database.DataAccessObject.Java.JavaDAO;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
 import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Database.DtatTransferObject.ActivityDTO;
+import Analysis.Database.DtatTransferObject.JavaDTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
+import Analysis.Database.DtatTransferObject.XmlDTO;
 import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeDriver;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -32,12 +35,37 @@ public class MyActionClass extends AnAction {
 
 //        codeMakeTest(e);
 
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.INTELLIJ_PATH);
-        projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
-//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
+//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.INTELLIJ_PATH);
+
+
+//        projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
+        projectAnalysis.executeAll();
 //        projectAnalysis.execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
 
-        new CodeDriver();
+//        DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll).forEach(java ->{
+//            System.out.println("Name : " + java.getName());
+//            System.out.println("NextActivity : " + java.getNextActivity());
+//            java.getXmls().forEach(xml->{
+//                System.out.println();
+//            });
+//        });
+/*
+        ArrayList<JavaDTO> javaDTOArray = DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll);
+        for(int i=0;i<javaDTOArray.size();i++ ){
+             JavaDTO javaDTO=javaDTOArray.get(i);
+            javaDTO.getName();//activity
+            javaDTO.getNextActivity();//next
+            for(int j=0;j<javaDTO.getXmls().size();j++){
+                XmlDTO xmlDTO = javaDTO.getXmls().get(j);
+                xmlDTO.getName();//xml
+            }
+        }
+*/
+//        Messages.showInfoMessage(DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll).size()+"", "Test");
+
+
+//        new CodeDriver();
 //        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);
 
 //        ManifestDTO manifestDTO = new ManifestDTO();

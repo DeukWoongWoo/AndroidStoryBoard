@@ -1,12 +1,10 @@
 package Analysis.Parser;
 
 import Analysis.Database.DatabaseManager.DatabaseManager;
-import Analysis.Database.DtatTransferObject.ComponentDTO;
-import Analysis.Database.DtatTransferObject.EventDTO;
-import Analysis.Database.DtatTransferObject.JavaDTO;
-import Analysis.Database.DtatTransferObject.XmlDTO;
+import Analysis.Database.DtatTransferObject.*;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.*;
 
 import java.util.regex.Matcher;
@@ -39,16 +37,20 @@ public class JavaParser implements FileParser {
 
     @Override
     public void parsing() {
-        javaDTO = new JavaDTO();
-        javaDTO.setPath(psiJavaFile.getProject().getBasePath() + "/" +curPath + "/" + psiJavaFile.getName());
 
         for (PsiClass p : psiJavaFile.getClasses()) {
-            javaDTO.setName(p.getName());
 
             PsiJavaCodeReferenceElement[] extendsElement = p.getExtendsList().getReferenceElements();
             if (extendsElement.length != 0) {
-                javaDTO.setExtendsValue(extendsElement[0].getText());
-            }
+                Pattern pattern = Pattern.compile("Activity");
+                Matcher matcher = pattern.matcher(extendsElement[0].getText());
+                if (matcher.find()) {
+                    javaDTO = new JavaDTO();
+                    javaDTO.setPath(psiJavaFile.getProject().getBasePath() + "/" + curPath + "/" + psiJavaFile.getName());
+                    javaDTO.setName(p.getName());
+                    javaDTO.setExtendsValue(extendsElement[0].getText());
+                } else return;
+            } else return;
 
             PsiJavaCodeReferenceElement[] implementsElement = p.getImplementsList().getReferenceElements();
             if (implementsElement.length != 0) {
@@ -65,8 +67,8 @@ public class JavaParser implements FileParser {
                 if (isOnClick) if (method.getName().equals("onClick")) {
                     eventDTO.setMethodName(method.getName());
                     eventDTO.setStartLine(getStartLine(method.getTextRange().getStartOffset()));
-                    eventDTO.setTotalLine(getTotalLine(method.getTextRange().getEndOffset(),getStartLine(method.getTextRange().getStartOffset())));
-                    DatabaseManager.getInstance().insertToJava(table->table.insertEvent(eventDTO));
+                    eventDTO.setTotalLine(getTotalLine(method.getTextRange().getEndOffset(), getStartLine(method.getTextRange().getStartOffset())));
+                    DatabaseManager.getInstance().insertToJava(table -> table.insertEvent(eventDTO));
                 }
 //                if(method.getMethodName().equals("onCreate")){
                 PsiCodeBlock body = method.getBody();
@@ -97,10 +99,10 @@ public class JavaParser implements FileParser {
                 if (element[1].getChildren()[1].getChildren().length > 2) {
                     eventDTO.setType(3);
                     eventDTO.setStartLine(getStartLine(statement.getTextRange().getStartOffset()));
-                    eventDTO.setTotalLine(getTotalLine(statement.getTextRange().getEndOffset(),getStartLine(statement.getTextRange().getStartOffset())));
+                    eventDTO.setTotalLine(getTotalLine(statement.getTextRange().getEndOffset(), getStartLine(statement.getTextRange().getStartOffset())));
                     eventDTO.setMethodName("Local");
 
-                    DatabaseManager.getInstance().insertToJava(table->table.insertEvent(eventDTO));
+                    DatabaseManager.getInstance().insertToJava(table -> table.insertEvent(eventDTO));
 
                     for (PsiElement el : element[1].getChildren()[1].getChildren()[3].getChildren()[5].getChildren()[9].getChildren()) {
                         if (el instanceof PsiStatement) {
@@ -109,10 +111,10 @@ public class JavaParser implements FileParser {
                         }
                     }
                 } else {
-                    if(element[1].getChildren()[1].getChildren()[1].getText().equals("this")){
+                    if (element[1].getChildren()[1].getChildren()[1].getText().equals("this")) {
                         eventDTO.setType(1);
                         eventDTO.setMethodName("onClick");
-                    }else eventDTO.setType(2);
+                    } else eventDTO.setType(2);
                 }
 
             } else if (type.equals("Intent")) {
@@ -120,13 +122,14 @@ public class JavaParser implements FileParser {
                 String[] idStr = strSplit[0].split("\\s");
 
                 String intentName = null;
-                if(idStr.length > 1) intentName = idStr[idStr.length-1];
+                if (idStr.length > 1) intentName = idStr[idStr.length - 1];
                 else intentName = idStr[0];
-                javaDTO.setIntentName(intentName);
-                javaDTO.setNextActivity(strSplit[1].substring(strSplit[1].indexOf("(")+1, strSplit[1].indexOf(")")).split(",")[1].split("\\.")[0].split("\\s")[1]);
-                javaDTO.setIntentFuncName(((PsiMethod)statement.getParent().getParent()).getName());
+                NextActivityDTO nextActivityDTO = new NextActivityDTO();
+                nextActivityDTO.setIntentName(intentName);
+                nextActivityDTO.setName(strSplit[1].substring(strSplit[1].indexOf("(") + 1, strSplit[1].indexOf(")")).split(",")[1].split("\\.")[0].split("\\s")[1]);
+                nextActivityDTO.setIntentFuncName(((PsiMethod) statement.getParent().getParent()).getName());
 
-                DatabaseManager.getInstance().updateToJava(table->table.updateJava(javaDTO));
+                DatabaseManager.getInstance().updateToJava(table -> table.insertNextActivity(nextActivityDTO));
             }
             return true;
         }
@@ -158,7 +161,7 @@ public class JavaParser implements FileParser {
         componentDTO.setXmlName(findStr.substring(findStr.lastIndexOf("(") + 1, findStr.lastIndexOf(")")));
 
         componentDTO.setStartLine(getStartLine(statement.getTextRange().getStartOffset()));
-        componentDTO.setTotalLine(getTotalLine(statement.getTextRange().getEndOffset(),getStartLine(statement.getTextRange().getStartOffset())));
+        componentDTO.setTotalLine(getTotalLine(statement.getTextRange().getEndOffset(), getStartLine(statement.getTextRange().getStartOffset())));
 
         DatabaseManager.getInstance().insertToJava(table -> table.insertComponent(componentDTO));
     }

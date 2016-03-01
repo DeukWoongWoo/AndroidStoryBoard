@@ -2,6 +2,7 @@ package GUI.StoryBoard.Object;
 
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.UI.palettePanel;
+import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
 
 import java.awt.*;
@@ -69,6 +70,38 @@ public class Layout_Relative_Root extends Layout_Relative {
         this.setBackground(Color.white);
         this.setOpaque(true);
     }
+    public Layout_Relative_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy) {
+        super(list, obj,pan,nextlist, actList,stroy);
+
+        System.out.println(this);
+        setPosition(new Point(0,0));
+
+        setSize(getObject_width(),getObject_height());
+
+        //--------- 변수 값 지정---------------
+        setPosition(new Point(isPosition().x, isPosition().y+getObject_height()/10));
+        //----------창 구성--------------------
+        this.setLocation(isPosition().x, isPosition().y);
+        this.setBackground(Color.white);
+        this.setOpaque(true);
+    }
+    public Layout_Relative_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy,   String ActivitName
+    ) {
+        super(list, obj,pan,nextlist, actList,stroy,ActivitName);
+
+        System.out.println(this);
+        setPosition(new Point(0,0));
+
+        setSize(getObject_width(),getObject_height());
+
+        //--------- 변수 값 지정---------------
+        setPosition(new Point(isPosition().x, isPosition().y+getObject_height()/10));
+        //----------창 구성--------------------
+        this.setLocation(isPosition().x, isPosition().y);
+        this.setBackground(Color.white);
+        this.setOpaque(true);
+    }
+
 
     public Layout_Relative_Root(String name_, HashMap<String, ObjectCustom> list , JSONObject obj){
         super(name_,list,obj);

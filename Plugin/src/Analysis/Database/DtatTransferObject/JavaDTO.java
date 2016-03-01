@@ -15,10 +15,8 @@ public class JavaDTO {
     private String path;
     private String extendsValue;
     private String implementsValue;
-    private String nextActivity;
-    private String intentName;
-    private String intentFuncName;
 
+    private ArrayList<NextActivityDTO> nextActivitys;
     private ArrayList<ComponentDTO> components;
     private ArrayList<XmlDTO> xmls;
     private ArrayList<EventDTO> events;
@@ -32,15 +30,6 @@ public class JavaDTO {
     public JavaDTO(){
         columns = new String[6];
         values = new Object[6];
-    }
-
-    public JavaDTO(int num, String name, String path, String extendsValue, String implementsValue, String nextActivity) {
-        this.num = num;
-        this.name = name;
-        this.path = path;
-        this.extendsValue = extendsValue;
-        this.implementsValue = implementsValue;
-        this.nextActivity = nextActivity;
     }
 
     public void setNum(int num) {
@@ -75,18 +64,13 @@ public class JavaDTO {
         values[valCnt++] = implementsValue;
     }
 
-    public void setNextActivity(String nextActivity) {
-        this.nextActivity = nextActivity;
-        columns[colCnt++] = "nextActivity";
-        values[valCnt++] = nextActivity;
+    public void setNextActivitys(ArrayList<NextActivityDTO> nextActivitys){
+        this.nextActivitys = nextActivitys;
     }
 
-    public void setIntentName(String intentName) {
-        this.intentName = intentName;
-    }
-
-    public void setIntentFuncName(String intentFuncName) {
-        this.intentFuncName = intentFuncName;
+    public void setNextActivity(NextActivityDTO nextActivity){
+        if(nextActivitys == null) nextActivitys = new ArrayList<>();
+        nextActivitys.add(nextActivity);
     }
 
     public void setComponents(ArrayList<ComponentDTO> components){
@@ -132,16 +116,8 @@ public class JavaDTO {
         return implementsValue;
     }
 
-    public String getNextActivity() {
-        return nextActivity;
-    }
-
-    public String getIntentName() {
-        return intentName;
-    }
-
-    public String getIntentFuncName() {
-        return intentFuncName;
+    public ArrayList<NextActivityDTO> getNextActivitys(){
+        return nextActivitys;
     }
 
     public ComponentDTO getComponent(int index){
@@ -149,6 +125,10 @@ public class JavaDTO {
     }
 
     public XmlDTO getXml(int index) { return xmls.get(index); }
+
+    public ArrayList<XmlDTO> getXmls() {
+        return xmls;
+    }
 
     public EventDTO getEvent(int index){
         return events.get(index);

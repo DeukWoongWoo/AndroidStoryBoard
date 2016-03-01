@@ -21,8 +21,11 @@ public class DatabaseQuery {
             "name TEXT NOT NULL," +
             "path TEXT NOT NULL," +
             "extends TEXT," +
-            "implements TEXT," +
-            "nextActivity TEXT," +
+            "implements TEXT" + ")";
+    public static final String createNextActivity = "CREATE TABLE NextActivity (" +
+            "num INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "javaId INTEGER NOT NULL," +
+            "name TEXT NOT NULL," +
             "intentName TEXT," +
             "intentFuncName TEXT" + ")";
     public static final String createXmlTable = "CREATE TABLE Xml (" +

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Component {
 
-
+    public String library="null";
     public String componentId=null;
     private ArrayList<Attribution> Attributes ;
     private int AttributeCount;
@@ -227,6 +227,9 @@ public class Component {
 
 
 
+    }
+    public void setAttributeCount(){
+        AttributeCount=Attributes.size();
     }
     public String getAttributes(int index){
         return Attributes.get(index).getAttribute();

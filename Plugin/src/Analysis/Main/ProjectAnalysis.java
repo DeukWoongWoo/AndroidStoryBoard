@@ -81,16 +81,23 @@ public class ProjectAnalysis {
         String[][] path = new String[xmlFiles.length][2];
         for(int i = 0; i < xmlFiles.length ; i++){
 
-            path[i][0] = project.getBasePath() + ConstantEtc.PROJECT_JAVA_PATH + "/res/layout/" + xmlFiles[i].getName();
+            path[i][0] = project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/res/layout/" + xmlFiles[i].getName();
             path[i][1] = xmlFiles[i].getName();
         }
         return path;
     }
     public String makeResourcePath(String xmlName){
         String xmlPath;
-        PsiDirectory psiDirectory = currentDirectory(ConstantEtc.PROJECT_XML_PATH + "/res/layout");
-        xmlPath=psiDirectory.getText() + "/" + xmlName;
+        xmlPath=project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/res/layout/"  + xmlName;
         return xmlPath;
+    }
+    public String makeAssetsPath(String xmlName){
+        String xmlPath;
+        xmlPath=project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/"  + xmlName;
+        return xmlPath;
+    }
+    public String findDrawablePath(){
+        return project.getBasePath() + ConstantEtc.PROJECT_XML_PATH+"/res/drawable";
     }
 
     private void createTable(){

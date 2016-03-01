@@ -56,9 +56,9 @@ public class NextActivityDAOImpl extends SQLiteOpenHelper implements NextActivit
         PreparedStatement prep = null;
         Connection connection = getConnection();
         ResultSet rows = null;
-        ArrayList<NextActivityDTO> nextActivities = null;
+        ArrayList<NextActivityDTO> nextActivities = new ArrayList<>();
         try{
-            prep = connection.prepareStatement(QueryBuilder.selectAll().from(tableName).where(query).build());
+            prep = connection.prepareStatement(query);
             rows = prep.executeQuery();
             while(rows.next()) {
                 NextActivityDTO nextActivityDTO = new NextActivityDTO();

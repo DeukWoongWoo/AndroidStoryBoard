@@ -51,12 +51,12 @@ public class ProjectAnalysis {
     public void executeAll() {
         createTable();
 
-        String path = "/src";
-        execute(path, ConstantEtc.XML_PATTERN);
-        execute(path, ConstantEtc.JAVA_PATTERN);
+//        String path = "/src";
+//        execute(path, ConstantEtc.XML_PATTERN);
+//        execute(path, ConstantEtc.JAVA_PATTERN);
 
-//       execute(ConstantEtc.PROJECT_XML_PATH,ConstantEtc.XML_PATTERN);
-//        execute(ConstantEtc.PROJECT_XML_PATH+ConstantEtc.PROJECT_JAVA_PATH,ConstantEtc.JAVA_PATTERN);
+        execute(ConstantEtc.PROJECT_XML_PATH, ConstantEtc.XML_PATTERN);
+        execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
     }
 
     public void execute(String path, String pattern, boolean start) {

@@ -57,8 +57,8 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
 
     private void initProjectAnalysis(Project project) {
         SharedPreference.PROJECT.set(project);
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(ConstantEtc.INTELLIJ_PATH);
-//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(ConstantEtc.PROJECT_XML_PATH);
+//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(ConstantEtc.INTELLIJ_PATH);
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(ConstantEtc.PROJECT_XML_PATH);
         projectAnalysis.executeAll();
     }
 

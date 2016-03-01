@@ -1,5 +1,9 @@
 package GUI.StoryBoard;
 
+import Analysis.Constant.ConstantEtc;
+import Analysis.Constant.SharedPreference;
+import Analysis.Main.ProjectAnalysis;
+import Analysis.RedoUndo.CodeDriver;
 import GUI.StoryBoard.UI.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -23,6 +27,8 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
 
     private ToolWindow mainViewWindow;
 
+    public static Project project;
+
     public StoryBoard_PlugIn() throws IOException {
         System.out.println("StoryBoard_Plugin...");
         totalPanel = new JPanel();
@@ -31,23 +37,30 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
         eastPanel = new componetTreePanel();
         totalPanel.setLayout(new BorderLayout());
 
-        totalPanel.add(centerPanel,"Center");
-        totalPanel.add(northPanel,"North");
-        totalPanel.add(eastPanel,"East");
+        totalPanel.add(centerPanel, "Center");
+        totalPanel.add(northPanel, "North");
+        totalPanel.add(eastPanel, "East");
 
     }
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         System.out.println("createToolWindowContent...");
-        mainViewWindow=toolWindow;
-
-        System.out.println("Create Tool Window : " + project.getBasePath());
+        mainViewWindow = toolWindow;
 
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         Content content = contentFactory.createContent(totalPanel, "", false);
         toolWindow.getContentManager().addContent(content);
 
+        initProjectAnalysis(project);
     }
+
+    private void initProjectAnalysis(Project project) {
+        SharedPreference.PROJECT.set(project);
+//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(ConstantEtc.INTELLIJ_PATH);
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(ConstantEtc.PROJECT_XML_PATH);
+        projectAnalysis.executeAll();
+    }
+
 
 }

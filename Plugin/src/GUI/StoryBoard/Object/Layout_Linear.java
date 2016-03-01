@@ -36,6 +36,7 @@ public class Layout_Linear extends Layout_Root {
     }
     public Layout_Linear(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist,HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
         super(list,obj,pan,nextlist,actList,stroy,ActivitName);
+
     }
 
 

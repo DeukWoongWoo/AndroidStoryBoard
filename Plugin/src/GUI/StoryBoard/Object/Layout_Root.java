@@ -21,7 +21,6 @@ public class Layout_Root extends ObjectCustom {
     int radiobuttonNum=1;
     int linearlayoutNum=1;
     int imageViewNum=1;
-    palettePanel panel;
     Point mouse_p;
 
     private boolean isButton;
@@ -193,10 +192,12 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
+        super(list,obj,pan,nextlist,actList,stroy,ActivitName);
         long width, height, x, y ;
         this.activityName = ActivitName;
         String name;
         JSONArray objectArray;
+
         panel = pan;
         objectJObject=obj;
         objectList =list;
@@ -587,7 +588,7 @@ public class Layout_Root extends ObjectCustom {
             refresh.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println(storyboard);
+                    System.out.println(getParent());
                     storyboard.drawActivity_temp();
                 }
             });

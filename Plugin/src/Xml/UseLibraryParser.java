@@ -37,7 +37,7 @@ public class UseLibraryParser {
         activity = new ArrayList<>();
         error = new ArrayList<>();
         event = new ArrayList<>();
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
         Filepath = projectAnalysis.makeAssetsPath("userLib.xml");
     }
 

@@ -28,16 +28,10 @@ import java.util.ArrayList;
 public class MyActionClass extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
-        SharedPreference.ACTIONEVENT.setData(e);
-
-//        codeMakeTest(e);
-
-//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.INTELLIJ_PATH);
-
-
+//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(ConstantEtc.INTELLIJ_PATH);
 //        projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
-       projectAnalysis.executeAll();
+//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(ConstantEtc.PROJECT_XML_PATH);
+//        projectAnalysis.executeAll();
 //        projectAnalysis.execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
 
 //        DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll).forEach(java ->{

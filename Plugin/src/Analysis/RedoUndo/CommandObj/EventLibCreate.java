@@ -52,7 +52,7 @@ public class EventLibCreate {
         int componentId = component.getNum();
         eventDTO = DatabaseManager.getInstance().selectToJava(table -> table.selectEvent("componentId=" + componentId)).get(0).getEvent(0);
         File file = new File(DatabaseManager.getInstance().selectToJava(table -> table.selectJava("num=" + xmlDTO.getJavaId())).get(0).getPath());
-        PsiJavaFile psiJavaFile = (PsiJavaFile) PsiManager.getInstance(SharedPreference.ACTIONEVENT.getData().getProject()).findFile(LocalFileSystem.getInstance().findFileByIoFile(file));
+        PsiJavaFile psiJavaFile = (PsiJavaFile) PsiManager.getInstance(SharedPreference.PROJECT.get()).findFile(LocalFileSystem.getInstance().findFileByIoFile(file));
 
         mainClass = psiJavaFile.getClasses()[0];
 
@@ -215,6 +215,6 @@ public class EventLibCreate {
     }
 
     private void syncProject() {
-        ProjectAnalysis.getInstance(null, null).executeAll();
+        ProjectAnalysis.getInstance(null).executeAll();
     }
 }

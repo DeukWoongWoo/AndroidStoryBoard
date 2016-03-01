@@ -59,7 +59,7 @@ public class XmlToJson {
     }
 
     public void make(){
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
         String[][] filePath=projectAnalysis.findResourcePath();
         XmlToJson xmlToJson = new XmlToJson();
         for(int i=0;i<filePath.length;i++)

@@ -23,10 +23,7 @@
 		"height":96
 	}]
 },
-{
-"name":"RelativeLayout3",
-"x":0,"width":285,"y":450,"height":0,
-"next" : "RelativeLayout2",
+{"name":"RelativeLayout3","x":0,"width":285,"y":450,"height":0,
 	"object":[
 	{
 		"textSize":"14",
@@ -44,7 +41,6 @@
 		"height":96
 	}]},
 {"name":"RelativeLayout1","x":0,"width":0,"y":48,"height":0,
-"next" : "RelativeLayout3",
 	"object":[
 		{
 			"textSize":"14",

@@ -39,6 +39,7 @@ public class DatabaseManager implements DBManager{
         manifestDAO.createManifest();
         manifestDAO.createActivity();
         javaDAO.createJava();
+        javaDAO.createNextActivity();
         javaDAO.createXml();
         javaDAO.createComponent();
         javaDAO.createEvent();

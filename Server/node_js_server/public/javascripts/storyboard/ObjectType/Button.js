@@ -54,8 +54,8 @@ function Button() {
             var h = this.height();
             textSize = this.textSize();
 
-            console.log('textLine');
-            console.log(textLine);
+            //console.log('textLine');
+            //console.log(textLine);
             //console.log(this.getText());
             //console.log(this.getText().length);
             textSvg.append('path').attr('id', this.name() + '-text').attr('d', function () {

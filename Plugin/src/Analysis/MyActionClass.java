@@ -40,7 +40,8 @@ public class MyActionClass extends AnAction {
 
 //        projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
         ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
-        projectAnalysis.execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
+        projectAnalysis.executeAll();
+//        projectAnalysis.execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
 
 //        DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll).forEach(java ->{
 //            System.out.println("Name : " + java.getName());

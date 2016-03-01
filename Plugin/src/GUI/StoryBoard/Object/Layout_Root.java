@@ -20,11 +20,14 @@ public class Layout_Root extends ObjectCustom {
     int buttonNum =1;
     int radiobuttonNum=1;
     int linearlayoutNum=1;
+    int imageViewNum=1;
     palettePanel panel;
     Point mouse_p;
 
     private boolean isButton;
     private boolean isRadioButton;
+    private boolean isImageView;
+
     private int x,y;
 
     public Layout_Root() {
@@ -232,9 +235,16 @@ public class Layout_Root extends ObjectCustom {
             g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
             revalidate();       // 무효화 선언된 화면을 알려줌
             repaint();          // 다시 그려준다.
+
         }
         else if(isRadioButton){
             g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();          // 다시 그려준다.
+
+        }
+        else if(isImageView){
+            g.drawRect(x,y,Constant.imageVIewWidth,Constant.imageViewHeight);
             revalidate();       // 무효화 선언된 화면을 알려줌
             repaint();          // 다시 그려준다.
         }
@@ -307,6 +317,25 @@ public class Layout_Root extends ObjectCustom {
             Button_Radio b= new Button_Radio(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
             b.getStroyBoard(storyboard);
             return b;
+        }
+        else if(type.equals("RadioButton")){
+            Button_Radio b= new Button_Radio(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
+            b.getStroyBoard(storyboard);
+            return b;
+        }
+        else if(type.equals("ImageVIew")){
+            Image_View i= new Image_View(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
+            i.getStroyBoard(storyboard);
+            return i;
+        }
+        else if(type.equals("CheckBox")){
+            CheckBox c = new CheckBox(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
+            return c;
+        }
+        else if(type.equals("TextView")){
+            TextView t = new TextView(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
+            t.getStroyBoard(storyboard);
+            return t;
         }
         else
         {
@@ -411,6 +440,22 @@ public class Layout_Root extends ObjectCustom {
         repaint();          // 다시 그려준다.
         radiobuttonNum++;
     }
+    public void newImageView(Point point){
+        JSONArray tempArray;
+        JSONObject tempObj;
+        tempArray = (JSONArray)objectJObject.get("object");
+        tempObj = new JSONObject();
+
+        Image_View b = new Image_View(""+imageViewNum, objectList,tempObj, point);
+
+        tempArray.add(tempObj);
+
+        add(b);
+
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();          // 다시 그려준다.
+        imageViewNum++;
+    }
     public void newLInearLayout(){
         JSONArray tempArray;
         JSONObject tempObj;
@@ -442,20 +487,30 @@ public class Layout_Root extends ObjectCustom {
                     panel.setChoice(0);
                     isButton=false;
                     isRadioButton=false;
+                    isImageView=false;
                 }
                 else if(panel.getChoice()==5){
                     newRadioButton(e.getPoint());
                     panel.setChoice(0);
                     isButton=false;
                     isRadioButton=false;
+                    isImageView=false;
                 }
                 else if(panel.getChoice()==2){
                     newLInearLayout();
                     panel.setChoice(0);
                 }
+                else if(panel.getChoice()==6){
+                    newImageView(e.getPoint());
+                    panel.setChoice(0);
+                    isButton=false;
+                    isRadioButton=false;
+                    isImageView=false;
+                }
                 else{
                     isButton=false;
                     isRadioButton=false;
+                    isImageView=false;
                     panel.setChoice(0);
 
                 }
@@ -474,13 +529,14 @@ public class Layout_Root extends ObjectCustom {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-
+                repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 isButton=false;
                 isRadioButton=false;
+                isImageView=false;
             }
         });
     }
@@ -501,8 +557,9 @@ public class Layout_Root extends ObjectCustom {
                     x = e.getX(); y = e.getY();
                     isRadioButton=true;
                 }
-                else if(panel.getChoice()==2){
-
+                else if(panel.getChoice()==6){
+                    x = e.getX(); y = e.getY();
+                    isImageView=true;
                 }
             }
         });
@@ -516,7 +573,7 @@ public class Layout_Root extends ObjectCustom {
         JMenuItem library;
         JMenuItem refresh;
         public PopUpMenu() {
-            library = new JMenuItem("Library");
+            library = new JMenuItem("library");
             refresh = new JMenuItem("refresh");
 
 
@@ -556,9 +613,9 @@ public class Layout_Root extends ObjectCustom {
             checklibray.setSize(230,50);
             checklibray.setLocation(30,45);
 
-            if(objectJObject.containsKey("Library")){
+            if(objectJObject.containsKey("library")){
 
-                checklibray.setSelectedItem(objectJObject.get("Library"));
+                checklibray.setSelectedItem(objectJObject.get("library"));
             }
             else
             {
@@ -583,13 +640,13 @@ public class Layout_Root extends ObjectCustom {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(checklibray.getSelectedItem().equals("NONE")){
-                        objectJObject.remove("Library");
+                        objectJObject.remove("library");
                     }
                     else
                     {
-                        objectJObject.put("Library", checklibray.getSelectedItem());
+                        objectJObject.put("library", checklibray.getSelectedItem());
                     }
-                    sendLibraryData((String)objectJObject.get("Library"));
+                    sendLibraryData((String)objectJObject.get("library"));
                     dispose();
                 }
             });

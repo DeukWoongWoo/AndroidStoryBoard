@@ -400,7 +400,7 @@ public class Button_Root extends ObjectCustom {
         public PopUpMenu() {
             connect = new JMenuItem("Connect");
             remove = new JMenuItem("Remove");
-            library = new JMenuItem("Library");
+            library = new JMenuItem("library");
 
             connect.addActionListener(new ActionListener() {
                 @Override
@@ -670,9 +670,9 @@ public class Button_Root extends ObjectCustom {
             checklibray.setSize(230,50);
             checklibray.setLocation(30,45);
 
-            if(objectJObject.containsKey("Library")){
+            if(objectJObject.containsKey("library")){
 
-                checklibray.setSelectedItem(objectJObject.get("Library"));
+                checklibray.setSelectedItem(objectJObject.get("library"));
             }
             else
             {
@@ -697,13 +697,13 @@ public class Button_Root extends ObjectCustom {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(checklibray.getSelectedItem().equals("NONE")){
-                        objectJObject.remove("Library");
+                        objectJObject.remove("library");
                     }
                     else
                     {
-                        objectJObject.put("Library", checklibray.getSelectedItem());
+                        objectJObject.put("library", checklibray.getSelectedItem());
                     }
-                    sendLibraryData((String)objectJObject.get("Library"));
+                    sendLibraryData((String)objectJObject.get("library"));
                     dispose();
                 }
             });

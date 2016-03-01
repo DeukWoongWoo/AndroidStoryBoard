@@ -1,5 +1,6 @@
 package GUI.StoryBoard;
 
+import GUI.StoryBoard.Object.Image_View;
 import GUI.StoryBoard.UI.*;
 import javax.swing.*;
 import java.io.IOException;

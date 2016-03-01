@@ -3,6 +3,7 @@ package GUI.StoryBoard.Object;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.UI.palettePanel;
 import GUI.StoryBoard.storyBoard;
+import Xml.UseLibraryParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -29,6 +30,8 @@ public class Activity extends JPanel {
     ArrayList nextActivitylist = new ArrayList();
     storyBoard storyboard;
     palettePanel panel;
+
+    UseLibraryParser  useLibraryParser = new UseLibraryParser("sdf");
 
     private boolean draggable = true;
     protected Point anchorPoint;

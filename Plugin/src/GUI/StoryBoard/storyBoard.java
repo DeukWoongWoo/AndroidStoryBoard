@@ -20,10 +20,8 @@ import java.util.Iterator;
  * Created by 우철 on 2016-02-11.
  */
 public class storyBoard extends JPanel {
-    JButton createActivityB;
     CustomJpanel jpan;
     JScrollPane scroll;
-    listner li;
     JSONObject jobjRoot;
 
     JSONArray activityArrayData;
@@ -39,22 +37,18 @@ public class storyBoard extends JPanel {
 
     // 생성자----------------------------------------------------------------
     public storyBoard() throws IOException {
-        createActivityB = new JButton("push");
 
 
-        li = new listner();
         jpan = new CustomJpanel();
         jpan.setLayout(null);
         scroll = new JScrollPane(jpan , JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 
 
-        jpan.setPreferredSize(new Dimension(3000,3000));
+        jpan.setPreferredSize(new Dimension(7000,7000));
         this.setLayout(new BorderLayout());
-        this.add(createActivityB, "North" );
         this.add(scroll , "Center") ;
 
-        createActivityB.addActionListener(li);
 
         this.setVisible(true);
         // 이동을 위한 마우스 이벤트
@@ -167,19 +161,6 @@ public class storyBoard extends JPanel {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();
     }
-    //리스너-----------------------------------------------------------------
-    class listner implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if(e.getSource()== createActivityB) {
-                NewWindow a = new  NewWindow();
-
-                revalidate();       // 무효화 선언된 화면을 알려줌
-                repaint();          // 다시 그려준다.
-            }
-
-        }
-    }
 
     //-------------Json 받아서 그려주는 함수---------------------------------
     //JObjectRoute 파일 경로. text 파일을 읽어온다.
@@ -279,7 +260,7 @@ public class storyBoard extends JPanel {
 
             activityArrayData.add(obj);
 
-            sendData();
+            sendJSonData();
             repaint_window();
         }
     }
@@ -299,14 +280,14 @@ public class storyBoard extends JPanel {
             list.put(resultStr, a);
             jpan.add(a);
 
-            activityArrayData.add(obj);
-
-            sendData();
+            sendJSonData();
             repaint_window();
         }
     }
-    public void sendData(){
+    public void sendJSonData(){
         System.out.println(jobjRoot);
+
+
     }
 
 
@@ -532,5 +513,6 @@ public class storyBoard extends JPanel {
          g.drawLine((start.getActivity_position().x+ start.getActivity_width()/2)  , (start.getActivity_position().y+ start.getActivity_height()/2),  (end.getActivity_position().x+end.getActivity_width()/2),(end.getActivity_position().y+ end.getActivity_height()/2));
 
     }
+
 
 }

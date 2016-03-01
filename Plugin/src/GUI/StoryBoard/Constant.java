@@ -13,7 +13,11 @@ public interface Constant  {
     int layoutWidth = 200;
     int layoutHeight = 200;
 
-     String FILE_ROUTE ="C:/Users/우철/Documents/AndroidStoryBoard/Plugin/jsonfile.txt";
+    int imageVIewWidth =200;
+    int imageViewHeight = 200;
+
+     String FILE_ROUTE ="C:/Users/우철/Documents/AndroidStoryBoard/Plugin/우철이 라이브러리 포함된것.txt";
+     String IMAGE_ROUTE ="C:\\Users\\우철\\Pictures\\Screenshots/aaa.jpg";
     Dimension MENUBUTTONSIZE = new Dimension(50,50);
     int SCALE_SHAPE = 1;
     boolean NEWFILE = true;

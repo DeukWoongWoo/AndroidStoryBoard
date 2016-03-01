@@ -25,6 +25,7 @@ public class palettePanel extends JPanel {
     JButton button_b = new JButton("Button");
     JButton radio_b = new JButton("Radio Button");
     JButton none_b = new JButton("none");
+    JButton image_b =new JButton("Image View");
 
     public int choice = 0;
 
@@ -56,7 +57,7 @@ public class palettePanel extends JPanel {
                         rightCenterPanel.add(button_b);
                         rightCenterPanel.add(radio_b);
                         rightCenterPanel.add(none_b);
-
+                        rightCenterPanel.add(image_b);
         activity_b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -85,6 +86,12 @@ public class palettePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 choice=5;
+            }
+        });
+        image_b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice =6;
             }
         });
         none_b.addActionListener(new ActionListener() {

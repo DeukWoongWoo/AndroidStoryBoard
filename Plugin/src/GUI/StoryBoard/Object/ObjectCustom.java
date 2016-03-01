@@ -40,7 +40,6 @@ public class ObjectCustom extends JPanel {
 
 
     public ObjectCustom() {
-
         addDragListeners();
         addmouseClickEvent();
         addFocusEvent();

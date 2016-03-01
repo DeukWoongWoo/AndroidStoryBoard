@@ -50,6 +50,7 @@ public class JsonToXml {
             String value = (String) entry.getValue();
             component.setAttributes(attr,value);
         }
+        component.setAttributeCount();
     }
     private void JsonToObject(JSONArray jsonArray, ArrayList <Component> componentArrayList){
         JSONObject jsonObject;
@@ -75,6 +76,14 @@ public class JsonToXml {
                 }
                 else if(key.equals("object")){//오브젝트있으면 레이아웃이다.
                     jsonLayout= (JSONArray) entry.getValue();
+                }else if(key.equals("Library")){
+                    String assetPath ="C:/Users/cho/Desktop/TestActivity/app/src/main/assets/userLib.xml";
+                    UseLibraryParser useLibraryParser = new UseLibraryParser(assetPath);
+                    useLibraryParser.parse();
+                    if(entry.getValue().equals("event"))
+                        component.library="event";
+                    else if(entry.getValue().equals("error"))
+                        component.library="error";
                 }
             }
             componentArrayList.add(component);
@@ -89,6 +98,7 @@ public class JsonToXml {
     }
     private void JsonToActivity(JSONArray jsonArray,ArrayList <Component> componentArrayList){
         JSONObject jsonObject;
+        String xmlName = null;
         String xmlPath=null;
         for(int i =0;i<jsonArray.size();i++){
             componentArrayList = new ArrayList<Component>();
@@ -100,17 +110,38 @@ public class JsonToXml {
                 if(key.equals("name")){
                     //// TODO: 2016-02-24 xmlName은 여기서 받는다
                     ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
-                    String xmlName = (String) entry.getValue();
+                    xmlName= (String) entry.getValue();
                     xmlPath = projectAnalysis.makeResourcePath(xmlName);
                 }
                 else if(key.equals("object")){
                     JSONArray jsonObjectArray = (JSONArray) entry.getValue();
                     JsonToObject(jsonObjectArray,componentArrayList);
+                }else if(key.equals("Library")){
+                    String assetPath ="C:/Users/cho/Desktop/TestActivity/app/src/main/assets/userLib.xml";
+                    UseLibraryParser useLibraryParser = new UseLibraryParser(assetPath);
+                    useLibraryParser.parse();
+                    useLibraryParser.append("activity",xmlName,xmlName);
+                }
+            }
+
+            for(int j=0;j<componentArrayList.size();j++){
+                Component component = componentArrayList.get(j);
+                if(!component.library.equals("null")){
+                    String assetPath ="C:/Users/cho/Desktop/TestActivity/app/src/main/assets/userLib.xml";
+                    UseLibraryParser useLibraryParser = new UseLibraryParser(assetPath);
+                    useLibraryParser.parse();
+                    useLibraryParser.append(component.library,xmlName,makeId(component.getId()));
                 }
             }
             //여기가 다른 액티비티로넘어가는 곳(xml을 만들자)
             appendXmlCode(componentArrayList,xmlPath);
         }
+    }
+    private String makeId(String id){
+        char[] charId = id.toCharArray();
+        String makeId=new String(charId,5,id.length()-5);
+        return makeId;
+
     }
     private void JsonToComponent(String filePath,ArrayList <Component> componentArrayList){
         try {
@@ -189,6 +220,7 @@ public class JsonToXml {
                     }
                     parentElement.appendChild(element);
                 }
+
             }
 
 

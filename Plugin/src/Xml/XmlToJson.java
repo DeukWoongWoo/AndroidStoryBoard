@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by cho on 2016-02-25.
@@ -148,6 +149,10 @@ public class XmlToJson {
                 getComponentWidthPoint(componentManager,componentManager.getComponent(i).getId(),"left");
                 getComponentHeightPoint(componentManager,componentManager.getComponent(i).getId(),"top");
             }
+
+
+
+
             JSONObject webJson = makeWebJsonObject(componentManager,xmlName);
             JSONObject pluginJson = makePluginJsonObject(componentArrayList,xmlName);
             xmlToJsonObject=new XmlToJsonObject(webJson,pluginJson);
@@ -170,18 +175,30 @@ public class XmlToJson {
             e.printStackTrace();
         }
     }
+
+    private String makeId(String id){
+        char[] charId = id.toCharArray();
+        String makeId=new String(charId,5,id.length()-5);
+        return makeId;
+
+    }
     private JSONObject makeWebJsonObject(ComponentManager componentManager, String xmlName){
+
         ArrayList<String> nextActivity = new ArrayList<>();
         xmlName="R.layout."+xmlName;
+        char[] pastxmlName =xmlName.toCharArray();
+        String changexmlName = new String(pastxmlName,0,xmlName.length()-4);
         String activityName=null;
         for(int i=0;i<javaDTOArray.size();i++ ){
             JavaDTO javaDTO=javaDTOArray.get(i);
             for(int j=0;j<javaDTO.getXmls().size();j++){
-                if(javaDTO.getXmls().get(j).getXmlName().equals(xmlName)){
-                    activityName=javaDTO.getName();
-                    for (NextActivityDTO nextActivityDTO : javaDTO.getNextActivitys()) {
-                        nextActivity.add(nextActivityDTO.getName());
-                    }
+                if(javaDTO.getXmls().get(j).getXmlName().equals(changexmlName)) {
+                    activityName = javaDTO.getName();
+                    /*ArrayList<NextActivityDTO> javaNextAct = javaDTO.getNextActivitys();
+                    for(int k=0;k<javaNextAct.size();k++){
+                        nextActivity.add(javaNextAct.get(k).getName());
+                    }*/
+
                 }
             }
         }
@@ -193,14 +210,15 @@ public class XmlToJson {
         JSONObject jsonApp=new JSONObject();
         jsonApp.put("appName","test");
         Component component;
-        String xmlFilepath = null;
+
         jsonActivity=new JSONObject();
-        jsonActivity.put("name",xmlFilepath);
+        jsonActivity.put("name",activityName);
         jsonActivity.put("x","0");
         jsonActivity.put("y","0");
         jsonActivity.put("width",768);
         jsonActivity.put("height",1280);
-        jsonActivity.put("next","asdf");
+        //for(int i=0;i<nextActivity.size();i++)
+            //jsonActivity.put("next",nextActivity.get(i));
 
 
         jsonArrayObject = new JSONArray();
@@ -208,7 +226,7 @@ public class XmlToJson {
             component= componentManager.getComponent(i);
             if(!component.getTagName().equals("RelativeLayout")){
                 jsonObject = new JSONObject();
-                jsonObject.put("name",component.getId());
+                jsonObject.put("name",makeId(component.getId()));
                 jsonObject.put("x",component.leftPoint);
                 jsonObject.put("y",component.topPoint);
                 jsonObject.put("height",component.getHeight());
@@ -228,6 +246,16 @@ public class XmlToJson {
     }
     private JSONObject makePluginJsonObject(ArrayList<Component> componentArrayList,String xmlName){
 
+
+
+        String assetPath ="C:/Users/cho/Desktop/TestActivity/app/src/main/assets/userLib.xml";
+        UseLibraryParser useLibraryParser = new UseLibraryParser(assetPath);
+        useLibraryParser.parse();
+
+
+
+
+
         JSONArray jsonObjectArray = new JSONArray();
         JSONObject jsonObject=null;
         //String xmlName = "test.xml";
@@ -238,6 +266,12 @@ public class XmlToJson {
         jsonActivity.put("y",0);
         jsonActivity.put("width",768);
         jsonActivity.put("height",1280);
+        for(int i=0;i<useLibraryParser.activityLength();i++){
+            if(xmlName.equals(useLibraryParser.getXmlName("activity",i))){
+                jsonActivity.put("library","activity");
+                break;
+            }
+        }
 
         for(int i=0;i<componentArrayList.size();i++){
             Component component = componentArrayList.get(i);
@@ -262,6 +296,19 @@ public class XmlToJson {
                     pushJson(jsonObject);
                     jsonObjectArray= new JSONArray();
                 }else{//컴포넌트!
+                    for(int j=0;j<useLibraryParser.eventLength();j++){
+                        if(xmlName.equals(useLibraryParser.getXmlName("event",j)) &&
+                                makeId(component.getId()).equals(useLibraryParser.getComponentName("event",j))){
+                            jsonObject.put("library","event");
+                            break;
+                        }
+                    }for(int j=0;j<useLibraryParser.errorLength();j++) {
+                        if (xmlName.equals(useLibraryParser.getXmlName("error", j)) &&
+                                makeId(component.getId()).equals(useLibraryParser.getComponentName("error", j))) {
+                            jsonObject.put("library", "error");
+                            break;
+                        }
+                    }
                     jsonObjectArray.add(jsonObject);
                 }
             }

@@ -89,7 +89,7 @@ public class ProjectAnalysis {
     public String makeResourcePath(String xmlName){
         String xmlPath;
         PsiDirectory psiDirectory = currentDirectory(ConstantEtc.PROJECT_XML_PATH + "/res/layout");
-        xmlPath=psiDirectory.getText() + "/" + xmlName;
+        xmlPath=project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/res/layout/"  + xmlName;
         return xmlPath;
     }
 

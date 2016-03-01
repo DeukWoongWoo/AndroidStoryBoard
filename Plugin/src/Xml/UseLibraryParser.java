@@ -189,5 +189,19 @@ public class UseLibraryParser {
 
         makeXml();
 }
+    public int length(){
+        return activity.size()+error.size()+event.size();
     }
+    public int activityLength(){
+        return activity.size();
+    }
+
+    public int eventLength(){
+        return event.size();
+    }
+    public int errorLength(){
+        return error.size();
+    }
+    }
+
 

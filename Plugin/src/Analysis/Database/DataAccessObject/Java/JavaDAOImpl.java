@@ -127,8 +127,8 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
                 javaDTO.setPath(rows.getString(3));
                 javaDTO.setExtendsValue(rows.getString(4));
                 javaDTO.setImplementsValue(rows.getString(5));
-                javaDTO.setXml(xmlDAO.select());
-                javaDTO.setNextActivity(nextActivityDAO.select());
+                javaDTO.setXml(xmlDAO.select("javaId="+rows.getInt(1)));
+                javaDTO.setNextActivitys(nextActivityDAO.select("javaId="+rows.getInt(1)));
                 items.add(javaDTO);
             }
         } catch (SQLException e) {
@@ -168,7 +168,7 @@ public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
     @Override
     public ArrayList<JavaDTO> selectNextActivity(String... col) {
         JavaDTO javaDTO = new JavaDTO();
-        javaDTO.setNextActivity(nextActivityDAO.select(col));
+        javaDTO.setNextActivitys(nextActivityDAO.select(col));
         ArrayList<JavaDTO> list = new ArrayList<>();
         list.add(javaDTO);
         return list;

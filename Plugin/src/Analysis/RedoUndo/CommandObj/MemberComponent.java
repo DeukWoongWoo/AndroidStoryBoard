@@ -157,7 +157,7 @@ public class MemberComponent {
         if (psiJavaFile == null) {
             checkXml();
             File inFile = new File(DatabaseManager.getInstance().selectToJava(table -> table.selectJava("num=" + xmlDTO.getJavaId())).get(0).getPath());
-            psiJavaFile = (PsiJavaFile) PsiManager.getInstance(SharedPreference.ACTIONEVENT.getData().getProject()).findFile(LocalFileSystem.getInstance().findFileByIoFile(inFile));
+            psiJavaFile = (PsiJavaFile) PsiManager.getInstance(SharedPreference.PROJECT.get()).findFile(LocalFileSystem.getInstance().findFileByIoFile(inFile));
         }
     }
 
@@ -193,6 +193,6 @@ public class MemberComponent {
     }
 
     private void syncProject() {
-        ProjectAnalysis.getInstance(null, null).executeAll();
+        ProjectAnalysis.getInstance(null).executeAll();
     }
 }

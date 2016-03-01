@@ -1,6 +1,7 @@
 package Analysis.RedoUndo.Util;
 
 import Analysis.Constant.SharedPreference;
+import GUI.StoryBoard.StoryBoard_PlugIn;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
@@ -25,11 +26,9 @@ public class ElementFactory {
     private Project project;
     private PsiElementFactory elementFactory;
     private XmlElementFactory xmlElementFactory;
-    private AnActionEvent actionEvent;
 
     public ElementFactory(){
-        actionEvent = SharedPreference.ACTIONEVENT.getData();
-        project = actionEvent.getProject();
+        project = SharedPreference.PROJECT.get();
         elementFactory = JavaPsiFacade.getElementFactory(project);
         xmlElementFactory = XmlElementFactory.getInstance(project);
     }
@@ -48,9 +47,10 @@ public class ElementFactory {
 
     public PsiClass createPsiClass(String className){
         try {
+            PsiManager.getInstance(project).findFile(project.getProjectFile());
             ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-            final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(actionEvent.getData(PlatformDataKeys.VIRTUAL_FILE));
-            PackageWrapper packageWrapper = new PackageWrapper(actionEvent.getData(LangDataKeys.PSI_FILE).getManager(),"");
+            final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(project.getProjectFile());
+            PackageWrapper packageWrapper = new PackageWrapper(PsiManager.getInstance(project).findFile(project.getProjectFile()).getManager(),"");
             PsiDirectory packageDirectoryInSourceRoot = RefactoringUtil.createPackageDirectoryInSourceRoot(packageWrapper, sourceRootForFile);
             return JavaDirectoryService.getInstance().createClass(packageDirectoryInSourceRoot,className);
         } catch (IncorrectOperationException e) {

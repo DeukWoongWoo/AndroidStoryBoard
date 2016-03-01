@@ -1,5 +1,6 @@
 package Xml;
 
+import Analysis.Main.ProjectAnalysis;
 import com.intellij.openapi.ui.Messages;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
@@ -31,11 +32,13 @@ public class UseLibraryParser {
     private ArrayList<Attribution> event;
 
 
-    public UseLibraryParser(String xmlPath) {
-        Filepath = xmlPath;
+
+    public UseLibraryParser() {
         activity = new ArrayList<>();
         error = new ArrayList<>();
         event = new ArrayList<>();
+        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
+        Filepath = projectAnalysis.makeAssetsPath("userLib.xml");
     }
 
     public void parse() {
@@ -189,5 +192,19 @@ public class UseLibraryParser {
 
         makeXml();
 }
+    public int length(){
+        return activity.size()+error.size()+event.size();
     }
+    public int activityLength(){
+        return activity.size();
+    }
+
+    public int eventLength(){
+        return event.size();
+    }
+    public int errorLength(){
+        return error.size();
+    }
+    }
+
 

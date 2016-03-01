@@ -31,8 +31,6 @@ public class Activity extends JPanel {
     storyBoard storyboard;
     palettePanel panel;
 
-    UseLibraryParser  useLibraryParser = new UseLibraryParser("sdf");
-
     private boolean draggable = true;
     protected Point anchorPoint;
     protected Cursor draggingCursor = Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);

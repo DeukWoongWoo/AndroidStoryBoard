@@ -16,7 +16,7 @@ public interface Constant  {
     int imageVIewWidth =200;
     int imageViewHeight = 200;
 
-     String FILE_ROUTE ="C:/Users/우철/Documents/AndroidStoryBoard/Plugin/우철이 라이브러리 포함된것.txt";
+     String FILE_ROUTE ="C:/Users/woong/Documents/AndroidStoryBoard/Plugin/우철이 라이브러리 포함된것.txt";
      String IMAGE_ROUTE ="C:\\Users\\우철\\Pictures\\Screenshots/aaa.jpg";
      String XML_ROUTE = "C:/Users/우철/Pictures/Screenshots";
     Dimension MENUBUTTONSIZE = new Dimension(50,50);

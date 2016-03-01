@@ -5,10 +5,7 @@ import Analysis.Constant.SharedPreference;
 import Analysis.Database.DataAccessObject.Java.JavaDAO;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
 import Analysis.Database.DatabaseManager.DatabaseManager;
-import Analysis.Database.DtatTransferObject.ActivityDTO;
-import Analysis.Database.DtatTransferObject.JavaDTO;
-import Analysis.Database.DtatTransferObject.ManifestDTO;
-import Analysis.Database.DtatTransferObject.XmlDTO;
+import Analysis.Database.DtatTransferObject.*;
 import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeDriver;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -31,16 +28,10 @@ import java.util.ArrayList;
 public class MyActionClass extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
-        SharedPreference.ACTIONEVENT.setData(e);
-
-//        codeMakeTest(e);
-
-//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.INTELLIJ_PATH);
-
-
+//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(ConstantEtc.INTELLIJ_PATH);
 //        projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
-        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(e, ConstantEtc.PROJECT_XML_PATH);
-        projectAnalysis.executeAll();
+//        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(ConstantEtc.PROJECT_XML_PATH);
+//        projectAnalysis.executeAll();
 //        projectAnalysis.execute(ConstantEtc.PROJECT_XML_PATH + ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
 
 //        DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll).forEach(java ->{
@@ -54,8 +45,10 @@ public class MyActionClass extends AnAction {
         ArrayList<JavaDTO> javaDTOArray = DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll);
         for(int i=0;i<javaDTOArray.size();i++ ){
              JavaDTO javaDTO=javaDTOArray.get(i);
-            javaDTO.getName();//activity
-            javaDTO.getNextActivity();//next
+            javaDTO.getName();//
+            for (NextActivityDTO nextActivityDTO : javaDTO.getNextActivitys()) {
+                nextActivityDTO.getName();//
+            }
             for(int j=0;j<javaDTO.getXmls().size();j++){
                 XmlDTO xmlDTO = javaDTO.getXmls().get(j);
                 xmlDTO.getName();//xml

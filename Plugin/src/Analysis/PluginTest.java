@@ -29,9 +29,9 @@ public class PluginTest extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 //        String AndroidPath = "/app/src/main/java";
-//        VirtualFile IntellijPathFile = e.getProject().getBaseDir().findFileByRelativePath(AndroidPath);
+//        VirtualFile IntellijPathFile = e.get().getBaseDir().findFileByRelativePath(AndroidPath);
 
-//        PsiDirectory psiDirectory = PsiManager.getInstance(e.getProject()).findDirectory(IntellijPathFile);
+//        PsiDirectory psiDirectory = PsiManager.getInstance(e.get()).findDirectory(IntellijPathFile);
 
         String str = "Project Path : "+e.getProject().getProjectFilePath() + "\n";
         str += "GetProjectPackage Name : " + e.getProject().getClass().getPackage().getName() + " \n";

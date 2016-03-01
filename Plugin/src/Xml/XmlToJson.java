@@ -250,10 +250,6 @@ public class XmlToJson {
         UseLibraryParser useLibraryParser = new UseLibraryParser();
         useLibraryParser.parse();
 
-
-
-
-
         JSONArray jsonObjectArray = new JSONArray();
         JSONObject jsonObject=null;
         //String xmlName = "test.xml";

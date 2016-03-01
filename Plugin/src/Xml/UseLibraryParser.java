@@ -32,12 +32,8 @@ public class UseLibraryParser {
     private ArrayList<Attribution> event;
 
 
-<<<<<<< HEAD
-    public UseLibraryParser(String xmlPath) {
-        Filepath = xmlPath;
-=======
-    UseLibraryParser() {
->>>>>>> XmlParsing
+
+    public UseLibraryParser() {
         activity = new ArrayList<>();
         error = new ArrayList<>();
         event = new ArrayList<>();

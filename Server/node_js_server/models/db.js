@@ -231,12 +231,12 @@ mysql.addObject = function (param) {
     var activityName = param.body.activity_name;
     var object = {
         object_name: param.body.object_name,
-        location_x: param.body.location_x,
-        location_y: param.body.location_y,
-        size_width: param.body.size_width,
-        size_height: param.body.size_height,
+        //location_x: param.body.location_x,
+        //location_y: param.body.location_y,
+        //size_width: param.body.size_width,
+        //size_height: param.body.size_height,
         type: param.body.type ? param.body.type : 'button',
-        color: param.body.color ? param.body.color : 'gray',
+        //color: param.body.color ? param.body.color : 'gray',
         //image_num: param.body.image_num ? param.body.image_num : 1,//todo
         activity_num: param.body.activity_num,
 

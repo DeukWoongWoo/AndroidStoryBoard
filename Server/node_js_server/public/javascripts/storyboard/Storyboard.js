@@ -66,7 +66,7 @@ function Storyboard() {
                     .activityName(activityData.name).width(objectData.width).height(objectData.height)
                     .x(objectData.x).y(objectData.y).color(objectData.color);
 
-                console.log(objectData.image);
+                //console.log(objectData.image);
                 if(isDefined(objectData.image)){
                     object.imageRoute('/image/' + userId + '/' +  appName + '/' );
                     object.setImage(objectData.image);
@@ -93,12 +93,41 @@ function Storyboard() {
         line = new Array();
         for (var i in storyboardData.activity) {
             if(isDefined(storyboardData.activity[i].next)){
-                for(var j in storyboardData.activity[i].next){
+                //console.log("initLine");
+                //console.log(storyboardData.activity[i].name);
+                //console.log(storyboardData.activity[i].next);
+                //console.log(storyboardData.activity[i].next.constructor.toString().indexOf("Array"));
+                //if(storyboardData.activity[i].next[0].length == 1 && storyboardData.activity[i].next.length )
+
+                if(storyboardData.activity[i].next.constructor.toString().indexOf("Array") > -1){
+                    for(var j in storyboardData.activity[i].next) {
+                        //console.log(storyboardData.activity[i].next[j]);
+                        line[count] = new Array(6);
+                        line[count]['start'] = storyboardData.activity[i].name;
+                        line[count]['end'] = storyboardData.activity[i].next[j];
+                        count++;
+                    }
+                }else {
                     line[count] = new Array(6);
                     line[count]['start'] = storyboardData.activity[i].name;
-                    line[count]['end'] = storyboardData.activity[i].next[j];
+                    line[count]['end'] = storyboardData.activity[i].next;
                     count++;
                 }
+
+                //for(var j in storyboardData.activity[i].next){
+                //    //console.log(storyboardData.activity[i].next);
+                //    //console.log(storyboardData.activity[i].next[j]);
+                //    line[count] = new Array(6);
+                //    line[count]['start'] = storyboardData.activity[i].name;
+                //    line[count]['end'] = storyboardData.activity[i].next[j];
+                //    count++;
+                //
+                //
+                //    //line[count] = new Array(6);
+                //    //line[count]['start'] = storyboardData.activity[i].name;
+                //    //line[count]['end'] = storyboardData.activity[i].next;
+                //    //count++;
+                //}
             }
         }
     }

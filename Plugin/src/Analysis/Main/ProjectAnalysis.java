@@ -92,6 +92,9 @@ public class ProjectAnalysis {
         xmlPath=psiDirectory.getText() + "/" + xmlName;
         return xmlPath;
     }
+    public String findDrawablePath(){
+        return project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/res/drawable";
+    }
 
     private void createTable(){
         DatabaseManager.getInstance().onCreateTable();

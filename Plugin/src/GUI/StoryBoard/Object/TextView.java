@@ -77,6 +77,7 @@ public class TextView extends ObjectCustom {
         repaint();
     }
     public TextView(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
+        super(list,obj,nextlist,actList,stroy,ActivitName);
         long width, height, x, y;
         String name;
 

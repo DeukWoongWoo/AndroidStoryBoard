@@ -1,14 +1,19 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.Main.ProjectAnalysis;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,9 +24,8 @@ import java.util.Iterator;
 public class Image_View extends ObjectCustom {
     protected HashMap<String, ObjectCustom> checkkey;
     String pathStirng=null;
-
+    String xmlPath=Constant.XML_ROUTE;
     private Image img;
-
     ImagePanel centerPanel =new ImagePanel();
 
     //----------- 생성자들 --------------
@@ -32,7 +36,6 @@ public class Image_View extends ObjectCustom {
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
         centerPanel =new ImagePanel();
-
         add(centerPanel, "Center");
     }
     public Image_View(String name_ , HashMap<String,  ObjectCustom> list, JSONObject obj, Point p) {
@@ -86,6 +89,7 @@ public class Image_View extends ObjectCustom {
         repaint();
     }
     public Image_View(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
+        super(list,obj,nextlist,actList,stroy,ActivitName);
         long width, height, x, y;
         String name;
 
@@ -104,8 +108,12 @@ public class Image_View extends ObjectCustom {
         getStroyBoard(stroy);
         name = (String) objectJObject.get("name");
         if (objectJObject.containsKey("src")) {
-            centerPanel =new ImagePanel((String)objectJObject.get("src"));
-            pathStirng=(String)objectJObject.get("src");
+            ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
+            xmlPath = projectAnalysis. findDrawablePath();
+            pathStirng=xmlPath+"/"+objectJObject.get("src")+".png";
+            centerPanel =new ImagePanel(pathStirng);
+
+
         }
         else
         {
@@ -201,9 +209,12 @@ public class Image_View extends ObjectCustom {
     //--------변경을 위한 창------------
     class Change_Window extends JFrame {
 
+        String srcname ="newone";
 
         JLabel id_label;
         JLabel path;
+        JLabel srcName;
+        JTextField srcName_field;
         JTextField path_field;
         JTextField id_field;
         JButton openbutton;
@@ -215,7 +226,9 @@ public class Image_View extends ObjectCustom {
         Point mouseP;
 
         public Change_Window(String id_, Point screenPosition, Point mouse) {
-            path = new JLabel("Path :");
+            path = new JLabel("open Image :");
+            srcName = new JLabel("src name :");
+            srcName_field = new JTextField();
             path_field = new JTextField();
             openbutton = new JButton("open");
             id_label = new JLabel("id :");
@@ -229,7 +242,11 @@ public class Image_View extends ObjectCustom {
             if(pathStirng!=null)
                 path_field.setText(pathStirng);
 
-            this.setSize(350, 150);          //창 사이즈
+            if (objectJObject.containsKey("src")) {
+                srcname = (String)objectJObject.get("src");
+
+            }
+            this.setSize(370, 200);          //창 사이즈
 
             this.setUndecorated(true);      //title bar 제거
             this.setLocation(screenPosition.x - mouse.x, screenPosition.y - mouse.y);   // 현재 버튼의 위에 덮기 위한 것
@@ -238,23 +255,35 @@ public class Image_View extends ObjectCustom {
             this.getRootPane().setBorder(new LineBorder(Color.black));  // JFrame 테두리 설정
 
 
+           ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
+           xmlPath = projectAnalysis. findDrawablePath();
+
             openbutton.setMargin(new Insets(0,0,0,0));
             okbutton.setMargin(new Insets(0, 0, 0, 0));
 
+            srcName_field.setText(srcname);
 
             path.setLocation(10,10);
-            openbutton.setLocation(290,10);
 
-            path_field.setLocation(80,10);
-            id_label.setLocation(10, 60);
+            openbutton.setLocation(320,10);
 
-            id_field.setLocation(80, 60);
-            okbutton.setLocation(200, 100);
+
+            path_field.setLocation(100,10);
+            id_label.setLocation(10, 110);
+
+            id_field.setLocation(100, 110);
+            okbutton.setLocation(220, 150);
+
+            srcName.setLocation(10, 60);
+            srcName_field.setLocation(100, 60);
+
+            srcName.setSize(150, 40);
+            srcName_field.setSize(200,40);
 
             id_label.setSize(100, 40);
 
 
-            path.setSize(40,40);
+            path.setSize(200,40);
             path_field.setSize(200,40);
             openbutton.setSize(40,40);
 
@@ -264,6 +293,8 @@ public class Image_View extends ObjectCustom {
             add(path);
             add(path_field);
             add(openbutton);
+            add(srcName);
+            add(srcName_field);
             this.add(id_label);
 
             this.add(id_field);
@@ -318,6 +349,8 @@ public class Image_View extends ObjectCustom {
                 }
             });
 
+
+            System.out.println(xmlPath);
         }
 
         // 확인 키
@@ -325,14 +358,31 @@ public class Image_View extends ObjectCustom {
             if (checkButtonId(id_field.getText()) == true) {
                 JOptionPane.showMessageDialog(null, id_field.getText() + "는 이미 중복되어있는 ID 값입니다.");
             } else {
+                Image temp_img;
                 setId(id_field.getText());
                 pathStirng=path_field.getText();
                 repaint();
                 objectJObject.put("name", getId());
-                objectJObject.put("src", pathStirng);
+                objectJObject.put("src", srcName_field.getText());
+                temp_img=new ImageIcon(pathStirng).getImage();
+                String temp;
+                temp = xmlPath+"/"+srcName_field.getText()+".png";
 
-                dispose();
+                try {
+                    temp_img=ImageIO.read(new File(pathStirng));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(xmlPath);
+                try {
+                    ImageIO.write((RenderedImage) temp_img, "png", new File(temp));
+                }
+                catch(Exception e){
+                    System.out.println(e);
+                }
             }
+
+            dispose();
         }
     }
     //--------이미지 페널을 위한 것-----
@@ -356,6 +406,9 @@ public class Image_View extends ObjectCustom {
             g.drawImage(img, 0, 0, getParent().getWidth(),getParent().getHeight(),this);
         }
 
+        public Image getImageView(){
+            return this.img;
+        }
     }
 
 }

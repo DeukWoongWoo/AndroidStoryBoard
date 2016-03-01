@@ -74,7 +74,8 @@ public class Button_Click extends Button_Root {
     public Button_Click(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actList,    storyBoard stroy, String ActivitName) {
         super(list, obj,nextlist, actList,stroy, ActivitName);
         init_text();
-        add(content);
+        setLayout(new BorderLayout());
+        add(content,"Center");
     }
 
 
@@ -93,7 +94,7 @@ public class Button_Click extends Button_Root {
         content.setVisible(true);
         content.setLocation(getObject_width()/10,0);
         content.setSize(getObject_width()-getObject_width()/10, getObject_height());
-        content.setFont(new Font("Serif", Font.PLAIN, getObject_height()/2 ));
+        content.setFont(new Font("Serif", Font.PLAIN, getObject_height()/5 ));
         content.setForeground(Color.black);
     }
 

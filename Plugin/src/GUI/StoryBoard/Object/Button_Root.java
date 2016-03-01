@@ -17,9 +17,9 @@ import java.util.Iterator;
  */
 public class Button_Root extends ObjectCustom {
 
-    private String text;
+
     private Point mouse_p;
-    protected HashMap<String, ObjectCustom> checkkey;
+
     JSONObject attribute;
     /////////////////////////////////
     //          생성자들
@@ -61,10 +61,12 @@ public class Button_Root extends ObjectCustom {
         obj.put("width",width);
         obj.put("height",height);
         obj.put("color",color);
-        obj.put("text", getText());
         obj.put("type","Button");
 
         setId("button"+name);
+        JSONObject attribute = setAttribue(obj);
+
+        attribute.put("text",getText());
         objectJObject=obj;
 
         checkkey=list;
@@ -239,6 +241,7 @@ public class Button_Root extends ObjectCustom {
 
     }
     public Button_Root(HashMap<String, ObjectCustom> list , JSONObject obj, ArrayList nextlist , HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
+        super(list,obj,nextlist,actList,stroy,ActivitName);
         long width, height, x, y ;
         String name, text, color;
 
@@ -255,7 +258,6 @@ public class Button_Root extends ObjectCustom {
 
         getStroyBoard(stroy);
         name =(String) objectJObject.get("name");
-        text = (String)objectJObject.get("text");
         color = (String)objectJObject.get("color");
         height=(long) objectJObject.get("height");
         width=(long) objectJObject.get("width");
@@ -269,7 +271,7 @@ public class Button_Root extends ObjectCustom {
 
         //--------- 변수 값 지정---------------
         setId(name);
-        setText(text);
+        setText(getText());
         setPosition(new Point((int)x, (int)y));
         setObject_height((int)height);
         setObject_width((int)width);
@@ -287,13 +289,6 @@ public class Button_Root extends ObjectCustom {
 
     }
 
-    //------private 변수 접근함수-------
-    public String getText() {
-        return text;
-    }
-    public void setText(String text) {
-        this.text = text;
-    }
 
     //-------마우스 이벤트 리스너---------
     private void addMouseListener(){
@@ -554,7 +549,7 @@ public class Button_Root extends ObjectCustom {
             else {
                 setting_Id_Text(id_field.getText(), name_field.getText());
                 objectJObject.put("name", getId() );
-                objectJObject.put("text", getText());
+                attributeObject.put("text", getText());
                 dispose();
             }
         }

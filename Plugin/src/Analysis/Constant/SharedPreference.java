@@ -1,23 +1,24 @@
 package Analysis.Constant;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.project.Project;
 
 /**
  * Created by woong on 2016-02-17.
  */
 public enum SharedPreference {
-    ACTIONEVENT(null);
+    PROJECT(null);
 
-    AnActionEvent actionEvent;
-    SharedPreference(AnActionEvent actionEvent){
-        this.actionEvent = actionEvent;
+    private Project project;
+    SharedPreference(Project project){
+        this.project = project;
     }
 
-    public void setData(AnActionEvent actionEvent) {
-        this.actionEvent = actionEvent;
+    public void set(Project project){
+        this.project = project;
     }
 
-    public AnActionEvent getData(){
-        return actionEvent;
+    public Project get(){
+        return project;
     }
 }

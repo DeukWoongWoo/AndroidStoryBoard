@@ -9,9 +9,9 @@ public class CodeDriver {
     public CodeDriver(){
         CommandManager commandManager = CommandManager.getInstance();
 
-//        commandManager.createLocalComponent("textView1", "activity_main", Type.TextView);
-//        commandManager.createLocalComponent("button1", "activity_main", Type.Button);
-//        commandManager.deleteLocalComponent("button1", "activity_main", Type.Button);
+        commandManager.createLocalComponent("textView1", "activity_main", Type.TextView);
+        commandManager.createLocalComponent("button1", "activity_main", Type.Button);
+        commandManager.deleteLocalComponent("button1", "activity_main", Type.Button);
 
 //        commandManager.createMemberComponent("button1","activity_main", Type.Button);
 //        commandManager.deleteMemberComponent("button1","activity_main", Type.Button);

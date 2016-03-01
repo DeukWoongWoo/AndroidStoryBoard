@@ -111,7 +111,7 @@ public class JsonToXml {
                 String key = (String) entry.getKey();
                 if(key.equals("name")){
                     //// TODO: 2016-02-24 xmlName은 여기서 받는다
-                    ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
+                    ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
                     xmlName= (String) entry.getValue();
                     xmlPath = projectAnalysis.makeResourcePath(xmlName);
                     String drawablePath = projectAnalysis.findDrawablePath();

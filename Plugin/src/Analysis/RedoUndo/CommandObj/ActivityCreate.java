@@ -48,7 +48,7 @@ public class ActivityCreate {
                 psiclass.add(elementFactory.createPsiMethod(builder.toString(), psiclass));
 
                 File file = new File(psiclass.getProject().getBasePath()+ ConstantEtc.INTELLIJ_PATH +"/AndroidManifest.xml");
-                XmlFile xmlfile = (XmlFile) PsiManager.getInstance(SharedPreference.ACTIONEVENT.getData().getProject()).findFile(LocalFileSystem.getInstance().findFileByIoFile(file));
+                XmlFile xmlfile = (XmlFile) PsiManager.getInstance(SharedPreference.PROJECT.get()).findFile(LocalFileSystem.getInstance().findFileByIoFile(file));
                 xmlfile.getRootTag().findSubTags("application")[0].add(elementFactory.createActivityTag(CommandKey.ACTIVITY.getId()));
             }
         }.execute();
@@ -57,7 +57,7 @@ public class ActivityCreate {
     }
 
     private void syncProject() {
-        ProjectAnalysis.getInstance(null,null).executeAll();
+        ProjectAnalysis.getInstance(null).executeAll();
     }
 
     public void remove() {

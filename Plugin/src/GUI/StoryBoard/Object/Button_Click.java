@@ -24,7 +24,7 @@ public class Button_Click extends Button_Root {
         setId("button"+name);
         checkkey=list;
         init_text();
-        obj.put("type", "button");
+        obj.put("type", "Button");
         add(content);
 
 
@@ -44,10 +44,34 @@ public class Button_Click extends Button_Root {
         setLocation(isPosition().x, isPosition().y);
         checkkey=list;
         init_text();
-        obj.put("type", "button");
+        obj.put("type", "Button");
         add(content);
 
 
+    }
+    public Button_Click(Constant.ObjectNew objectNew) {
+
+        super(objectNew.name, objectNew.objectList, objectNew.jObject);
+
+        setText("NEW BUTTON");
+        setId("@+id/"+"button"+objectNew.name);
+
+        parentWidth=objectNew.parentWidth;
+        parentHeight=objectNew.parentHeight;
+
+        setPosition(objectNew.mousep);
+        objectNew.jObject.put("x",(long)isPosition().x);
+        objectNew.jObject.put("y",(long)isPosition().y);
+
+        setLocation(isPosition().x, isPosition().y);
+        checkkey=objectNew.objectList;
+        init_text();
+        objectNew.jObject.put("type", "Button");
+        add(content);
+
+
+        JSONObject attribute = setAttribue(objectNew.jObject);
+        attribute.put("text",getText());
     }
 
     // 버튼 json에서 받아와서 하는 것들

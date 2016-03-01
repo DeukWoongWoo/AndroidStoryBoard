@@ -43,7 +43,7 @@ public class Image_View extends ObjectCustom {
         String name, color;
 
         System.out.println(obj);
-        name = "imageView"+ name_;
+        name = "@+id/"+"imageView"+ name_;
         width = Constant.imageVIewWidth;
         height = Constant.imageViewHeight;
         x = p.x;
@@ -101,15 +101,12 @@ public class Image_View extends ObjectCustom {
         activityList = actList;
         this.activityName = ActivitName;
 
-        if (objectJObject.containsKey("attribute")) {
-
-        }
-
         getStroyBoard(stroy);
-        name = (String) objectJObject.get("name");
+
+
         if (objectJObject.containsKey("src")) {
-            ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
-            xmlPath = projectAnalysis. findDrawablePath();
+//            ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
+//            xmlPath = projectAnalysis. findDrawablePath();
             pathStirng=xmlPath+"/"+objectJObject.get("src")+".png";
             centerPanel =new ImagePanel(pathStirng);
 
@@ -120,25 +117,16 @@ public class Image_View extends ObjectCustom {
             centerPanel =new ImagePanel();
         }
 
-        height = (long) objectJObject.get("height");
-        width = (long) objectJObject.get("width");
-        x = (long) objectJObject.get("x");
-        y = (long) objectJObject.get("y");
-
         if (objectJObject.containsKey("next")) {
             nextActivitylist.add(objectJObject.get("next"));
         }
 
 
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int) x, (int) y));
-        setObject_height((int) height);
-        setObject_width((int) width);
+
 
         //----------창 구성--------------------
-        this.setSize((int) width, (int) height);
-        this.setLocation((int) x, (int) y);
+        this.setSize((int) getObject_width(), (int) getObject_height());
+        this.setLocation((int) isPosition().x, (int) isPosition().y);
         this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
@@ -184,26 +172,6 @@ public class Image_View extends ObjectCustom {
 
         });
 
-    }
-    public boolean checkButtonId(String id_) {
-        String temp = this.getId();
-        boolean checkId = false;
-        Iterator<String> buttonKeyList = checkkey.keySet().iterator();
-
-        while (buttonKeyList.hasNext()) {
-            String key = (String) buttonKeyList.next();
-            Object o = checkkey.get(key);
-            ObjectCustom b = (ObjectCustom) o;
-            if (b.getId().equals(id_)) {
-                if (temp.equals(id_))
-                    continue;
-
-                checkId = true;
-            }
-
-        }
-
-        return checkId;
     }
 
     //--------변경을 위한 창------------
@@ -255,8 +223,8 @@ public class Image_View extends ObjectCustom {
             this.getRootPane().setBorder(new LineBorder(Color.black));  // JFrame 테두리 설정
 
 
-           ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
-           xmlPath = projectAnalysis. findDrawablePath();
+//           ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
+//           xmlPath = projectAnalysis. findDrawablePath();
 
             openbutton.setMargin(new Insets(0,0,0,0));
             okbutton.setMargin(new Insets(0, 0, 0, 0));
@@ -355,7 +323,7 @@ public class Image_View extends ObjectCustom {
 
         // 확인 키
         public void result() {
-            if (checkButtonId(id_field.getText()) == true) {
+            if (checkObjectId(id_field.getText()) == true) {
                 JOptionPane.showMessageDialog(null, id_field.getText() + "는 이미 중복되어있는 ID 값입니다.");
             } else {
                 Image temp_img;

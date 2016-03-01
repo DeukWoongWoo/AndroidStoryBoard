@@ -33,28 +33,13 @@ public class Layout_Root extends ObjectCustom {
 
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj) {
-        long width, height, x, y ;
-        String name;
-        JSONArray objectArray;
-
+        super();
         objectJObject=obj;
         objectList =list;
 
-        name =(String) objectJObject.get("name");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
@@ -62,28 +47,14 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan) {
-        long width, height, x, y ;
-        String name;
-        JSONArray objectArray;
+        super();
         panel = pan;
         objectJObject=obj;
         objectList =list;
 
-        name =(String) objectJObject.get("name");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
@@ -93,29 +64,16 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist) {
-        long width, height, x, y ;
-        String name;
+        super();
         JSONArray objectArray;
         panel = pan;
         objectJObject=obj;
         objectList =list;
         nextActivitylist = nextlist;
 
-        name =(String) objectJObject.get("name");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
@@ -125,30 +83,16 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList) {
-        long width, height, x, y ;
-        String name;
-        JSONArray objectArray;
+        super();
         panel = pan;
         objectJObject=obj;
         objectList =list;
         nextActivitylist = nextlist;
         activityList=actList;
 
-        name =(String) objectJObject.get("name");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
@@ -158,31 +102,16 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy) {
-        long width, height, x, y ;
-        String name;
-        JSONArray objectArray;
+        super();
         panel = pan;
         objectJObject=obj;
         objectList =list;
         nextActivitylist = nextlist;
         activityList=actList;
         getStroyBoard(stroy);
-
-        name =(String) objectJObject.get("name");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
@@ -193,11 +122,7 @@ public class Layout_Root extends ObjectCustom {
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
         super(list,obj,pan,nextlist,actList,stroy,ActivitName);
-        long width, height, x, y ;
         this.activityName = ActivitName;
-        String name;
-        JSONArray objectArray;
-
         panel = pan;
         objectJObject=obj;
         objectList =list;
@@ -205,21 +130,11 @@ public class Layout_Root extends ObjectCustom {
         activityList=actList;
         getStroyBoard(stroy);
 
-        name =(String) objectJObject.get("name");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
 
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
+
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
@@ -229,29 +144,6 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if(isButton){
-            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
-            revalidate();       // 무효화 선언된 화면을 알려줌
-            repaint();          // 다시 그려준다.
-
-        }
-        else if(isRadioButton){
-            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
-            revalidate();       // 무효화 선언된 화면을 알려줌
-            repaint();          // 다시 그려준다.
-
-        }
-        else if(isImageView){
-            g.drawRect(x,y,Constant.imageVIewWidth,Constant.imageViewHeight);
-            revalidate();       // 무효화 선언된 화면을 알려줌
-            repaint();          // 다시 그려준다.
-        }
-
-
-    }
 
     public Layout_Root(String name_, HashMap<String, ObjectCustom> list , JSONObject obj) {
         long width, height, x, y ;
@@ -293,6 +185,31 @@ public class Layout_Root extends ObjectCustom {
         addMouseListner();
         repaint();
     }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if(isButton){
+            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();          // 다시 그려준다.
+
+        }
+        else if(isRadioButton){
+            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();          // 다시 그려준다.
+
+        }
+        else if(isImageView){
+            g.drawRect(x,y,Constant.imageVIewWidth,Constant.imageViewHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();          // 다시 그려준다.
+        }
+
+
+    }
+
     public ObjectCustom CreateObjectCustom(String type, JSONObject jobj){
         if(type.equals("linear layout")){
             Layout_Linear linear = new Layout_Linear(objectList, jobj, panel, nextActivitylist, activityList,  storyboard,activityName);
@@ -397,7 +314,14 @@ public class Layout_Root extends ObjectCustom {
         tempArray = (JSONArray)objectJObject.get("object");
         tempObj = new JSONObject();
 
-        Button_Click b = new Button_Click(""+buttonNum, objectList,tempObj, point);
+        Constant.ObjectNew sendfile = new Constant.ObjectNew();
+        sendfile.name=""+buttonNum;
+        sendfile.objectList=objectList;
+        sendfile.jObject=tempObj;
+        sendfile.mousep=point;
+        sendfile.parentHeight=getObject_height();
+        sendfile.parentWidth=getObject_width();
+        Button_Click b = new Button_Click(sendfile);
 
         tempArray.add(tempObj);
 
@@ -590,6 +514,7 @@ public class Layout_Root extends ObjectCustom {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println(getParent());
                     storyboard.drawActivity_temp();
+                    sendData();
                 }
             });
             add(library);

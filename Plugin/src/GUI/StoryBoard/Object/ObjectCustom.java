@@ -1,7 +1,11 @@
 package GUI.StoryBoard.Object;
 
+import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.UI.palettePanel;
 import GUI.StoryBoard.storyBoard;
+import Xml.JsonToXml;
+import Xml.XmlToJson;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -9,6 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Created by 우철 on 2016-02-13.
@@ -17,12 +22,13 @@ public class ObjectCustom extends JPanel {
     int parentHeight, parentWidth;
     palettePanel panel;
     //--- Json 요소들 -----------------------
-    private String id , color;
+    private String id , objectName,color, objectType;
     private Point object_position;
     private int object_width, object_height;
     private String library_string;
     public String activityName;
-    private String text;
+    private String text=null;
+    private boolean fixedYN=false;
     private boolean librayYN;
 
 
@@ -50,6 +56,7 @@ public class ObjectCustom extends JPanel {
         addmouseClickEvent();
         addFocusEvent();
         setBorder(new ResizableBorder(8));
+      //  getObjectElement();
     }
     public ObjectCustom(HashMap<String, ObjectCustom> list , JSONObject obj, ArrayList nextlist , HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
 
@@ -65,7 +72,7 @@ public class ObjectCustom extends JPanel {
         addmouseClickEvent();
         addFocusEvent();
         setBorder(new ResizableBorder(8));
-        getAttributeJson();
+        getObjectElement();
     }
     //레이아웃이 받아오는 상속
     public ObjectCustom(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
@@ -83,8 +90,9 @@ public class ObjectCustom extends JPanel {
         addmouseClickEvent();
         addFocusEvent();
         setBorder(new ResizableBorder(8));
-        getAttributeJson();
-        System.out.println(this.getParent());
+        getObjectElement();
+
+
     }
 
 
@@ -99,6 +107,8 @@ public class ObjectCustom extends JPanel {
             public void mouseMoved(MouseEvent e) {
                 parentHeight= getParent().getHeight();
                 parentWidth=getParent().getWidth();
+
+
                 if (hasFocus()) {
                     ResizableBorder border = (ResizableBorder) getBorder();
                     setCursor(Cursor.getPredefinedCursor(border.getCursor(e)));
@@ -131,7 +141,7 @@ public class ObjectCustom extends JPanel {
                                     setJsonXYWH(x,y+dy,w,h-dy,objectJObject);
                                 }
                                 resize();
-
+                                fixedYN=true;
                             }
                             break;
 
@@ -149,6 +159,7 @@ public class ObjectCustom extends JPanel {
                                 }
                                 startPos = e.getPoint();
                                 resize();
+                                fixedYN=true;
                             }
                             break;
 
@@ -163,6 +174,7 @@ public class ObjectCustom extends JPanel {
                                     setJsonXYWH(x + dx, y, w - dx, h,objectJObject);
                                 }
                                 resize();
+                                fixedYN=true;
                             }
                             break;
 
@@ -178,6 +190,7 @@ public class ObjectCustom extends JPanel {
                                 }
 
                                 startPos = e.getPoint();
+                                fixedYN=true;
                                 resize();
                             }
                             break;
@@ -201,7 +214,9 @@ public class ObjectCustom extends JPanel {
                                 else {
                                     setBounds(x + dx, y + dy, w - dx, h - dy);
                                     setJsonXYWH(x + dx, y + dy, w - dx, h - dy,objectJObject);
-                                }resize();
+                                }
+                                fixedYN=true;
+                                resize();
                             }
                             break;
 
@@ -223,7 +238,7 @@ public class ObjectCustom extends JPanel {
                                     setBounds(x, y + dy, w + dx, h - dy);
                                     setJsonXYWH(x, y + dy, w + dx, h - dy,objectJObject);
                                 }
-
+                                fixedYN=true;
                                 startPos = new Point(e.getX(), startPos.y);
                                 resize();
                             }
@@ -252,6 +267,7 @@ public class ObjectCustom extends JPanel {
                                     setBounds(x + dx, y, w - dx, h + dy);
                                     setJsonXYWH(x + dx, y, w - dx, h + dy,objectJObject);
                                 }
+                                fixedYN=true;
                                 startPos = new Point(startPos.x, e.getY());
                                 resize();
                             }
@@ -280,6 +296,7 @@ public class ObjectCustom extends JPanel {
                                     setBounds(x, y, w + dx, h + dy);
                                     setJsonXYWH(x, y, w + dx, h + dy,objectJObject);
                                 }
+                                fixedYN=true;
                                 startPos = e.getPoint();
                                 resize();
                             }
@@ -295,6 +312,8 @@ public class ObjectCustom extends JPanel {
                             bounds.translate(dx, dy);
                             setBounds(bounds);
                             setJsonXYWH(bounds.x ,bounds.y, w, h, objectJObject);
+                            fixedYN=true;
+
                             resize();
                     }
 
@@ -328,9 +347,12 @@ public class ObjectCustom extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                startPos = null;
-                repaint();
 
+                if(fixedYN)
+                    fixObject();
+                repaint();
+                startPos = null;
+                fixedYN=false;
 
             }
 
@@ -470,7 +492,18 @@ public class ObjectCustom extends JPanel {
     public void setText(String text) {
         this.text = text;
     }
-
+    public String getObjectName() {
+        return objectName;
+    }
+    public void setObjectName(String objectName) {
+        this.objectName = objectName;
+    }
+    public String getObjectType() {
+        return objectType;
+    }
+    public void setObjectType(String objectType) {
+        this.objectType = objectType;
+    }
     //--------------------------------------------------------------------------------------------------------------
     private void resize() {
         if (getParent() != null) {
@@ -493,11 +526,25 @@ public class ObjectCustom extends JPanel {
     public void fixObject(){
         removeAttribue();
         setAttribue(objectJObject);
+        sendData();
+
+
+        JsonToXml jsonToXml = new JsonToXml();
+        jsonToXml.make(Constant.FILE_OUT);
+        XmlToJson xmlToJson = new XmlToJson();
+        xmlToJson.make();
+
+
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
     }
 
     public void removeAttribue(){
-        if(objectJObject.containsKey("attribute"))
+        if(objectJObject.containsKey("attribute")) {
             objectJObject.remove("attribute");
+
+
+        }
     }
     //입력 -> attribute 가 필요한 json 출력 attribute json
     public JSONObject setAttribue(JSONObject json){
@@ -509,8 +556,8 @@ public class ObjectCustom extends JPanel {
 
         center_x=isPosition().x+getWidth()/2;
         center_y=isPosition().y+getWidth()/2;
-        parent_w=parentWidth/2;
-        parent_h=parentWidth/2;
+        parent_w=parentWidth;
+        parent_h=parentHeight;
 
         top = String.valueOf((isPosition().y)/2);
         bottom = String.valueOf( (parentHeight-(isPosition().y+getObject_height()))/2 );
@@ -521,14 +568,19 @@ public class ObjectCustom extends JPanel {
         bottom+="dp";
         right+="dp";
         left+="dp";
+        attribute.put("id",getId());
 
         attribute.put("layout_width","wrap_content");
         attribute.put("layout_height","wrap_content");
         attribute.put("textAllCaps","false");
 
+        if(text!=null){
+            attribute.put("text",getText());
+        }
         // 왼쪽 상단
         if(center_x<parent_w && center_y<parent_h){
             attribute.put("layout_alignParentStart","true");
+            attribute.put("layout_alignParentLeft","true");
 
             attribute.put("layout_marginLeft",left);
             attribute.put("layout_marginStart",left);
@@ -539,6 +591,7 @@ public class ObjectCustom extends JPanel {
         //왼쪽 하단
         else if(center_x<parent_w && center_y>parent_h){
             attribute.put("layout_alignParentStart","true");
+            attribute.put("layout_alignParentLeft","true");
 
             attribute.put("layout_marginLeft",left);
             attribute.put("layout_marginStart",left);
@@ -548,6 +601,7 @@ public class ObjectCustom extends JPanel {
         //오른쪽 상단
         else if(center_x>parent_w && center_y<parent_h){
             attribute.put("layout_alignParentEnd","true");
+            attribute.put("layout_alignParentRight","true");
 
             attribute.put("layout_marginRight",right);
             attribute.put("layout_marginEnd",right);
@@ -557,6 +611,7 @@ public class ObjectCustom extends JPanel {
         //오른쪽 하단
         else if(center_x<parent_w && center_y<parent_h){
             attribute.put("layout_alignParentEnd","true");
+            attribute.put("layout_alignParentRight","true");
 
             attribute.put("layout_marginRight",right);
             attribute.put("layout_marginEnd",right);
@@ -595,20 +650,68 @@ public class ObjectCustom extends JPanel {
     }
     public void sendData(){
 
+        storyboard.getRootObject();
+    }
 
+    public void getObjectElement(){
+        long width, height, x, y ;
+
+        height=(long) objectJObject.get("height");
+        width=(long) objectJObject.get("width");
+        x=(long) objectJObject.get("x");
+        y=(long) objectJObject.get("y");
+
+        if(objectJObject.containsKey("name"))
+            setObjectName((String)objectJObject.get("name"));
+        if(objectJObject.containsKey("x") && objectJObject.containsKey("y"))
+            setPosition(new Point((int)x,(int)y));
+        if(objectJObject.containsKey("width"))
+            setObject_width((int)width);
+        if(objectJObject.containsKey("height"))
+            setObject_height((int)height);
+        if(objectJObject.containsKey("type"))
+            setObjectType((String)objectJObject.get("type"));
+
+
+        getAttributeJson();
     }
 
     public void getAttributeJson(){
         if(objectJObject.containsKey("attribute"))
         {
             attributeObject=(JSONObject)objectJObject.get("attribute");
+
             if(attributeObject.containsKey("text")){
                 setText((String)attributeObject.get("text"));
             }
-
+            if(attributeObject.containsKey("id")){
+                setId((String)attributeObject.get("id"));
+            }
+            System.out.println(getId());
         }
     }
+    public boolean checkObjectId(String id_) {
+        String temp = this.getId();
+        boolean checkId = false;
+        Iterator<String> ObjectKeyList = checkkey.keySet().iterator();
 
+        while (ObjectKeyList.hasNext()) {
+            String key = (String) ObjectKeyList.next();
+            Object o = checkkey.get(key);
+            ObjectCustom b = (ObjectCustom) o;
+            if(b.getId()==null)
+                continue;
 
+            if (b.getId().equals(id_)) {
+                if (temp.equals(id_))
+                    continue;
+
+                checkId = true;
+            }
+
+        }
+
+        return checkId;
+    }
 
 }

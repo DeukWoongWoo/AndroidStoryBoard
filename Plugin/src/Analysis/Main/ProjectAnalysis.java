@@ -102,9 +102,6 @@ public class ProjectAnalysis {
         return project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/res/drawable";
     }
 
-    public String findDrawablePath() {
-        return project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/res/drawable";
-    }
 
     private void createTable() {
         DatabaseManager.getInstance().onCreateTable();

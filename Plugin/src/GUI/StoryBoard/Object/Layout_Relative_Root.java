@@ -6,6 +6,7 @@ import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -112,7 +113,14 @@ public class Layout_Relative_Root extends Layout_Relative {
 
     @Override
     public void addDragListeners() {
-
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+                parentHeight= getParent().getHeight();
+                parentWidth=getParent().getWidth();
+            }
+        });
     }
 
     @Override

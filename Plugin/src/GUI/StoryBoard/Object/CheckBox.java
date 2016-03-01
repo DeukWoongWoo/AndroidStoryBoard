@@ -32,7 +32,7 @@ public class CheckBox extends ObjectCustom {
         String name, color;
 
         System.out.println(obj);
-        name = "CheckBox"+ name_;
+        name = "@+id/"+"CheckBox"+ name_;
         width = Constant.imageVIewWidth;
         height = Constant.imageViewHeight;
         x = p.x;

@@ -64,6 +64,7 @@ public class Button_Root extends ObjectCustom {
         obj.put("type","Button");
 
         setId("button"+name);
+
         JSONObject attribute = setAttribue(obj);
 
         attribute.put("text",getText());
@@ -111,38 +112,20 @@ public class Button_Root extends ObjectCustom {
 
     }
     public Button_Root(HashMap<String, ObjectCustom> list , JSONObject obj, ArrayList nextlist){
-        long width, height, x, y ;
-        String name, text, color;
-
+        super();
         nextActivitylist=nextlist;
         objectJObject=obj;
         objectList =list;
         checkkey=list;
 
-        name =(String) objectJObject.get("name");
-        text = (String)objectJObject.get("text");
-        color = (String)objectJObject.get("color");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
         if(objectJObject.containsKey("next")){
-            nextActivitylist.add(objectJObject.get("next"));
+            JSONObject temp = (JSONObject)objectJObject.get("next");
+            nextActivitylist.add(temp.get("toactivity"));
         }
 
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setText(text);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-        setColor(color);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
@@ -152,8 +135,7 @@ public class Button_Root extends ObjectCustom {
 
     }
     public Button_Root(HashMap<String, ObjectCustom> list , JSONObject obj, ArrayList nextlist , HashMap<String, Activity> actList) {
-        long width, height, x, y ;
-        String name, text, color;
+        super();
 
         nextActivitylist=nextlist;
         objectJObject=obj;
@@ -161,30 +143,15 @@ public class Button_Root extends ObjectCustom {
         checkkey=list;
         activityList=actList;
 
-        name =(String) objectJObject.get("name");
-        text = (String)objectJObject.get("text");
-        color = (String)objectJObject.get("color");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
         if(objectJObject.containsKey("next")){
             nextActivitylist.add(objectJObject.get("next"));
         }
 
 
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setText(text);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-        setColor(color);
 
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
@@ -194,8 +161,7 @@ public class Button_Root extends ObjectCustom {
 
     }
     public Button_Root(HashMap<String, ObjectCustom> list , JSONObject obj, ArrayList nextlist , HashMap<String, Activity> actList, storyBoard stroy) {
-        long width, height, x, y ;
-        String name, text, color;
+        super();
 
         nextActivitylist=nextlist;
         objectJObject=obj;
@@ -208,30 +174,16 @@ public class Button_Root extends ObjectCustom {
         }
 
         getStroyBoard(stroy);
-        name =(String) objectJObject.get("name");
-        text = (String)objectJObject.get("text");
-        color = (String)objectJObject.get("color");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
+
 
         if(objectJObject.containsKey("next")){
             nextActivitylist.add(objectJObject.get("next"));
         }
 
 
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setText(text);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-        setColor(color);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
@@ -242,8 +194,7 @@ public class Button_Root extends ObjectCustom {
     }
     public Button_Root(HashMap<String, ObjectCustom> list , JSONObject obj, ArrayList nextlist , HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
         super(list,obj,nextlist,actList,stroy,ActivitName);
-        long width, height, x, y ;
-        String name, text, color;
+
 
         nextActivitylist=nextlist;
         objectJObject=obj;
@@ -251,35 +202,17 @@ public class Button_Root extends ObjectCustom {
         checkkey=list;
         activityList=actList;
         this.activityName=ActivitName;
-
-        if(objectJObject.containsKey("attribute")){
-
-        }
-
         getStroyBoard(stroy);
-        name =(String) objectJObject.get("name");
-        color = (String)objectJObject.get("color");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
+
 
         if(objectJObject.containsKey("next")){
             nextActivitylist.add(objectJObject.get("next"));
         }
 
 
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setText(getText());
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-        setColor(color);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
@@ -340,27 +273,7 @@ public class Button_Root extends ObjectCustom {
         setName(id_);
         repaint();
     }
-    //-------버튼 아이디 중복 확인--------
-    public boolean checkButtonId(String id_) {
-        String temp = this.getId();
-        boolean checkId = false;
-        Iterator<String> buttonKeyList = checkkey.keySet().iterator();
 
-        while(buttonKeyList.hasNext()) {
-            String key = (String) buttonKeyList.next();
-            Object o = checkkey.get(key);
-            ObjectCustom b = (ObjectCustom) o;
-            if(b.getId().equals(id_)){
-                if(temp.equals(id_))
-                    continue;
-
-                checkId = true;
-            }
-
-        }
-
-        return checkId;
-    }
     //------- 버튼 제거-------------------
     public void removeButton(){
         String temp = this.getId();
@@ -542,7 +455,8 @@ public class Button_Root extends ObjectCustom {
         // 확인 키
         public void result()
         {
-            if(checkButtonId(id_field.getText())==true)
+
+            if(checkObjectId(id_field.getText())==true)
             {
                 JOptionPane.showMessageDialog(null, id_field.getText()+"는 이미 중복되어있는 ID 값입니다.");
             }
@@ -596,7 +510,10 @@ public class Button_Root extends ObjectCustom {
                     }
                     else
                     {
-                        objectJObject.put("next", combo.getSelectedItem());
+                        JSONObject tempObject= new JSONObject();
+                        tempObject.put("fromactivity", activityName);
+                        tempObject.put("toactivity", combo.getSelectedItem());
+                       // objectJObject.put("next", combo.getSelectedItem());
                     }
 
                     dispose();

@@ -61,8 +61,36 @@ public class Button_Radio extends Button_Root {
         add(content);
         objectJObject=obj;
     }
+    public Button_Radio(Constant.ObjectNew objectNew) {
 
-     public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj) {
+
+        super(objectNew.name,objectNew.objectList,objectNew.jObject);
+
+        content = new JLabel(getText());
+        checkkey=objectNew.objectList;
+        setText("NEW RadioButton");
+        setId("@+id/"+"Radio button"+objectNew.name);
+
+        add(content);
+        setPosition(objectNew.mousep);
+        setLocation(objectNew.mousep.x , objectNew.mousep.y);
+        objectNew.jObject.put("x", (long)objectNew.mousep.x);
+        objectNew.jObject.put("y", (long)objectNew.mousep.y);
+
+
+        objectNew.jObject.put("name", getId());
+        objectNew.jObject.put("type", "radio button");
+
+        init_text();
+
+        setBackground(Color.white);
+        add(content);
+        objectJObject=objectNew.jObject;
+        JSONObject attribute = setAttribue(objectNew.jObject);
+        attribute.put("text",getText());
+    }
+
+    public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj) {
         super(list, obj);
 
         init_text();

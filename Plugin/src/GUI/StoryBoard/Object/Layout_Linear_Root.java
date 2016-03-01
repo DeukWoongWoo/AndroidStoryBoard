@@ -6,6 +6,9 @@ import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -88,7 +91,14 @@ public class Layout_Linear_Root extends Layout_Linear {
 
     @Override
     public void addDragListeners() {
-
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+                parentHeight= getParent().getHeight();
+                parentWidth=getParent().getWidth();
+            }
+        });
     }
     @Override
     public void addmouseClickEvent() {

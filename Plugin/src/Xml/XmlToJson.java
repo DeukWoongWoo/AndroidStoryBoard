@@ -5,6 +5,7 @@ import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Database.DtatTransferObject.JavaDTO;
 import Analysis.Database.DtatTransferObject.NextActivityDTO;
 import Analysis.Main.ProjectAnalysis;
+import GUI.StoryBoard.Constant;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.text.StringHash;
 import org.json.simple.JSONArray;
@@ -70,8 +71,10 @@ public class XmlToJson {
             addWebObject(xmlToJsonObject.getWebJson());
             addPluginObject(xmlToJsonObject.getPluginJson());
         }
-        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
-        makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
+//        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
+       // makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
+         makeFile(makePluginJsonObject(), Constant.FILE_OUT);
+
     }
 
     private XmlToJsonObject makeObject(String Filepath[]){

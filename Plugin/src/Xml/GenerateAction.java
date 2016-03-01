@@ -61,11 +61,11 @@ public class GenerateAction extends AnAction {
 
 
 
-       // XmlToJson xmlToJson = new XmlToJson();
-        //xmlToJson.make();
+        XmlToJson xmlToJson = new XmlToJson();
+        xmlToJson.make();
 
-        JsonToXml jsonToXml = new JsonToXml();
-        jsonToXml.make("C:/Users/cho/Desktop/json/plugin.json");
+       //JsonToXml jsonToXml = new JsonToXml();
+        //jsonToXml.make("C:/Users/cho/Desktop/json/plugin.json");
 
 /*
         try{

@@ -48,6 +48,8 @@ public class JsonToXml {
             Map.Entry entry = (Map.Entry) iterator.next();
             String attr = (String) entry.getKey();
             String value = (String) entry.getValue();
+            if(attr.equals("id"))
+                component.setId(value);
             component.setAttributes(attr,value);
         }
         component.setAttributeCount();
@@ -99,6 +101,7 @@ public class JsonToXml {
         JSONObject jsonObject;
         String xmlName = null;
         String xmlPath=null;
+        boolean isLibrary=false;
         for(int i =0;i<jsonArray.size();i++){
             componentArrayList = new ArrayList<Component>();
             jsonObject= (JSONObject) jsonArray.get(i);
@@ -116,13 +119,16 @@ public class JsonToXml {
                 else if(key.equals("object")){
                     JSONArray jsonObjectArray = (JSONArray) entry.getValue();
                     JsonToObject(jsonObjectArray,componentArrayList);
-                }else if(key.equals("library")){
-
-                    UseLibraryParser useLibraryParser = new UseLibraryParser();
-                    useLibraryParser.parse();
-                    useLibraryParser.append("activity",xmlName,xmlName);
-                }
+                }else if(key.equals("library"))
+                    isLibrary=true;
             }
+
+            if(isLibrary){
+                UseLibraryParser useLibraryParser = new UseLibraryParser();
+                useLibraryParser.parse();
+                useLibraryParser.append("activity",xmlName,xmlName);
+            }
+
 
             for(int j=0;j<componentArrayList.size();j++){
                 Component component = componentArrayList.get(j);

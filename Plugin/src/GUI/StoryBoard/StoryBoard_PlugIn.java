@@ -24,6 +24,7 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
     private ToolWindow mainViewWindow;
 
     public StoryBoard_PlugIn() throws IOException {
+        System.out.println("StoryBoard_Plugin...");
         totalPanel = new JPanel();
         centerPanel = new storyBoard();
         northPanel = new menuPanel();
@@ -38,7 +39,10 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
+        System.out.println("createToolWindowContent...");
         mainViewWindow=toolWindow;
+
+        System.out.println("Create Tool Window : " + project.getBasePath());
 
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         Content content = contentFactory.createContent(totalPanel, "", false);

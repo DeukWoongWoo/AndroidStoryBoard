@@ -31,7 +31,7 @@ public class Activity extends JPanel {
     storyBoard storyboard;
     palettePanel panel;
 
-    UseLibraryParser  useLibraryParser = new UseLibraryParser();
+//    UseLibraryParser  useLibraryParser = new UseLibraryParser();
 
     private boolean draggable = true;
     protected Point anchorPoint;

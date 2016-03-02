@@ -1,6 +1,8 @@
 package Analysis.RedoUndo.Util;
 
+import Analysis.Constant.ConstantEtc;
 import Analysis.Constant.SharedPreference;
+import Analysis.MyActionClass;
 import GUI.StoryBoard.StoryBoard_PlugIn;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
@@ -47,9 +49,8 @@ public class ElementFactory {
 
     public PsiClass createPsiClass(String className){
         try {
-            PsiManager.getInstance(project).findFile(project.getProjectFile());
             ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-            final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(project.getProjectFile());
+            final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(project.getBaseDir().findFileByRelativePath(ConstantEtc.PROJECT_XML_PATH));
             PackageWrapper packageWrapper = new PackageWrapper(PsiManager.getInstance(project).findFile(project.getProjectFile()).getManager(),"");
             PsiDirectory packageDirectoryInSourceRoot = RefactoringUtil.createPackageDirectoryInSourceRoot(packageWrapper, sourceRootForFile);
             return JavaDirectoryService.getInstance().createClass(packageDirectoryInSourceRoot,className);

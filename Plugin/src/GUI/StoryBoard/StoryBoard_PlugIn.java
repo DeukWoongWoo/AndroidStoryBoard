@@ -47,11 +47,11 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
         toolWindow.getContentManager().addContent(content);
 
         initProjectAnalysis(project);
-        try {
-            init();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            init();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void initProjectAnalysis(Project project) {

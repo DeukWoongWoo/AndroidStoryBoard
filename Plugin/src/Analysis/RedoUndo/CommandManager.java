@@ -62,6 +62,11 @@ public class CommandManager{
         execute(CommandKey.LINK);
     }
 
+    public void deleteLinkActivity(String id, String from, String to){
+        commandMap.put(CommandKey.LINK, new ActivityLinkDeleteCommand(new ActivityLink(id, from, to)));
+        execute(CommandKey.LINK);
+    }
+
     public void createActivity(String className){
         CommandKey.ACTIVITY.setId(className);
         execute(CommandKey.ACTIVITY);
@@ -91,11 +96,11 @@ public class CommandManager{
         execute(new FuncComponentDeleteCommand(new FuncComponent(id, xml, type)));
     }
 
-    public void createButton(CommandKey key, String id){
-        System.out.println("Create " + key.name() + " ... / ID : " + id);
-        key.setId("R.id."+id);
-        execute(key);
-    }
+//    public void createButton(CommandKey key, String id){
+//        System.out.println("Create " + key.name() + " ... / ID : " + id);
+//        key.setId("R.id."+id);
+//        execute(key);
+//    }
 
     private void execute(CommandKey key) {
         System.out.println("Command Execute...");

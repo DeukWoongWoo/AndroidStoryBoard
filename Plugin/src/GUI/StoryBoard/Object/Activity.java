@@ -33,7 +33,8 @@ public class Activity extends JPanel {
 
 //    UseLibraryParser  useLibraryParser = new UseLibraryParser();
 
-    private boolean draggable = true;
+
+
     protected Point anchorPoint;
     protected Cursor draggingCursor = Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);
     protected boolean overbearing = false;

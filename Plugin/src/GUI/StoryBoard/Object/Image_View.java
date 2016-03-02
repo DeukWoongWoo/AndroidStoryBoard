@@ -353,6 +353,7 @@ public class Image_View extends ObjectCustom {
             dispose();
         }
     }
+
     //--------이미지 페널을 위한 것-----
     class ImagePanel extends JPanel
     {
@@ -378,5 +379,4 @@ public class Image_View extends ObjectCustom {
             return this.img;
         }
     }
-
 }

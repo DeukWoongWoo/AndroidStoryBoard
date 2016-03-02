@@ -21,12 +21,15 @@ public class Layout_Root extends ObjectCustom {
     int radiobuttonNum=1;
     int linearlayoutNum=1;
     int imageViewNum=1;
+    int textViewNum=1;
+    int checkBoxNum=1;
     Point mouse_p;
 
     private boolean isButton;
     private boolean isRadioButton;
     private boolean isImageView;
-
+    private boolean isTextView;
+    private boolean isCheckBok;
     private int x,y;
 
     public Layout_Root() {
@@ -181,6 +184,8 @@ public class Layout_Root extends ObjectCustom {
         obj.put("object", objarr );
 
         setId("layout"+name);
+
+
         objectJObject=obj;
         addMouseListner();
         repaint();
@@ -205,6 +210,16 @@ public class Layout_Root extends ObjectCustom {
             g.drawRect(x,y,Constant.imageVIewWidth,Constant.imageViewHeight);
             revalidate();       // 무효화 선언된 화면을 알려줌
             repaint();          // 다시 그려준다.
+        }
+        else if(isTextView){
+            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();          // 다시 그려준다.
+        }
+        else if(isCheckBok){
+            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();
         }
 
 
@@ -355,7 +370,15 @@ public class Layout_Root extends ObjectCustom {
         tempArray = (JSONArray)objectJObject.get("object");
         tempObj = new JSONObject();
 
-        Button_Radio b = new Button_Radio(""+radiobuttonNum, objectList,tempObj, point);
+        Constant.ObjectNew sendfile = new Constant.ObjectNew();
+        sendfile.name=""+radiobuttonNum;
+        sendfile.objectList=objectList;
+        sendfile.jObject=tempObj;
+        sendfile.mousep=point;
+        sendfile.parentHeight=getObject_height();
+        sendfile.parentWidth=getObject_width();
+
+        Button_Radio b = new Button_Radio(sendfile);
 
         tempArray.add(tempObj);
 
@@ -380,6 +403,46 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         imageViewNum++;
+    }
+    public void newTextView(Point point){
+        JSONArray tempArray;
+        JSONObject tempObj;
+        tempArray = (JSONArray)objectJObject.get("object");
+        tempObj = new JSONObject();
+
+        TextView t = new TextView(""+imageViewNum, objectList,tempObj, point);
+
+        tempArray.add(tempObj);
+
+        add(t);
+
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();          // 다시 그려준다.
+        textViewNum++;
+    }
+    public void newCheckBox(Point point){
+        JSONArray tempArray;
+        JSONObject tempObj;
+        tempArray = (JSONArray)objectJObject.get("object");
+        tempObj = new JSONObject();
+
+        Constant.ObjectNew sendfile = new Constant.ObjectNew();
+        sendfile.name=""+checkBoxNum;
+        sendfile.objectList=objectList;
+        sendfile.jObject=tempObj;
+        sendfile.mousep=point;
+        sendfile.parentHeight=getObject_height();
+        sendfile.parentWidth=getObject_width();
+
+        CheckBox t = new CheckBox(sendfile);
+
+        tempArray.add(tempObj);
+
+        add(t);
+
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();          // 다시 그려준다.
+        textViewNum++;
     }
     public void newLInearLayout(){
         JSONArray tempArray;
@@ -407,35 +470,38 @@ public class Layout_Root extends ObjectCustom {
                     menu.show(e.getComponent(), e.getX(), e.getY());
 
                 }
-                else if(panel.getChoice()==4){
+                else if(panel.getChoice()==Constant.BUTTON){
                     newButton(e.getPoint());
                     panel.setChoice(0);
-                    isButton=false;
-                    isRadioButton=false;
-                    isImageView=false;
+                    objectBooleanFalse();
                 }
-                else if(panel.getChoice()==5){
+                else if(panel.getChoice()==Constant.RADIOBUTTON){
                     newRadioButton(e.getPoint());
                     panel.setChoice(0);
-                    isButton=false;
-                    isRadioButton=false;
-                    isImageView=false;
+                    objectBooleanFalse();
                 }
-                else if(panel.getChoice()==2){
+                else if(panel.getChoice()==Constant.LINEARLAYOUT){
                     newLInearLayout();
                     panel.setChoice(0);
                 }
-                else if(panel.getChoice()==6){
+                else if(panel.getChoice()==Constant.IMAGEVIEW){
                     newImageView(e.getPoint());
                     panel.setChoice(0);
-                    isButton=false;
-                    isRadioButton=false;
-                    isImageView=false;
+                    objectBooleanFalse();
+                }
+                else if(panel.getChoice()==Constant.TEXTVIEW){
+                    newTextView(e.getPoint());
+                    panel.setChoice(0);
+                    objectBooleanFalse();
+
+                }
+                else if(panel.getChoice()==Constant.CHECKBOX){
+                    newCheckBox(e.getPoint());
+                    panel.setChoice(0);
+                    objectBooleanFalse();
                 }
                 else{
-                    isButton=false;
-                    isRadioButton=false;
-                    isImageView=false;
+                    objectBooleanFalse();
                     panel.setChoice(0);
 
                 }
@@ -459,9 +525,7 @@ public class Layout_Root extends ObjectCustom {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                isButton=false;
-                isRadioButton=false;
-                isImageView=false;
+                objectBooleanFalse();
             }
         });
     }
@@ -474,17 +538,25 @@ public class Layout_Root extends ObjectCustom {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                if(panel.getChoice()==4){
+                if(panel.getChoice()==Constant.BUTTON){
                     x = e.getX(); y = e.getY();
                     isButton=true;
                 }
-                else if(panel.getChoice()==5){
+                else if(panel.getChoice()==Constant.RADIOBUTTON){
                     x = e.getX(); y = e.getY();
                     isRadioButton=true;
                 }
-                else if(panel.getChoice()==6){
+                else if(panel.getChoice()==Constant.IMAGEVIEW){
                     x = e.getX(); y = e.getY();
                     isImageView=true;
+                }
+                else if(panel.getChoice()==Constant.TEXTVIEW){
+                    x = e.getX(); y = e.getY();
+                    isTextView=true;
+                }
+                else if(panel.getChoice()==Constant.CHECKBOX){
+                    x = e.getX(); y = e.getY();
+                    isCheckBok=true;
                 }
             }
         });
@@ -512,7 +584,6 @@ public class Layout_Root extends ObjectCustom {
             refresh.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println(getParent());
                     storyboard.drawActivity_temp();
                     sendData();
                 }
@@ -609,5 +680,13 @@ public class Layout_Root extends ObjectCustom {
         activity_=activityName;
 
         System.out.println("id :"+id_+"  activity : "+activityName+ " library :" + library);
+    }
+
+    public void objectBooleanFalse(){
+        isButton=false;
+        isRadioButton=false;
+        isImageView=false;
+        isTextView=false;
+        isCheckBok=false;
     }
 }

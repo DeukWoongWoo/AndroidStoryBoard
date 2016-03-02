@@ -51,7 +51,7 @@ public class Button_Root extends ObjectCustom {
 
         this.setSize((int)width, (int)height);
         this.setLocation((int)x, (int)y);
-        this.setLayout(null);
+        this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
 
@@ -69,8 +69,8 @@ public class Button_Root extends ObjectCustom {
 
         attribute.put("text",getText());
         objectJObject=obj;
-
         checkkey=list;
+
         addMouseListener();
 
         repaint();
@@ -103,7 +103,7 @@ public class Button_Root extends ObjectCustom {
         //----------창 구성--------------------
         this.setSize((int)width, (int)height);
         this.setLocation((int)x, (int)y);
-        this.setLayout(null);
+        this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
 
@@ -126,7 +126,7 @@ public class Button_Root extends ObjectCustom {
         //----------창 구성--------------------
         this.setSize((int)getObject_width(), (int)getObject_height());
         this.setLocation((int)isPosition().x, (int)isPosition().y);
-        this.setLayout(null);
+        this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
 
@@ -152,7 +152,7 @@ public class Button_Root extends ObjectCustom {
         //----------창 구성--------------------
         this.setSize((int)getObject_width(), (int)getObject_height());
         this.setLocation((int)isPosition().x, (int)isPosition().y);
-        this.setLayout(null);
+        this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
 
@@ -184,7 +184,7 @@ public class Button_Root extends ObjectCustom {
         //----------창 구성--------------------
         this.setSize((int)getObject_width(), (int)getObject_height());
         this.setLocation((int)isPosition().x, (int)isPosition().y);
-        this.setLayout(null);
+        this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
 
@@ -213,7 +213,7 @@ public class Button_Root extends ObjectCustom {
         //----------창 구성--------------------
         this.setSize((int)getObject_width(), (int)getObject_height());
         this.setLocation((int)isPosition().x, (int)isPosition().y);
-        this.setLayout(null);
+        this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
 

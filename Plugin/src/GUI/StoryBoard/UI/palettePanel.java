@@ -1,5 +1,7 @@
 package GUI.StoryBoard.UI;
 
+import GUI.StoryBoard.Constant;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -26,7 +28,8 @@ public class palettePanel extends JPanel {
     JButton radio_b = new JButton("Radio Button");
     JButton none_b = new JButton("none");
     JButton image_b =new JButton("Image View");
-
+    JButton textview_b =new JButton("TextView");
+    JButton checkbox_b = new JButton("CheckBox");
     public int choice = 0;
 
     public palettePanel() {
@@ -58,6 +61,8 @@ public class palettePanel extends JPanel {
                         rightCenterPanel.add(radio_b);
                         rightCenterPanel.add(none_b);
                         rightCenterPanel.add(image_b);
+                        rightCenterPanel.add(textview_b);
+                        rightCenterPanel.add(checkbox_b);
         activity_b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -79,19 +84,19 @@ public class palettePanel extends JPanel {
         button_b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                choice=4;
+                choice= Constant.BUTTON;
             }
         });
         radio_b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                choice=5;
+                choice=Constant.RADIOBUTTON;
             }
         });
         image_b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                choice =6;
+                choice =Constant.IMAGEVIEW;
             }
         });
         none_b.addActionListener(new ActionListener() {
@@ -100,8 +105,18 @@ public class palettePanel extends JPanel {
                 choice=0;
             }
         });
-
-
+        textview_b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice=Constant.TEXTVIEW;
+            }
+        });
+        checkbox_b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                choice=Constant.CHECKBOX;
+            }
+        });
 
         palettelToggleB.addMouseListener(new MouseListener() {
             @Override

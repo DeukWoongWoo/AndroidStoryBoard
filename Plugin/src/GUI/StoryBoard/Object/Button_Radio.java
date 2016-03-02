@@ -14,16 +14,18 @@ import java.util.HashMap;
  */
 public class Button_Radio extends Button_Root {
 
-    JLabel content =new JLabel();
+    JLabel content =new JLabel("",SwingConstants.LEFT);
+    CirclePanel circle = new CirclePanel();
+
     public Button_Radio(String name, HashMap<String, ObjectCustom> list, JSONObject obj) {
 
         super(name,list,obj);
+
 
         content = new JLabel(getText());
         checkkey=list;
         setText("NEW RadioButton");
         setId("Radio button"+name);
-
 
         obj.put("name", getId());
         obj.put("text", getText());
@@ -32,8 +34,14 @@ public class Button_Radio extends Button_Root {
         init_text();
 
         setBackground(Color.white);
+        circle.repaint();
+        add(circle);
         add(content);
+
         objectJObject=obj;
+
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();
     }
     public Button_Radio(String name, HashMap<String, ObjectCustom> list, JSONObject obj, Point point) {
 
@@ -43,7 +51,6 @@ public class Button_Radio extends Button_Root {
         checkkey=list;
         setText("NEW RadioButton");
         setId("Radio button"+name);
-
         add(content);
         setPosition(point);
         setLocation(point.x , point.y);
@@ -53,41 +60,54 @@ public class Button_Radio extends Button_Root {
 
         obj.put("name", getId());
         obj.put("text", getText());
-        obj.put("type", "radio button");
+        obj.put("type", "RadioButton");
 
         init_text();
 
         setBackground(Color.white);
-        add(content);
+        add(circle, BorderLayout.WEST);
+        add(content, BorderLayout.CENTER);
+
         objectJObject=obj;
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();
+
     }
     public Button_Radio(Constant.ObjectNew objectNew) {
 
 
         super(objectNew.name,objectNew.objectList,objectNew.jObject);
 
-        content = new JLabel(getText());
-        checkkey=objectNew.objectList;
         setText("NEW RadioButton");
         setId("@+id/"+"Radio button"+objectNew.name);
 
-        add(content);
+        parentWidth=objectNew.parentWidth;
+        parentHeight=objectNew.parentHeight;
+
+        checkkey=objectNew.objectList;
         setPosition(objectNew.mousep);
-        setLocation(objectNew.mousep.x , objectNew.mousep.y);
         objectNew.jObject.put("x", (long)objectNew.mousep.x);
         objectNew.jObject.put("y", (long)objectNew.mousep.y);
+        objectNew.jObject.put("type", "RadioButton");
 
-
-        objectNew.jObject.put("name", getId());
-        objectNew.jObject.put("type", "radio button");
-
+        setLocation(isPosition().x, isPosition().y);
+        checkkey=objectNew.objectList;
+        this.add(content,BorderLayout.CENTER);
         init_text();
 
+        this.setOpaque(false);
+        circle.repaint();
+
         setBackground(Color.white);
-        add(content);
-        objectJObject=objectNew.jObject;
+        add(circle, BorderLayout.WEST);
+        add(content, BorderLayout.CENTER);
+
+
         JSONObject attribute = setAttribue(objectNew.jObject);
         attribute.put("text",getText());
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();
+
     }
 
     public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj) {
@@ -122,10 +142,12 @@ public class Button_Radio extends Button_Root {
         super(list, obj, nextlist, actlist,stroy, ActivitName);
 
         init_text();
+        circle.repaint();
+        add(circle, BorderLayout.WEST);
+        add(content, BorderLayout.CENTER);
 
-        add(content);
-        setBackground(Color.white);
-        repaint();
+
+        this.setOpaque(false);
     }
 
 
@@ -142,8 +164,42 @@ public class Button_Radio extends Button_Root {
         content.setVisible(true);
         content.setLocation(getObject_width()/10,0);
         content.setSize(getObject_width()-getObject_width()/10, getObject_height());
-        content.setFont(new Font("Serif", Font.PLAIN, getObject_height()/2 ));
         content.setForeground(Color.black);
     }
 
+
+    class CirclePanel extends JPanel{
+
+        Image img=new ImageIcon("/icon/radio.png").getImage();
+
+
+        public CirclePanel(){
+            setPreferredSize(new Dimension(50,50));
+            setMaximumSize(new Dimension(50,50));
+            this.setVisible(true);
+            this.setOpaque(false);
+
+
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();
+        }
+
+
+        @Override
+        public void paint(Graphics g) {
+            super.paint(g);
+            System.out.println(img);
+
+            System.out.println(g.drawImage(img, 0, 0, null));
+            g.drawImage(img, 0, 0, 50, 50, null);
+        }
+
+        @Override
+        public void paintComponents(Graphics g) {
+            super.paintComponents(g);
+
+        }
+    }
+
 }
+

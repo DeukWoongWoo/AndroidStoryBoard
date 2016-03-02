@@ -20,21 +20,18 @@ public interface Constant  {
     int imageVIewWidth =200;
     int imageViewHeight = 200;
 
-<<<<<<< HEAD
      String FILE_ROUTE ="C:/Users/우철/Documents/AndroidStoryBoard/Plugin/우철이 라이브러리 포함된것.txt";
      String IMAGE_ROUTE ="C:\\Users\\우철\\Pictures\\Screenshots/aaa.jpg";
      String XML_ROUTE = "C:/Users/우철/Pictures/Screenshots";
      String FILE_OUT = "C:/Users/우철/Pictures/Screenshots/jsonfile.txt";
-=======
-<<<<<<< HEAD
-     String FILE_ROUTE ="C:/Users/cho/Documents/AndroidStoryBoard/Plugin/우철이 라이브러리 포함된것.txt";
-     String IMAGE_ROUTE ="C:\\Users\\cho\\Pictures\\Screenshots/aaa.jpg";
-=======
-     String FILE_ROUTE ="C:/Users/woong/Documents/AndroidStoryBoard/Plugin/우철이 라이브러리 포함된것.txt";
-     String IMAGE_ROUTE ="C:\\Users\\우철\\Pictures\\Screenshots/aaa.jpg";
-     String XML_ROUTE = "C:/Users/우철/Pictures/Screenshots";
->>>>>>> 0be9f2e92589c92e1a3f2dc333d12aa7f2baeca7
->>>>>>> DevlopMain
+
+    int BUTTON = 4;
+    int RADIOBUTTON = 5;
+    int LINEARLAYOUT = 2;
+    int IMAGEVIEW = 6;
+    int TEXTVIEW = 7;
+    int CHECKBOX = 8;
+
     Dimension MENUBUTTONSIZE = new Dimension(50,50);
     int SCALE_SHAPE = 1;
     boolean NEWFILE = true;

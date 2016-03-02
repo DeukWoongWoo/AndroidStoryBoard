@@ -687,7 +687,6 @@ public class ObjectCustom extends JPanel {
             if(attributeObject.containsKey("id")){
                 setId((String)attributeObject.get("id"));
             }
-            System.out.println(getId());
         }
     }
     public boolean checkObjectId(String id_) {
@@ -714,4 +713,29 @@ public class ObjectCustom extends JPanel {
         return checkId;
     }
 
+    class ImagePanel1 extends JPanel
+    {
+
+        private Image img;
+
+        public ImagePanel1(){
+
+        }
+        public ImagePanel1(String img) {
+            this(new ImageIcon(img).getImage());
+        }
+
+        public ImagePanel1(Image img) {
+            this.img = img;
+        }
+
+        public void paintComponent(Graphics g) {
+            g.drawImage(img, 0, 0, 50,50,this);
+            System.out.println("Image Panel1:"+ g.drawImage(img, 0, 0, 50,50,this));
+        }
+
+        public Image getImageView(){
+            return this.img;
+        }
+    }
 }

@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class Button_Click extends Button_Root {
 
-    JLabel content = new JLabel();
+    JLabel content = new JLabel("",SwingConstants.CENTER);
 
     // 버튼 생성을 위해서 필요한 값들
     public Button_Click(String name , HashMap<String, ObjectCustom> list, JSONObject obj) {
@@ -25,7 +25,7 @@ public class Button_Click extends Button_Root {
         checkkey=list;
         init_text();
         obj.put("type", "Button");
-        add(content);
+        add(content,BorderLayout.CENTER);
 
 
     }
@@ -45,7 +45,7 @@ public class Button_Click extends Button_Root {
         checkkey=list;
         init_text();
         obj.put("type", "Button");
-        add(content);
+        add(content,"Center");
 
 
     }
@@ -67,7 +67,7 @@ public class Button_Click extends Button_Root {
         checkkey=objectNew.objectList;
         init_text();
         objectNew.jObject.put("type", "Button");
-        add(content);
+        add(content, BorderLayout.CENTER);
 
 
         JSONObject attribute = setAttribue(objectNew.jObject);
@@ -99,7 +99,7 @@ public class Button_Click extends Button_Root {
         super(list, obj,nextlist, actList,stroy, ActivitName);
         init_text();
         setLayout(new BorderLayout());
-        add(content,"Center");
+        add(content,BorderLayout.CENTER);
     }
 
 

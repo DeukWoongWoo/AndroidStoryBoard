@@ -195,7 +195,7 @@ public class storyBoard extends JPanel {
     // JSON 파일을 받은 것을 전부 그려준다.
     public void drawActivity() {
         removeAllActivity();
-        jobjRoot = parserJObject(Constant.FILE_OUT);
+        jobjRoot = parserJObject(Constant.FILE_ROUTE);
 
         setAppName((String)jobjRoot.get("appName"));
         activityArrayData = (JSONArray)jobjRoot.get("activity");
@@ -203,11 +203,35 @@ public class storyBoard extends JPanel {
         // 가지고 있는 액티비티를 만든다.
         for(int i=0; i<activityArrayData.size();i++){
             JSONObject activity_jobj;
+            JSONArray activity_list;
             activity_jobj=(JSONObject)activityArrayData.get(i);
-            Activity a = new Activity(activity_list, activity_jobj, parlPanel, this);
-            activity_list.put((String)activity_jobj.get("name"),a);
-            a.setOverbearing(true);
-            jpan.add(a);
+
+            if(activity_jobj.containsKey("activity")) {
+                activity_list=(JSONArray) activity_jobj.get("activity");
+
+                for(int j=0; j<activity_list.size(); j++) {
+//                    JSONObject tempObject = new JSONObject();
+//                    JSONArray temparray = (JSONArray)activity_jobj.get("object");
+//                    tempObject.put("name",activity_jobj.get("name"));
+//                    tempObject.put("height",activity_jobj.get("height"));
+//                    tempObject.put("width",activity_jobj.get("width"));
+//                    tempObject.put("x",activity_jobj.get("x"));
+//                    tempObject.put("y",activity_jobj.get("y"));
+//                    tempObject.put("library",activity_jobj.get("library"));
+//                    tempObject.put("object",temparray);
+
+                    String activity_name;
+                    activity_name=(String)activity_list.get(j);
+
+                    Activity a = new Activity(this.activity_list, activity_jobj, parlPanel, this, activity_name);
+
+                    this.activity_list.put(activity_name, a);
+                    a.setOverbearing(true);
+                    jpan.add(a);
+                }
+
+            }
+
         }
 
         revalidate();       // 무효화 선언된 화면을 알려줌
@@ -233,10 +257,13 @@ public class storyBoard extends JPanel {
             JSONObject activity_jobj;
             activity_jobj=(JSONObject)activityArrayData.get(i);
 
-            Activity a = new Activity(activity_list, activity_jobj, parlPanel,this);
-            activity_list.put((String)activity_jobj.get("name"),a);
-            a.setOverbearing(true);
-            jpan.add(a);
+
+
+                Activity a = new Activity(activity_list, activity_jobj, parlPanel, this);
+                activity_list.put((String) activity_jobj.get("name"), a);
+                a.setOverbearing(true);
+                jpan.add(a);
+
         }
 
         revalidate();       // 무효화 선언된 화면을 알려줌
@@ -466,7 +493,7 @@ public class storyBoard extends JPanel {
             repaint.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    drawActivity_temp();
+                    drawActivity();
                     repaint_window();
                 }
             });
@@ -523,7 +550,7 @@ public class storyBoard extends JPanel {
     public void setRootJObject(){
         String jsonString = jobjRoot.toJSONString();
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(Constant.FILE_OUT));
+            BufferedWriter out = new BufferedWriter(new FileWriter(Constant.FILE_ROUTE));
             out.write(jsonString);
             out.close();
         }

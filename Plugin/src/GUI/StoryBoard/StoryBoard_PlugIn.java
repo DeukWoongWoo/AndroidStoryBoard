@@ -67,12 +67,10 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
         xmlToJson.make();
         centerPanel = new storyBoard();
         northPanel = new menuPanel();
-        eastPanel = new componetTreePanel();
         totalPanel.setLayout(new BorderLayout());
 
 
         totalPanel.add(centerPanel, "Center");
         totalPanel.add(northPanel, "North");
-        totalPanel.add(eastPanel, "East");
     }
 }

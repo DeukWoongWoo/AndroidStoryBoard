@@ -20,10 +20,10 @@ public interface Constant  {
     int imageVIewWidth =200;
     int imageViewHeight = 200;
 
-     String FILE_ROUTE ="C:/Users/우철/Documents/AndroidStoryBoard/Plugin/우철이 라이브러리 포함된것.txt";
+     String FILE_ROUTE ="C:/Users/우철/Documents/AndroidStoryBoard/Plugin/hi.txt";
      String IMAGE_ROUTE ="C:\\Users\\우철\\Pictures\\Screenshots/aaa.jpg";
      String XML_ROUTE = "C:/Users/우철/Pictures/Screenshots";
-     String FILE_OUT = "C:/Users/우철/Pictures/Screenshots/jsonfile.txt";
+ //    String FILE_OUT = "C:/Users/우철/Pictures/Screenshots/jsonfile.txt";
 
     int BUTTON = 4;
     int RADIOBUTTON = 5;

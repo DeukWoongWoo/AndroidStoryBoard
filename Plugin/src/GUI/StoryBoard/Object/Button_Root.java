@@ -1,6 +1,5 @@
 package GUI.StoryBoard.Object;
 
-import Analysis.RedoUndo.CodeBuilder.Type;
 import Analysis.RedoUndo.CommandManager;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
@@ -120,6 +119,7 @@ public class Button_Root extends ObjectCustom {
         objectList =list;
         checkkey=list;
 
+
         if(objectJObject.containsKey("next")){
             JSONObject temp = (JSONObject)objectJObject.get("next");
             nextActivitylist.add(temp.get("toactivity"));
@@ -203,7 +203,7 @@ public class Button_Root extends ObjectCustom {
         objectList =list;
         checkkey=list;
         activityList=actList;
-        this.activityName=ActivitName;
+        this.XmlName =ActivitName;
         getStroyBoard(stroy);
 
 
@@ -466,6 +466,9 @@ public class Button_Root extends ObjectCustom {
                 setting_Id_Text(id_field.getText(), name_field.getText());
                 objectJObject.put("name", getId() );
                 attributeObject.put("text", getText());
+
+                fixObject(1);
+
                 dispose();
             }
         }
@@ -509,16 +512,15 @@ public class Button_Root extends ObjectCustom {
                 public void actionPerformed(ActionEvent e) {
                     if(combo.getSelectedItem().equals("NONE")){
                         objectJObject.remove("next");
-
-
+                        fixObject(1);
 
                     }
                     else
                     {
                         JSONObject tempObject= new JSONObject();
-                        tempObject.put("fromactivity", activityName);
+                        tempObject.put("fromxml", XmlName);
                         tempObject.put("toactivity", combo.getSelectedItem());
-
+                        fixObject(1);
                         CommandManager commandManager = CommandManager.getInstance();
                     }
 
@@ -616,12 +618,15 @@ public class Button_Root extends ObjectCustom {
                 public void actionPerformed(ActionEvent e) {
                     if(checklibray.getSelectedItem().equals("NONE")){
                         objectJObject.remove("library");
+                        fixObject(1);
                     }
                     else
                     {
                         objectJObject.put("library", checklibray.getSelectedItem());
+                        fixObject(1);
                     }
                     sendLibraryData((String)objectJObject.get("library"));
+
                     dispose();
                 }
             });
@@ -654,8 +659,8 @@ public class Button_Root extends ObjectCustom {
         String id_, activity_;
 
         id_=getId();
-        activity_=activityName;
+        activity_= XmlName;
 
-        System.out.println("id :"+id_+"  activity : "+activityName + " library :" + library);
+        System.out.println("id :"+id_+"  activity : "+ XmlName + " library :" + library);
     }
 }

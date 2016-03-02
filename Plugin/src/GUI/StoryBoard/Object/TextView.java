@@ -89,7 +89,7 @@ public class TextView extends ObjectCustom {
         objectList = list;
         checkkey = list;
         activityList = actList;
-        this.activityName = ActivitName;
+        this.XmlName = ActivitName;
 
         if (objectJObject.containsKey("attribute")) {
 
@@ -293,6 +293,7 @@ public class TextView extends ObjectCustom {
                 setting_Id_Text(id_field.getText(), name_field.getText());
                 objectJObject.put("name", getId() );
                 objectJObject.put("text", getText());
+                fixObject(1);
                 dispose();
             }
         }

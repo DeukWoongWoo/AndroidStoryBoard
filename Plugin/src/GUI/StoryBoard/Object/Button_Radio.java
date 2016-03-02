@@ -188,9 +188,6 @@ public class Button_Radio extends Button_Root {
         @Override
         public void paint(Graphics g) {
             super.paint(g);
-            System.out.println(img);
-
-            System.out.println(g.drawImage(img, 0, 0, null));
             g.drawImage(img, 0, 0, 50, 50, null);
         }
 

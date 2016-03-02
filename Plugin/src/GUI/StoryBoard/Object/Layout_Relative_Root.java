@@ -68,6 +68,8 @@ public class Layout_Relative_Root extends Layout_Relative {
         this.setBackground(Color.white);
         this.setOpaque(true);
     }
+
+
     public Layout_Relative_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy) {
         super(list, obj,pan,nextlist, actList,stroy);
 

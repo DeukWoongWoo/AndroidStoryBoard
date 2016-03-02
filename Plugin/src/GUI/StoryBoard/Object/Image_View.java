@@ -10,13 +10,11 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Created by 우철 on 2016-02-29.
@@ -99,7 +97,7 @@ public class Image_View extends ObjectCustom {
         objectList = list;
         checkkey = list;
         activityList = actList;
-        this.activityName = ActivitName;
+        this.XmlName = ActivitName;
 
         getStroyBoard(stroy);
 
@@ -295,6 +293,7 @@ public class Image_View extends ObjectCustom {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     result();
+                    fixObject(1);
                 }
             });
 
@@ -308,6 +307,7 @@ public class Image_View extends ObjectCustom {
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                         result();
+                        fixObject(1);
                     }
                 }
 

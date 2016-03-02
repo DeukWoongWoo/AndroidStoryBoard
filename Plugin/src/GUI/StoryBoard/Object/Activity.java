@@ -20,9 +20,12 @@ import java.util.Iterator;
  */
 public class Activity extends JPanel {
     private String id;
+    String Xmlname;
     private int activity_width, activity_height;
     private Point activity_position;
     private String type = "activity";
+
+    String activityname;
     JLabel nameLabel = new JLabel();
     JSONObject activityObject;
     HashMap<String, Activity> activitylist;
@@ -147,19 +150,19 @@ public class Activity extends JPanel {
 
 
         name =(String) activityObject.get("name");
-        height=(long) activityObject.get("height");
-        width=(long) activityObject.get("width");
+        height=(long) activityObject.get("height")/2;
+        width=(long) activityObject.get("width")/2;
         x=(long) activityObject.get("x");
         y=(long) activityObject.get("y");
 
         //--------- 변수 값 지정---------------
         setId(name);
         setActivity_position(new Point((int)x, (int)y));
-        setActivity_height((int)height+(int)height/10);
+        setActivity_height(((int)height+(int)height/10));
         setActivity_width((int)width);
 
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height+(int)height/10);
+        this.setSize(((int)width), ((int)height+(int)height/10)/2);
         this.setLocation((int)x, (int)y);
         this.setBorder(new LineBorder(Color.black));
         this.setLayout(null);
@@ -186,8 +189,8 @@ public class Activity extends JPanel {
 
 
         name =(String) activityObject.get("name");
-        height=(long) activityObject.get("height");
-        width=(long) activityObject.get("width");
+        height=(long) activityObject.get("height")/2;
+        width=(long) activityObject.get("width")/2;
         x=(long) activityObject.get("x");
         y=(long) activityObject.get("y");
 
@@ -226,8 +229,8 @@ public class Activity extends JPanel {
 
 
         name =(String) activityObject.get("name");
-        height=(long) activityObject.get("height");
-        width=(long) activityObject.get("width");
+        height=(long) activityObject.get("height")/2;
+        width=(long) activityObject.get("width")/2;
         x=(long) activityObject.get("x");
         y=(long) activityObject.get("y");
 
@@ -245,6 +248,47 @@ public class Activity extends JPanel {
         this.setBackground(Color.black);
 
         nameLabel.setText(getId());
+        nameLabel.setLocation((int)width/10,0);
+        nameLabel.setSize(getActivity_width()-(int)width/10, getActivity_height()/10);
+        nameLabel.setForeground(Color.white);
+        nameLabel.setFont(new Font("Serif", Font.PLAIN, getActivity_height()/15 ));
+        add(nameLabel);
+
+
+        makeAllObject(activityObject);
+
+    }
+    public Activity(HashMap<String, Activity> list , JSONObject obj, palettePanel pan, storyBoard stroy, String activityname){
+        long width, height, x, y ;
+
+        panel=pan;
+        activityObject =obj;
+        activitylist =list;
+        getStroyBoard(stroy);
+        addDragListeners();
+
+        this.activityname =activityname;
+
+        Xmlname =(String) activityObject.get("name");
+        height=(long) activityObject.get("height")/2;
+        width=(long) activityObject.get("width")/2;
+        x=(long) activityObject.get("x");
+        y=(long) activityObject.get("y");
+
+        //--------- 변수 값 지정---------------
+        setId(activityname);
+        setActivity_position(new Point((int)x, (int)y));
+        setActivity_height((int)height+(int)height/10);
+        setActivity_width((int)width);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height+(int)height/10);
+        this.setLocation((int)x, (int)y);
+        this.setBorder(new LineBorder(Color.black));
+        this.setLayout(null);
+        this.setBackground(Color.black);
+
+        nameLabel.setText(this.activityname);
         nameLabel.setLocation((int)width/10,0);
         nameLabel.setSize(getActivity_width()-(int)width/10, getActivity_height()/10);
         nameLabel.setForeground(Color.white);
@@ -453,6 +497,7 @@ public class Activity extends JPanel {
 
                 activityObject.put("x", (long)getActivity_position().x);
                 activityObject.put("y", (long)getActivity_position().y);
+                storyboard.setRootJObject();
             }
 
             @Override
@@ -476,13 +521,13 @@ public class Activity extends JPanel {
     public ObjectCustom createObjectCusthom(String type , JSONObject jobj) {
 
         if(type.equals("linear layout")){
-            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel, nextActivitylist, activitylist,storyboard,getId());
+            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel, nextActivitylist, activitylist,storyboard, Xmlname);
 
             return linear;
         }
         else if(type.equals("RelativeLayout")){
 
-            Layout_Relative_Root relative = new Layout_Relative_Root(objectList,jobj, panel, nextActivitylist, activitylist ,storyboard,getId());
+            Layout_Relative_Root relative = new Layout_Relative_Root(objectList,jobj, panel, nextActivitylist, activitylist ,storyboard, Xmlname);
 
             return relative;
         }

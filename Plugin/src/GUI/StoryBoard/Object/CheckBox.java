@@ -3,7 +3,6 @@ package GUI.StoryBoard.Object;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
-import sun.java2d.pipe.DrawImage;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -11,7 +10,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Created by 우철 on 2016-03-01.
@@ -83,7 +81,7 @@ public class CheckBox extends ObjectCustom {
         objectList = list;
         checkkey = list;
         activityList = actList;
-        this.activityName = ActivitName;
+        this.XmlName = ActivitName;
 
 
         getStroyBoard(stroy);
@@ -306,7 +304,9 @@ public class CheckBox extends ObjectCustom {
             else {
                 setting_Id_Text(id_field.getText(), name_field.getText());
                 objectJObject.put("name", getId() );
-                objectJObject.put("text", getText());
+                attributeObject.put("text", getText());
+
+                fixObject(1);
                 dispose();
             }
         }

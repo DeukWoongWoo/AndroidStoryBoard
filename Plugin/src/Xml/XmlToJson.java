@@ -73,7 +73,7 @@ public class XmlToJson {
         }
 //        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
        // makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
-         makeFile(makePluginJsonObject(), Constant.FILE_OUT);
+         makeFile(makePluginJsonObject(), Constant.FILE_ROUTE);
 
     }
 

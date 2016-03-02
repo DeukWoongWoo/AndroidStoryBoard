@@ -116,6 +116,10 @@ public class JavaDTO {
         return implementsValue;
     }
 
+    public NextActivityDTO getNextActivity(int index){
+        return nextActivitys.get(index);
+    }
+
     public ArrayList<NextActivityDTO> getNextActivitys(){
         return nextActivitys;
     }

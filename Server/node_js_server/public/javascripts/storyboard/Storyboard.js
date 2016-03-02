@@ -21,14 +21,14 @@ function Storyboard() {
     }
 
     this.addBackBoard = function(){
-        document.getElementById(target.replace(/\#/g,'')).innerHTML = "<rect id='storyboard-background' x='-5000' y='-5000' width='10000' height='10000' style='fill: white; stroke: white;  stroke-width: 100px;' onmousedown='startDrag(event)'/>";
+        document.getElementById(target.replace(/\#/g,'')).innerHTML = "<rect id='storyboard-background' x='-50000' y='-50000' width='100000' height='100000' style='fill: white; stroke: white;  stroke-width: 100px;' onmousedown='startDrag(event)'/>";
     }
 
     this.addActivity = function () {
         var num = numOfActivities;
         activities[num] = new Activity();
         //768*1280
-        activities[num].width(768).height(1280);
+        activities[num].width(768*2).height(1280*2);
         activities[num].create(target);
         numOfActivities++;
 
@@ -56,17 +56,20 @@ function Storyboard() {
     this.drawActivityObject = function () {
         for (var i in storyboardData.activity) {
             var activityData = storyboardData.activity[i];
-            var activity = this.addActivity().activityName(activityData.name).x(activityData.x).y(activityData.y).update();
+            var activity = this.addActivity().activityName(activityData.name).x(activityData.x*2).y(activityData.y*2).update();
                 //.width(activityData.width).height(activityData.height).update();
             for (var j in storyboardData.activity[i].object) {
                 var objectData = storyboardData.activity[i].object[j];
-                if(!isDefined(objectData.color))
-                    objectData.color = 'grey';
-                var object = activity.addObject().type(objectData.type).name(objectData.name)
-                    .activityName(activityData.name).width(objectData.width).height(objectData.height)
-                    .x(objectData.x).y(objectData.y).color(objectData.color);
+                if(!isDefined(objectData.color)){
+                    if(objectData.type == "Button")
+                        objectData.color = 'grey';
+                    else objectData.color = 'none';
+                }
 
-                //console.log(objectData.image);
+                var object = activity.addObject().type(objectData.type).name(objectData.name)
+                    .activityName(activityData.name).width(objectData.width*2).height(objectData.height*2)
+                    .x(objectData.x*2).y(objectData.y*2).color(objectData.color);
+
                 if(isDefined(objectData.image)){
                     object.imageRoute('/image/' + userId + '/' +  appName + '/' );
                     object.setImage(objectData.image);
@@ -75,7 +78,7 @@ function Storyboard() {
 
                 if(isDefined(objectData.text)){
                     object.textColor(objectData.textColor ? objectData.textColor : 'black');
-                    object.textSize(objectData.textSize ? objectData.textSize : 5);
+                    object.textSize(objectData.textSize ? objectData.textSize*2 : 5*2);
                     object.setText(objectData.text);
                 }else
                     object.setText(null);

@@ -1,8 +1,9 @@
 document.write("<script src='javascripts/storyboard/ObjectType/Button.js'></script>");
 document.write("<script src='javascripts/storyboard/ObjectType/CheckBox.js'></script>");
 document.write("<script src='javascripts/storyboard/ObjectType/RadioButton.js'></script>");
-document.write("<script src='javascripts/storyboard/ObjectType/Text.js'></script>");
+document.write("<script src='javascripts/storyboard/ObjectType/TextView.js'></script>");
 document.write("<script src='javascripts/storyboard/ObjectType/Image.js'></script>");
+document.write("<script src='javascripts/storyboard/ObjectType/TextEdit.js'></script>");
 
 function EObject() {
     var text;
@@ -32,13 +33,13 @@ function EObject() {
             type = new CheckBox();
             return this;
         } else if (objectType == 'TextView') {
-            type = new Text();
+            type = new TextView();
             return this;
         }else if (objectType == 'ImageView') {
             type = new Image();
             return this;
         }else if(objectType == 'TextEdit'){
-            type = new Image();
+            type = new TextEdit();
             return this;
         }
         else return type;

@@ -11,6 +11,8 @@ import java.util.List;
 
 public class Component {
 
+    public String nextActivity=null;
+    public boolean isNext=false;
     public String library="null";
     public String componentId=null;
     private ArrayList<Attribution> Attributes ;

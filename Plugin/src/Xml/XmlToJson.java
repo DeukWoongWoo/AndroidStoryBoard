@@ -313,6 +313,8 @@ public class XmlToJson {
                             break;
                         }
                     }
+                    if(component.isNext)
+                        jsonObject.put("next",component.nextActivity);
                     jsonObjectArray.add(jsonObject);
                 }
             }
@@ -445,23 +447,36 @@ public class XmlToJson {
                     leftPoint=parentLeftPoint;
                     if(component.isMarginLeft)
                         leftPoint+=component.marginLeft;
-                }
-
-                else
+                } else {
+                    if(component.rightId.equals("Center")){
+                    int midlePoint=(parentRightPoint+parentLeftPoint)/2;
+                    leftPoint = midlePoint-stdWidth/2;
+                    rightPoint=midlePoint+stdWidth/2;
+                }else
                     leftPoint = rightPoint-stdWidth;
+
+                }
             }else{//left에 물린경우
                 if(component.tagName.equals("RelativeLayout")){
                     rightPoint=parentRightPoint;
+                    if(component.leftId.equals("Center"))
+                        leftPoint=parentLeftPoint;
                     if(component.isMarginRight)
                         rightPoint-=component.marginRight;
                 }
-
-                else
-                    rightPoint = leftPoint+stdWidth;
+                else{
+                    if(component.leftId.equals("Center")){
+                        int middlePoint=(parentRightPoint+parentLeftPoint)/2;
+                        leftPoint = middlePoint-stdWidth/2;
+                        rightPoint=middlePoint+stdWidth/2;
+                    }else
+                        rightPoint = leftPoint+stdWidth;
+                }
             }
         }
         component.leftPoint=leftPoint;
         component.rightPoint=rightPoint;
+        component.parentLeftPoint=parentLeftPoint;
         if(component.tagName.equals("RelativeLayout")) {
             stdWidth = rightPoint-leftPoint;
         }
@@ -543,10 +558,17 @@ public class XmlToJson {
             }else{//top에 물린경우
                 if(component.tagName.equals("RelativeLayout")){
                     bottomPoint=parentBottomPoint;
+                    if(component.topId.equals("Center"))
+                        topPoint = parentTopPoint;
                     if(component.isMarginBottom)
                         bottomPoint-=component.marginBottom;
                 }
                 else
+                if(component.topId.equals("Center")){
+                    int middlePoint=(parentTopPoint+parentBottomPoint)/2;
+                    topPoint = middlePoint-stdHeight/2;
+                    bottomPoint=middlePoint+stdHeight/2;
+                }else
                     bottomPoint = topPoint+stdHeight;
             }
         }

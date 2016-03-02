@@ -105,8 +105,8 @@ public class Image_View extends ObjectCustom {
 
 
         if (objectJObject.containsKey("src")) {
-//            ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
-//            xmlPath = projectAnalysis. findDrawablePath();
+            ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
+            xmlPath = projectAnalysis. findDrawablePath();
             pathStirng=xmlPath+"/"+objectJObject.get("src")+".png";
             centerPanel =new ImagePanel(pathStirng);
 
@@ -223,8 +223,8 @@ public class Image_View extends ObjectCustom {
             this.getRootPane().setBorder(new LineBorder(Color.black));  // JFrame 테두리 설정
 
 
-//           ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null, null);
-//           xmlPath = projectAnalysis. findDrawablePath();
+           ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
+           xmlPath = projectAnalysis. findDrawablePath();
 
             openbutton.setMargin(new Insets(0,0,0,0));
             okbutton.setMargin(new Insets(0, 0, 0, 0));

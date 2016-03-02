@@ -1,5 +1,7 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
+import Analysis.RedoUndo.CommandManager;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
@@ -507,13 +509,17 @@ public class Button_Root extends ObjectCustom {
                 public void actionPerformed(ActionEvent e) {
                     if(combo.getSelectedItem().equals("NONE")){
                         objectJObject.remove("next");
+
+
+
                     }
                     else
                     {
                         JSONObject tempObject= new JSONObject();
                         tempObject.put("fromactivity", activityName);
                         tempObject.put("toactivity", combo.getSelectedItem());
-                       // objectJObject.put("next", combo.getSelectedItem());
+
+                        CommandManager commandManager = CommandManager.getInstance();
                     }
 
                     dispose();

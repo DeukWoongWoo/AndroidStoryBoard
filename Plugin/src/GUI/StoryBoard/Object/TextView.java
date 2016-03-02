@@ -18,7 +18,7 @@ import java.util.Iterator;
 public class TextView extends ObjectCustom {
     private String text = "textView";
     protected HashMap<String, ObjectCustom> checkkey;
-    JLabel content = new JLabel();
+    JLabel content = new JLabel("",SwingConstants.CENTER);
 
     public TextView() {
         //----------창 구성--------------------
@@ -26,6 +26,7 @@ public class TextView extends ObjectCustom {
         this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
+        this.setOpaque(false);
     }
     public TextView(String name_ , HashMap<String,  ObjectCustom> list, JSONObject obj, Point p) {
         long width, height, x, y ;
@@ -33,8 +34,8 @@ public class TextView extends ObjectCustom {
 
         System.out.println(obj);
         name = "TextView"+ name_;
-        width = Constant.imageVIewWidth;
-        height = Constant.imageViewHeight;
+        width = Constant.buttonWidth;
+        height = Constant.buttonHeight;
         x = p.x;
         y = p.y;
         color = "gray";
@@ -48,9 +49,10 @@ public class TextView extends ObjectCustom {
 
         this.setSize((int)width, (int)height);
         this.setLocation((int)x, (int)y);
-        this.setLayout(null);
+        this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.WHITE);
+        this.setOpaque(false);
 
         obj.put("name",getId());
         obj.put("x",x);
@@ -77,6 +79,7 @@ public class TextView extends ObjectCustom {
         repaint();
     }
     public TextView(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
+        super(list,obj,nextlist,actList,stroy,ActivitName);
         long width, height, x, y;
         String name;
 
@@ -116,7 +119,7 @@ public class TextView extends ObjectCustom {
         this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
-
+        this.setOpaque(false);
         //---------메소드----------------------
         addMouseListener();
         add(content);
@@ -156,10 +159,10 @@ public class TextView extends ObjectCustom {
 
     }
 
+
     public String getText() {
         return text;
     }
-
     public void setText(String text) {
         this.text = text;
     }

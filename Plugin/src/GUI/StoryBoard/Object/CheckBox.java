@@ -3,6 +3,7 @@ package GUI.StoryBoard.Object;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
+import sun.java2d.pipe.DrawImage;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -16,9 +17,10 @@ import java.util.Iterator;
  * Created by 우철 on 2016-03-01.
  */
 public class CheckBox extends ObjectCustom {
-    private String text = "checkBox";
     protected HashMap<String, ObjectCustom> checkkey;
-    JLabel content = new JLabel();
+    JLabel content = new JLabel("",SwingConstants.LEFT);
+    Image img;
+    ImagePanel1 panel1 ;
 
     public CheckBox() {
         //----------창 구성--------------------
@@ -26,15 +28,16 @@ public class CheckBox extends ObjectCustom {
         this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
+        this.setOpaque(false);
     }
     public CheckBox(String name_ , HashMap<String,  ObjectCustom> list, JSONObject obj, Point p) {
         long width, height, x, y ;
         String name, color;
-
+        panel1 = new ImagePanel1("/icon/radio.png");
         System.out.println(obj);
-        name = "CheckBox"+ name_;
-        width = Constant.imageVIewWidth;
-        height = Constant.imageViewHeight;
+        name = "@+id/"+"CheckBox"+ name_;
+        width = Constant.buttonWidth;
+        height = Constant.buttonHeight;
         x = p.x;
         y = p.y;
         color = "gray";
@@ -48,18 +51,14 @@ public class CheckBox extends ObjectCustom {
 
         this.setSize((int)width, (int)height);
         this.setLocation((int)x, (int)y);
-        this.setLayout(null);
-        this.setVisible(true);
-        this.setBackground(Color.WHITE);
 
         obj.put("name",getId());
         obj.put("x",x);
         obj.put("y",y);
         obj.put("width",width);
         obj.put("height",height);
-        obj.put("color",color);
         obj.put("type","CheckBox");
-        obj.put("text",getText());
+
 
         content.setText(getText());
         setId(name);
@@ -70,17 +69,15 @@ public class CheckBox extends ObjectCustom {
         this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
-
+        this.setOpaque(false);
         addMouseListener();
         add(content);
-
+        add(panel1, BorderLayout.WEST);
         repaint();
     }
     public CheckBox(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
-        long width, height, x, y;
-        String name;
-
-
+        super(list,obj,nextlist,actList,stroy,ActivitName);
+        panel1 = new ImagePanel1("/icon/radio.png");
         nextActivitylist = nextlist;
         objectJObject = obj;
         objectList = list;
@@ -88,40 +85,80 @@ public class CheckBox extends ObjectCustom {
         activityList = actList;
         this.activityName = ActivitName;
 
-        if (objectJObject.containsKey("attribute")) {
-
-        }
 
         getStroyBoard(stroy);
-        name = (String) objectJObject.get("name");
-        height = (long) objectJObject.get("height");
-        width = (long) objectJObject.get("width");
-        x = (long) objectJObject.get("x");
-        y = (long) objectJObject.get("y");
-
-        if (objectJObject.containsKey("next")) {
-            nextActivitylist.add(objectJObject.get("next"));
-        }
-
-        content.setText(getText());
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int) x, (int) y));
-        setObject_height((int) height);
-        setObject_width((int) width);
-
         //----------창 구성--------------------
-        this.setSize((int) width, (int) height);
-        this.setLocation((int) x, (int) y);
+        this.setSize((int) getObject_width(), (int) getObject_height());
+        this.setLocation((int) isPosition().x, (int) isPosition().y);
         this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setBackground(Color.LIGHT_GRAY);
-
+        this.setOpaque(false);
+        init_text();
         //---------메소드----------------------
         addMouseListener();
-        add(content);
+        add(content, BorderLayout.CENTER);
+        add(panel1, BorderLayout.WEST);
+    }
+    public CheckBox(Constant.ObjectNew objectNew) {
+        long width, height, x, y ;
+        String name, color;
+
+        panel1 = new ImagePanel1("/icon/radio.png");
+        name = "@+id/"+"CheckBox"+ objectNew.name;
+        setText("New CheckBox");
+
+
+        parentWidth=objectNew.parentWidth;
+        parentHeight=objectNew.parentHeight;
+
+
+        width = Constant.buttonWidth;
+        height = Constant.buttonHeight;
+
+
+        x = objectNew.mousep.x;
+        y = objectNew.mousep.y;
+
+        objectJObject=objectNew.jObject;
+        checkkey=objectNew.objectList;
+        setObjectName(objectNew.name);
+
+        setId("@+id/"+"checkbox"+objectNew.name);
+
+        this.setBackground(Color.LIGHT_GRAY);
+        this.setLayout(new BorderLayout());
+        this.setSize((int)width,(int)height);
+        this.setOpaque(false);
+        setPosition(objectNew.mousep);
+
+        objectNew.jObject.put("x",(long)isPosition().x);
+        objectNew.jObject.put("y",(long)isPosition().y);
+        objectNew.jObject.put("name",getObjectName());
+        objectNew.jObject.put("width",width);
+        objectNew.jObject.put("height",height);
+        objectNew.jObject.put("type","CheckBox");
+
+        setLocation(isPosition().x, isPosition().y);
+        init_text();
+
+
+        checkkey=objectNew.objectList;
+
+
+
+
+        add(content, BorderLayout.CENTER);
+        add(panel1, BorderLayout.WEST);
+
+        JSONObject attribute = setAttribue(objectNew.jObject);
+        attribute.put("text",getText());
+
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();
 
     }
+
     private void addMouseListener() {
 
         addMouseListener(new MouseListener() {
@@ -154,14 +191,6 @@ public class CheckBox extends ObjectCustom {
 
         });
 
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     class Change_Window extends JFrame {
@@ -197,23 +226,11 @@ public class CheckBox extends ObjectCustom {
             id_field.setLocation(100, 60);
             okbutton.setLocation(200, 100);
 
-//            name_label.setLocation(scale_size, scale_size);
-//            id_label.setLocation(scale_size, scale_size*6);
-//            name_field.setLocation(scale_size*10, scale_size);
-//            id_field.setLocation(scale_size*10, scale_size*6);
-//            okbutton.setLocation(scale_size*20, scale_size*10);
-
             name_label.setSize(100, 40);
             id_label.setSize(100, 40);
             name_field.setSize(200, 40);
             id_field.setSize(200, 40);
             okbutton.setSize(100, 40);
-
-//            name_label.setSize(scale_size*10, scale_size*4);
-//            id_label.setSize(scale_size*10, scale_size*4);
-//            name_field.setSize(scale_size*20, scale_size*4);
-//            id_field.setSize(scale_size*20, scale_size*4);
-//            okbutton.setSize(scale_size*10, scale_size*4);
 
             this.add(name_label);
             this.add(id_label);
@@ -282,7 +299,7 @@ public class CheckBox extends ObjectCustom {
         // 확인 키
         public void result()
         {
-            if(checkButtonId(id_field.getText())==true)
+            if(checkObjectId(id_field.getText())==true)
             {
                 JOptionPane.showMessageDialog(null, id_field.getText()+"는 이미 중복되어있는 ID 값입니다.");
             }
@@ -301,25 +318,12 @@ public class CheckBox extends ObjectCustom {
         setName(id_);
         repaint();
     }
-    //-------체크박스의 아이디 중복 확인--------
-    public boolean checkButtonId(String id_) {
-        String temp = this.getId();
-        boolean checkId = false;
-        Iterator<String> buttonKeyList = checkkey.keySet().iterator();
-
-        while(buttonKeyList.hasNext()) {
-            String key = (String) buttonKeyList.next();
-            Object o = checkkey.get(key);
-            ObjectCustom b = (ObjectCustom) o;
-            if(b.getId().equals(id_)){
-                if(temp.equals(id_))
-                    continue;
-
-                checkId = true;
-            }
-
-        }
-
-        return checkId;
+    public void init_text()
+    {
+        content.setText(getText());
+        content.setVisible(true);
+        content.setLocation(getObject_width()/10,0);
+        content.setSize(getObject_width()-getObject_width()/10, getObject_height());
+        content.setForeground(Color.black);
     }
 }

@@ -10,7 +10,9 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -193,7 +195,7 @@ public class storyBoard extends JPanel {
     // JSON 파일을 받은 것을 전부 그려준다.
     public void drawActivity() {
         removeAllActivity();
-        jobjRoot = parserJObject(Constant.FILE_ROUTE);
+        jobjRoot = parserJObject(Constant.FILE_OUT);
 
         setAppName((String)jobjRoot.get("appName"));
         activityArrayData = (JSONArray)jobjRoot.get("activity");
@@ -514,5 +516,21 @@ public class storyBoard extends JPanel {
 
     }
 
+    public void getRootObject(){
+        System.out.println(jobjRoot);
+    }
+
+    public void setRootJObject(){
+        String jsonString = jobjRoot.toJSONString();
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter(Constant.FILE_OUT));
+            out.write(jsonString);
+            out.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println(e);
+        }
+    }
 
 }

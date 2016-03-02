@@ -54,6 +54,17 @@ public class JsonToXml {
         }
         component.setAttributeCount();
     }
+    private void JsonToNext(JSONObject jsonObject,String fromActivity,String toActivity){
+        Iterator iterator = jsonObject.entrySet().iterator();
+        while(iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            String key = (String) entry.getKey();
+            if(key.equals("fromactivity"))
+                fromActivity = (String) entry.getValue();
+            else if(key.equals("toactivity"))
+                toActivity = (String)entry.getValue();
+        }
+    }
     private void JsonToObject(JSONArray jsonArray, ArrayList <Component> componentArrayList){
         JSONObject jsonObject;
         JSONArray jsonLayout = null;
@@ -85,6 +96,16 @@ public class JsonToXml {
                         component.library="event";
                     else if(entry.getValue().equals("error"))
                         component.library="error";
+                }else if(key.equals("next")){
+                    String fromActivity = null;
+                    String toActivity=null;
+
+                    JSONObject jsonNext= (JSONObject) entry.getValue();
+                    JsonToNext(jsonNext,fromActivity,toActivity);
+
+                    component.isNext=true;
+                    component.nextActivity=toActivity;
+                    //// TODO: 2016-03-02 JAVADTO에 삽입할곳
                 }
             }
             componentArrayList.add(component);

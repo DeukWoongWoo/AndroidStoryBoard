@@ -5,6 +5,7 @@ import Analysis.Constant.SharedPreference;
 import Analysis.Main.ProjectAnalysis;
 import Analysis.RedoUndo.CodeDriver;
 import GUI.StoryBoard.UI.*;
+import Xml.XmlToJson;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -32,14 +33,7 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
     public StoryBoard_PlugIn() throws IOException {
         System.out.println("StoryBoard_Plugin...");
         totalPanel = new JPanel();
-        centerPanel = new storyBoard();
-        northPanel = new menuPanel();
-        eastPanel = new componetTreePanel();
-        totalPanel.setLayout(new BorderLayout());
 
-        totalPanel.add(centerPanel, "Center");
-        totalPanel.add(northPanel, "North");
-        totalPanel.add(eastPanel, "East");
 
     }
 
@@ -53,6 +47,11 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
         toolWindow.getContentManager().addContent(content);
 
         initProjectAnalysis(project);
+        try {
+            init();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initProjectAnalysis(Project project) {
@@ -63,4 +62,17 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
     }
 
 
+    public void init() throws IOException {
+        XmlToJson xmlToJson = new XmlToJson();
+        xmlToJson.make();
+        centerPanel = new storyBoard();
+        northPanel = new menuPanel();
+        eastPanel = new componetTreePanel();
+        totalPanel.setLayout(new BorderLayout());
+
+
+        totalPanel.add(centerPanel, "Center");
+        totalPanel.add(northPanel, "North");
+        totalPanel.add(eastPanel, "East");
+    }
 }

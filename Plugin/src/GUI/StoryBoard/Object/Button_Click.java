@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class Button_Click extends Button_Root {
 
-    JLabel content = new JLabel();
+    JLabel content = new JLabel("",SwingConstants.CENTER);
 
     // 버튼 생성을 위해서 필요한 값들
     public Button_Click(String name , HashMap<String, ObjectCustom> list, JSONObject obj) {
@@ -24,8 +24,8 @@ public class Button_Click extends Button_Root {
         setId("button"+name);
         checkkey=list;
         init_text();
-        obj.put("type", "button");
-        add(content);
+        obj.put("type", "Button");
+        add(content,BorderLayout.CENTER);
 
 
     }
@@ -44,10 +44,34 @@ public class Button_Click extends Button_Root {
         setLocation(isPosition().x, isPosition().y);
         checkkey=list;
         init_text();
-        obj.put("type", "button");
-        add(content);
+        obj.put("type", "Button");
+        add(content,"Center");
 
 
+    }
+    public Button_Click(Constant.ObjectNew objectNew) {
+
+        super(objectNew.name, objectNew.objectList, objectNew.jObject);
+
+        setText("NEW BUTTON");
+        setId("@+id/"+"button"+objectNew.name);
+
+        parentWidth=objectNew.parentWidth;
+        parentHeight=objectNew.parentHeight;
+
+        setPosition(objectNew.mousep);
+        objectNew.jObject.put("x",(long)isPosition().x);
+        objectNew.jObject.put("y",(long)isPosition().y);
+
+        setLocation(isPosition().x, isPosition().y);
+        checkkey=objectNew.objectList;
+        init_text();
+        objectNew.jObject.put("type", "Button");
+        add(content, BorderLayout.CENTER);
+
+
+        JSONObject attribute = setAttribue(objectNew.jObject);
+        attribute.put("text",getText());
     }
 
     // 버튼 json에서 받아와서 하는 것들
@@ -74,7 +98,8 @@ public class Button_Click extends Button_Root {
     public Button_Click(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actList,    storyBoard stroy, String ActivitName) {
         super(list, obj,nextlist, actList,stroy, ActivitName);
         init_text();
-        add(content);
+        setLayout(new BorderLayout());
+        add(content,BorderLayout.CENTER);
     }
 
 
@@ -93,7 +118,7 @@ public class Button_Click extends Button_Root {
         content.setVisible(true);
         content.setLocation(getObject_width()/10,0);
         content.setSize(getObject_width()-getObject_width()/10, getObject_height());
-        content.setFont(new Font("Serif", Font.PLAIN, getObject_height()/2 ));
+        content.setFont(new Font("Serif", Font.PLAIN, getObject_height()/5 ));
         content.setForeground(Color.black);
     }
 

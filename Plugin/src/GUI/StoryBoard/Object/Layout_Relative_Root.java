@@ -6,6 +6,7 @@ import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -27,8 +28,6 @@ public class Layout_Relative_Root extends Layout_Relative {
     }
     public Layout_Relative_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan) {
         super(list, obj,pan);
-
-        System.out.println(this);
         setPosition(new Point(0,0));
 
         setSize(getObject_width(),getObject_height());
@@ -43,7 +42,6 @@ public class Layout_Relative_Root extends Layout_Relative {
     public Layout_Relative_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist) {
         super(list, obj,pan,nextlist);
 
-        System.out.println(this);
         setPosition(new Point(0,0));
 
         setSize(getObject_width(),getObject_height());
@@ -58,7 +56,7 @@ public class Layout_Relative_Root extends Layout_Relative {
     public Layout_Relative_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList) {
         super(list, obj,pan,nextlist, actList);
 
-        System.out.println(this);
+
         setPosition(new Point(0,0));
 
         setSize(getObject_width(),getObject_height());
@@ -73,7 +71,7 @@ public class Layout_Relative_Root extends Layout_Relative {
     public Layout_Relative_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy) {
         super(list, obj,pan,nextlist, actList,stroy);
 
-        System.out.println(this);
+
         setPosition(new Point(0,0));
 
         setSize(getObject_width(),getObject_height());
@@ -89,7 +87,7 @@ public class Layout_Relative_Root extends Layout_Relative {
     ) {
         super(list, obj,pan,nextlist, actList,stroy,ActivitName);
 
-        System.out.println(this);
+
         setPosition(new Point(0,0));
 
         setSize(getObject_width(),getObject_height());
@@ -115,7 +113,14 @@ public class Layout_Relative_Root extends Layout_Relative {
 
     @Override
     public void addDragListeners() {
-
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+                parentHeight= getParent().getHeight();
+                parentWidth=getParent().getWidth();
+            }
+        });
     }
 
     @Override

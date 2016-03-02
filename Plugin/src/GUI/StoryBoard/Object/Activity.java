@@ -31,7 +31,10 @@ public class Activity extends JPanel {
     storyBoard storyboard;
     palettePanel panel;
 
-    private boolean draggable = true;
+//    UseLibraryParser  useLibraryParser = new UseLibraryParser();
+
+
+
     protected Point anchorPoint;
     protected Cursor draggingCursor = Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);
     protected boolean overbearing = false;
@@ -474,14 +477,12 @@ public class Activity extends JPanel {
 
         if(type.equals("linear layout")){
             Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel, nextActivitylist, activitylist,storyboard,getId());
-            System.out.println(getId());
 
             return linear;
         }
         else if(type.equals("RelativeLayout")){
 
             Layout_Relative_Root relative = new Layout_Relative_Root(objectList,jobj, panel, nextActivitylist, activitylist ,storyboard,getId());
-            System.out.println(getId());
 
             return relative;
         }
@@ -527,7 +528,6 @@ public class Activity extends JPanel {
                 public void actionPerformed(ActionEvent e) {
 
                     removeActivity_json();
-                    System.out.println("clicked destroy");
                     activityObject.clear();
 
                 }

@@ -5,6 +5,7 @@ import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Database.DtatTransferObject.JavaDTO;
 import Analysis.Database.DtatTransferObject.NextActivityDTO;
 import Analysis.Main.ProjectAnalysis;
+import GUI.StoryBoard.Constant;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.text.StringHash;
 import org.json.simple.JSONArray;
@@ -70,8 +71,10 @@ public class XmlToJson {
             addWebObject(xmlToJsonObject.getWebJson());
             addPluginObject(xmlToJsonObject.getPluginJson());
         }
-        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
-        makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
+//        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
+       // makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
+         makeFile(makePluginJsonObject(), Constant.FILE_OUT);
+
     }
 
     private XmlToJsonObject makeObject(String Filepath[]){
@@ -194,10 +197,10 @@ public class XmlToJson {
             for(int j=0;j<javaDTO.getXmls().size();j++){
                 if(javaDTO.getXmls().get(j).getXmlName().equals(changexmlName)) {
                     activityName = javaDTO.getName();
-                    /*ArrayList<NextActivityDTO> javaNextAct = javaDTO.getNextActivitys();
+                    ArrayList<NextActivityDTO> javaNextAct = javaDTO.getNextActivitys();
                     for(int k=0;k<javaNextAct.size();k++){
                         nextActivity.add(javaNextAct.get(k).getName());
-                    }*/
+                    }
 
                 }
             }
@@ -217,9 +220,16 @@ public class XmlToJson {
         jsonActivity.put("y","0");
         jsonActivity.put("width",768);
         jsonActivity.put("height",1280);
-        //for(int i=0;i<nextActivity.size();i++)
-            //jsonActivity.put("next",nextActivity.get(i));
 
+        if(nextActivity.size()==1)
+            jsonActivity.put("next",nextActivity.get(0));
+        else{
+            JSONArray jr = new JSONArray();
+            for(int i=0;i<nextActivity.size();i++){
+                jr.add(nextActivity.get(i));
+            }
+            jsonActivity.put("next",jr);
+        }
 
         jsonArrayObject = new JSONArray();
         for(int i=0;i<componentManager.size();i++){
@@ -303,6 +313,8 @@ public class XmlToJson {
                             break;
                         }
                     }
+                    if(component.isNext)
+                        jsonObject.put("next",component.nextActivity);
                     jsonObjectArray.add(jsonObject);
                 }
             }
@@ -435,23 +447,36 @@ public class XmlToJson {
                     leftPoint=parentLeftPoint;
                     if(component.isMarginLeft)
                         leftPoint+=component.marginLeft;
-                }
-
-                else
+                } else {
+                    if(component.rightId.equals("Center")){
+                    int midlePoint=(parentRightPoint+parentLeftPoint)/2;
+                    leftPoint = midlePoint-stdWidth/2;
+                    rightPoint=midlePoint+stdWidth/2;
+                }else
                     leftPoint = rightPoint-stdWidth;
+
+                }
             }else{//left에 물린경우
                 if(component.tagName.equals("RelativeLayout")){
                     rightPoint=parentRightPoint;
+                    if(component.leftId.equals("Center"))
+                        leftPoint=parentLeftPoint;
                     if(component.isMarginRight)
                         rightPoint-=component.marginRight;
                 }
-
-                else
-                    rightPoint = leftPoint+stdWidth;
+                else{
+                    if(component.leftId.equals("Center")){
+                        int middlePoint=(parentRightPoint+parentLeftPoint)/2;
+                        leftPoint = middlePoint-stdWidth/2;
+                        rightPoint=middlePoint+stdWidth/2;
+                    }else
+                        rightPoint = leftPoint+stdWidth;
+                }
             }
         }
         component.leftPoint=leftPoint;
         component.rightPoint=rightPoint;
+        component.parentLeftPoint=parentLeftPoint;
         if(component.tagName.equals("RelativeLayout")) {
             stdWidth = rightPoint-leftPoint;
         }
@@ -533,10 +558,17 @@ public class XmlToJson {
             }else{//top에 물린경우
                 if(component.tagName.equals("RelativeLayout")){
                     bottomPoint=parentBottomPoint;
+                    if(component.topId.equals("Center"))
+                        topPoint = parentTopPoint;
                     if(component.isMarginBottom)
                         bottomPoint-=component.marginBottom;
                 }
                 else
+                if(component.topId.equals("Center")){
+                    int middlePoint=(parentTopPoint+parentBottomPoint)/2;
+                    topPoint = middlePoint-stdHeight/2;
+                    bottomPoint=middlePoint+stdHeight/2;
+                }else
                     bottomPoint = topPoint+stdHeight;
             }
         }

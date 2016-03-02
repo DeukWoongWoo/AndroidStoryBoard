@@ -21,41 +21,28 @@ public class Layout_Root extends ObjectCustom {
     int radiobuttonNum=1;
     int linearlayoutNum=1;
     int imageViewNum=1;
-    palettePanel panel;
+    int textViewNum=1;
+    int checkBoxNum=1;
     Point mouse_p;
 
     private boolean isButton;
     private boolean isRadioButton;
     private boolean isImageView;
-
+    private boolean isTextView;
+    private boolean isCheckBok;
     private int x,y;
 
     public Layout_Root() {
 
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj) {
-        long width, height, x, y ;
-        String name;
-        JSONArray objectArray;
-
+        super();
         objectJObject=obj;
         objectList =list;
 
-        name =(String) objectJObject.get("name");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
@@ -63,28 +50,14 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan) {
-        long width, height, x, y ;
-        String name;
-        JSONArray objectArray;
+        super();
         panel = pan;
         objectJObject=obj;
         objectList =list;
 
-        name =(String) objectJObject.get("name");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
@@ -94,29 +67,16 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist) {
-        long width, height, x, y ;
-        String name;
+        super();
         JSONArray objectArray;
         panel = pan;
         objectJObject=obj;
         objectList =list;
         nextActivitylist = nextlist;
 
-        name =(String) objectJObject.get("name");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
@@ -126,30 +86,16 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList) {
-        long width, height, x, y ;
-        String name;
-        JSONArray objectArray;
+        super();
         panel = pan;
         objectJObject=obj;
         objectList =list;
         nextActivitylist = nextlist;
         activityList=actList;
 
-        name =(String) objectJObject.get("name");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
@@ -159,31 +105,16 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy) {
-        long width, height, x, y ;
-        String name;
-        JSONArray objectArray;
+        super();
         panel = pan;
         objectJObject=obj;
         objectList =list;
         nextActivitylist = nextlist;
         activityList=actList;
         getStroyBoard(stroy);
-
-        name =(String) objectJObject.get("name");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
-
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
@@ -193,10 +124,8 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
-        long width, height, x, y ;
+        super(list,obj,pan,nextlist,actList,stroy,ActivitName);
         this.activityName = ActivitName;
-        String name;
-        JSONArray objectArray;
         panel = pan;
         objectJObject=obj;
         objectList =list;
@@ -204,21 +133,11 @@ public class Layout_Root extends ObjectCustom {
         activityList=actList;
         getStroyBoard(stroy);
 
-        name =(String) objectJObject.get("name");
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
-
-        //--------- 변수 값 지정---------------
-        setId(name);
-        setPosition(new Point((int)x, (int)y));
-        setObject_height((int)height);
-        setObject_width((int)width);
 
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height);
-        this.setLocation((int)x, (int)y);
+        this.setSize((int)getObject_width(), (int)getObject_height());
+        this.setLocation((int)isPosition().x, (int)isPosition().y);
+
         this.setLayout(null);
         this.setVisible(true);
         this.setOpaque(false);
@@ -228,29 +147,6 @@ public class Layout_Root extends ObjectCustom {
         makeAllObject(objectJObject);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if(isButton){
-            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
-            revalidate();       // 무효화 선언된 화면을 알려줌
-            repaint();          // 다시 그려준다.
-
-        }
-        else if(isRadioButton){
-            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
-            revalidate();       // 무효화 선언된 화면을 알려줌
-            repaint();          // 다시 그려준다.
-
-        }
-        else if(isImageView){
-            g.drawRect(x,y,Constant.imageVIewWidth,Constant.imageViewHeight);
-            revalidate();       // 무효화 선언된 화면을 알려줌
-            repaint();          // 다시 그려준다.
-        }
-
-
-    }
 
     public Layout_Root(String name_, HashMap<String, ObjectCustom> list , JSONObject obj) {
         long width, height, x, y ;
@@ -288,10 +184,47 @@ public class Layout_Root extends ObjectCustom {
         obj.put("object", objarr );
 
         setId("layout"+name);
+
+
         objectJObject=obj;
         addMouseListner();
         repaint();
     }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if(isButton){
+            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();          // 다시 그려준다.
+
+        }
+        else if(isRadioButton){
+            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();          // 다시 그려준다.
+
+        }
+        else if(isImageView){
+            g.drawRect(x,y,Constant.imageVIewWidth,Constant.imageViewHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();          // 다시 그려준다.
+        }
+        else if(isTextView){
+            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();          // 다시 그려준다.
+        }
+        else if(isCheckBok){
+            g.drawRect(x,y,Constant.buttonWidth,Constant.buttonHeight);
+            revalidate();       // 무효화 선언된 화면을 알려줌
+            repaint();
+        }
+
+
+    }
+
     public ObjectCustom CreateObjectCustom(String type, JSONObject jobj){
         if(type.equals("linear layout")){
             Layout_Linear linear = new Layout_Linear(objectList, jobj, panel, nextActivitylist, activityList,  storyboard,activityName);
@@ -396,7 +329,14 @@ public class Layout_Root extends ObjectCustom {
         tempArray = (JSONArray)objectJObject.get("object");
         tempObj = new JSONObject();
 
-        Button_Click b = new Button_Click(""+buttonNum, objectList,tempObj, point);
+        Constant.ObjectNew sendfile = new Constant.ObjectNew();
+        sendfile.name=""+buttonNum;
+        sendfile.objectList=objectList;
+        sendfile.jObject=tempObj;
+        sendfile.mousep=point;
+        sendfile.parentHeight=getObject_height();
+        sendfile.parentWidth=getObject_width();
+        Button_Click b = new Button_Click(sendfile);
 
         tempArray.add(tempObj);
 
@@ -430,7 +370,15 @@ public class Layout_Root extends ObjectCustom {
         tempArray = (JSONArray)objectJObject.get("object");
         tempObj = new JSONObject();
 
-        Button_Radio b = new Button_Radio(""+radiobuttonNum, objectList,tempObj, point);
+        Constant.ObjectNew sendfile = new Constant.ObjectNew();
+        sendfile.name=""+radiobuttonNum;
+        sendfile.objectList=objectList;
+        sendfile.jObject=tempObj;
+        sendfile.mousep=point;
+        sendfile.parentHeight=getObject_height();
+        sendfile.parentWidth=getObject_width();
+
+        Button_Radio b = new Button_Radio(sendfile);
 
         tempArray.add(tempObj);
 
@@ -455,6 +403,46 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         imageViewNum++;
+    }
+    public void newTextView(Point point){
+        JSONArray tempArray;
+        JSONObject tempObj;
+        tempArray = (JSONArray)objectJObject.get("object");
+        tempObj = new JSONObject();
+
+        TextView t = new TextView(""+imageViewNum, objectList,tempObj, point);
+
+        tempArray.add(tempObj);
+
+        add(t);
+
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();          // 다시 그려준다.
+        textViewNum++;
+    }
+    public void newCheckBox(Point point){
+        JSONArray tempArray;
+        JSONObject tempObj;
+        tempArray = (JSONArray)objectJObject.get("object");
+        tempObj = new JSONObject();
+
+        Constant.ObjectNew sendfile = new Constant.ObjectNew();
+        sendfile.name=""+checkBoxNum;
+        sendfile.objectList=objectList;
+        sendfile.jObject=tempObj;
+        sendfile.mousep=point;
+        sendfile.parentHeight=getObject_height();
+        sendfile.parentWidth=getObject_width();
+
+        CheckBox t = new CheckBox(sendfile);
+
+        tempArray.add(tempObj);
+
+        add(t);
+
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();          // 다시 그려준다.
+        textViewNum++;
     }
     public void newLInearLayout(){
         JSONArray tempArray;
@@ -482,35 +470,38 @@ public class Layout_Root extends ObjectCustom {
                     menu.show(e.getComponent(), e.getX(), e.getY());
 
                 }
-                else if(panel.getChoice()==4){
+                else if(panel.getChoice()==Constant.BUTTON){
                     newButton(e.getPoint());
                     panel.setChoice(0);
-                    isButton=false;
-                    isRadioButton=false;
-                    isImageView=false;
+                    objectBooleanFalse();
                 }
-                else if(panel.getChoice()==5){
+                else if(panel.getChoice()==Constant.RADIOBUTTON){
                     newRadioButton(e.getPoint());
                     panel.setChoice(0);
-                    isButton=false;
-                    isRadioButton=false;
-                    isImageView=false;
+                    objectBooleanFalse();
                 }
-                else if(panel.getChoice()==2){
+                else if(panel.getChoice()==Constant.LINEARLAYOUT){
                     newLInearLayout();
                     panel.setChoice(0);
                 }
-                else if(panel.getChoice()==6){
+                else if(panel.getChoice()==Constant.IMAGEVIEW){
                     newImageView(e.getPoint());
                     panel.setChoice(0);
-                    isButton=false;
-                    isRadioButton=false;
-                    isImageView=false;
+                    objectBooleanFalse();
+                }
+                else if(panel.getChoice()==Constant.TEXTVIEW){
+                    newTextView(e.getPoint());
+                    panel.setChoice(0);
+                    objectBooleanFalse();
+
+                }
+                else if(panel.getChoice()==Constant.CHECKBOX){
+                    newCheckBox(e.getPoint());
+                    panel.setChoice(0);
+                    objectBooleanFalse();
                 }
                 else{
-                    isButton=false;
-                    isRadioButton=false;
-                    isImageView=false;
+                    objectBooleanFalse();
                     panel.setChoice(0);
 
                 }
@@ -534,9 +525,7 @@ public class Layout_Root extends ObjectCustom {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                isButton=false;
-                isRadioButton=false;
-                isImageView=false;
+                objectBooleanFalse();
             }
         });
     }
@@ -549,17 +538,25 @@ public class Layout_Root extends ObjectCustom {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                if(panel.getChoice()==4){
+                if(panel.getChoice()==Constant.BUTTON){
                     x = e.getX(); y = e.getY();
                     isButton=true;
                 }
-                else if(panel.getChoice()==5){
+                else if(panel.getChoice()==Constant.RADIOBUTTON){
                     x = e.getX(); y = e.getY();
                     isRadioButton=true;
                 }
-                else if(panel.getChoice()==6){
+                else if(panel.getChoice()==Constant.IMAGEVIEW){
                     x = e.getX(); y = e.getY();
                     isImageView=true;
+                }
+                else if(panel.getChoice()==Constant.TEXTVIEW){
+                    x = e.getX(); y = e.getY();
+                    isTextView=true;
+                }
+                else if(panel.getChoice()==Constant.CHECKBOX){
+                    x = e.getX(); y = e.getY();
+                    isCheckBok=true;
                 }
             }
         });
@@ -587,8 +584,8 @@ public class Layout_Root extends ObjectCustom {
             refresh.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println(storyboard);
                     storyboard.drawActivity_temp();
+                    sendData();
                 }
             });
             add(library);
@@ -683,5 +680,13 @@ public class Layout_Root extends ObjectCustom {
         activity_=activityName;
 
         System.out.println("id :"+id_+"  activity : "+activityName+ " library :" + library);
+    }
+
+    public void objectBooleanFalse(){
+        isButton=false;
+        isRadioButton=false;
+        isImageView=false;
+        isTextView=false;
+        isCheckBok=false;
     }
 }

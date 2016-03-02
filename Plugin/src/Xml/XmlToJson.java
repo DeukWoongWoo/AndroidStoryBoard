@@ -197,10 +197,10 @@ public class XmlToJson {
             for(int j=0;j<javaDTO.getXmls().size();j++){
                 if(javaDTO.getXmls().get(j).getXmlName().equals(changexmlName)) {
                     activityName = javaDTO.getName();
-                    /*ArrayList<NextActivityDTO> javaNextAct = javaDTO.getNextActivitys();
+                    ArrayList<NextActivityDTO> javaNextAct = javaDTO.getNextActivitys();
                     for(int k=0;k<javaNextAct.size();k++){
                         nextActivity.add(javaNextAct.get(k).getName());
-                    }*/
+                    }
 
                 }
             }
@@ -220,9 +220,16 @@ public class XmlToJson {
         jsonActivity.put("y","0");
         jsonActivity.put("width",768);
         jsonActivity.put("height",1280);
-        //for(int i=0;i<nextActivity.size();i++)
-            //jsonActivity.put("next",nextActivity.get(i));
 
+        if(nextActivity.size()==1)
+            jsonActivity.put("next",nextActivity.get(0));
+        else{
+            JSONArray jr = new JSONArray();
+            for(int i=0;i<nextActivity.size();i++){
+                jr.add(nextActivity.get(i));
+            }
+            jsonActivity.put("next",jr);
+        }
 
         jsonArrayObject = new JSONArray();
         for(int i=0;i<componentManager.size();i++){

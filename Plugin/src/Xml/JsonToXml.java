@@ -97,12 +97,8 @@ public class JsonToXml {
                     else if(entry.getValue().equals("error"))
                         component.library="error";
                 }else if(key.equals("next")){
-                    String fromActivity = null;
                     String toActivity=null;
-
-                    JSONObject jsonNext= (JSONObject) entry.getValue();
-                    JsonToNext(jsonNext,fromActivity,toActivity);
-
+                    toActivity = (String) entry.getValue();
                     component.isNext=true;
                     component.nextActivity=toActivity;
                     //// TODO: 2016-03-02 JAVADTO에 삽입할곳
@@ -135,7 +131,7 @@ public class JsonToXml {
                     ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
                     xmlName= (String) entry.getValue();
                     xmlPath = projectAnalysis.makeResourcePath(xmlName);
-                    String drawablePath = projectAnalysis.findDrawablePath();
+
                 }
                 else if(key.equals("object")){
                     JSONArray jsonObjectArray = (JSONArray) entry.getValue();

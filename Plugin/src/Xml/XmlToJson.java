@@ -256,7 +256,19 @@ public class XmlToJson {
     }
     private JSONObject makePluginJsonObject(ArrayList<Component> componentArrayList,String xmlName){
 
+        ArrayList<String> activityName = new ArrayList<>();
+        xmlName="R.layout."+xmlName;
+        char[] pastxmlName =xmlName.toCharArray();
+        String changexmlName = new String(pastxmlName,0,xmlName.length()-4);
 
+        for(int i=0;i<javaDTOArray.size();i++ ){
+            JavaDTO javaDTO=javaDTOArray.get(i);
+            for(int j=0;j<javaDTO.getXmls().size();j++){
+                if(javaDTO.getXmls().get(j).getXmlName().equals(changexmlName)) {
+                    activityName.add (javaDTO.getName());
+                }
+            }
+        }
         UseLibraryParser useLibraryParser = new UseLibraryParser();
         useLibraryParser.parse();
 
@@ -270,6 +282,11 @@ public class XmlToJson {
         jsonActivity.put("y",0);
         jsonActivity.put("width",768);
         jsonActivity.put("height",1280);
+        JSONArray jsonact = new JSONArray();
+        for(int i=0;i<activityName.size();i++)
+            jsonact.add(activityName.get(i));
+        jsonActivity.put("activity",jsonact);
+
         for(int i=0;i<useLibraryParser.activityLength();i++){
             if(xmlName.equals(useLibraryParser.getXmlName("activity",i))){
                 jsonActivity.put("library","activity");

@@ -31,10 +31,7 @@ public class Activity extends JPanel {
     storyBoard storyboard;
     palettePanel panel;
 
-<<<<<<< HEAD
-//    UseLibraryParser  useLibraryParser = new UseLibraryParser();
-=======
->>>>>>> c19d303c9f97d415b9f4a8b450fa875556a70f77
+
 
     private boolean draggable = true;
     protected Point anchorPoint;

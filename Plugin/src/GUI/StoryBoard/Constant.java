@@ -20,10 +20,6 @@ public interface Constant  {
     int imageVIewWidth =200;
     int imageViewHeight = 200;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> c19d303c9f97d415b9f4a8b450fa875556a70f77
      String FILE_ROUTE ="C:/Users/우철/Documents/AndroidStoryBoard/Plugin/우철이 라이브러리 포함된것.txt";
      String IMAGE_ROUTE ="C:\\Users\\우철\\Pictures\\Screenshots/aaa.jpg";
      String XML_ROUTE = "C:/Users/우철/Pictures/Screenshots";

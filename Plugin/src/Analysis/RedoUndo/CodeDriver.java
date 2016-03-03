@@ -15,7 +15,7 @@ public class CodeDriver {
 //        commandManager.deleteLinkActivity("button","activity_main","SecondActivity");
 
 //        commandManager.createLocalComponent("textView1", "activity_main", Type.TextView);
-//        commandManager.createLocalComponent("button1", "activity_main", Type.Button);
+//        commandManager.createLocalComponent("button11", "activity_main", Type.Button);
 //        commandManager.deleteLocalComponent("button1", "activity_main", Type.Button);
 
 //        commandManager.createMemberComponent("button1","activity_main", Type.Button);
@@ -24,11 +24,8 @@ public class CodeDriver {
 //        commandManager.createFucnComponent("button1","activity_main", Type.Button);
 //        commandManager.createFucnComponent("textView1","activity_main", Type.TextView);
 
-//        commandManager.createButton(CommandKey.LOCALBUTTON,"button1");
-//        commandManager.createButton(CommandKey.MEMBERBUTTON, "button2");
-//        commandManager.createButton(CommandKey.FUNCBUTTON, "button3");
-
         commandManager.createActivity("TestActivity");
+        commandManager.deleteActivity("TestActivity");
 
 //        commandManager.linkActivity("button","activity_main","TestActivity");
 

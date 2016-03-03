@@ -28,17 +28,20 @@ public class makeXml {
 
     public static void makeUserLib(String assetPath) {
         try {
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            Document doc = documentBuilder.newDocument();
-            Element resources =  doc.createElement("resource");
-            doc.appendChild(resources);
+            File f = new File(assetPath);
+            if(f.isFile()){
+                DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+                Document doc = documentBuilder.newDocument();
+                Element resources =  doc.createElement("resource");
+                doc.appendChild(resources);
 
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(assetPath));
-            transformer.transform(source,result);
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer = transformerFactory.newTransformer();
+                DOMSource source = new DOMSource(doc);
+                StreamResult result = new StreamResult(new File(assetPath));
+                transformer.transform(source,result);
+            }
         }catch (Exception e){
 
         }

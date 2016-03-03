@@ -1,7 +1,6 @@
 package Xml;
 
 import Analysis.Main.ProjectAnalysis;
-import com.intellij.icons.AllIcons;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,7 +23,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -54,17 +52,7 @@ public class JsonToXml {
         }
         component.setAttributeCount();
     }
-    private void JsonToNext(JSONObject jsonObject,String fromActivity,String toActivity){
-        Iterator iterator = jsonObject.entrySet().iterator();
-        while(iterator.hasNext()) {
-            Map.Entry entry = (Map.Entry) iterator.next();
-            String key = (String) entry.getKey();
-            if(key.equals("fromactivity"))
-                fromActivity = (String) entry.getValue();
-            else if(key.equals("toactivity"))
-                toActivity = (String)entry.getValue();
-        }
-    }
+
     private void JsonToObject(JSONArray jsonArray, ArrayList <Component> componentArrayList){
         JSONObject jsonObject;
         JSONArray jsonLayout = null;
@@ -96,12 +84,6 @@ public class JsonToXml {
                         component.library="event";
                     else if(entry.getValue().equals("error"))
                         component.library="error";
-                }else if(key.equals("next")){
-                    String toActivity=null;
-                    toActivity = (String) entry.getValue();
-                    component.isNext=true;
-                    component.nextActivity=toActivity;
-                    //// TODO: 2016-03-02 JAVADTO에 삽입할곳
                 }
             }
             componentArrayList.add(component);
@@ -114,11 +96,10 @@ public class JsonToXml {
             }
         }
     }
-    private void JsonToActivity(JSONArray jsonArray,ArrayList <Component> componentArrayList){
+    private void JsonToXmls(JSONArray jsonArray, ArrayList <Component> componentArrayList){
         JSONObject jsonObject;
         String xmlName = null;
         String xmlPath=null;
-        boolean isLibrary=false;
         for(int i =0;i<jsonArray.size();i++){
             componentArrayList = new ArrayList<Component>();
             jsonObject= (JSONObject) jsonArray.get(i);
@@ -131,21 +112,12 @@ public class JsonToXml {
                     ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
                     xmlName= (String) entry.getValue();
                     xmlPath = projectAnalysis.makeResourcePath(xmlName);
-
                 }
                 else if(key.equals("object")){
                     JSONArray jsonObjectArray = (JSONArray) entry.getValue();
                     JsonToObject(jsonObjectArray,componentArrayList);
-                }else if(key.equals("library"))
-                    isLibrary=true;
+                }
             }
-
-            if(isLibrary){
-                UseLibraryParser useLibraryParser = new UseLibraryParser();
-                useLibraryParser.parse();
-                useLibraryParser.append("activity",xmlName,xmlName);
-            }
-
 
             for(int j=0;j<componentArrayList.size();j++){
                 Component component = componentArrayList.get(j);
@@ -177,9 +149,33 @@ public class JsonToXml {
             String value;
             while(iterator.hasNext()) {
                 Map.Entry entry = (Map.Entry) iterator.next();
-                if(entry.getKey().equals("activity")){
+                if(entry.getKey().equals("xmls")){
                     jsonLayout = (JSONArray) entry.getValue();
-                    JsonToActivity(jsonLayout,componentArrayList);
+                    JsonToXmls(jsonLayout,componentArrayList);
+                }else if(entry.getKey().equals("activities")){
+                    jsonLayout = (JSONArray) entry.getValue();
+                    for(int i=0;i<jsonLayout.size();i++){
+                        JSONObject jsonObject1 = new JSONObject();
+                        jsonObject1= (JSONObject) jsonLayout.get(i);
+                        Iterator iterator2 = jsonObject1.entrySet().iterator();
+                        String activityName = null;
+                        String xmlName = null;
+                        boolean isLibrary=false;
+                        while (iterator2.hasNext()){
+                            Map.Entry entry2 = (Map.Entry) iterator2.next();
+                            if(entry2.getKey().equals("xmlName"))
+                                xmlName= (String) entry2.getValue();
+                            else if(entry2.getKey().equals("name"))
+                                activityName = (String) entry2.getValue();
+                            else if(entry2.getKey().equals("library"))
+                                isLibrary=true;
+                        }
+                        if(isLibrary){
+                            UseLibraryParser useLibraryParser = new UseLibraryParser();
+                            useLibraryParser.parse();
+                            useLibraryParser.append("activity",xmlName,activityName);
+                        }
+                    }
                 }
             }
         } catch (ParseException e) {
@@ -253,6 +249,7 @@ public class JsonToXml {
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File(xmlPath));
             transformer.transform(source,result);
+            System.out.print("[Make Xml]: "+xmlPath);
 
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();

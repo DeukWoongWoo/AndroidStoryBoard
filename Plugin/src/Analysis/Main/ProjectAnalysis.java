@@ -8,6 +8,7 @@ import Analysis.Parser.JavaParser;
 import Analysis.Parser.FileParser;
 import Analysis.Parser.XmlParser;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
@@ -51,7 +52,7 @@ public class ProjectAnalysis {
         PsiDirectory psiDirectory = currentDirectory(path);
         findFiles(ConstantEtc.XML_PATTERN, psiDirectory);
 
-        makeDirectory(path, "assets");
+        if (baseDir.findFileByRelativePath(path + "/assets") == null) makeDirectory(path, "assets");
     }
 
     private void makeDirectory(String path, String name) {
@@ -59,8 +60,13 @@ public class ProjectAnalysis {
         System.out.println("[Test] >> " + path);
         System.out.println("[Test] >> " + project.getBaseDir().findFileByRelativePath(path));
         final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(project.getBaseDir().findFileByRelativePath(path));
-        PackageWrapper packageWrapper = new PackageWrapper(PsiManager.getInstance(project).findFile(project.getProjectFile()).getManager(),name);
-        RefactoringUtil.createPackageDirectoryInSourceRoot(packageWrapper, sourceRootForFile);
+        PackageWrapper packageWrapper = new PackageWrapper(PsiManager.getInstance(project).findFile(project.getProjectFile()).getManager(), name);
+        new WriteCommandAction.Simple(project, PsiManager.getInstance(project).findFile(project.getProjectFile()).getContainingFile()) {
+            @Override
+            protected void run() throws Throwable {
+                RefactoringUtil.createPackageDirectoryInSourceRoot(packageWrapper, sourceRootForFile);
+            }
+        }.execute();
     }
 
     public void executeAll() {
@@ -113,7 +119,8 @@ public class ProjectAnalysis {
         xmlPath = project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/" + xmlName;
         return xmlPath;
     }
-    public String findDrawablePath(){
+
+    public String findDrawablePath() {
         return project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/res/drawable";
     }
 

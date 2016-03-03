@@ -58,6 +58,8 @@ public class makeXml {
                 doc.appendChild(resources);
                 Element userId = doc.createElement("userId");
                 resources.appendChild(userId);
+                Element appName = doc.createElement("appName");
+                resources.appendChild(appName);
 
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();

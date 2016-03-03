@@ -90,6 +90,11 @@ public class Component {
             paddingBottom=20;
             paddingTop=20;
             color = "gray";
+        }else if(tagName.equals("EditText")){
+            paddingLeft=8;
+            paddingRight=8;
+            paddingBottom=22;
+            paddingTop=20;
         }
         this.id=tagName;
         for(int i=0;i<AttributeCount;i++) {
@@ -224,6 +229,8 @@ public class Component {
             }
             Attributes.add(tempAttr);
         }
+        textWidth = getComponentWidthSize(text,changeDpToInt(textSize));
+        textHeight=(int)(changeDpToInt(textSize)*2.7);
 
     }
     public void setContentWidthSize(){
@@ -232,6 +239,8 @@ public class Component {
             if(tagName.equals("CheckBox") ||
                     tagName.equals("RadioButton")){
                contentWidth+=64;
+            }else if(tagName.equals("EditText")){
+                contentWidth+=25;
             }
             else if(tagName.equals("Button")){
                 if(contentWidth<176){

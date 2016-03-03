@@ -137,15 +137,6 @@ public class Component {
                 }
             }
 
-            //LinearLayout
-            else if(xpp.getAttributeName(i).equals("layout_gravity")){
-
-            }else if(xpp.getAttributeName(i).equals("layout_weight")){
-
-            }
-
-
-
             //RelativeLayout
             else if(xpp.getAttributeName(i).equals("layout_centerHorizontal")){
                 leftId = "Center";

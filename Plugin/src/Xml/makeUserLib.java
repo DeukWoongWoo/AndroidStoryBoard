@@ -18,12 +18,9 @@ import java.io.File;
  */
 public class makeUserLib {
 
-
-
     public makeUserLib(){
 
     }
-
 
     public static void makeXml(String xmlPath) {
         try {
@@ -38,7 +35,6 @@ public class makeUserLib {
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File(xmlPath));
             transformer.transform(source,result);
-
         }catch (Exception e){
 
         }

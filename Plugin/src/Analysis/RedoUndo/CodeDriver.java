@@ -28,7 +28,7 @@ public class CodeDriver {
 //        commandManager.createButton(CommandKey.MEMBERBUTTON, "button2");
 //        commandManager.createButton(CommandKey.FUNCBUTTON, "button3");
 
-//        commandManager.createActivity("TestActivity");
+        commandManager.createActivity("TestActivity");
 
 //        commandManager.linkActivity("button","activity_main","TestActivity");
 

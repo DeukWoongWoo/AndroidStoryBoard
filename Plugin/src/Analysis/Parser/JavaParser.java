@@ -126,6 +126,7 @@ public class JavaParser implements FileParser {
                 else intentName = idStr[0];
                 NextActivityDTO nextActivityDTO = new NextActivityDTO();
                 nextActivityDTO.setIntentName(intentName);
+
                 nextActivityDTO.setName(strSplit[1].substring(strSplit[1].indexOf("(") + 1, strSplit[1].indexOf(")")).split(",")[1].split("\\.")[0].split("\\s")[1]);
                 nextActivityDTO.setIntentFuncName(((PsiMethod) statement.getParent().getParent()).getName());
 

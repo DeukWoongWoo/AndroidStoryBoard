@@ -100,6 +100,7 @@ public class Button_Click extends Button_Root {
     }
     public Button_Click(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actList,    storyBoard stroy, String ActivitName) {
         super(list, obj,nextlist, actList,stroy, ActivitName);
+        typeObject= Type.Button;
         init_text();
         setLayout(new BorderLayout());
         add(content,BorderLayout.CENTER);

@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 public class Layout_Root extends ObjectCustom {
 
-    int buttonNum =1;
+    public static int buttonNum =1;
     int radiobuttonNum=1;
     int linearlayoutNum=1;
     int imageViewNum=1;
@@ -244,6 +244,7 @@ public class Layout_Root extends ObjectCustom {
             return b;
         }
         else if(type.equals("button")){
+
             Button_Click b = new Button_Click(objectList, jobj,nextActivitylist, activityList,  storyboard, XmlName);
             b.getStroyBoard(storyboard);
             return b;
@@ -338,12 +339,13 @@ public class Layout_Root extends ObjectCustom {
         sendfile.mousep=point;
         sendfile.parentHeight=getObject_height();
         sendfile.parentWidth=getObject_width();
+        // 만들어주는 덕웅이 코드
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("button"+sendfile.name, XmlName.split("\\.")[0], Type.Button);
+
         Button_Click b = new Button_Click(sendfile);
 
 
-        // 만들어주는 덕웅이 코드
-        CommandManager newobject = CommandManager.getInstance();
-        newobject.createLocalComponent("button"+sendfile.name, XmlName, Type.Button);
 
         tempArray.add(tempObj);
 
@@ -498,31 +500,37 @@ public class Layout_Root extends ObjectCustom {
 
                 }
                 else if(panel.getChoice()==Constant.BUTTON){
+                    CreateOption a = new CreateOption(e.getPoint());
                     newButton(e.getPoint());
                     panel.setChoice(0);
                     objectBooleanFalse();
                 }
                 else if(panel.getChoice()==Constant.RADIOBUTTON){
+                    CreateOption a = new CreateOption(e.getPoint());
                     newRadioButton(e.getPoint());
                     panel.setChoice(0);
                     objectBooleanFalse();
                 }
                 else if(panel.getChoice()==Constant.LINEARLAYOUT){
+                    CreateOption a = new CreateOption(e.getPoint());
                     newLInearLayout();
                     panel.setChoice(0);
                 }
                 else if(panel.getChoice()==Constant.IMAGEVIEW){
+                    CreateOption a = new CreateOption(e.getPoint());
                     newImageView(e.getPoint());
                     panel.setChoice(0);
                     objectBooleanFalse();
                 }
                 else if(panel.getChoice()==Constant.TEXTVIEW){
+                    CreateOption a = new CreateOption(e.getPoint());
                     newTextView(e.getPoint());
                     panel.setChoice(0);
                     objectBooleanFalse();
 
                 }
                 else if(panel.getChoice()==Constant.CHECKBOX){
+                    CreateOption a = new CreateOption(e.getPoint());
                     newCheckBox(e.getPoint());
                     panel.setChoice(0);
                     objectBooleanFalse();
@@ -723,6 +731,52 @@ public class Layout_Root extends ObjectCustom {
 
 
     }
+    class CreateOption extends JPopupMenu {
 
+        JMenuItem local;
+        JMenuItem member;
+        JMenuItem function;
+        JMenuItem none;
+
+        public CreateOption(Point p) {
+            setLocation(p.x,p.y);
+            local = new JMenuItem("Local");
+            member = new JMenuItem("Member");
+            function = new JMenuItem("Function");
+            none = new JMenuItem("None");
+
+
+            local.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+            member.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+            function.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+            none.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+            add(local);
+            add(member);
+            add(function);
+            add(none);
+        }
+
+    }
 
 }

@@ -47,7 +47,7 @@ public class makeXml {
 
         }
     }
-    public static void makeUserId(String userIdXmlpath){
+    public static void makeUserInform(String userIdXmlpath){
         try{
             File f = new File(userIdXmlpath);
             if(f.isFile()) {

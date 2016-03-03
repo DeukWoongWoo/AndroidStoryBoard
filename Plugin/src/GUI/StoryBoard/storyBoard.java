@@ -203,10 +203,11 @@ public class storyBoard extends JPanel {
         removeAllActivity();
 
         String pathpath;
-        pathpath= SharedPreference.PROJECT.get() + ConstantEtc.PROJECT_XML_PATH + "/assets";
+        pathpath= SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
 
-        jobjRoot = parserJObject(pathpath+"/plugin.json");
+        jobjRoot = parserJObject(pathpath);
 
+        System.out.println(jobjRoot);
         setAppName((String)jobjRoot.get("appName"));
         activityArrayData = (JSONArray)jobjRoot.get("activities");
         xmlArrayData = (JSONArray)jobjRoot.get("xmls");
@@ -336,6 +337,10 @@ public class storyBoard extends JPanel {
 
             JSONArray xmlsarray = (JSONArray)jobjRoot.get("xmls");
             Activity a = new Activity(resultStr, list, obj, pos, xmlsarray);
+
+            System.out.println("present activitArrayData : "+activityArrayData);
+            System.out.println("create Activity : "+obj);
+
             activityArrayData.add(obj);
 
             a.setOverbearing(true);
@@ -774,8 +779,14 @@ public class storyBoard extends JPanel {
     }
     public void setRootJObject(){
         String jsonString = jobjRoot.toJSONString();
+        System.out.println("save Object :"+jobjRoot);
+        String pathpath;
+        pathpath= SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
+
+
+
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(Constant.FILE_ROUTE));
+            BufferedWriter out = new BufferedWriter(new FileWriter(pathpath));
             out.write(jsonString);
             out.close();
         }

@@ -332,6 +332,7 @@ public class Button_Root extends ObjectCustom {
         int scale_size;
 
         public Change_Window(String id_, String text, Point screenPosition, Point mouse) {
+            System.out.println("start chane Window jobjct :"+ objectJObject);
             name_label = new JLabel("name :");
             id_label = new JLabel("id :");
             id_field = new JTextField(getId());
@@ -449,7 +450,7 @@ public class Button_Root extends ObjectCustom {
                 setting_Id_Text(id_field.getText(), name_field.getText());
                 objectJObject.put("name", getId() );
                 attributeObject.put("text", getText());
-
+                System.out.println("Button fix before : "+objectJObject);
                 fixObject(1);
 
                 dispose();

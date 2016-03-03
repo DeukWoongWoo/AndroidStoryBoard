@@ -65,6 +65,7 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
     public void init() throws IOException {
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
+
         centerPanel = new storyBoard();
         northPanel = new menuPanel();
         totalPanel.setLayout(new BorderLayout());

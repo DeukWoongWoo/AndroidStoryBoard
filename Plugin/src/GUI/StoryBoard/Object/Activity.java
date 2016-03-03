@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import Xml.makeXml;
+
+
 /**
  * Created by 우철 on 2016-02-12.
  */
@@ -149,6 +152,10 @@ public class Activity extends JPanel {
 
         CommandManager newobject = CommandManager.getInstance();
         newobject.createActivity(getId());
+
+        makeXml.makeActivityxml(temp);
+
+
 
         addDragListeners();
         activitylist =list;

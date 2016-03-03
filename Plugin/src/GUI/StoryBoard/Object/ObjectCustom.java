@@ -40,6 +40,7 @@ public class ObjectCustom extends JPanel {
     private String layout_width, layout_height, layout_alignParentStart, layout_marginStart, layout_alignParentTop;
     private String layout_alignParentLeft, layout_marginLeft, layout_marginTop , textAllCaps;
 
+    public int totalscale;
     private boolean overbearing = true;
     public storyBoard storyboard;
 
@@ -351,7 +352,8 @@ public class ObjectCustom extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
+                System.out.println("Send Data :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+                System.out.println(objectJObject);
                 if(fixedYN)
                     fixObject(2);
                 repaint();
@@ -532,23 +534,31 @@ public class ObjectCustom extends JPanel {
     }
 
     public void fixObject(int scale){
+        totalscale=scale;
         removeAttribue();
         setAttribue(objectJObject);
         setScale(scale);
 
-        sendData();
+        System.out.println("BeforeObject :"+ objectJObject);
+        System.out.println("BeforeObject :"+ storyboard.jobjRoot);
+        storyboard.setRootJObject();
 
         String pathpath;
-        pathpath= SharedPreference.PROJECT.get() + ConstantEtc.PROJECT_XML_PATH + "/assets";
+        pathpath= SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
 
 
         JsonToXml jsonToXml = new JsonToXml();
-        jsonToXml.make(pathpath+"/plugin.json");
+        jsonToXml.make(pathpath);
+
+
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 
-
         storyboard.setRootJObject();
+
+        System.out.println("AfterObject :"+ objectJObject);
+        System.out.println("AfterObject :"+ storyboard.jobjRoot);
+
         storyboard.drawActivity();
     }
 
@@ -556,10 +566,10 @@ public class ObjectCustom extends JPanel {
         storyboard.setRootJObject();
 
         String pathpath;
-        pathpath= SharedPreference.PROJECT.get() + ConstantEtc.PROJECT_XML_PATH + "/assets";
+        pathpath= SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
 
         JsonToXml jsonToXml = new JsonToXml();
-        jsonToXml.make(pathpath+"/plugin.json");
+        jsonToXml.make(pathpath);
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 
@@ -580,18 +590,31 @@ public class ObjectCustom extends JPanel {
 
         int center_x,center_y, parent_w, parent_h;
 
+
         String top,bottom,right,left;
 
-        center_x=isPosition().x+getWidth()/2;
-        center_y=isPosition().y+getWidth()/2;
+
+        long isX , isY;
+        if(totalscale==1){
+            isX=(long)json.get("x")/2;
+            isY=(long)json.get("y")/2;
+        }else{
+            isX=(long)json.get("x");
+            isY=(long)json.get("y");
+        }
+        center_x=(int)isX+getWidth()/2;
+        center_y=(int)isY+getWidth()/2;
         parent_w=parentWidth;
         parent_h=parentHeight;
+        System.out.println(isX+ " , " +isY);
+        System.out.println(isPosition()+ "  "+ parent_h+"  "+parent_w);
 
-        top = String.valueOf((isPosition().y));
-        bottom = String.valueOf( (parentHeight-(isPosition().y+getObject_height())) );
-        right = String.valueOf( (parentWidth-(isPosition().x+getObject_width())) );
-        left = String.valueOf( (isPosition().x) );
+        top = String.valueOf(isY);
+        bottom = String.valueOf( (parentHeight-(isY+getObject_height())) );
+        right = String.valueOf( (parentWidth-(isX+getObject_width())) );
+        left = String.valueOf( (isX) );
 
+        System.out.println("top:"+top +"  bottom:"+bottom+ " right"+right+" left"+left);
         top+="dp";
         bottom+="dp";
         right+="dp";
@@ -808,7 +831,7 @@ public class ObjectCustom extends JPanel {
         }
 
         CommandManager deleteobject = CommandManager.getInstance();
-        deleteobject.deleteLocalComponent(getId(), XmlName, typeObject);
+        deleteobject.deleteLocalComponent(getId().split("/")[1], XmlName.split("\\.")[0], typeObject);
 
         storyboard.setRootJObject();
         storyboard.drawActivity();

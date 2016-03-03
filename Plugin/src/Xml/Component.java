@@ -70,6 +70,8 @@ public class Component {
     public boolean isWidth=false;
     public boolean isHeight=false;
 
+    //linearLayout
+
 
     Component(){
         Attributes =new ArrayList<Attribution>();
@@ -134,6 +136,17 @@ public class Component {
                     isHeight=true;
                 }
             }
+
+            //LinearLayout
+            if(xpp.getAttributeName(i).equals("layout_gravity")){
+
+            }else if(xpp.getAttributeName(i).equals("layout_weight")){
+
+            }
+
+
+
+            //RelativeLayout
             if(xpp.getAttributeName(i).equals("layout_centerHorizontal")){
                 leftId = "Center";
                 left=xpp.getAttributeName(i);
@@ -141,8 +154,6 @@ public class Component {
                 topId="Center";
                 top = xpp.getAttributeName(i);
             }
-
-
             if(xpp.getAttributeName(i).equals("layout_alignRight")){
                 right=xpp.getAttributeName(i);
                 rightId = xpp.getAttributeValue(i);
@@ -175,7 +186,6 @@ public class Component {
                 isMarginBottom=true;
                 marginBottom = changeDpToInt(xpp.getAttributeValue(i))*2;
             }
-
             if(xpp.getAttributeName(i).equals("layout_alignTop")){
                 top=xpp.getAttributeName(i);
                 topId = xpp.getAttributeValue(i);
@@ -195,6 +205,7 @@ public class Component {
                 bottom = xpp.getAttributeName(i);
                 bottomId = "Parent";
             }
+
 
             if(xpp.getAttributeName(i).equals("paddingTop")){
                 paddingTop = changeDpToInt(xpp.getAttributeValue(i));

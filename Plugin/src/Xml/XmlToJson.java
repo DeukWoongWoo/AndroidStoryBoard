@@ -28,6 +28,7 @@ public class XmlToJson {
     private JSONObject pluginJsonObject;
     private JSONArray pluginJsonArray;
     private ArrayList<JavaDTO> javaDTOArray = DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll);
+    private String appName;
 
     public XmlToJson(){
         webJsonObject=new JSONObject();
@@ -35,6 +36,8 @@ public class XmlToJson {
         webJsonArray=new JSONArray();
         pluginJsonArray=new JSONArray();
         Messages.showInfoMessage("Contructor!!","filePath");
+
+        appName=SharedPreference.PROJECT.get().getName();
     }
 
     private void addWebObject(JSONObject jsonObject){
@@ -45,14 +48,15 @@ public class XmlToJson {
     }
 
     private JSONObject makeWebJsonObject(){
-        webJsonObject.put("appName","test");
+
+        webJsonObject.put("appName",appName);
         webJsonObject.put("activity",webJsonArray);
 
 
         return webJsonObject;
     }
     private JSONObject makePluginJsonObject(){
-        pluginJsonObject.put("appName","test");
+        pluginJsonObject.put("appName",appName);
         pluginJsonObject.put("xmls",pluginJsonArray);
         pluginJsonObject.put("activities", makePluginActivityJsonObject());
         return pluginJsonObject;
@@ -102,7 +106,6 @@ public class XmlToJson {
         for(int i=0;i<filePath.length;i++)
         {
             String fp[] = filePath[i];
-            Messages.showInfoMessage(fp[0],"filePath");
             XmlToJsonObject xmlToJsonObject=xmlToJson.makeObject(fp);
             addWebObject(xmlToJsonObject.getWebJson());
             addPluginObject(xmlToJsonObject.getPluginJson());
@@ -115,8 +118,8 @@ public class XmlToJson {
         makeFile(makePluginJsonObject(),pathpath+"/plugin.json");
          //makeFile(makePluginJsonObject(), Constant.FILE_OUT);
 
-//        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
-       // makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
+        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
+        makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
         // makeFile(makePluginJsonObject(), Constant.FILE_ROUTE);
 
 
@@ -642,6 +645,7 @@ public class XmlToJson {
 
         component.topPoint=topPoint;
         component.bottomPoint=bottomPoint;
+        component.parentTopPoint=parentTopPoint;
         if(component.tagName.equals("RelativeLayout")) {
             stdHeight = bottomPoint-topPoint;
         }

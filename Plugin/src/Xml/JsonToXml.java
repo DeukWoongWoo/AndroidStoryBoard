@@ -249,7 +249,7 @@ public class JsonToXml {
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File(xmlPath));
             transformer.transform(source,result);
-            System.out.print("[Make Xml]: "+xmlPath);
+
 
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();

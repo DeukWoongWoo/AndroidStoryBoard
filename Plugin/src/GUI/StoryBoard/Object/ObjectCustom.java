@@ -2,6 +2,8 @@ package GUI.StoryBoard.Object;
 
 import Analysis.Constant.ConstantEtc;
 import Analysis.Constant.SharedPreference;
+import Analysis.RedoUndo.CodeBuilder.Type;
+import Analysis.RedoUndo.CommandManager;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.UI.palettePanel;
 import GUI.StoryBoard.storyBoard;
@@ -51,7 +53,7 @@ public class ObjectCustom extends JPanel {
     public HashMap<String, ObjectCustom> objectList;
     public HashMap<String, Activity> activityList;
     public ArrayList nextActivitylist;
-
+    Type typeObject;
 
     public ObjectCustom() {
         addDragListeners();
@@ -550,6 +552,21 @@ public class ObjectCustom extends JPanel {
         storyboard.drawActivity();
     }
 
+    public void newObject(){
+        storyboard.setRootJObject();
+
+        String pathpath;
+        pathpath= SharedPreference.PROJECT.get() + ConstantEtc.PROJECT_XML_PATH + "/assets";
+
+        JsonToXml jsonToXml = new JsonToXml();
+        jsonToXml.make(pathpath+"/plugin.json");
+        XmlToJson xmlToJson = new XmlToJson();
+        xmlToJson.make();
+
+
+        storyboard.drawActivity();
+
+    }
     public void removeAttribue(){
         if(objectJObject.containsKey("attribute")) {
             objectJObject.remove("attribute");
@@ -789,6 +806,9 @@ public class ObjectCustom extends JPanel {
             objectJObject.clear();
             checkkey.remove(removeKey);
         }
+
+        CommandManager deleteobject = CommandManager.getInstance();
+        deleteobject.deleteLocalComponent(getId(), XmlName, typeObject);
 
         storyboard.setRootJObject();
         storyboard.drawActivity();

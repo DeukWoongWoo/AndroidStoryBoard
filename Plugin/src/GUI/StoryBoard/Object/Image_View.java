@@ -64,10 +64,10 @@ public class Image_View extends ObjectCustom {
         this.setBackground(Color.WHITE);
 
         obj.put("name",getId());
-        obj.put("x",x);
-        obj.put("y",y);
-        obj.put("width",width);
-        obj.put("height",height);
+        obj.put("x",x*2);
+        obj.put("y",y*2);
+        obj.put("width",width*2);
+        obj.put("height",height*2);
         obj.put("color",color);
         obj.put("type","ImageVIew");
 
@@ -103,9 +103,9 @@ public class Image_View extends ObjectCustom {
 
 
         if (objectJObject.containsKey("src")) {
-            ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
-            xmlPath = projectAnalysis. findDrawablePath();
-            pathStirng=xmlPath+"/"+objectJObject.get("src")+".png";
+//            ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
+//            xmlPath = projectAnalysis. findDrawablePath();
+           pathStirng=xmlPath+"/"+objectJObject.get("src")+".png";
             centerPanel =new ImagePanel(pathStirng);
 
 
@@ -221,8 +221,8 @@ public class Image_View extends ObjectCustom {
             this.getRootPane().setBorder(new LineBorder(Color.black));  // JFrame 테두리 설정
 
 
-           ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
-           xmlPath = projectAnalysis. findDrawablePath();
+//           ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
+//           xmlPath = projectAnalysis. findDrawablePath();
 
             openbutton.setMargin(new Insets(0,0,0,0));
             okbutton.setMargin(new Insets(0, 0, 0, 0));
@@ -327,6 +327,8 @@ public class Image_View extends ObjectCustom {
                 JOptionPane.showMessageDialog(null, id_field.getText() + "는 이미 중복되어있는 ID 값입니다.");
             } else {
                 Image temp_img;
+                String temp_last[];
+                String last;
                 setId(id_field.getText());
                 pathStirng=path_field.getText();
                 repaint();
@@ -334,7 +336,11 @@ public class Image_View extends ObjectCustom {
                 objectJObject.put("src", srcName_field.getText());
                 temp_img=new ImageIcon(pathStirng).getImage();
                 String temp;
-                temp = xmlPath+"/"+srcName_field.getText()+".png";
+                temp_last=pathStirng.split("\\.");
+                last = temp_last[temp_last.length-1];
+                System.out.println(last);
+                temp = xmlPath+"/"+srcName_field.getText()+"."+last;
+
 
                 try {
                     temp_img=ImageIO.read(new File(pathStirng));
@@ -343,7 +349,7 @@ public class Image_View extends ObjectCustom {
                 }
                 System.out.println(xmlPath);
                 try {
-                    ImageIO.write((RenderedImage) temp_img, "png", new File(temp));
+                    ImageIO.write((RenderedImage) temp_img, last, new File(temp));
                 }
                 catch(Exception e){
                     System.out.println(e);
@@ -379,4 +385,5 @@ public class Image_View extends ObjectCustom {
             return this.img;
         }
     }
+
 }

@@ -86,8 +86,8 @@ public class Button_Radio extends Button_Root {
 
         checkkey=objectNew.objectList;
         setPosition(objectNew.mousep);
-        objectNew.jObject.put("x", (long)objectNew.mousep.x);
-        objectNew.jObject.put("y", (long)objectNew.mousep.y);
+        objectNew.jObject.put("x", (long)objectNew.mousep.x*2);
+        objectNew.jObject.put("y", (long)objectNew.mousep.y*2);
         objectNew.jObject.put("type", "RadioButton");
 
         setLocation(isPosition().x, isPosition().y);
@@ -107,6 +107,8 @@ public class Button_Radio extends Button_Root {
         attribute.put("text",getText());
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();
+
+
 
     }
 

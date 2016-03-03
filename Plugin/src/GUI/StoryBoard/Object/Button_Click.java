@@ -60,8 +60,8 @@ public class Button_Click extends Button_Root {
         parentHeight=objectNew.parentHeight;
 
         setPosition(objectNew.mousep);
-        objectNew.jObject.put("x",(long)isPosition().x);
-        objectNew.jObject.put("y",(long)isPosition().y);
+        objectNew.jObject.put("x",(long)isPosition().x*2);
+        objectNew.jObject.put("y",(long)isPosition().y*2);
 
         setLocation(isPosition().x, isPosition().y);
         checkkey=objectNew.objectList;
@@ -72,6 +72,7 @@ public class Button_Click extends Button_Root {
 
         JSONObject attribute = setAttribue(objectNew.jObject);
         attribute.put("text",getText());
+
     }
 
     // 버튼 json에서 받아와서 하는 것들

@@ -8,6 +8,7 @@ import Xml.XmlToJson;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class ObjectCustom extends JPanel {
     private String text=null;
     private boolean fixedYN=false;
     private boolean librayYN;
-
+    private boolean focusYN =false;
 
     //--- json attribute 값 -----------------
     private String layout_width, layout_height, layout_alignParentStart, layout_marginStart, layout_alignParentTop;
@@ -335,7 +336,7 @@ public class ObjectCustom extends JPanel {
 
             @Override
             public void mousePressed(MouseEvent e) {
-
+                setBorder(new ResizableBorder(8));
 
                 ResizableBorder border = (ResizableBorder) getBorder();
                 cursor = border.getCursor(e);
@@ -352,16 +353,18 @@ public class ObjectCustom extends JPanel {
                 repaint();
                 startPos = null;
                 fixedYN=false;
-
+                System.out.println("Mouse Released");
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-
+                if(focusYN==false)
+                    setBorder(new LineBorder(Color.black));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
+                setBorder(new ResizableBorder(8));
                 setCursor(Cursor.getDefaultCursor());
             }
         });
@@ -370,11 +373,13 @@ public class ObjectCustom extends JPanel {
         addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-
+                focusYN=true;
             }
 
             @Override
             public void focusLost(FocusEvent e) {
+                focusYN=false;
+                setBorder(new ResizableBorder(8));
                 startPos = null;
                 repaint();
 
@@ -530,10 +535,10 @@ public class ObjectCustom extends JPanel {
         sendData();
 
 
-//        JsonToXml jsonToXml = new JsonToXml();
-//        jsonToXml.make(Constant.FILE_ROUTE);
-//        XmlToJson xmlToJson = new XmlToJson();
-//        xmlToJson.make();
+        JsonToXml jsonToXml = new JsonToXml();
+        jsonToXml.make(Constant.FILE_ROUTE);
+        XmlToJson xmlToJson = new XmlToJson();
+        xmlToJson.make();
 
 
         storyboard.setRootJObject();
@@ -753,6 +758,35 @@ public class ObjectCustom extends JPanel {
         public Image getImageView(){
             return this.img;
         }
+    }
+
+    //------- 버튼 제거-------------------
+    public void removeObject(){
+        String temp = this.getId();
+        String removeKey=null;
+        this.setVisible(false);
+        Iterator<String> objectKeyList = checkkey.keySet().iterator();
+
+        while(objectKeyList.hasNext()) {
+            String key = (String) objectKeyList.next();
+            Object o = checkkey.get(key);
+            ObjectCustom b = (ObjectCustom) o;
+            System.out.println("탐색하는 아이디 :"+b.getId());
+            System.out.println("지워야 할 아이디 :"+ temp);
+            if(b.getId()==null)
+                continue;
+            if(b.getId().equals(temp)){
+                removeKey = key;
+                System.out.println("지우는 키 :"+removeKey);
+            }
+        }
+        if(removeKey!=null) {
+            objectJObject.clear();
+            checkkey.remove(removeKey);
+        }
+
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
     }
 
 

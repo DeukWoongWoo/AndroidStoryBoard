@@ -345,6 +345,8 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         buttonNum++;
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
 
     }
     //-----------새로운 Radio 버튼 생성---------
@@ -387,6 +389,8 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         radiobuttonNum++;
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
     }
     public void newImageView(Point point){
         JSONArray tempArray;
@@ -403,6 +407,8 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         imageViewNum++;
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
     }
     public void newTextView(Point point){
         JSONArray tempArray;
@@ -419,6 +425,8 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         textViewNum++;
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
     }
     public void newCheckBox(Point point){
         JSONArray tempArray;
@@ -443,6 +451,8 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         textViewNum++;
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
     }
     public void newLInearLayout(){
         JSONArray tempArray;
@@ -501,10 +511,16 @@ public class Layout_Root extends ObjectCustom {
                     objectBooleanFalse();
                 }
                 else{
-                    objectBooleanFalse();
+                    isButton=false;
+                    isRadioButton=false;
+                    isImageView=false;
+                    isTextView=false;
+                    isCheckBok=false;
+
                     panel.setChoice(0);
 
                 }
+
                 mouse_p = e.getLocationOnScreen();
             }
 
@@ -517,7 +533,6 @@ public class Layout_Root extends ObjectCustom {
             public void mouseReleased(MouseEvent e) {
 
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 repaint();
@@ -688,5 +703,9 @@ public class Layout_Root extends ObjectCustom {
         isImageView=false;
         isTextView=false;
         isCheckBok=false;
+
+
     }
+
+
 }

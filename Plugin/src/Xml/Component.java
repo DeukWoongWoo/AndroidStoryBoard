@@ -4,6 +4,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Created by cho on 2016-01-24.
@@ -56,12 +57,19 @@ public class Component {
     public int contentWidth=-1;
     public int contentHeight=-1;
 
-    public String color="white";
+
+    public String image = null;
+    public boolean isBackground=false;
+    public String color="none";
     public String text="null";
     public String textSize="14";
+    public String textColor="#000000";
 
     public int parentLeftPoint;
     public int parentTopPoint;
+    public boolean isWidth=false;
+    public boolean isHeight=false;
+
 
     Component(){
         Attributes =new ArrayList<Attribution>();
@@ -90,18 +98,35 @@ public class Component {
             tempAttr.setValue(xpp.getAttributeValue(i));
 
             if(xpp.getAttributeName(i).equals("background")) {
-                color=xpp.getAttributeValue(i);
+                isBackground= true;
+                String background=xpp.getAttributeValue(i);
+                char[] backArray =  background.toCharArray();
+                String comp=null;
+                if(backArray[0]!='#'){
+                    comp = new String(backArray,0,10);
+                    if(comp.equals("@drawable/")) {
+                        String img = new String(backArray, 10, background.length() - 10);
+                        image = img;
+                    }
+                }
+                else
+                    color=background;
+            }
+            if(xpp.getAttributeName(i).equals("textColor")){
+                textColor=xpp.getAttributeValue(i);
             }
 
             if(xpp.getAttributeName(i).equals("layout_width")){
                 if((!xpp.getAttributeValue(i).equals("wrap_content")) &&
                         (!xpp.getAttributeValue(i).equals("match_parent"))){
                     contentWidth=changeDpToInt(xpp.getAttributeValue(i))*2;
+                    isWidth=true;
                 }
             }else  if(xpp.getAttributeName(i).equals("layout_height")){
                 if((!xpp.getAttributeValue(i).equals("wrap_content"))&&
                         (!xpp.getAttributeValue(i).equals("match_parent"))){
                     contentHeight=changeDpToInt(xpp.getAttributeValue(i))*2;
+                    isHeight=true;
                 }
             }
             if(xpp.getAttributeName(i).equals("layout_centerHorizontal")){

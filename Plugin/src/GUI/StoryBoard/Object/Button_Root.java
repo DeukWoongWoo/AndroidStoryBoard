@@ -33,7 +33,6 @@ public class Button_Root extends ObjectCustom {
         long width, height, x, y ;
         String name, text, color;
 
-        System.out.println(obj);
         name = "button"+ name_;
         text = "NEW BUTTON";
         width = Constant.buttonWidth;
@@ -59,8 +58,8 @@ public class Button_Root extends ObjectCustom {
         obj.put("name",getId());
         obj.put("x",x);
         obj.put("y",y);
-        obj.put("width",width);
-        obj.put("height",height);
+        obj.put("width",width*2);
+        obj.put("height",height*2);
         obj.put("color",color);
         obj.put("type","Button");
 
@@ -146,7 +145,8 @@ public class Button_Root extends ObjectCustom {
         activityList=actList;
 
         if(objectJObject.containsKey("next")){
-            nextActivitylist.add(objectJObject.get("next"));
+            JSONObject temp = (JSONObject)objectJObject.get("next");
+            nextActivitylist.add(temp.get("toactivity"));
         }
 
 
@@ -177,10 +177,12 @@ public class Button_Root extends ObjectCustom {
 
         getStroyBoard(stroy);
 
-
         if(objectJObject.containsKey("next")){
-            nextActivitylist.add(objectJObject.get("next"));
+            JSONObject temp = (JSONObject)objectJObject.get("next");
+            nextActivitylist.add(temp.get("toactivity"));
+
         }
+
 
 
         //----------창 구성--------------------
@@ -208,8 +210,11 @@ public class Button_Root extends ObjectCustom {
 
 
         if(objectJObject.containsKey("next")){
-            nextActivitylist.add(objectJObject.get("next"));
+            JSONObject temp = (JSONObject)objectJObject.get("next");
+            nextActivitylist.add(temp.get("toactivity"));
+
         }
+
 
 
         //----------창 구성--------------------
@@ -276,29 +281,6 @@ public class Button_Root extends ObjectCustom {
         repaint();
     }
 
-    //------- 버튼 제거-------------------
-    public void removeButton(){
-        String temp = this.getId();
-        String removeKey=null;
-        this.setVisible(false);
-        Iterator<String> buttonKeyList = checkkey.keySet().iterator();
-
-        while(buttonKeyList.hasNext()) {
-            String key = (String) buttonKeyList.next();
-            Object o = checkkey.get(key);
-            ObjectCustom b = (ObjectCustom) o;
-
-            if(b.getId().equals(temp)){
-                removeKey = key;
-            }
-        }
-        if(removeKey!=null) {
-            System.out.println(objectJObject);
-            objectJObject.clear();
-            checkkey.remove(removeKey);
-        }
-    }
-
 
     //      새로운 클레스들 생성 ---------
     //
@@ -322,7 +304,8 @@ public class Button_Root extends ObjectCustom {
             remove.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    removeButton();
+                    removeObject();
+
                 }
             });
 
@@ -520,8 +503,9 @@ public class Button_Root extends ObjectCustom {
                         JSONObject tempObject= new JSONObject();
                         tempObject.put("fromxml", XmlName);
                         tempObject.put("toactivity", combo.getSelectedItem());
+                        objectJObject.put("next", tempObject);
                         fixObject(1);
-                        CommandManager commandManager = CommandManager.getInstance();
+                        //CommandManager commandManager = CommandManager.getInstance();
                     }
 
                     dispose();
@@ -546,10 +530,13 @@ public class Button_Root extends ObjectCustom {
             combo.addItem("NONE");
 
             if(objectJObject.containsKey("next")){
-                if(activityList.containsKey(objectJObject.get("next")))
-                    combo.setSelectedItem(objectJObject.get("next"));
-                else
-                    combo.setSelectedItem("NONE");
+                JSONObject temp = (JSONObject)objectJObject.get("next");
+                if(temp.containsKey("toactivity")) {
+                    if (activityList.containsKey(temp.get("toactivity"))) {
+                        combo.setSelectedItem(temp.get("toactivity"));
+                    } else
+                        combo.setSelectedItem("NONE");
+                }
             }
             else
                 combo.setSelectedItem("NONE");
@@ -663,4 +650,5 @@ public class Button_Root extends ObjectCustom {
 
         System.out.println("id :"+id_+"  activity : "+ XmlName + " library :" + library);
     }
+
 }

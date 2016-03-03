@@ -326,4 +326,5 @@ public class TextView extends ObjectCustom {
 
         return checkId;
     }
+
 }

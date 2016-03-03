@@ -1,6 +1,7 @@
 package GUI.StoryBoard;
 
 import GUI.StoryBoard.Object.Activity;
+import GUI.StoryBoard.Object.Xml;
 import GUI.StoryBoard.UI.palettePanel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -24,9 +25,11 @@ import java.util.Iterator;
 public class storyBoard extends JPanel {
     CustomJpanel jpan;
     JScrollPane scroll;
-    JSONObject jobjRoot;
+    public JSONObject jobjRoot;
+    public Point mouse_p;
 
     JSONArray activityArrayData;
+    JSONArray xmlArrayData;
 
     palettePanel parlPanel = new palettePanel();
     private Point prePoint;
@@ -104,12 +107,13 @@ public class storyBoard extends JPanel {
                 {
                     PopUpMenu menu = new PopUpMenu();
                     menu.show(e.getComponent(), e.getX(), e.getY());
-
+                    mouse_p=e.getLocationOnScreen();
                 }
 
                 else if(parlPanel.getChoice()==1)
                 {
                     NewWindow a = new  NewWindow(e.getPoint());
+
 
                     parlPanel.setChoice(0);
                     isActivity=false;
@@ -198,40 +202,62 @@ public class storyBoard extends JPanel {
         jobjRoot = parserJObject(Constant.FILE_ROUTE);
 
         setAppName((String)jobjRoot.get("appName"));
-        activityArrayData = (JSONArray)jobjRoot.get("activity");
+        activityArrayData = (JSONArray)jobjRoot.get("activities");
+        xmlArrayData = (JSONArray)jobjRoot.get("xmls");
+
+        for(int i=0; i<activityArrayData.size();i++){
+            JSONObject tempJsonObject;
+            tempJsonObject = (JSONObject)activityArrayData.get(i);
+            if(tempJsonObject.isEmpty())
+            {
+                activityArrayData.remove(i);
+                i=-1;
+            }
+        }
 
         // 가지고 있는 액티비티를 만든다.
         for(int i=0; i<activityArrayData.size();i++){
             JSONObject activity_jobj;
             JSONArray activity_list;
+            String xmlname;
             activity_jobj=(JSONObject)activityArrayData.get(i);
 
-            if(activity_jobj.containsKey("activity")) {
-                activity_list=(JSONArray) activity_jobj.get("activity");
+            if(activity_jobj.containsKey("xmlName")) {
+                xmlname = (String) activity_jobj.get("xmlName");
 
-                for(int j=0; j<activity_list.size(); j++) {
-//                    JSONObject tempObject = new JSONObject();
-//                    JSONArray temparray = (JSONArray)activity_jobj.get("object");
-//                    tempObject.put("name",activity_jobj.get("name"));
-//                    tempObject.put("height",activity_jobj.get("height"));
-//                    tempObject.put("width",activity_jobj.get("width"));
-//                    tempObject.put("x",activity_jobj.get("x"));
-//                    tempObject.put("y",activity_jobj.get("y"));
-//                    tempObject.put("library",activity_jobj.get("library"));
-//                    tempObject.put("object",temparray);
+                // xml 이름이 있나 없나 탐색
+                for (int j = 0; j < xmlArrayData.size(); j++) {
+                    JSONObject xmltempJobj;
+                    xmltempJobj = (JSONObject) xmlArrayData.get(j);
+                    if (xmlname.equals(xmltempJobj.get("name"))) {
 
-                    String activity_name;
-                    activity_name=(String)activity_list.get(j);
+                        Activity a = new Activity(this.activity_list, activity_jobj, parlPanel, this, xmltempJobj);
 
-                    Activity a = new Activity(this.activity_list, activity_jobj, parlPanel, this, activity_name);
+                        this.activity_list.put((String) activity_jobj.get("name"), a);
+                        a.setOverbearing(true);
+                        jpan.add(a);
+                        break;
 
-                    this.activity_list.put(activity_name, a);
-                    a.setOverbearing(true);
-                    jpan.add(a);
+                    } else {
+                        if(j==xmlArrayData.size()-1){
+                            activity_jobj.remove("xmlName");
+                            Activity a = new Activity(this.activity_list, activity_jobj, parlPanel, this);
+
+                            this.activity_list.put((String) activity_jobj.get("name"), a);
+                            a.setOverbearing(true);
+                            jpan.add(a);
+                        }
+                    }
+
                 }
-
             }
+            else{
+                Activity a = new Activity(this.activity_list, activity_jobj, parlPanel, this);
 
+                this.activity_list.put((String) activity_jobj.get("name"), a);
+                a.setOverbearing(true);
+                jpan.add(a);
+            }
         }
 
         revalidate();       // 무효화 선언된 화면을 알려줌
@@ -311,6 +337,11 @@ public class storyBoard extends JPanel {
 
             sendJSonData();
             repaint_window();
+
+           setRootJObject();
+           drawActivity();
+
+
         }
     }
     public void sendJSonData(){
@@ -337,9 +368,9 @@ public class storyBoard extends JPanel {
 
         public NewWindow() {
 
-            int standard_x =Constant.activitySize_X;
+            int standard_x =Constant.activitySize_X/2;
 
-            int standard_y =Constant.activitySize_Y;
+            int standard_y =Constant.activitySize_Y/2;
             int standard_scale = standard_y/250;
 
             this.setSize(standard_x+standard_x/10, standard_y/4);          //창 사이즈
@@ -410,9 +441,9 @@ public class storyBoard extends JPanel {
         }
 
         public NewWindow(Point p){
-            int standard_x =Constant.activitySize_X;
+            int standard_x =Constant.activitySize_X/2;
 
-            int standard_y =Constant.activitySize_Y;
+            int standard_y =Constant.activitySize_Y/2;
             int standard_scale = standard_y/250;
 
             this.setSize(standard_x+standard_x/10, standard_y/4);          //창 사이즈
@@ -483,22 +514,205 @@ public class storyBoard extends JPanel {
         }
 
     }
+    class NewXML extends JFrame{
+
+        JLabel xmlName_label = new JLabel("XML name :");
+        JTextField xmlName_Field = new JTextField();
+        JButton okbutton = new JButton("OK");
+
+        public NewXML() {
+
+            int standard_x =Constant.activitySize_X/2;
+
+            int standard_y =Constant.activitySize_Y/2;
+            int standard_scale = standard_y/250;
+
+            this.setSize(standard_x+standard_x/10, standard_y/4);          //창 사이즈
+            this.setUndecorated(true);      //title bar 제거
+            this.setLocation(100,100);
+            this.setVisible(true);
+            this.setLayout(null);   // 자유 레이아웃
+            this.getRootPane().setBorder(new LineBorder(Color.black));  //테두리 설정
+
+            okbutton.setMargin(new Insets(0, 0, 0, 0));
+
+            xmlName_Field.setFont(new Font("Serif", Font.PLAIN, standard_scale*18 ));
+            xmlName_label.setFont(new Font("Serif", Font.PLAIN, standard_scale*18 ));
+
+
+            xmlName_label.setLocation(standard_scale*5, standard_scale*5);
+            xmlName_Field.setLocation(standard_scale*55, standard_scale*5);
+            okbutton.setLocation(standard_scale*100, standard_scale*35);
+
+            xmlName_label.setSize(standard_scale*50, standard_scale*20);
+            xmlName_Field.setSize(standard_scale*100, standard_scale*20);
+            okbutton.setSize(standard_scale*50, standard_scale*20);
+
+            this.add(xmlName_label);
+
+            this.add(xmlName_Field);
+            this.add(okbutton);
+
+            // 포커스가 벗어나면 알아서 꺼진다.
+            this.addWindowFocusListener(new WindowFocusListener() {
+                @Override
+                public void windowGainedFocus(WindowEvent e) {
+                }
+
+                @Override
+                public void windowLostFocus(WindowEvent e) {
+                    dispose();
+                }
+            });
+            // 오케이 버튼을 눌렀을때의 위한 함수
+            okbutton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Xml a = new Xml(xmlName_Field.getText(), (JSONArray)jobjRoot.get("xmls"));
+                    dispose();
+                    setRootJObject();
+                    drawActivity();
+                }
+            });
+            // 엔터시 입력시의 이벤트를 위한 함수
+            xmlName_Field.addKeyListener(new KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        Xml a = new Xml(xmlName_Field.getText(), (JSONArray)jobjRoot.get("xmls"));
+                        dispose();
+                        setRootJObject();
+                        drawActivity();
+                    }
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+
+                }
+            });
+        }
+
+        public NewXML(Point p){
+            int standard_x =Constant.activitySize_X/2;
+
+            int standard_y =Constant.activitySize_Y/2;
+            int standard_scale = standard_y/250;
+
+            this.setSize(standard_x+standard_x/10, standard_y/4);          //창 사이즈
+            this.setUndecorated(true);      //title bar 제거
+            this.setLocation(p.x,p.y);
+            this.setVisible(true);
+            this.setLayout(null);   // 자유 레이아웃
+            this.getRootPane().setBorder(new LineBorder(Color.black));  //테두리 설정
+
+            okbutton.setMargin(new Insets(0, 0, 0, 0));
+
+            xmlName_Field.setFont(new Font("Serif", Font.PLAIN, standard_scale*18 ));
+            xmlName_label.setFont(new Font("Serif", Font.PLAIN, standard_scale*18 ));
+
+
+            xmlName_label.setLocation(standard_scale*5, standard_scale*5);
+            xmlName_Field.setLocation(standard_scale*55, standard_scale*5);
+            okbutton.setLocation(standard_scale*100, standard_scale*35);
+
+            xmlName_label.setSize(standard_scale*50, standard_scale*20);
+            xmlName_Field.setSize(standard_scale*100, standard_scale*20);
+            okbutton.setSize(standard_scale*50, standard_scale*20);
+
+            this.add(xmlName_label);
+
+            this.add(xmlName_Field);
+            this.add(okbutton);
+
+            // 포커스가 벗어나면 알아서 꺼진다.
+            this.addWindowFocusListener(new WindowFocusListener() {
+                @Override
+                public void windowGainedFocus(WindowEvent e) {
+                }
+
+                @Override
+                public void windowLostFocus(WindowEvent e) {
+                    dispose();
+                }
+            });
+            // 오케이 버튼을 눌렀을때의 위한 함수
+            okbutton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Xml a = new Xml(xmlName_Field.getText(), (JSONArray)jobjRoot.get("xmls"));
+                    dispose();
+                    setRootJObject();
+                    drawActivity();
+
+                }
+            });
+            // 엔터시 입력시의 이벤트를 위한 함수
+            xmlName_Field.addKeyListener(new KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        Xml a = new Xml(xmlName_Field.getText(), (JSONArray)jobjRoot.get("xmls"));
+                        dispose();
+                        setRootJObject();
+                        drawActivity();
+                    }
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+
+                }
+            });
+        }
+
+    }
 
     //------- 팝업 메뉴 ------------------
     class PopUpMenu extends JPopupMenu{
         JMenuItem repaint;
+        JMenuItem xmlnew;
+        JMenuItem removeXml;
         public PopUpMenu() {
             repaint = new JMenuItem("Repaint");
-
+            xmlnew = new JMenuItem("Make Xml");
+            removeXml =new JMenuItem("Remove Xml");
             repaint.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     drawActivity();
                     repaint_window();
+                    sendJSonData();
                 }
             });
 
+
+            xmlnew.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    NewXML a =new NewXML();
+
+                }
+            });
+            removeXml.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Remove_Xml a =new Remove_Xml();
+                }
+            });
             add(repaint);
+            add(xmlnew);
+            add(removeXml);
         }
 
     }
@@ -512,7 +726,7 @@ public class storyBoard extends JPanel {
             drawNextLine(g);
 
             if(isActivity) {
-                g.drawRect(scroll_p.x+x, scroll_p.y+y, Constant.activitySize_X, Constant.activitySize_Y);
+                g.drawRect(scroll_p.x+x, scroll_p.y+y, Constant.activitySize_X/2, Constant.activitySize_Y/2);
             }
         }
     }
@@ -539,14 +753,18 @@ public class storyBoard extends JPanel {
     public void drawline(Activity start, Activity end, Graphics g){
     //     System.out.println(start.getId() +" -> " + end.getId());
 
-         g.drawLine((start.getActivity_position().x+ start.getActivity_width()/2)  , (start.getActivity_position().y+ start.getActivity_height()/2),  (end.getActivity_position().x+end.getActivity_width()/2),(end.getActivity_position().y+ end.getActivity_height()/2));
+        Point startP = new Point((start.getActivity_position().x+ start.getActivity_width()/2),(start.getActivity_position().y+ start.getActivity_height()/2));
+        Point endP = new Point( (end.getActivity_position().x+end.getActivity_width()/2),(end.getActivity_position().y+ end.getActivity_height()/2));
+        Point centerP = new Point((startP.x+endP.x)/2,(startP.y+endP.y)/2);
+        Point lightP = new Point ((startP.x+endP.x*2)/3,(startP.y+endP.y*2)/3);
+
+        g.drawLine(startP.x  , startP.y,  endP.x, endP.y);
+        g.fillOval(lightP.x-10,lightP.y-10,20,20);
 
     }
-
     public void getRootObject(){
         System.out.println(jobjRoot);
     }
-
     public void setRootJObject(){
         String jsonString = jobjRoot.toJSONString();
         try {
@@ -558,6 +776,108 @@ public class storyBoard extends JPanel {
         {
             System.out.println(e);
         }
+    }
+    class Remove_Xml extends JFrame {
+
+        JLabel next_label;
+
+        JButton okbutton;
+        JButton cancelButton;
+        JComboBox<String> combo = new JComboBox<String>();
+        int scale_size;
+
+        public Remove_Xml(){
+
+            this.setUndecorated(true);      //title bar 제거
+            this.setSize(350, 150);          //창 사이즈
+            this.setVisible(true);
+            this.setLayout(null);
+            this.setLocation(mouse_p.x, mouse_p.y);   // 현재 버튼의 위에 덮기 위한 것
+            okbutton = new JButton("OK");
+            cancelButton = new JButton("NO");
+            next_label = new JLabel("XML Choice :");
+
+            okbutton.setMargin(new Insets(0, 0, 0, 0));
+            okbutton.setLocation(100, 100);
+            okbutton.setSize(100, 40);
+
+            cancelButton.setMargin(new Insets(0, 0, 0, 0));
+            cancelButton.setLocation(220, 100);
+            cancelButton.setSize(100, 40);
+
+            combo.setSize(300,40);
+            combo.setLocation(50,50);
+
+            next_label.setSize(100,20);
+            next_label.setLocation(10,10);
+
+            okbutton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(combo.getSelectedItem().equals("NONE")){
+
+                    }
+                    else
+                    {
+                        int num=100000;
+                        JSONObject tempObject;
+                        for(int i=0;i<xmlArrayData.size();i++){
+                            String tempString;
+                            tempObject= (JSONObject) xmlArrayData.get(i);
+
+                            tempString=(String)tempObject.get("name");
+                            if(tempString.equals( combo.getSelectedItem()))
+                            {
+                                num=i;
+                            }
+                        }
+                        if(num!=100000)
+                        xmlArrayData.remove(num);
+
+                    }
+
+                    dispose();
+                    setRootJObject();
+                    drawActivity();
+                }
+            });
+            cancelButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                }
+            });
+
+
+            for(int i=0; i<xmlArrayData.size(); i++)
+            {
+                JSONObject tempobj;
+                tempobj=(JSONObject)xmlArrayData.get(i);
+                combo.addItem((String)tempobj.get("name"));
+            }
+
+            combo.addItem("NONE");
+            combo.setSelectedItem("NONE");
+
+            add(okbutton);
+            add(cancelButton);
+            add(combo);
+            add(next_label);
+            this.addWindowFocusListener(new WindowFocusListener() {
+                @Override
+                public void windowGainedFocus(WindowEvent e) {
+
+                }
+
+                @Override
+                public void windowLostFocus(WindowEvent e) {
+
+                    dispose();
+                }
+            });
+        }
+
+
     }
 
 }

@@ -328,7 +328,8 @@ public class storyBoard extends JPanel {
         else {
             JSONObject obj = new JSONObject();
 
-            Activity a = new Activity(resultStr, list, obj, pos);
+            JSONArray xmlsarray = (JSONArray)jobjRoot.get("xmls");
+            Activity a = new Activity(resultStr, list, obj, pos, xmlsarray);
             activityArrayData.add(obj);
 
             a.setOverbearing(true);

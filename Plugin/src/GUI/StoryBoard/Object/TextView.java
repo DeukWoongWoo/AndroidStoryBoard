@@ -97,10 +97,10 @@ public class TextView extends ObjectCustom {
 
         getStroyBoard(stroy);
         name = (String) objectJObject.get("name");
-        height = (long) objectJObject.get("height");
-        width = (long) objectJObject.get("width");
-        x = (long) objectJObject.get("x");
-        y = (long) objectJObject.get("y");
+        height = (long) objectJObject.get("height")/2;
+        width = (long) objectJObject.get("width")/2;
+        x = (long) objectJObject.get("x")/2;
+        y = (long) objectJObject.get("y")/2;
 
         if (objectJObject.containsKey("next")) {
             nextActivitylist.add(objectJObject.get("next"));
@@ -131,8 +131,14 @@ public class TextView extends ObjectCustom {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && !e.isConsumed()) {
-                    Change_Window c = new Change_Window(getId(),getText(),e.getLocationOnScreen(), e.getPoint());
+                    Change_Window c = new Change_Window(getId(),getText(),e.getPoint(), e.getPoint());
                     e.consume();
+                }
+                if (e.getModifiers() == MouseEvent.BUTTON3_MASK)
+                {
+                    PopUpMenu menu = new PopUpMenu();
+                    menu.show(e.getComponent(), e.getX(), e.getY());
+
                 }
             }
 
@@ -326,5 +332,23 @@ public class TextView extends ObjectCustom {
 
         return checkId;
     }
+    class PopUpMenu extends JPopupMenu{
+        JMenuItem remove;
+        public PopUpMenu() {
 
+            remove = new JMenuItem("Remove");
+
+
+
+            remove.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    removeObject();
+
+                }
+            });
+            add(remove);
+        }
+
+    }
 }

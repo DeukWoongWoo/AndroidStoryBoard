@@ -101,11 +101,11 @@ public class Activity extends JPanel {
         activitylist =list;
 
     }
-    public Activity(String name , HashMap<String, Activity> list, JSONObject obj, Point pos){
+    public Activity(String name , HashMap<String, Activity> list, JSONObject obj, Point pos, JSONArray xmlarray){
         String layout_type ="linear layout";
         activityObject =obj;
         JSONArray array = new JSONArray();
-
+        String temp;
 
         setId(name);
         this.setName(name);
@@ -137,6 +137,13 @@ public class Activity extends JPanel {
 //            array.add(tempobj);
 //        }
 
+        temp=getId();
+
+        temp=temp.toLowerCase();
+
+        Xml a = new Xml(temp+".xml",xmlarray);
+
+        obj.put("xmlName", temp+".xml");
         addDragListeners();
         activitylist =list;
 

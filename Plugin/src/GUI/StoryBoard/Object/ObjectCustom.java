@@ -535,10 +535,10 @@ public class ObjectCustom extends JPanel {
         sendData();
 
 
-        JsonToXml jsonToXml = new JsonToXml();
-        jsonToXml.make(Constant.FILE_ROUTE);
-        XmlToJson xmlToJson = new XmlToJson();
-        xmlToJson.make();
+//        JsonToXml jsonToXml = new JsonToXml();
+//        jsonToXml.make(Constant.FILE_ROUTE);
+//        XmlToJson xmlToJson = new XmlToJson();
+//        xmlToJson.make();
 
 
         storyboard.setRootJObject();

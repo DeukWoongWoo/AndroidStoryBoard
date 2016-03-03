@@ -147,6 +147,12 @@ public class Image_View extends ObjectCustom {
                     Change_Window c = new Change_Window(getId(), e.getLocationOnScreen(), e.getPoint());
                     e.consume();
                 }
+                if (e.getModifiers() == MouseEvent.BUTTON3_MASK)
+                {
+                    PopUpMenu menu = new PopUpMenu();
+                    menu.show(e.getComponent(), e.getX(), e.getY());
+
+                }
             }
 
             @Override
@@ -385,5 +391,23 @@ public class Image_View extends ObjectCustom {
             return this.img;
         }
     }
+    class PopUpMenu extends JPopupMenu{
+        JMenuItem remove;
+        public PopUpMenu() {
 
+            remove = new JMenuItem("Remove");
+
+
+
+            remove.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    removeObject();
+
+                }
+            });
+            add(remove);
+        }
+
+    }
 }

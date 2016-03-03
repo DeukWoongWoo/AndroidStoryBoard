@@ -1,5 +1,7 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
+import Analysis.RedoUndo.CommandManager;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.UI.palettePanel;
 import GUI.StoryBoard.storyBoard;
@@ -101,11 +103,11 @@ public class Activity extends JPanel {
         activitylist =list;
 
     }
-    public Activity(String name , HashMap<String, Activity> list, JSONObject obj, Point pos){
+    public Activity(String name , HashMap<String, Activity> list, JSONObject obj, Point pos, JSONArray xmlarray){
         String layout_type ="linear layout";
         activityObject =obj;
         JSONArray array = new JSONArray();
-
+        String temp;
 
         setId(name);
         this.setName(name);
@@ -136,6 +138,17 @@ public class Activity extends JPanel {
 //            Layout_Relative_Root a =  new Layout_Relative_Root(getId(), objectList , tempobj);
 //            array.add(tempobj);
 //        }
+
+        temp=getId();
+
+        temp=temp.toLowerCase();
+
+        Xml a = new Xml(temp+".xml",xmlarray);
+
+        obj.put("xmlName", temp+".xml");
+
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createActivity(getId());
 
         addDragListeners();
         activitylist =list;
@@ -466,6 +479,7 @@ public class Activity extends JPanel {
             activitylist.remove(removeKey);
         }
         setVisible(false);
+
 
 
     }

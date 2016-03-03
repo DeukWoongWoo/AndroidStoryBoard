@@ -59,13 +59,14 @@ public class GenerateAction extends AnAction {
         String xmlName;
 
 
-
+        makeXml.makeActivityxml("c");
 
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 
         JsonToXml jsonToXml = new JsonToXml();
         jsonToXml.make("C:/Users/cho/Desktop/json/plugin.json");
+
 
 /*
         try{

@@ -1,5 +1,7 @@
 package GUI.StoryBoard;
 
+import Analysis.Constant.ConstantEtc;
+import Analysis.Constant.SharedPreference;
 import GUI.StoryBoard.Object.Activity;
 import GUI.StoryBoard.Object.Xml;
 import GUI.StoryBoard.UI.palettePanel;
@@ -199,7 +201,11 @@ public class storyBoard extends JPanel {
     // JSON 파일을 받은 것을 전부 그려준다.
     public void drawActivity() {
         removeAllActivity();
-        jobjRoot = parserJObject(Constant.FILE_ROUTE);
+
+        String pathpath;
+        pathpath= SharedPreference.PROJECT.get() + ConstantEtc.PROJECT_XML_PATH + "/assets";
+
+        jobjRoot = parserJObject(pathpath+"/plugin.json");
 
         setAppName((String)jobjRoot.get("appName"));
         activityArrayData = (JSONArray)jobjRoot.get("activities");
@@ -328,7 +334,8 @@ public class storyBoard extends JPanel {
         else {
             JSONObject obj = new JSONObject();
 
-            Activity a = new Activity(resultStr, list, obj, pos);
+            JSONArray xmlsarray = (JSONArray)jobjRoot.get("xmls");
+            Activity a = new Activity(resultStr, list, obj, pos, xmlsarray);
             activityArrayData.add(obj);
 
             a.setOverbearing(true);

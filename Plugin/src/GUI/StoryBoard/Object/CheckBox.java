@@ -1,5 +1,6 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
@@ -101,7 +102,7 @@ public class CheckBox extends ObjectCustom {
     public CheckBox(Constant.ObjectNew objectNew) {
         long width, height, x, y ;
         String name, color;
-
+        typeObject= Type.CheckBox;
         panel1 = new ImagePanel1("/icon/radio.png");
         name = "@+id/"+"CheckBox"+ objectNew.name;
         setText("New CheckBox");
@@ -165,6 +166,12 @@ public class CheckBox extends ObjectCustom {
                 if (e.getClickCount() == 2 && !e.isConsumed()) {
                     Change_Window c = new Change_Window(getId(),getText(),e.getLocationOnScreen(), e.getPoint());
                     e.consume();
+                }
+                if (e.getModifiers() == MouseEvent.BUTTON3_MASK)
+                {
+                    PopUpMenu menu = new PopUpMenu();
+                    menu.show(e.getComponent(), e.getX(), e.getY());
+
                 }
             }
 
@@ -327,4 +334,24 @@ public class CheckBox extends ObjectCustom {
         content.setForeground(Color.black);
     }
 
+
+    class PopUpMenu extends JPopupMenu{
+        JMenuItem remove;
+        public PopUpMenu() {
+
+            remove = new JMenuItem("Remove");
+
+
+
+            remove.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    removeObject();
+
+                }
+            });
+            add(remove);
+        }
+
+    }
 }

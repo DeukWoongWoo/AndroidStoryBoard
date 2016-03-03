@@ -1,6 +1,7 @@
 package GUI.StoryBoard.Object;
 
 import Analysis.Main.ProjectAnalysis;
+import Analysis.RedoUndo.CodeBuilder.Type;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
@@ -39,7 +40,7 @@ public class Image_View extends ObjectCustom {
     public Image_View(String name_ , HashMap<String,  ObjectCustom> list, JSONObject obj, Point p) {
         long width, height, x, y ;
         String name, color;
-
+        typeObject= Type.ImageView;
         System.out.println(obj);
         name = "@+id/"+"imageView"+ name_;
         width = Constant.imageVIewWidth;
@@ -146,6 +147,12 @@ public class Image_View extends ObjectCustom {
                 if (e.getClickCount() == 2 && !e.isConsumed()) {
                     Change_Window c = new Change_Window(getId(), e.getLocationOnScreen(), e.getPoint());
                     e.consume();
+                }
+                if (e.getModifiers() == MouseEvent.BUTTON3_MASK)
+                {
+                    PopUpMenu menu = new PopUpMenu();
+                    menu.show(e.getComponent(), e.getX(), e.getY());
+
                 }
             }
 
@@ -385,5 +392,23 @@ public class Image_View extends ObjectCustom {
             return this.img;
         }
     }
+    class PopUpMenu extends JPopupMenu{
+        JMenuItem remove;
+        public PopUpMenu() {
 
+            remove = new JMenuItem("Remove");
+
+
+
+            remove.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    removeObject();
+
+                }
+            });
+            add(remove);
+        }
+
+    }
 }

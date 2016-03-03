@@ -4,6 +4,8 @@ function CheckBox(){
     var textSvg;
     var textSize;
 
+    var rectSize = 64;
+
     this.create = function (target) {
         own = target.append('rect');
         rect = target.append('rect');
@@ -22,10 +24,10 @@ function CheckBox(){
             .attr('y', this.y());
 
         var temp = (this.height() < this.width() ? this.height() : this.width());
-        rect.attr("width", (this.width() < 64 || this.height() < 64) ?  temp : 64)
-            .attr("height", (this.width() < 64 || this.height() < 64) ?  temp : 64)
-            .attr('x', this.x() + 32)
-            .attr('y', this.y() + this.height()/2)
+        rect.attr("width", (this.width() < rectSize || this.height() < rectSize) ?  temp : rectSize)
+            .attr("height", (this.width() < rectSize || this.height() < rectSize) ?  temp : rectSize)
+            .attr('x', this.x() + rectSize/2)
+            .attr('y', this.y() + this.height()/2 - rectSize/2)
             .attr('stroke', 'black')
             .attr('stroke-width', 10)
             .attr('fill', 'none')
@@ -34,20 +36,31 @@ function CheckBox(){
             .attr("id", this.name());
 
         if (this.getText()) {
+            var t = this.width();
+            this.width(t - rectSize);
             textSvg
-                .attr("width", this.width() - 50)
-                .attr("height", this.height() - 50)
-                .attr('x', this.x() + 64 + 10)
-                .attr('y', this.y() + 10);
+                .attr("width", this.width() - 20)
+                .attr("height", this.height() - 20)
+                .attr('x', this.x() + rectSize/2 + rectSize)
+                .attr('y', this.y() + rectSize/4)
+                .attr("object-name", this.name())
+                .attr("class", this.activityName() + '-activity-name')
+                .attr("id", this.name());
 
-            var textLine = this.height() / this.textSize();
+            var textLine = this.getText().length / (this.width() / (this.textSize()));
+            textLine = Math.round(textLine);
             var w = this.width();
+            var h = this.height();
             textSize = this.textSize();
 
+            //console.log('textLine');
+            //console.log(textLine);
+            //console.log(this.getText());
+            //console.log(this.getText().length);
             textSvg.append('path').attr('id', this.name() + '-text').attr('d', function () {
                 var d = '';
                 for (var i = 0; i < textLine; i++) {
-                    d += 'M10,' + (textSize * i) + ' H' + w + ' ';
+                    d += 'M0,' + ((h/(textLine+1))* (i+1)) + ' H' + w + ' ';
                 }
                 return d;
             });

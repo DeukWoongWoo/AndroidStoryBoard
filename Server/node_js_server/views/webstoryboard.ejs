@@ -87,7 +87,7 @@
     });
 
     $("#storyboard-svg").on("mousewheel", function (event) {
-        var baeyul = 5;
+        var baeyul = 15;
         var zoomValue = event.originalEvent.wheelDelta;
         if (box.width + zoomValue * baeyul > 0 && box.height + zoomValue * baeyul > 0
                 && box.width + zoomValue < backWidth && box.height + zoomValue < backHeight) {
@@ -96,9 +96,9 @@
             box.width += zoomValue;
             box.height += zoomValue;
 
-            d3.selectAll('#storyboard-svg text').attr('font-size', function (d, i) {
-                return d3.select(this).attr('font-size') * 1 - zoomValue * 0.02;
-            });
+//            d3.selectAll('#storyboard-svg text').attr('font-size', function (d, i) {
+//                return d3.select(this).attr('font-size') * 1 - zoomValue * 0.02;
+//            });
         }
     });
 
@@ -107,6 +107,10 @@
     var targetObj;
     var startLineObj;
     var endLineObj;
+    var allow;
+//    var startAllowObj;
+//    var endAllowObj;
+    var allowStartX;
 
     function startDrag(e, obj) {
         obj = changeLocation(obj);
@@ -140,6 +144,7 @@
     function saveLineInfo(obj) {
         var sCount = 0, eCount = 0;
         var line = $('line' + '.' + $(obj).attr('id'));
+
         startLineObj = new Array();
         endLineObj = new Array();
 
@@ -174,10 +179,8 @@
 
     function moveLine(lineObj, e_obj, se) {
         for (var i in lineObj) {
-            var x = lineObj[i].getAttribute('x' + se) * 1;
-            var y = lineObj[i].getAttribute('y' + se) * 1;
-            lineObj[i].setAttribute('x' + se, (rX + e_obj.clientX * bae) + 150);
-            lineObj[i].setAttribute('y' + se, (rY + e_obj.clientY * bae) + 250);
+            lineObj[i].setAttribute('x' + se, (rX + e_obj.clientX * bae) + 768);
+            lineObj[i].setAttribute('y' + se, (rY + e_obj.clientY * bae) + 1280);
         }
     }
 

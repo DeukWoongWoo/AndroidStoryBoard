@@ -19,6 +19,7 @@ import com.intellij.psi.PsiManager;
 import com.intellij.refactoring.PackageWrapper;
 import com.intellij.refactoring.util.RefactoringUtil;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,7 +53,14 @@ public class ProjectAnalysis {
         PsiDirectory psiDirectory = currentDirectory(path);
         findFiles(ConstantEtc.XML_PATTERN, psiDirectory);
 
-        if (baseDir.findFileByRelativePath(path + "/java/assets") == null) makeDirectory(path+"/java", "assets");
+
+        makeAssetsDirectory();
+//        if (baseDir.findFileByRelativePath(path + "/java/assets") == null) makeDirectory(path+"/java", "assets");
+    }
+
+    private void makeAssetsDirectory(){
+        File file = new File(project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets");
+        if(!file.exists()) file.mkdirs();
     }
 
     private void makeDirectory(String path, String name) {

@@ -125,7 +125,7 @@ public class Layout_Root extends ObjectCustom {
     }
     public Layout_Root(HashMap<String, ObjectCustom> list , JSONObject obj, palettePanel pan, ArrayList nextlist, HashMap<String, Activity> actList, storyBoard stroy, String ActivitName) {
         super(list,obj,pan,nextlist,actList,stroy,ActivitName);
-        this.activityName = ActivitName;
+        this.XmlName = ActivitName;
         panel = pan;
         objectJObject=obj;
         objectList =list;
@@ -227,46 +227,46 @@ public class Layout_Root extends ObjectCustom {
 
     public ObjectCustom CreateObjectCustom(String type, JSONObject jobj){
         if(type.equals("linear layout")){
-            Layout_Linear linear = new Layout_Linear(objectList, jobj, panel, nextActivitylist, activityList,  storyboard,activityName);
+            Layout_Linear linear = new Layout_Linear(objectList, jobj, panel, nextActivitylist, activityList,  storyboard, XmlName);
             linear.getStroyBoard(storyboard);
             return linear;
         }
         else if(type.equals("RelativeLayout")){
-            Layout_Relative relative = new Layout_Relative(objectList, jobj, panel, nextActivitylist, activityList,  storyboard,activityName);
+            Layout_Relative relative = new Layout_Relative(objectList, jobj, panel, nextActivitylist, activityList,  storyboard, XmlName);
             relative.getStroyBoard(storyboard);
             return relative;
         }
         else if(type.equals("Button")){
-            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist,activityList,  storyboard,activityName);
+            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist,activityList,  storyboard, XmlName);
             b.getStroyBoard(storyboard);
             return b;
         }
         else if(type.equals("button")){
-            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
+            Button_Click b = new Button_Click(objectList, jobj,nextActivitylist, activityList,  storyboard, XmlName);
             b.getStroyBoard(storyboard);
             return b;
         }
         else if(type.equals("radio button")){
-            Button_Radio b= new Button_Radio(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
+            Button_Radio b= new Button_Radio(objectList, jobj,nextActivitylist, activityList,  storyboard, XmlName);
             b.getStroyBoard(storyboard);
             return b;
         }
         else if(type.equals("RadioButton")){
-            Button_Radio b= new Button_Radio(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
+            Button_Radio b= new Button_Radio(objectList, jobj,nextActivitylist, activityList,  storyboard, XmlName);
             b.getStroyBoard(storyboard);
             return b;
         }
         else if(type.equals("ImageVIew")){
-            Image_View i= new Image_View(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
+            Image_View i= new Image_View(objectList, jobj,nextActivitylist, activityList,  storyboard, XmlName);
             i.getStroyBoard(storyboard);
             return i;
         }
         else if(type.equals("CheckBox")){
-            CheckBox c = new CheckBox(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
+            CheckBox c = new CheckBox(objectList, jobj,nextActivitylist, activityList,  storyboard, XmlName);
             return c;
         }
         else if(type.equals("TextView")){
-            TextView t = new TextView(objectList, jobj,nextActivitylist, activityList,  storyboard,activityName);
+            TextView t = new TextView(objectList, jobj,nextActivitylist, activityList,  storyboard, XmlName);
             t.getStroyBoard(storyboard);
             return t;
         }
@@ -345,6 +345,8 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         buttonNum++;
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
 
     }
     //-----------새로운 Radio 버튼 생성---------
@@ -387,6 +389,8 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         radiobuttonNum++;
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
     }
     public void newImageView(Point point){
         JSONArray tempArray;
@@ -403,6 +407,8 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         imageViewNum++;
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
     }
     public void newTextView(Point point){
         JSONArray tempArray;
@@ -419,6 +425,8 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         textViewNum++;
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
     }
     public void newCheckBox(Point point){
         JSONArray tempArray;
@@ -443,6 +451,8 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         textViewNum++;
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
     }
     public void newLInearLayout(){
         JSONArray tempArray;
@@ -501,10 +511,16 @@ public class Layout_Root extends ObjectCustom {
                     objectBooleanFalse();
                 }
                 else{
-                    objectBooleanFalse();
+                    isButton=false;
+                    isRadioButton=false;
+                    isImageView=false;
+                    isTextView=false;
+                    isCheckBok=false;
+
                     panel.setChoice(0);
 
                 }
+
                 mouse_p = e.getLocationOnScreen();
             }
 
@@ -517,7 +533,6 @@ public class Layout_Root extends ObjectCustom {
             public void mouseReleased(MouseEvent e) {
 
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 repaint();
@@ -677,9 +692,9 @@ public class Layout_Root extends ObjectCustom {
         String id_, activity_;
 
         id_=getId();
-        activity_=activityName;
+        activity_= XmlName;
 
-        System.out.println("id :"+id_+"  activity : "+activityName+ " library :" + library);
+        System.out.println("id :"+id_+"  activity : "+ XmlName + " library :" + library);
     }
 
     public void objectBooleanFalse(){
@@ -688,5 +703,9 @@ public class Layout_Root extends ObjectCustom {
         isImageView=false;
         isTextView=false;
         isCheckBok=false;
+
+
     }
+
+
 }

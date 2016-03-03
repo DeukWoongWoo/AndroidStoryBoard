@@ -30,6 +30,7 @@ public class palettePanel extends JPanel {
     JButton image_b =new JButton("Image View");
     JButton textview_b =new JButton("TextView");
     JButton checkbox_b = new JButton("CheckBox");
+
     public int choice = 0;
 
     public palettePanel() {

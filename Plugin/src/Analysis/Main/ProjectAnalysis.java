@@ -9,10 +9,14 @@ import Analysis.Parser.FileParser;
 import Analysis.Parser.XmlParser;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ProjectFileIndex;
+import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import com.intellij.refactoring.PackageWrapper;
+import com.intellij.refactoring.util.RefactoringUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,6 +50,15 @@ public class ProjectAnalysis {
 
         PsiDirectory psiDirectory = currentDirectory(path);
         findFiles(ConstantEtc.XML_PATTERN, psiDirectory);
+
+        makeDirectory(path, "assets");
+    }
+
+    private void makeDirectory(String path, String name) {
+        ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
+        final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(project.getBaseDir().findFileByRelativePath(path));
+        PackageWrapper packageWrapper = new PackageWrapper(PsiManager.getInstance(project).findFile(project.getProjectFile()).getManager(),name);
+        RefactoringUtil.createPackageDirectoryInSourceRoot(packageWrapper, sourceRootForFile);
     }
 
     public void executeAll() {

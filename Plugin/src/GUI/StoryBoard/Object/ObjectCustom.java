@@ -5,10 +5,10 @@ import GUI.StoryBoard.UI.palettePanel;
 import GUI.StoryBoard.storyBoard;
 import Xml.JsonToXml;
 import Xml.XmlToJson;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -26,11 +26,11 @@ public class ObjectCustom extends JPanel {
     private Point object_position;
     private int object_width, object_height;
     private String library_string;
-    public String activityName;
+    public String XmlName;
     private String text=null;
     private boolean fixedYN=false;
     private boolean librayYN;
-
+    private boolean focusYN =false;
 
     //--- json attribute 값 -----------------
     private String layout_width, layout_height, layout_alignParentStart, layout_marginStart, layout_alignParentTop;
@@ -66,7 +66,7 @@ public class ObjectCustom extends JPanel {
         checkkey=list;
         activityList=actList;
         getStroyBoard(stroy);
-        this.activityName=ActivitName;
+        this.XmlName =ActivitName;
 
         addDragListeners();
         addmouseClickEvent();
@@ -84,7 +84,7 @@ public class ObjectCustom extends JPanel {
         checkkey=list;
         activityList=actList;
         getStroyBoard(stroy);
-        this.activityName=ActivitName;
+        this.XmlName =ActivitName;
 
         addDragListeners();
         addmouseClickEvent();
@@ -336,7 +336,7 @@ public class ObjectCustom extends JPanel {
 
             @Override
             public void mousePressed(MouseEvent e) {
-
+                setBorder(new ResizableBorder(8));
 
                 ResizableBorder border = (ResizableBorder) getBorder();
                 cursor = border.getCursor(e);
@@ -349,20 +349,22 @@ public class ObjectCustom extends JPanel {
             public void mouseReleased(MouseEvent e) {
 
                 if(fixedYN)
-                    fixObject();
+                    fixObject(2);
                 repaint();
                 startPos = null;
                 fixedYN=false;
-
+                System.out.println("Mouse Released");
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-
+                if(focusYN==false)
+                    setBorder(new LineBorder(Color.black));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
+                setBorder(new ResizableBorder(8));
                 setCursor(Cursor.getDefaultCursor());
             }
         });
@@ -371,11 +373,13 @@ public class ObjectCustom extends JPanel {
         addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-
+                focusYN=true;
             }
 
             @Override
             public void focusLost(FocusEvent e) {
+                focusYN=false;
+                setBorder(new ResizableBorder(8));
                 startPos = null;
                 repaint();
 
@@ -523,14 +527,16 @@ public class ObjectCustom extends JPanel {
         storyboard =story;
     }
 
-    public void fixObject(){
+    public void fixObject(int scale){
         removeAttribue();
         setAttribue(objectJObject);
+        setScale(scale);
+
         sendData();
 
 
         JsonToXml jsonToXml = new JsonToXml();
-        jsonToXml.make(Constant.FILE_OUT);
+        jsonToXml.make(Constant.FILE_ROUTE);
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 
@@ -559,10 +565,10 @@ public class ObjectCustom extends JPanel {
         parent_w=parentWidth;
         parent_h=parentHeight;
 
-        top = String.valueOf((isPosition().y)/2);
-        bottom = String.valueOf( (parentHeight-(isPosition().y+getObject_height()))/2 );
-        right = String.valueOf( (parentWidth-(isPosition().x+getObject_width()))/2 );
-        left = String.valueOf( (isPosition().x)/2 );
+        top = String.valueOf((isPosition().y));
+        bottom = String.valueOf( (parentHeight-(isPosition().y+getObject_height())) );
+        right = String.valueOf( (parentWidth-(isPosition().x+getObject_width())) );
+        left = String.valueOf( (isPosition().x) );
 
         top+="dp";
         bottom+="dp";
@@ -656,10 +662,10 @@ public class ObjectCustom extends JPanel {
     public void getObjectElement(){
         long width, height, x, y ;
 
-        height=(long) objectJObject.get("height");
-        width=(long) objectJObject.get("width");
-        x=(long) objectJObject.get("x");
-        y=(long) objectJObject.get("y");
+        height=(long) objectJObject.get("height")/2;
+        width=(long) objectJObject.get("width")/2;
+        x=(long) objectJObject.get("x")/2;
+        y=(long) objectJObject.get("y")/2;
 
         if(objectJObject.containsKey("name"))
             setObjectName((String)objectJObject.get("name"));
@@ -713,6 +719,21 @@ public class ObjectCustom extends JPanel {
         return checkId;
     }
 
+    public void setScale(int scale){
+        long width, height, x, y ;
+
+        height=(long) objectJObject.get("height")*scale;
+        width=(long) objectJObject.get("width")*scale;
+        x=(long) objectJObject.get("x")*scale;
+        y=(long) objectJObject.get("y")*scale;
+
+        objectJObject.put("x",x);
+        objectJObject.put("y",y);
+        objectJObject.put("height",height);
+        objectJObject.put("width",width);
+
+    }
+
     class ImagePanel1 extends JPanel
     {
 
@@ -731,11 +752,42 @@ public class ObjectCustom extends JPanel {
 
         public void paintComponent(Graphics g) {
             g.drawImage(img, 0, 0, 50,50,this);
-            System.out.println("Image Panel1:"+ g.drawImage(img, 0, 0, 50,50,this));
+
         }
 
         public Image getImageView(){
             return this.img;
         }
     }
+
+    //------- 버튼 제거-------------------
+    public void removeObject(){
+        String temp = this.getId();
+        String removeKey=null;
+        this.setVisible(false);
+        Iterator<String> objectKeyList = checkkey.keySet().iterator();
+
+        while(objectKeyList.hasNext()) {
+            String key = (String) objectKeyList.next();
+            Object o = checkkey.get(key);
+            ObjectCustom b = (ObjectCustom) o;
+            System.out.println("탐색하는 아이디 :"+b.getId());
+            System.out.println("지워야 할 아이디 :"+ temp);
+            if(b.getId()==null)
+                continue;
+            if(b.getId().equals(temp)){
+                removeKey = key;
+                System.out.println("지우는 키 :"+removeKey);
+            }
+        }
+        if(removeKey!=null) {
+            objectJObject.clear();
+            checkkey.remove(removeKey);
+        }
+
+        storyboard.setRootJObject();
+        storyboard.drawActivity();
+    }
+
+
 }

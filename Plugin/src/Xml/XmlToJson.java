@@ -105,9 +105,15 @@ public class XmlToJson {
             addWebObject(xmlToJsonObject.getWebJson());
             addPluginObject(xmlToJsonObject.getPluginJson());
         }
+<<<<<<< HEAD
         makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
         makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
          //makeFile(makePluginJsonObject(), Constant.FILE_OUT);
+=======
+//        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
+       // makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
+         makeFile(makePluginJsonObject(), Constant.FILE_ROUTE);
+>>>>>>> 6ac677f4407f1200c62b3dbdaa175fee4b40fccc
 
     }
 

@@ -47,11 +47,11 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
         toolWindow.getContentManager().addContent(content);
 
         initProjectAnalysis(project);
-        try {
-            init();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            init();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void initProjectAnalysis(Project project) {
@@ -67,12 +67,10 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
         xmlToJson.make();
         centerPanel = new storyBoard();
         northPanel = new menuPanel();
-        eastPanel = new componetTreePanel();
         totalPanel.setLayout(new BorderLayout());
 
 
         totalPanel.add(centerPanel, "Center");
         totalPanel.add(northPanel, "North");
-        totalPanel.add(eastPanel, "East");
     }
 }

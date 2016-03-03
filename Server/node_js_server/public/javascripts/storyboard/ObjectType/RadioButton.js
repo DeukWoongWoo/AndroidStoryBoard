@@ -19,7 +19,7 @@ function RadioButton() {
     this.update = function () {
         own.attr("width", this.width())
             .attr("height", this.height())
-            .attr('fill', "red")//this.color())
+            .attr('fill', this.color())
             .attr('x', this.x())
             .attr('y', this.y());
 

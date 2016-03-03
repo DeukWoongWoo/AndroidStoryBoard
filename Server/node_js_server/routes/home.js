@@ -15,7 +15,7 @@ router.get('/err', function (req, res) {
 });
 
 router.get('/delete/image/:app_name', function (req, res) {
-    if(!(isDefined(req.session.user_id) && isDefined(req.params.app_name)))
+    if (!(isDefined(req.session.user_id) && isDefined(req.params.app_name)))
         res.redirect('/');
 
     var locationOfTarget = './users/' + req.session.user_id + '/' + req.params.app_name + '/';
@@ -116,8 +116,8 @@ router.get('/delete/:app_name', function (req, res) {
                 if (err) console.log(err);
             });
             var dirName = './users/' + req.session.user_id + '/' + req.params.app_name + '/';
-            deleteFiles(dirName, function(err){
-                if(err) console.log(err);
+            deleteFiles(dirName, function (err) {
+                if (err) console.log(err);
             });
         } else if (err)console.log(err);
         res.redirect('/');
@@ -138,7 +138,7 @@ function deleteFiles(dirName, callback) {
                 });
             },
             function (err) {
-                if(err)callback(err);
+                if (err)callback(err);
                 fs.rmdir(dirName, function (err) {
                     if (err) {
                         console.error(err);
@@ -250,7 +250,7 @@ function getAppAndRender(req, res, msg) {
         if (err)res.send(err);
         else {
             var page_data = {app: result, user_id: req.body.user_id};
-            if(isDefined(msg)) page_data.push({warring_result : msg});
+            if (isDefined(msg)) page_data.push({warring_result: msg});
             res.render('makedataapp', page_data);
         }
     });
@@ -403,22 +403,13 @@ router.get('/logout', function (req, res, next) {
 
 router.post('/registerapp', function (req, res, next) {
     registerApp(req, res, function (err) {
-        //if (err) console.log(err);//TODO: 웹에 경고 메시지 띄우기res.send(err);//
-        //else
-            renderAppPage(req, res, err);
+        renderAppPage(req, res, err);
     });
 });
 
 router.post('/registerimage', function (req, res, next) {
-    console.error("ajax test");
-    console.log(req.body);
-    console.log(req.session.user_id);
-    console.log(req.files);
-
     uploadImages(req, function (err) {
-        //if (err) res.send(err);//console.log(err);//TODO: 웹에 경고 메시지 띄우기
-        //else
-            renderAppPage(req, res, err);
+        renderAppPage(req, res, err);
     });
 });
 
@@ -430,7 +421,7 @@ function renderAppPage(req, res, msg) {
                 res.render('home', {
                     user_id: req.session.user_id,
                     app: appList,
-                    warring_result : msg,
+                    warring_result: msg,
                 });
             });
     });
@@ -502,13 +493,12 @@ function addActivityObject(req, activity, callback) {
         if (err)callback(err);
         else {
             for (var i in objects) {
-                setObjectData(req, activity, objects[i]);
-                console.log(objects[i].name);
-                console.log(req.body);
-                //todo:name 말고 여러가지 object의 속성들을 담아줘야한다.
-                db.addObject(req, function (err) {
-                    if (err)callback(err);
-                });
+                if (objects[i].type == "Button" || objects[i].type == "RadioButton" || objects[i].type == "CheckBox") {
+                    setObjectData(req, activity, objects[i]);
+                    db.addObject(req, function (err) {
+                        if (err)callback(err);
+                    });
+                }
             }
         }
     });
@@ -565,10 +555,11 @@ function updateStoryboard(req, callback) {
 }
 
 function uploadImages(req, callback) {
-    var maxFileSize = 1000000;
+    var maxFileSize = 100000000;
     var tmpOfTarget;
     var locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
     var target;
+
 
     async.series([
         function (callback) {
@@ -649,9 +640,20 @@ function uploadImages(req, callback) {
         return err;
     }
 
+    function deleteExtension(splitData) {
+        var returnData = "";
+        for (var i in splitData) {
+            if (i - 1 >= 0) returnData += splitData[i - 1];
+        }
+        return returnData;
+    }
+
     function renameAndSaveFile(uploadFileName, tmpOfTarget, callback) {
         //locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
-        target = locationOfTarget + uploadFileName;
+
+        target = locationOfTarget + deleteExtension(uploadFileName.split('.'));
+        console.log(deleteExtension(uploadFileName.split('.')));
+        console.log(target);
         saveFile(locationOfTarget, tmpOfTarget, target, function (err) {
             callback(err);
         });

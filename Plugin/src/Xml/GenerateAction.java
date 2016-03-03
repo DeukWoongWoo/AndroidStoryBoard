@@ -59,7 +59,7 @@ public class GenerateAction extends AnAction {
         String xmlName;
 
 
-
+        makeXml.makeActivityxml("C:/Users/cho/Desktop/json/b.xml");
 
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();

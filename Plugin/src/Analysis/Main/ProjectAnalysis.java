@@ -57,6 +57,8 @@ public class ProjectAnalysis {
 
     private void makeDirectory(String path, String name) {
         ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
+        System.out.println("[Test] >> " + path);
+        System.out.println("[Test] >> " + project.getBaseDir().findFileByRelativePath(path));
         final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(project.getBaseDir().findFileByRelativePath(path));
         PackageWrapper packageWrapper = new PackageWrapper(PsiManager.getInstance(project).findFile(project.getProjectFile()).getManager(), name);
         new WriteCommandAction.Simple(project, PsiManager.getInstance(project).findFile(project.getProjectFile()).getContainingFile()) {

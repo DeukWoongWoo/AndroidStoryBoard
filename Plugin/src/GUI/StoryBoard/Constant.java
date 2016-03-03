@@ -20,7 +20,7 @@ public interface Constant  {
     int imageVIewWidth =200;
     int imageViewHeight = 200;
 
-     String FILE_ROUTE ="C:/Users/우철/Documents/AndroidStoryBoard/Plugin/dong.txt";
+     String FILE_ROUTE ="C:/Users/우철/Documents/AndroidStoryBoard/Plugin/dong1.txt";
      String IMAGE_ROUTE ="C:\\Users\\우철\\Pictures\\Screenshots/aaa.jpg";
      String XML_ROUTE = "C:/Users/우철/Pictures/Screenshots";
      String FILE_OUT = "C:/Users/우철/Pictures/Screenshots/jsonfile.txt";

@@ -1,5 +1,7 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.Constant.ConstantEtc;
+import Analysis.Constant.SharedPreference;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.UI.palettePanel;
 import GUI.StoryBoard.storyBoard;
@@ -534,9 +536,12 @@ public class ObjectCustom extends JPanel {
 
         sendData();
 
+        String pathpath;
+        pathpath= SharedPreference.PROJECT.get() + ConstantEtc.PROJECT_XML_PATH + "/assets";
+
 
         JsonToXml jsonToXml = new JsonToXml();
-        jsonToXml.make(Constant.FILE_ROUTE);
+        jsonToXml.make(pathpath+"/plugin.json");
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 

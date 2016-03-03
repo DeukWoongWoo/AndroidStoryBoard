@@ -1,5 +1,6 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
@@ -101,7 +102,7 @@ public class CheckBox extends ObjectCustom {
     public CheckBox(Constant.ObjectNew objectNew) {
         long width, height, x, y ;
         String name, color;
-
+        typeObject= Type.CheckBox;
         panel1 = new ImagePanel1("/icon/radio.png");
         name = "@+id/"+"CheckBox"+ objectNew.name;
         setText("New CheckBox");

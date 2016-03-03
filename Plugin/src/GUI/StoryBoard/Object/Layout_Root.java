@@ -1,5 +1,7 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
+import Analysis.RedoUndo.CommandManager;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.UI.palettePanel;
 import GUI.StoryBoard.storyBoard;
@@ -338,6 +340,11 @@ public class Layout_Root extends ObjectCustom {
         sendfile.parentWidth=getObject_width();
         Button_Click b = new Button_Click(sendfile);
 
+
+        // 만들어주는 덕웅이 코드
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("button"+sendfile.name, XmlName, Type.Button);
+
         tempArray.add(tempObj);
 
         add(b);
@@ -345,8 +352,8 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         buttonNum++;
-        storyboard.setRootJObject();
-        storyboard.drawActivity();
+
+        newObject();
 
     }
     //-----------새로운 Radio 버튼 생성---------
@@ -382,6 +389,9 @@ public class Layout_Root extends ObjectCustom {
 
         Button_Radio b = new Button_Radio(sendfile);
 
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("Radio button"+sendfile.name, XmlName, Type.RadioButton);
+
         tempArray.add(tempObj);
 
         add(b);
@@ -389,8 +399,7 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         radiobuttonNum++;
-        storyboard.setRootJObject();
-        storyboard.drawActivity();
+        newObject();
     }
     public void newImageView(Point point){
         JSONArray tempArray;
@@ -400,6 +409,9 @@ public class Layout_Root extends ObjectCustom {
 
         Image_View b = new Image_View(""+imageViewNum, objectList,tempObj, point);
 
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("imageView"+imageViewNum, XmlName, Type.RadioButton);
+
         tempArray.add(tempObj);
 
         add(b);
@@ -407,8 +419,7 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         imageViewNum++;
-        storyboard.setRootJObject();
-        storyboard.drawActivity();
+        newObject();
     }
     public void newTextView(Point point){
         JSONArray tempArray;
@@ -418,6 +429,10 @@ public class Layout_Root extends ObjectCustom {
 
         TextView t = new TextView(""+imageViewNum, objectList,tempObj, point);
 
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("TextView"+imageViewNum, XmlName, Type.RadioButton);
+
+
         tempArray.add(tempObj);
 
         add(t);
@@ -425,8 +440,7 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         textViewNum++;
-        storyboard.setRootJObject();
-        storyboard.drawActivity();
+        newObject();
     }
     public void newCheckBox(Point point){
         JSONArray tempArray;
@@ -444,6 +458,10 @@ public class Layout_Root extends ObjectCustom {
 
         CheckBox t = new CheckBox(sendfile);
 
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("CheckBox"+sendfile.name, XmlName, Type.RadioButton);
+
+
         tempArray.add(tempObj);
 
         add(t);
@@ -451,8 +469,7 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         textViewNum++;
-        storyboard.setRootJObject();
-        storyboard.drawActivity();
+        newObject();
     }
     public void newLInearLayout(){
         JSONArray tempArray;

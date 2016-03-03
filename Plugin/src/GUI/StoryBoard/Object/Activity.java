@@ -1,5 +1,7 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
+import Analysis.RedoUndo.CommandManager;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.UI.palettePanel;
 import GUI.StoryBoard.storyBoard;
@@ -144,6 +146,10 @@ public class Activity extends JPanel {
         Xml a = new Xml(temp+".xml",xmlarray);
 
         obj.put("xmlName", temp+".xml");
+
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createActivity(getId());
+
         addDragListeners();
         activitylist =list;
 
@@ -473,6 +479,7 @@ public class Activity extends JPanel {
             activitylist.remove(removeKey);
         }
         setVisible(false);
+
 
 
     }

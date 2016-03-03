@@ -1,6 +1,7 @@
 package GUI.StoryBoard.Object;
 
 import Analysis.Main.ProjectAnalysis;
+import Analysis.RedoUndo.CodeBuilder.Type;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
@@ -39,7 +40,7 @@ public class Image_View extends ObjectCustom {
     public Image_View(String name_ , HashMap<String,  ObjectCustom> list, JSONObject obj, Point p) {
         long width, height, x, y ;
         String name, color;
-
+        typeObject= Type.ImageView;
         System.out.println(obj);
         name = "@+id/"+"imageView"+ name_;
         width = Constant.imageVIewWidth;

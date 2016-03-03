@@ -1,5 +1,6 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
@@ -52,6 +53,7 @@ public class Button_Click extends Button_Root {
     public Button_Click(Constant.ObjectNew objectNew) {
 
         super(objectNew.name, objectNew.objectList, objectNew.jObject);
+        typeObject= Type.Button;
 
         setText("NEW BUTTON");
         setId("@+id/"+"button"+objectNew.name);

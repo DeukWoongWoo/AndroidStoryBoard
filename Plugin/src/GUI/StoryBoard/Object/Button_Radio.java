@@ -1,5 +1,6 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
@@ -20,7 +21,7 @@ public class Button_Radio extends Button_Root {
     public Button_Radio(String name, HashMap<String, ObjectCustom> list, JSONObject obj) {
 
         super(name,list,obj);
-
+        typeObject= Type.RadioButton;
 
         content = new JLabel(getText());
         checkkey=list;
@@ -77,6 +78,7 @@ public class Button_Radio extends Button_Root {
 
 
         super(objectNew.name,objectNew.objectList,objectNew.jObject);
+        typeObject= Type.RadioButton;
 
         setText("NEW RadioButton");
         setId("@+id/"+"Radio button"+objectNew.name);

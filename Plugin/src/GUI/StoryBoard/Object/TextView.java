@@ -1,5 +1,6 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
@@ -31,7 +32,7 @@ public class TextView extends ObjectCustom {
     public TextView(String name_ , HashMap<String,  ObjectCustom> list, JSONObject obj, Point p) {
         long width, height, x, y ;
         String name, color;
-
+        typeObject= Type.TextView;
         System.out.println(obj);
         name = "TextView"+ name_;
         width = Constant.buttonWidth;

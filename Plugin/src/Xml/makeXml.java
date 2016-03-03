@@ -1,6 +1,7 @@
 package Xml;
 
 
+import Analysis.Main.ProjectAnalysis;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -46,8 +47,12 @@ public class makeXml {
 
         }
     }
-    public static void makeActivityxml(String activityXmlPath) {
+    public static void makeActivityxml(String xmlName) {
         try{
+
+            ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
+            String xmlPath = projectAnalysis.makeResourcePath(xmlName)+".xml";
+
             DocumentBuilderFactory documentBuilderFactory= DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document doc= documentBuilder.newDocument();
@@ -69,7 +74,7 @@ public class makeXml {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(activityXmlPath));
+            StreamResult result = new StreamResult(new File(xmlPath));
             transformer.transform(source,result);
 
         } catch (TransformerConfigurationException e) {

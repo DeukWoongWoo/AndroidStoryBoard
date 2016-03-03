@@ -30,7 +30,7 @@ public class makeXml {
     public static void makeUserLib(String assetPath) {
         try {
             File f = new File(assetPath);
-            if(f.isFile()){
+            if(!f.isFile()){
                 DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
                 Document doc = documentBuilder.newDocument();
@@ -50,7 +50,7 @@ public class makeXml {
     public static void makeUserInform(String userIdXmlpath){
         try{
             File f = new File(userIdXmlpath);
-            if(f.isFile()) {
+            if(!f.isFile()) {
                 DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
                 Document doc = documentBuilder.newDocument();
@@ -68,7 +68,7 @@ public class makeXml {
                 transformer.transform(source,result);
             }
         }catch (Exception e){
-
+            System.out.println("[userInfoMake]: Error1!!!!!!!");
         }
     }
     public static void makeActivityxml(String xmlName) {

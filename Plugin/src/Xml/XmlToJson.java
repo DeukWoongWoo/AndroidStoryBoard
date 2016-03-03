@@ -1,5 +1,7 @@
 package Xml;
 
+import Analysis.Constant.ConstantEtc;
+import Analysis.Constant.SharedPreference;
 import Analysis.Database.DataAccessObject.Java.JavaDAO;
 import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Database.DtatTransferObject.JavaDTO;
@@ -106,8 +108,11 @@ public class XmlToJson {
             addPluginObject(xmlToJsonObject.getPluginJson());
         }
 
-        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
-        makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
+        String pathpath;
+        pathpath=SharedPreference.PROJECT.get() + ConstantEtc.PROJECT_XML_PATH + "/assets";
+
+        makeFile(makeWebJsonObject(),pathpath+"/web.json");
+        makeFile(makePluginJsonObject(),pathpath+"/plugin.json");
          //makeFile(makePluginJsonObject(), Constant.FILE_OUT);
 
 //        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");

@@ -16,13 +16,13 @@ import java.io.File;
 /**
  * Created by cho on 2016-03-03.
  */
-public class makeUserLib {
+public class makeXml {
 
-    public makeUserLib(){
+    public makeXml(){
 
     }
 
-    public static void makeXml(String xmlPath) {
+    public static void makeUserLib(String xmlPath) {
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -39,4 +39,22 @@ public class makeUserLib {
 
         }
     }
+    public static void makeActivityxml(String xmlPath) {
+        try {
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document doc = documentBuilder.newDocument();
+            Element resources =  doc.createElement("resource");
+            doc.appendChild(resources);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(xmlPath));
+            transformer.transform(source,result);
+        }catch (Exception e){
+
+        }
+    }
+
 }

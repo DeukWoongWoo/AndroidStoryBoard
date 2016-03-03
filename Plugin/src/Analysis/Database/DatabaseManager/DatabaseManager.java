@@ -19,8 +19,8 @@ import java.util.function.Supplier;
  * Created by woong on 2016-01-24.
         */
 public class DatabaseManager implements DBManager{
-    private final ManifestDAO manifestDAO = new ManifestDAOImpl();
-    private final JavaDAO javaDAO = new JavaDAOImpl();
+    private final ManifestDAOImpl manifestDAO = new ManifestDAOImpl();
+    private final JavaDAOImpl javaDAO = new JavaDAOImpl();
 
     public volatile static DatabaseManager instance = null;
 
@@ -46,27 +46,27 @@ public class DatabaseManager implements DBManager{
     }
 
     @Override
-    public ArrayList<ManifestDTO> selectToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function) {
+    public ArrayList<ManifestDTO> selectToManifest(Function<ManifestDAOImpl, ArrayList<ManifestDTO>> function) {
         return function.apply(manifestDAO);
     }
 
     @Override
-    public ArrayList<JavaDTO> selectToJava(Function<JavaDAO, ArrayList<JavaDTO>> function) {
+    public ArrayList<JavaDTO> selectToJava(Function<JavaDAOImpl, ArrayList<JavaDTO>> function) {
         return function.apply(javaDAO);
     }
 
     @Override
-    public void insertToManifest(Consumer<ManifestDAO> action) {
+    public void insertToManifest(Consumer<ManifestDAOImpl> action) {
         action.accept(manifestDAO);
     }
 
     @Override
-    public void insertToJava(Consumer<JavaDAO> action) {
+    public void insertToJava(Consumer<JavaDAOImpl> action) {
         action.accept(javaDAO);
     }
 
     @Override
-    public void updateToJava(Consumer<JavaDAO> action) {
+    public void updateToJava(Consumer<JavaDAOImpl> action) {
         action.accept(javaDAO);
     }
 

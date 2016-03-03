@@ -1,9 +1,10 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
+import Analysis.RedoUndo.CommandManager;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.UI.palettePanel;
 import GUI.StoryBoard.storyBoard;
-import Xml.UseLibraryParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -20,12 +21,19 @@ import java.util.Iterator;
  */
 public class Activity extends JPanel {
     private String id;
+    String Xmlname;
     private int activity_width, activity_height;
     private Point activity_position;
     private String type = "activity";
+
+    public Point mouse_p;
+    String activityname;
     JLabel nameLabel = new JLabel();
     JSONObject activityObject;
+    JSONObject xmlObject;
     HashMap<String, Activity> activitylist;
+    JSONArray Xmllist;
+
     HashMap <String, ObjectCustom> objectList = new HashMap();
     ArrayList nextActivitylist = new ArrayList();
     storyBoard storyboard;
@@ -95,15 +103,15 @@ public class Activity extends JPanel {
         activitylist =list;
 
     }
-    public Activity(String name , HashMap<String, Activity> list, JSONObject obj, Point pos){
+    public Activity(String name , HashMap<String, Activity> list, JSONObject obj, Point pos, JSONArray xmlarray){
         String layout_type ="linear layout";
         activityObject =obj;
         JSONArray array = new JSONArray();
-
+        String temp;
 
         setId(name);
         this.setName(name);
-        this.setSize(Constant.activitySize_X, Constant.activitySize_Y);
+        this.setSize(Constant.activitySize_X/2, Constant.activitySize_Y/2);
         this.setBackground(Color.BLACK);
         this.setBorder(new LineBorder(Color.black));
         this.setLayout(null);
@@ -119,24 +127,34 @@ public class Activity extends JPanel {
         obj.put("y", (long)getActivity_position().y);
         obj.put("width", (long)getActivity_width());
         obj.put("height", (long)getActivity_height());
-        obj.put("object", array);
 
+//        if(layout_type.equals("linear layout")){
+//            JSONObject tempobj= new JSONObject();
+//            Layout_Linear_Root a =  new Layout_Linear_Root(getId(), objectList , tempobj);
+//            array.add(tempobj);
+//        }
+//        else{
+//            JSONObject tempobj= new JSONObject();
+//            Layout_Relative_Root a =  new Layout_Relative_Root(getId(), objectList , tempobj);
+//            array.add(tempobj);
+//        }
 
-        if(layout_type.equals("linear layout")){
-            JSONObject tempobj= new JSONObject();
-            Layout_Linear_Root a =  new Layout_Linear_Root(getId(), objectList , tempobj);
-            array.add(tempobj);
-        }
-        else{
-            JSONObject tempobj= new JSONObject();
-            Layout_Relative_Root a =  new Layout_Relative_Root(getId(), objectList , tempobj);
-            array.add(tempobj);
-        }
+        temp=getId();
+
+        temp=temp.toLowerCase();
+
+        Xml a = new Xml(temp+".xml",xmlarray);
+
+        obj.put("xmlName", temp+".xml");
+
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createActivity(getId());
 
         addDragListeners();
         activitylist =list;
 
     }
+
     public Activity(HashMap<String, Activity> list , JSONObject obj){
         long width, height, x, y ;
         String name;
@@ -147,19 +165,19 @@ public class Activity extends JPanel {
 
 
         name =(String) activityObject.get("name");
-        height=(long) activityObject.get("height");
-        width=(long) activityObject.get("width");
+        height=(long) activityObject.get("height")/2;
+        width=(long) activityObject.get("width")/2;
         x=(long) activityObject.get("x");
         y=(long) activityObject.get("y");
 
         //--------- 변수 값 지정---------------
         setId(name);
         setActivity_position(new Point((int)x, (int)y));
-        setActivity_height((int)height+(int)height/10);
+        setActivity_height(((int)height+(int)height/10));
         setActivity_width((int)width);
 
         //----------창 구성--------------------
-        this.setSize((int)width, (int)height+(int)height/10);
+        this.setSize(((int)width), ((int)height+(int)height/10)/2);
         this.setLocation((int)x, (int)y);
         this.setBorder(new LineBorder(Color.black));
         this.setLayout(null);
@@ -186,8 +204,8 @@ public class Activity extends JPanel {
 
 
         name =(String) activityObject.get("name");
-        height=(long) activityObject.get("height");
-        width=(long) activityObject.get("width");
+        height=(long) activityObject.get("height")/2;
+        width=(long) activityObject.get("width")/2;
         x=(long) activityObject.get("x");
         y=(long) activityObject.get("y");
 
@@ -223,11 +241,12 @@ public class Activity extends JPanel {
         activitylist =list;
         getStroyBoard(stroy);
         addDragListeners();
+        Xmllist =(JSONArray)stroy.jobjRoot.get("xmls");
 
 
         name =(String) activityObject.get("name");
-        height=(long) activityObject.get("height");
-        width=(long) activityObject.get("width");
+        height=(long) activityObject.get("height")/2;
+        width=(long) activityObject.get("width")/2;
         x=(long) activityObject.get("x");
         y=(long) activityObject.get("y");
 
@@ -245,6 +264,97 @@ public class Activity extends JPanel {
         this.setBackground(Color.black);
 
         nameLabel.setText(getId());
+        nameLabel.setLocation((int)width/10,0);
+        nameLabel.setSize(getActivity_width()-(int)width/10, getActivity_height()/10);
+        nameLabel.setForeground(Color.white);
+        nameLabel.setFont(new Font("Serif", Font.PLAIN, getActivity_height()/15 ));
+        add(nameLabel);
+
+    }
+    public Activity(HashMap<String, Activity> list , JSONObject obj, palettePanel pan, storyBoard stroy , JSONObject xmlJObject){
+        long width, height, x, y ;
+        String name;
+        panel=pan;
+        activityObject =obj;
+        activitylist =list;
+        this.xmlObject =xmlJObject;
+        getStroyBoard(stroy);
+        addDragListeners();
+        Xmlname = (String)this.xmlObject.get("name");
+        Xmllist =(JSONArray)stroy.jobjRoot.get("xmls");
+
+        if(activityObject.containsKey("next")) {
+            JSONArray nextAct = (JSONArray) activityObject.get("next");
+
+
+            for (int i = 0; nextAct.size() > i; i++) {
+                nextActivitylist.add((String) nextAct.get(i));
+            }
+        }
+
+        name =(String) activityObject.get("name");
+        height=(long) activityObject.get("height")/2;
+        width=(long) activityObject.get("width")/2;
+        x=(long) activityObject.get("x");
+        y=(long) activityObject.get("y");
+
+        //--------- 변수 값 지정---------------
+        setId(name);
+        setActivity_position(new Point((int)x, (int)y));
+        setActivity_height((int)height+(int)height/10);
+        setActivity_width((int)width);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height+(int)height/10);
+        this.setLocation((int)x, (int)y);
+        this.setBorder(new LineBorder(Color.black));
+        this.setLayout(null);
+        this.setBackground(Color.black);
+
+        nameLabel.setText(getId());
+        nameLabel.setLocation((int)width/10,0);
+        nameLabel.setSize(getActivity_width()-(int)width/10, getActivity_height()/10);
+        nameLabel.setForeground(Color.white);
+        nameLabel.setFont(new Font("Serif", Font.PLAIN, getActivity_height()/15 ));
+        add(nameLabel);
+
+
+
+        makeAllObject(xmlJObject);
+
+    }
+
+    public Activity(HashMap<String, Activity> list , JSONObject obj, palettePanel pan, storyBoard stroy, String activityname){
+        long width, height, x, y ;
+
+        panel=pan;
+        activityObject =obj;
+        activitylist =list;
+        getStroyBoard(stroy);
+        addDragListeners();
+
+        this.activityname =activityname;
+
+        Xmlname =(String) activityObject.get("name");
+        height=(long) activityObject.get("height")/2;
+        width=(long) activityObject.get("width")/2;
+        x=(long) activityObject.get("x");
+        y=(long) activityObject.get("y");
+
+        //--------- 변수 값 지정---------------
+        setId(activityname);
+        setActivity_position(new Point((int)x, (int)y));
+        setActivity_height((int)height+(int)height/10);
+        setActivity_width((int)width);
+
+        //----------창 구성--------------------
+        this.setSize((int)width, (int)height+(int)height/10);
+        this.setLocation((int)x, (int)y);
+        this.setBorder(new LineBorder(Color.black));
+        this.setLayout(null);
+        this.setBackground(Color.black);
+
+        nameLabel.setText(this.activityname);
         nameLabel.setLocation((int)width/10,0);
         nameLabel.setSize(getActivity_width()-(int)width/10, getActivity_height()/10);
         nameLabel.setForeground(Color.white);
@@ -333,21 +443,21 @@ public class Activity extends JPanel {
 
 
 
-//        while(buttonKeyList.hasNext()) {
-//            String key = (String) buttonKeyList.next();
-//            Object o = activitylist.get(key);
-//            Activity a = (Activity) o;
-//
-//            if(a.getId().equals(temp)){
-//                removeKey = key;
-//            }
-//        }
-//
-//        if(removeKey!=null) {
-//
-//            activitylist.remove(removeKey);
-//        }
+     /*   while(buttonKeyList.hasNext()) {
+            String key = (String) buttonKeyList.next();
+            Object o = activitylist.get(key);
+            Activity a = (Activity) o;
 
+            if(a.getId().equals(temp)){
+                removeKey = key;
+            }
+        }
+
+        if(removeKey!=null) {
+
+            activitylist.remove(removeKey);
+        }
+//*/
 
     }
     public void removeActivity_json() {
@@ -369,6 +479,9 @@ public class Activity extends JPanel {
             activitylist.remove(removeKey);
         }
         setVisible(false);
+
+
+
     }
 
 
@@ -439,6 +552,7 @@ public class Activity extends JPanel {
                     menu.show(e.getComponent(), e.getX(), e.getY());
 
                 }
+                mouse_p = e.getLocationOnScreen();
 
             }
 
@@ -453,6 +567,7 @@ public class Activity extends JPanel {
 
                 activityObject.put("x", (long)getActivity_position().x);
                 activityObject.put("y", (long)getActivity_position().y);
+                storyboard.setRootJObject();
             }
 
             @Override
@@ -476,13 +591,13 @@ public class Activity extends JPanel {
     public ObjectCustom createObjectCusthom(String type , JSONObject jobj) {
 
         if(type.equals("linear layout")){
-            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel, nextActivitylist, activitylist,storyboard,getId());
+            Layout_Linear_Root linear = new Layout_Linear_Root(objectList, jobj, panel, nextActivitylist, activitylist,storyboard, Xmlname);
 
             return linear;
         }
         else if(type.equals("RelativeLayout")){
 
-            Layout_Relative_Root relative = new Layout_Relative_Root(objectList,jobj, panel, nextActivitylist, activitylist ,storyboard,getId());
+            Layout_Relative_Root relative = new Layout_Relative_Root(objectList,jobj, panel, nextActivitylist, activitylist ,storyboard, Xmlname);
 
             return relative;
         }
@@ -498,32 +613,37 @@ public class Activity extends JPanel {
     public void makeAllObject(JSONObject jobj){
 
         JSONArray objectArray;
+
         objectArray = (JSONArray)jobj.get("object");
-        for(int i=0; i<objectArray.size(); i++){
-            String type;
-            ObjectCustom temp;
-            JSONObject tempJsonObject;
-            tempJsonObject = (JSONObject)objectArray.get(i);
 
-            type =(String)tempJsonObject.get("type");
-            temp=createObjectCusthom(type,tempJsonObject);
-            objectList.put((String)tempJsonObject.get("name"),temp);
-            add(temp);
+            for (int i = 0; i < objectArray.size(); i++) {
+                String type;
+                ObjectCustom temp;
+                JSONObject tempJsonObject;
+                tempJsonObject = (JSONObject) objectArray.get(i);
 
-        }
+                type = (String) tempJsonObject.get("type");
+                temp = createObjectCusthom(type, tempJsonObject);
+                objectList.put((String) tempJsonObject.get("name"), temp);
+                add(temp);
+
+            }
+
     }
 
 
     //-----------------팝업 메뉴 클레스----------
     class PopUpMenu extends JPopupMenu{
-        JMenuItem anItem;
+        JMenuItem remove;
         JMenuItem set_name;
+        JMenuItem set_xml;
 
         public PopUpMenu() {
-            anItem = new JMenuItem("Remove");
+            remove = new JMenuItem("Remove");
             set_name = new JMenuItem("Set Name");
+            set_xml = new JMenuItem("connect Xml");
 
-            anItem.addActionListener(new ActionListener() {
+            remove.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
@@ -539,8 +659,16 @@ public class Activity extends JPanel {
                     settingName();
                 }
             });
-            add(anItem);
+            set_xml.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Connect_Xml a =new Connect_Xml();
+                }
+            });
+
+            add(remove);
             add(set_name);
+            add(set_xml);
         }
 
     }
@@ -551,4 +679,97 @@ public class Activity extends JPanel {
 
     }
 
+    class Connect_Xml extends JFrame {
+
+        JLabel next_label;
+
+        JButton okbutton;
+        JButton cancelButton;
+        JComboBox<String> combo = new JComboBox<String>();
+        int scale_size;
+
+        public Connect_Xml(){
+
+            this.setUndecorated(true);      //title bar 제거
+            this.setSize(350, 150);          //창 사이즈
+            this.setVisible(true);
+            this.setLayout(null);
+            this.setLocation(mouse_p.x, mouse_p.y);   // 현재 버튼의 위에 덮기 위한 것
+            okbutton = new JButton("OK");
+            cancelButton = new JButton("NO");
+            next_label = new JLabel("XML Choice :");
+
+            okbutton.setMargin(new Insets(0, 0, 0, 0));
+            okbutton.setLocation(100, 100);
+            okbutton.setSize(100, 40);
+
+            cancelButton.setMargin(new Insets(0, 0, 0, 0));
+            cancelButton.setLocation(220, 100);
+            cancelButton.setSize(100, 40);
+
+            combo.setSize(300,40);
+            combo.setLocation(50,50);
+
+            next_label.setSize(100,20);
+            next_label.setLocation(10,10);
+
+            okbutton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(combo.getSelectedItem().equals("NONE")){
+                        activityObject.remove("xmlName");
+                    }
+                    else
+                    {
+                        activityObject.put("xmlName", combo.getSelectedItem());
+                    }
+
+                    dispose();
+                    storyboard.setRootJObject();
+                    storyboard.drawActivity();
+                }
+            });
+            cancelButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                }
+            });
+
+
+            for(int i=0; i<Xmllist.size(); i++)
+            {
+                JSONObject tempobj;
+                tempobj=(JSONObject)Xmllist.get(i);
+                combo.addItem((String)tempobj.get("name"));
+            }
+
+            combo.addItem("NONE");
+
+            if(activityObject.containsKey("xmlName")){
+                combo.setSelectedItem(activityObject.get("xmlName"));
+            }
+            else
+                combo.setSelectedItem("NONE");
+
+            add(okbutton);
+            add(cancelButton);
+            add(combo);
+            add(next_label);
+            this.addWindowFocusListener(new WindowFocusListener() {
+                @Override
+                public void windowGainedFocus(WindowEvent e) {
+
+                }
+
+                @Override
+                public void windowLostFocus(WindowEvent e) {
+
+                    dispose();
+                }
+            });
+        }
+
+
+    }
 }

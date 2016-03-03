@@ -8,11 +8,16 @@ import Analysis.Parser.JavaParser;
 import Analysis.Parser.FileParser;
 import Analysis.Parser.XmlParser;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ProjectFileIndex;
+import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import com.intellij.refactoring.PackageWrapper;
+import com.intellij.refactoring.util.RefactoringUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,6 +51,20 @@ public class ProjectAnalysis {
 
         PsiDirectory psiDirectory = currentDirectory(path);
         findFiles(ConstantEtc.XML_PATTERN, psiDirectory);
+
+        if (baseDir.findFileByRelativePath(path + "/java/assets") == null) makeDirectory(path+"/java", "assets");
+    }
+
+    private void makeDirectory(String path, String name) {
+        ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
+        final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(currentDirectory(path).getVirtualFile());
+        PackageWrapper packageWrapper = new PackageWrapper(PsiManager.getInstance(project).findFile(project.getProjectFile()).getManager(), name);
+        new WriteCommandAction.Simple(project, PsiManager.getInstance(project).findFile(project.getProjectFile()).getContainingFile()) {
+            @Override
+            protected void run() throws Throwable {
+                RefactoringUtil.createPackageDirectoryInSourceRoot(packageWrapper, sourceRootForFile);
+            }
+        }.execute();
     }
 
     public void executeAll() {
@@ -98,7 +117,8 @@ public class ProjectAnalysis {
         xmlPath = project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/" + xmlName;
         return xmlPath;
     }
-    public String findDrawablePath(){
+
+    public String findDrawablePath() {
         return project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/res/drawable";
     }
 
@@ -109,7 +129,6 @@ public class ProjectAnalysis {
 
     private void findFiles(String pattern, PsiDirectory psiDirectory) {
         PsiFile[] psiFiles = psiDirectory.getFiles();
-
         if (psiFiles.length != 0)
             checkFileType(psiFiles, pattern);
     }

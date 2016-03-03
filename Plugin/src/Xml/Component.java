@@ -4,6 +4,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Created by cho on 2016-01-24.
@@ -56,12 +57,21 @@ public class Component {
     public int contentWidth=-1;
     public int contentHeight=-1;
 
-    public String color="white";
+
+    public String image = null;
+    public boolean isBackground=false;
+    public String color="none";
     public String text="null";
     public String textSize="14";
+    public String textColor="#000000";
 
     public int parentLeftPoint;
     public int parentTopPoint;
+    public boolean isWidth=false;
+    public boolean isHeight=false;
+
+    //linearLayout
+
 
     Component(){
         Attributes =new ArrayList<Attribution>();
@@ -82,6 +92,11 @@ public class Component {
             paddingBottom=20;
             paddingTop=20;
             color = "gray";
+        }else if(tagName.equals("EditText")){
+            paddingLeft=8;
+            paddingRight=8;
+            paddingBottom=22;
+            paddingTop=20;
         }
         this.id=tagName;
         for(int i=0;i<AttributeCount;i++) {
@@ -90,30 +105,47 @@ public class Component {
             tempAttr.setValue(xpp.getAttributeValue(i));
 
             if(xpp.getAttributeName(i).equals("background")) {
-                color=xpp.getAttributeValue(i);
+                isBackground= true;
+                String background=xpp.getAttributeValue(i);
+                char[] backArray =  background.toCharArray();
+                String comp=null;
+                if(backArray[0]!='#'){
+                    comp = new String(backArray,0,10);
+                    if(comp.equals("@drawable/")) {
+                        String img = new String(backArray, 10, background.length() - 10);
+                        image = img;
+                    }
+                }
+                else
+                    color=background;
+            }
+            if(xpp.getAttributeName(i).equals("textColor")){
+                textColor=xpp.getAttributeValue(i);
             }
 
-            if(xpp.getAttributeName(i).equals("layout_width")){
+            else if(xpp.getAttributeName(i).equals("layout_width")){
                 if((!xpp.getAttributeValue(i).equals("wrap_content")) &&
                         (!xpp.getAttributeValue(i).equals("match_parent"))){
                     contentWidth=changeDpToInt(xpp.getAttributeValue(i))*2;
+                    isWidth=true;
                 }
             }else  if(xpp.getAttributeName(i).equals("layout_height")){
                 if((!xpp.getAttributeValue(i).equals("wrap_content"))&&
                         (!xpp.getAttributeValue(i).equals("match_parent"))){
                     contentHeight=changeDpToInt(xpp.getAttributeValue(i))*2;
+                    isHeight=true;
                 }
             }
-            if(xpp.getAttributeName(i).equals("layout_centerHorizontal")){
+
+            //RelativeLayout
+            else if(xpp.getAttributeName(i).equals("layout_centerHorizontal")){
                 leftId = "Center";
                 left=xpp.getAttributeName(i);
             }else if(xpp.getAttributeName(i).equals("layout_centerVertical")){
                 topId="Center";
                 top = xpp.getAttributeName(i);
             }
-
-
-            if(xpp.getAttributeName(i).equals("layout_alignRight")){
+            else if(xpp.getAttributeName(i).equals("layout_alignRight")){
                 right=xpp.getAttributeName(i);
                 rightId = xpp.getAttributeValue(i);
             }else if(xpp.getAttributeName(i).equals("layout_alignLeft")){
@@ -132,7 +164,7 @@ public class Component {
                 left = xpp.getAttributeName(i);
                 leftId = "Parent";
             }
-            if(xpp.getAttributeName(i).equals("layout_marginRight")){
+            else if(xpp.getAttributeName(i).equals("layout_marginRight")){
                 isMarginRight=true;
                 marginRight= changeDpToInt(xpp.getAttributeValue(i))*2;
             } else if(xpp.getAttributeName(i).equals("layout_marginLeft")){
@@ -145,8 +177,7 @@ public class Component {
                 isMarginBottom=true;
                 marginBottom = changeDpToInt(xpp.getAttributeValue(i))*2;
             }
-
-            if(xpp.getAttributeName(i).equals("layout_alignTop")){
+            else if(xpp.getAttributeName(i).equals("layout_alignTop")){
                 top=xpp.getAttributeName(i);
                 topId = xpp.getAttributeValue(i);
             }else if(xpp.getAttributeName(i).equals("layout_alignBottom")){
@@ -166,7 +197,8 @@ public class Component {
                 bottomId = "Parent";
             }
 
-            if(xpp.getAttributeName(i).equals("paddingTop")){
+
+            else if(xpp.getAttributeName(i).equals("paddingTop")){
                 paddingTop = changeDpToInt(xpp.getAttributeValue(i));
             }else if(xpp.getAttributeName(i).equals("paddingBottom")){
                 paddingBottom=changeDpToInt(xpp.getAttributeValue(i));
@@ -183,9 +215,9 @@ public class Component {
                 paddingTop=padding;
             }
 
-            if(xpp.getAttributeName(i).equals("id"))
+            else if(xpp.getAttributeName(i).equals("id"))
                 this.id = xpp.getAttributeValue(i);
-            if(xpp.getAttributeName(i).equals("text")){
+            else if(xpp.getAttributeName(i).equals("text")){
                 text = xpp.getAttributeValue(i);
                 for(int j=0;j<AttributeCount;j++){
                     if(xpp.getAttributeName(j).equals("textSize")){
@@ -199,6 +231,11 @@ public class Component {
             }
             Attributes.add(tempAttr);
         }
+        if(textSize.equals("14")){
+            textWidth = getComponentWidthSize(text,14);
+            textHeight=(int)(14*2.7);
+        }
+
 
     }
     public void setContentWidthSize(){
@@ -207,6 +244,8 @@ public class Component {
             if(tagName.equals("CheckBox") ||
                     tagName.equals("RadioButton")){
                contentWidth+=64;
+            }else if(tagName.equals("EditText")){
+                contentWidth+=25;
             }
             else if(tagName.equals("Button")){
                 if(contentWidth<176){

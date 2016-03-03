@@ -1,6 +1,7 @@
 package GUI.StoryBoard.Object;
 
 import Analysis.Main.ProjectAnalysis;
+import Analysis.RedoUndo.CodeBuilder.Type;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
@@ -10,13 +11,11 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Created by 우철 on 2016-02-29.
@@ -41,7 +40,7 @@ public class Image_View extends ObjectCustom {
     public Image_View(String name_ , HashMap<String,  ObjectCustom> list, JSONObject obj, Point p) {
         long width, height, x, y ;
         String name, color;
-
+        typeObject= Type.ImageView;
         System.out.println(obj);
         name = "@+id/"+"imageView"+ name_;
         width = Constant.imageVIewWidth;
@@ -66,10 +65,10 @@ public class Image_View extends ObjectCustom {
         this.setBackground(Color.WHITE);
 
         obj.put("name",getId());
-        obj.put("x",x);
-        obj.put("y",y);
-        obj.put("width",width);
-        obj.put("height",height);
+        obj.put("x",x*2);
+        obj.put("y",y*2);
+        obj.put("width",width*2);
+        obj.put("height",height*2);
         obj.put("color",color);
         obj.put("type","ImageVIew");
 
@@ -99,15 +98,15 @@ public class Image_View extends ObjectCustom {
         objectList = list;
         checkkey = list;
         activityList = actList;
-        this.activityName = ActivitName;
+        this.XmlName = ActivitName;
 
         getStroyBoard(stroy);
 
 
         if (objectJObject.containsKey("src")) {
-            ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
-            xmlPath = projectAnalysis. findDrawablePath();
-            pathStirng=xmlPath+"/"+objectJObject.get("src")+".png";
+//            ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
+//            xmlPath = projectAnalysis. findDrawablePath();
+           pathStirng=xmlPath+"/"+objectJObject.get("src")+".png";
             centerPanel =new ImagePanel(pathStirng);
 
 
@@ -148,6 +147,12 @@ public class Image_View extends ObjectCustom {
                 if (e.getClickCount() == 2 && !e.isConsumed()) {
                     Change_Window c = new Change_Window(getId(), e.getLocationOnScreen(), e.getPoint());
                     e.consume();
+                }
+                if (e.getModifiers() == MouseEvent.BUTTON3_MASK)
+                {
+                    PopUpMenu menu = new PopUpMenu();
+                    menu.show(e.getComponent(), e.getX(), e.getY());
+
                 }
             }
 
@@ -223,8 +228,8 @@ public class Image_View extends ObjectCustom {
             this.getRootPane().setBorder(new LineBorder(Color.black));  // JFrame 테두리 설정
 
 
-           ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
-           xmlPath = projectAnalysis. findDrawablePath();
+//           ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
+//           xmlPath = projectAnalysis. findDrawablePath();
 
             openbutton.setMargin(new Insets(0,0,0,0));
             okbutton.setMargin(new Insets(0, 0, 0, 0));
@@ -295,6 +300,7 @@ public class Image_View extends ObjectCustom {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     result();
+                    fixObject(1);
                 }
             });
 
@@ -308,6 +314,7 @@ public class Image_View extends ObjectCustom {
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                         result();
+                        fixObject(1);
                     }
                 }
 
@@ -327,6 +334,8 @@ public class Image_View extends ObjectCustom {
                 JOptionPane.showMessageDialog(null, id_field.getText() + "는 이미 중복되어있는 ID 값입니다.");
             } else {
                 Image temp_img;
+                String temp_last[];
+                String last;
                 setId(id_field.getText());
                 pathStirng=path_field.getText();
                 repaint();
@@ -334,7 +343,11 @@ public class Image_View extends ObjectCustom {
                 objectJObject.put("src", srcName_field.getText());
                 temp_img=new ImageIcon(pathStirng).getImage();
                 String temp;
-                temp = xmlPath+"/"+srcName_field.getText()+".png";
+                temp_last=pathStirng.split("\\.");
+                last = temp_last[temp_last.length-1];
+                System.out.println(last);
+                temp = xmlPath+"/"+srcName_field.getText()+"."+last;
+
 
                 try {
                     temp_img=ImageIO.read(new File(pathStirng));
@@ -343,7 +356,7 @@ public class Image_View extends ObjectCustom {
                 }
                 System.out.println(xmlPath);
                 try {
-                    ImageIO.write((RenderedImage) temp_img, "png", new File(temp));
+                    ImageIO.write((RenderedImage) temp_img, last, new File(temp));
                 }
                 catch(Exception e){
                     System.out.println(e);
@@ -378,5 +391,24 @@ public class Image_View extends ObjectCustom {
         public Image getImageView(){
             return this.img;
         }
+    }
+    class PopUpMenu extends JPopupMenu{
+        JMenuItem remove;
+        public PopUpMenu() {
+
+            remove = new JMenuItem("Remove");
+
+
+
+            remove.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    removeObject();
+
+                }
+            });
+            add(remove);
+        }
+
     }
 }

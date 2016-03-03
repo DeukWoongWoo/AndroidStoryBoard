@@ -1,9 +1,9 @@
 package GUI.StoryBoard.Object;
 
+import Analysis.RedoUndo.CodeBuilder.Type;
 import GUI.StoryBoard.Constant;
 import GUI.StoryBoard.storyBoard;
 import org.json.simple.JSONObject;
-import sun.java2d.pipe.DrawImage;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -11,7 +11,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Created by 우철 on 2016-03-01.
@@ -83,7 +82,7 @@ public class CheckBox extends ObjectCustom {
         objectList = list;
         checkkey = list;
         activityList = actList;
-        this.activityName = ActivitName;
+        this.XmlName = ActivitName;
 
 
         getStroyBoard(stroy);
@@ -103,7 +102,7 @@ public class CheckBox extends ObjectCustom {
     public CheckBox(Constant.ObjectNew objectNew) {
         long width, height, x, y ;
         String name, color;
-
+        typeObject= Type.CheckBox;
         panel1 = new ImagePanel1("/icon/radio.png");
         name = "@+id/"+"CheckBox"+ objectNew.name;
         setText("New CheckBox");
@@ -132,11 +131,11 @@ public class CheckBox extends ObjectCustom {
         this.setOpaque(false);
         setPosition(objectNew.mousep);
 
-        objectNew.jObject.put("x",(long)isPosition().x);
-        objectNew.jObject.put("y",(long)isPosition().y);
+        objectNew.jObject.put("x",(long)isPosition().x*2);
+        objectNew.jObject.put("y",(long)isPosition().y*2);
         objectNew.jObject.put("name",getObjectName());
-        objectNew.jObject.put("width",width);
-        objectNew.jObject.put("height",height);
+        objectNew.jObject.put("width",width*2);
+        objectNew.jObject.put("height",height*2);
         objectNew.jObject.put("type","CheckBox");
 
         setLocation(isPosition().x, isPosition().y);
@@ -167,6 +166,12 @@ public class CheckBox extends ObjectCustom {
                 if (e.getClickCount() == 2 && !e.isConsumed()) {
                     Change_Window c = new Change_Window(getId(),getText(),e.getLocationOnScreen(), e.getPoint());
                     e.consume();
+                }
+                if (e.getModifiers() == MouseEvent.BUTTON3_MASK)
+                {
+                    PopUpMenu menu = new PopUpMenu();
+                    menu.show(e.getComponent(), e.getX(), e.getY());
+
                 }
             }
 
@@ -306,7 +311,9 @@ public class CheckBox extends ObjectCustom {
             else {
                 setting_Id_Text(id_field.getText(), name_field.getText());
                 objectJObject.put("name", getId() );
-                objectJObject.put("text", getText());
+                attributeObject.put("text", getText());
+
+                fixObject(1);
                 dispose();
             }
         }
@@ -325,5 +332,26 @@ public class CheckBox extends ObjectCustom {
         content.setLocation(getObject_width()/10,0);
         content.setSize(getObject_width()-getObject_width()/10, getObject_height());
         content.setForeground(Color.black);
+    }
+
+
+    class PopUpMenu extends JPopupMenu{
+        JMenuItem remove;
+        public PopUpMenu() {
+
+            remove = new JMenuItem("Remove");
+
+
+
+            remove.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    removeObject();
+
+                }
+            });
+            add(remove);
+        }
+
     }
 }

@@ -1,6 +1,10 @@
 package Analysis.RedoUndo.Util;
 
+import Analysis.Constant.ConstantEtc;
 import Analysis.Constant.SharedPreference;
+import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
+import Analysis.Database.DatabaseManager.DatabaseManager;
+import Analysis.MyActionClass;
 import GUI.StoryBoard.StoryBoard_PlugIn;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
@@ -47,10 +51,10 @@ public class ElementFactory {
 
     public PsiClass createPsiClass(String className){
         try {
-            PsiManager.getInstance(project).findFile(project.getProjectFile());
+            String packageName = DatabaseManager.getInstance().selectToManifest(ManifestDAO::selectManifest).get(0).getPackageName();
             ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-            final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(project.getProjectFile());
-            PackageWrapper packageWrapper = new PackageWrapper(PsiManager.getInstance(project).findFile(project.getProjectFile()).getManager(),"");
+            final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(project.getBaseDir().findFileByRelativePath(ConstantEtc.PROJECT_XML_PATH+ConstantEtc.PROJECT_JAVA_PATH));
+            PackageWrapper packageWrapper = new PackageWrapper(PsiManager.getInstance(project).findFile(project.getProjectFile()).getManager(),packageName);
             PsiDirectory packageDirectoryInSourceRoot = RefactoringUtil.createPackageDirectoryInSourceRoot(packageWrapper, sourceRootForFile);
             return JavaDirectoryService.getInstance().createClass(packageDirectoryInSourceRoot,className);
         } catch (IncorrectOperationException e) {

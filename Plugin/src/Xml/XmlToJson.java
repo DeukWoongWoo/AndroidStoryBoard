@@ -1,13 +1,13 @@
 package Xml;
 
+import Analysis.Constant.ConstantEtc;
+import Analysis.Constant.SharedPreference;
 import Analysis.Database.DataAccessObject.Java.JavaDAO;
 import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Database.DtatTransferObject.JavaDTO;
 import Analysis.Database.DtatTransferObject.NextActivityDTO;
 import Analysis.Main.ProjectAnalysis;
-import GUI.StoryBoard.Constant;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.util.text.StringHash;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by cho on 2016-02-25.
@@ -29,6 +28,7 @@ public class XmlToJson {
     private JSONObject pluginJsonObject;
     private JSONArray pluginJsonArray;
     private ArrayList<JavaDTO> javaDTOArray = DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll);
+    private String appName;
 
     public XmlToJson(){
         webJsonObject=new JSONObject();
@@ -37,8 +37,7 @@ public class XmlToJson {
         pluginJsonArray=new JSONArray();
         Messages.showInfoMessage("Contructor!!","filePath");
 
-
-
+        appName=SharedPreference.PROJECT.get().getName();
     }
 
     private void addWebObject(JSONObject jsonObject){
@@ -49,14 +48,55 @@ public class XmlToJson {
     }
 
     private JSONObject makeWebJsonObject(){
-        webJsonObject.put("appName","test");
+
+        webJsonObject.put("appName",appName);
         webJsonObject.put("activity",webJsonArray);
+
+
         return webJsonObject;
     }
     private JSONObject makePluginJsonObject(){
-        pluginJsonObject.put("appName","test");
-        pluginJsonObject.put("activity",pluginJsonArray);
+        pluginJsonObject.put("appName",appName);
+        pluginJsonObject.put("xmls",pluginJsonArray);
+        pluginJsonObject.put("activities", makePluginActivityJsonObject());
         return pluginJsonObject;
+    }
+
+    private JSONArray makePluginActivityJsonObject(){
+        String activityName;
+        String xmlName;
+        UseLibraryParser useLibraryParser = new UseLibraryParser();
+        useLibraryParser.parse();
+        JSONArray activityJsonArray = new JSONArray();
+        for(int i=0;i<javaDTOArray.size();i++ ){
+            JSONObject jsonObject = new JSONObject();
+            JavaDTO javaDTO=javaDTOArray.get(i);
+            xmlName=javaDTO.getXml(0).getXmlName();
+
+            char[] pastxmlName =xmlName.toCharArray();
+            String changexmlName = new String(pastxmlName,9,xmlName.length()-9);
+            changexmlName=changexmlName+".xml";
+            activityName=javaDTO.getName();
+            jsonObject.put("xmlName",changexmlName);
+            jsonObject.put("name",activityName);
+            jsonObject.put("x",0);
+            jsonObject.put("y",0);
+            jsonObject.put("width",768);
+            jsonObject.put("height",1280);
+            for(int j=0;j<useLibraryParser.activityLength();j++)
+                if(useLibraryParser.getComponentName("activity",j).equals(activityName)&&
+                        useLibraryParser.getXmlName("activity",j).equals(changexmlName))
+                    jsonObject.put("library","activity");
+            JSONArray jsonArray = new JSONArray();
+            ArrayList<NextActivityDTO> javaNextAct = javaDTO.getNextActivitys();
+
+            for(int k=0;k<javaNextAct.size();k++)
+                jsonArray.add(javaNextAct.get(k).getName());
+            if (javaNextAct.size()>0)
+                jsonObject.put("next",jsonArray);
+            activityJsonArray.add(jsonObject);
+        }
+        return activityJsonArray;
     }
 
     public void make(){
@@ -66,14 +106,22 @@ public class XmlToJson {
         for(int i=0;i<filePath.length;i++)
         {
             String fp[] = filePath[i];
-            Messages.showInfoMessage(fp[0],"filePath");
             XmlToJsonObject xmlToJsonObject=xmlToJson.makeObject(fp);
             addWebObject(xmlToJsonObject.getWebJson());
             addPluginObject(xmlToJsonObject.getPluginJson());
         }
-//        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
-       // makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
-         makeFile(makePluginJsonObject(), Constant.FILE_OUT);
+
+        String pathpath;
+        pathpath=SharedPreference.PROJECT.get() + ConstantEtc.PROJECT_XML_PATH + "/assets";
+
+        makeFile(makeWebJsonObject(),pathpath+"/web.json");
+        makeFile(makePluginJsonObject(),pathpath+"/plugin.json");
+         //makeFile(makePluginJsonObject(), Constant.FILE_OUT);
+
+        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
+        makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
+        // makeFile(makePluginJsonObject(), Constant.FILE_ROUTE);
+
 
     }
 
@@ -155,12 +203,12 @@ public class XmlToJson {
 
 
 
-
             JSONObject webJson = makeWebJsonObject(componentManager,xmlName);
             JSONObject pluginJson = makePluginJsonObject(componentArrayList,xmlName);
+
             xmlToJsonObject=new XmlToJsonObject(webJson,pluginJson);
         }catch(Exception e2){
-            Messages.showInfoMessage("error1","error1");
+            Messages.showInfoMessage("error1222","error1222");
 
         }
         return xmlToJsonObject;
@@ -183,8 +231,10 @@ public class XmlToJson {
         char[] charId = id.toCharArray();
         String makeId=new String(charId,5,id.length()-5);
         return makeId;
-
     }
+
+
+
     private JSONObject makeWebJsonObject(ComponentManager componentManager, String xmlName){
 
         ArrayList<String> nextActivity = new ArrayList<>();
@@ -192,6 +242,7 @@ public class XmlToJson {
         char[] pastxmlName =xmlName.toCharArray();
         String changexmlName = new String(pastxmlName,0,xmlName.length()-4);
         String activityName=null;
+
         for(int i=0;i<javaDTOArray.size();i++ ){
             JavaDTO javaDTO=javaDTOArray.get(i);
             for(int j=0;j<javaDTO.getXmls().size();j++){
@@ -210,8 +261,6 @@ public class XmlToJson {
         JSONObject jsonActivity;
         JSONObject jsonObject;
         JSONArray jsonArrayObject;
-        JSONObject jsonApp=new JSONObject();
-        jsonApp.put("appName","test");
         Component component;
 
         jsonActivity=new JSONObject();
@@ -220,7 +269,6 @@ public class XmlToJson {
         jsonActivity.put("y","0");
         jsonActivity.put("width",768);
         jsonActivity.put("height",1280);
-
         if(nextActivity.size()==1)
             jsonActivity.put("next",nextActivity.get(0));
         else{
@@ -228,13 +276,14 @@ public class XmlToJson {
             for(int i=0;i<nextActivity.size();i++){
                 jr.add(nextActivity.get(i));
             }
-            jsonActivity.put("next",jr);
+            if(nextActivity.size()>0)
+                jsonActivity.put("next",jr);
         }
 
         jsonArrayObject = new JSONArray();
         for(int i=0;i<componentManager.size();i++){
             component= componentManager.getComponent(i);
-            if(!component.getTagName().equals("RelativeLayout")){
+            if(!component.getTagName().equals("RelativeLayout")){//오브젝트인경우
                 jsonObject = new JSONObject();
                 jsonObject.put("name",makeId(component.getId()));
                 jsonObject.put("x",component.leftPoint);
@@ -243,11 +292,30 @@ public class XmlToJson {
                 jsonObject.put("width",component.getWidth());
                 jsonObject.put("text",component.text);
                 jsonObject.put("textSize",component.textSize);
+                jsonObject.put("textColor",component.textColor);
                 jsonObject.put("type",component.tagName);
-                jsonObject.put("color",component.color);
+                if(component.image == null)
+                    jsonObject.put("color",component.color);
+                else
+                    jsonObject.put("image",component.image);
                 //jsonObject.put("next","null");
                 //jsonObject.put("image","null");
                 jsonArrayObject.add(jsonObject);
+            }else{//레이아웃인경우
+                if(component.isBackground) {
+                    jsonObject = new JSONObject();
+                    jsonObject.put("height",component.getHeight());
+                    jsonObject.put("width",component.getWidth());
+                    jsonObject.put("type",component.tagName);
+                    jsonObject.put("x",component.leftPoint);
+                    jsonObject.put("y",component.topPoint);
+                    if(component.image !=null)//이미지가 있는 경우
+                        jsonObject.put("image",component.image);
+                    else
+                        jsonObject.put("color",component.color);
+                    jsonArrayObject.add(jsonObject);
+                }
+
             }
         }
         jsonActivity.put("object",jsonArrayObject);
@@ -255,6 +323,7 @@ public class XmlToJson {
         return jsonActivity;
     }
     private JSONObject makePluginJsonObject(ArrayList<Component> componentArrayList,String xmlName){
+
 
 
         UseLibraryParser useLibraryParser = new UseLibraryParser();
@@ -266,16 +335,6 @@ public class XmlToJson {
         //todo : 여기는 xml파일 대로 xmlName이 바뀐다.
         JSONObject jsonActivity = new JSONObject();
         jsonActivity.put("name",xmlName);
-        jsonActivity.put("x",0);
-        jsonActivity.put("y",0);
-        jsonActivity.put("width",768);
-        jsonActivity.put("height",1280);
-        for(int i=0;i<useLibraryParser.activityLength();i++){
-            if(xmlName.equals(useLibraryParser.getXmlName("activity",i))){
-                jsonActivity.put("library","activity");
-                break;
-            }
-        }
 
         for(int i=0;i<componentArrayList.size();i++){
             Component component = componentArrayList.get(i);
@@ -313,8 +372,7 @@ public class XmlToJson {
                             break;
                         }
                     }
-                    if(component.isNext)
-                        jsonObject.put("next",component.nextActivity);
+
                     jsonObjectArray.add(jsonObject);
                 }
             }
@@ -444,7 +502,10 @@ public class XmlToJson {
             stdWidth = component.contentWidth;
             if(!component.rightId.equals("null")){//right에 물린경우
                 if(component.tagName.equals("RelativeLayout")){
-                    leftPoint=parentLeftPoint;
+                    if(component.isWidth)
+                        leftPoint=rightPoint-stdWidth;
+                    else
+                        leftPoint=parentLeftPoint;
                     if(component.isMarginLeft)
                         leftPoint+=component.marginLeft;
                 } else {
@@ -458,7 +519,10 @@ public class XmlToJson {
                 }
             }else{//left에 물린경우
                 if(component.tagName.equals("RelativeLayout")){
-                    rightPoint=parentRightPoint;
+                    if(component.isWidth)
+                        rightPoint=stdWidth+leftPoint;
+                    else
+                        rightPoint=parentRightPoint;
                     if(component.leftId.equals("Center"))
                         leftPoint=parentLeftPoint;
                     if(component.isMarginRight)
@@ -549,7 +613,10 @@ public class XmlToJson {
             stdHeight = component.contentHeight;
             if(!component.bottomId.equals("null")){//bottom에 물린경우
                 if(component.tagName.equals("RelativeLayout")){
-                    topPoint = parentTopPoint;
+                    if(component.isHeight)
+                        topPoint=bottomPoint-stdHeight;
+                    else
+                        topPoint=parentTopPoint;
                     if(component.isMarginTop)
                         topPoint+=component.marginTop;
                 }
@@ -557,7 +624,10 @@ public class XmlToJson {
                     topPoint = bottomPoint-stdHeight;
             }else{//top에 물린경우
                 if(component.tagName.equals("RelativeLayout")){
-                    bottomPoint=parentBottomPoint;
+                    if(component.isHeight)
+                        bottomPoint=topPoint+stdHeight;
+                    else
+                        bottomPoint=parentBottomPoint;
                     if(component.topId.equals("Center"))
                         topPoint = parentTopPoint;
                     if(component.isMarginBottom)
@@ -575,6 +645,7 @@ public class XmlToJson {
 
         component.topPoint=topPoint;
         component.bottomPoint=bottomPoint;
+        component.parentTopPoint=parentTopPoint;
         if(component.tagName.equals("RelativeLayout")) {
             stdHeight = bottomPoint-topPoint;
         }

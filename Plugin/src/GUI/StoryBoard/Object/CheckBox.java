@@ -130,11 +130,11 @@ public class CheckBox extends ObjectCustom {
         this.setOpaque(false);
         setPosition(objectNew.mousep);
 
-        objectNew.jObject.put("x",(long)isPosition().x);
-        objectNew.jObject.put("y",(long)isPosition().y);
+        objectNew.jObject.put("x",(long)isPosition().x*2);
+        objectNew.jObject.put("y",(long)isPosition().y*2);
         objectNew.jObject.put("name",getObjectName());
-        objectNew.jObject.put("width",width);
-        objectNew.jObject.put("height",height);
+        objectNew.jObject.put("width",width*2);
+        objectNew.jObject.put("height",height*2);
         objectNew.jObject.put("type","CheckBox");
 
         setLocation(isPosition().x, isPosition().y);
@@ -326,4 +326,5 @@ public class CheckBox extends ObjectCustom {
         content.setSize(getObject_width()-getObject_width()/10, getObject_height());
         content.setForeground(Color.black);
     }
+
 }

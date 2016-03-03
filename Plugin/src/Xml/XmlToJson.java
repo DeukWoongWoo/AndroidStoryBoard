@@ -46,7 +46,7 @@ public class XmlToJson {
 
     private JSONObject makeWebJsonObject(){
         webJsonObject.put("appName","test");
-        webJsonObject.put("xmls",webJsonArray);
+        webJsonObject.put("activity",webJsonArray);
 
 
         return webJsonObject;

@@ -123,7 +123,7 @@ public class Component {
                 textColor=xpp.getAttributeValue(i);
             }
 
-            if(xpp.getAttributeName(i).equals("layout_width")){
+            else if(xpp.getAttributeName(i).equals("layout_width")){
                 if((!xpp.getAttributeValue(i).equals("wrap_content")) &&
                         (!xpp.getAttributeValue(i).equals("match_parent"))){
                     contentWidth=changeDpToInt(xpp.getAttributeValue(i))*2;
@@ -138,7 +138,7 @@ public class Component {
             }
 
             //LinearLayout
-            if(xpp.getAttributeName(i).equals("layout_gravity")){
+            else if(xpp.getAttributeName(i).equals("layout_gravity")){
 
             }else if(xpp.getAttributeName(i).equals("layout_weight")){
 
@@ -147,14 +147,14 @@ public class Component {
 
 
             //RelativeLayout
-            if(xpp.getAttributeName(i).equals("layout_centerHorizontal")){
+            else if(xpp.getAttributeName(i).equals("layout_centerHorizontal")){
                 leftId = "Center";
                 left=xpp.getAttributeName(i);
             }else if(xpp.getAttributeName(i).equals("layout_centerVertical")){
                 topId="Center";
                 top = xpp.getAttributeName(i);
             }
-            if(xpp.getAttributeName(i).equals("layout_alignRight")){
+            else if(xpp.getAttributeName(i).equals("layout_alignRight")){
                 right=xpp.getAttributeName(i);
                 rightId = xpp.getAttributeValue(i);
             }else if(xpp.getAttributeName(i).equals("layout_alignLeft")){
@@ -173,7 +173,7 @@ public class Component {
                 left = xpp.getAttributeName(i);
                 leftId = "Parent";
             }
-            if(xpp.getAttributeName(i).equals("layout_marginRight")){
+            else if(xpp.getAttributeName(i).equals("layout_marginRight")){
                 isMarginRight=true;
                 marginRight= changeDpToInt(xpp.getAttributeValue(i))*2;
             } else if(xpp.getAttributeName(i).equals("layout_marginLeft")){
@@ -186,7 +186,7 @@ public class Component {
                 isMarginBottom=true;
                 marginBottom = changeDpToInt(xpp.getAttributeValue(i))*2;
             }
-            if(xpp.getAttributeName(i).equals("layout_alignTop")){
+            else if(xpp.getAttributeName(i).equals("layout_alignTop")){
                 top=xpp.getAttributeName(i);
                 topId = xpp.getAttributeValue(i);
             }else if(xpp.getAttributeName(i).equals("layout_alignBottom")){
@@ -207,7 +207,7 @@ public class Component {
             }
 
 
-            if(xpp.getAttributeName(i).equals("paddingTop")){
+            else if(xpp.getAttributeName(i).equals("paddingTop")){
                 paddingTop = changeDpToInt(xpp.getAttributeValue(i));
             }else if(xpp.getAttributeName(i).equals("paddingBottom")){
                 paddingBottom=changeDpToInt(xpp.getAttributeValue(i));
@@ -224,9 +224,9 @@ public class Component {
                 paddingTop=padding;
             }
 
-            if(xpp.getAttributeName(i).equals("id"))
+            else if(xpp.getAttributeName(i).equals("id"))
                 this.id = xpp.getAttributeValue(i);
-            if(xpp.getAttributeName(i).equals("text")){
+            else if(xpp.getAttributeName(i).equals("text")){
                 text = xpp.getAttributeValue(i);
                 for(int j=0;j<AttributeCount;j++){
                     if(xpp.getAttributeName(j).equals("textSize")){
@@ -240,8 +240,11 @@ public class Component {
             }
             Attributes.add(tempAttr);
         }
-        textWidth = getComponentWidthSize(text,changeDpToInt(textSize));
-        textHeight=(int)(changeDpToInt(textSize)*2.7);
+        if(textSize.equals("14")){
+            textWidth = getComponentWidthSize(text,14);
+            textHeight=(int)(14*2.7);
+        }
+
 
     }
     public void setContentWidthSize(){

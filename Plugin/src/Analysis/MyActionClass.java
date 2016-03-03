@@ -61,7 +61,7 @@ public class MyActionClass extends AnAction {
 //        Messages.showInfoMessage(DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll).size()+"", "Test");
 
 
-//        new CodeDriver();
+        new CodeDriver();
 //        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);
 
 //        ManifestDTO manifestDTO = new ManifestDTO();

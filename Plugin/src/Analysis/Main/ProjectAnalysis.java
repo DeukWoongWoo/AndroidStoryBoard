@@ -52,12 +52,12 @@ public class ProjectAnalysis {
         PsiDirectory psiDirectory = currentDirectory(path);
         findFiles(ConstantEtc.XML_PATTERN, psiDirectory);
 
-        if (baseDir.findFileByRelativePath(path + "/assets") == null) makeDirectory(path, "assets");
+        if (baseDir.findFileByRelativePath(path + "/java/assets") == null) makeDirectory(path+"/java", "assets");
     }
 
     private void makeDirectory(String path, String name) {
         ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-        final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(project.getBaseDir().findFileByRelativePath(path));
+        final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(currentDirectory(path).getVirtualFile());
         PackageWrapper packageWrapper = new PackageWrapper(PsiManager.getInstance(project).findFile(project.getProjectFile()).getManager(), name);
         new WriteCommandAction.Simple(project, PsiManager.getInstance(project).findFile(project.getProjectFile()).getContainingFile()) {
             @Override
@@ -129,7 +129,6 @@ public class ProjectAnalysis {
 
     private void findFiles(String pattern, PsiDirectory psiDirectory) {
         PsiFile[] psiFiles = psiDirectory.getFiles();
-
         if (psiFiles.length != 0)
             checkFileType(psiFiles, pattern);
     }

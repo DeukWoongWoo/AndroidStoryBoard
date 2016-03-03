@@ -22,10 +22,10 @@ import java.util.ArrayList;
 public class JavaDAOImpl extends SQLiteOpenHelper implements JavaDAO {
     private final String tableName = "Java";
 
-    private final NextActivityDAO nextActivityDAO = new NextActivityDAOImpl();
-    private final XmlDAO xmlDAO = new XmlDAOImpl();
-    private final ComponentDAO componentDAO = new ComponentDAOImpl();
-    private final EventDAO eventDAO = new EventDAOImpl();
+    private final NextActivityDAOImpl nextActivityDAO = new NextActivityDAOImpl();
+    private final XmlDAOImpl xmlDAO = new XmlDAOImpl();
+    private final ComponentDAOImpl componentDAO = new ComponentDAOImpl();
+    private final EventDAOImpl eventDAO = new EventDAOImpl();
 
     private int currentJavaId;
     private int currentXmlId;

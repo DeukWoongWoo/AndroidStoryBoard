@@ -35,8 +35,12 @@ public class ActivityCreate {
 
                 PsiJavaFile psiJavaFile = (PsiJavaFile) PsiManager.getInstance(psiclass.getProject()).findFile(psiclass.getContainingFile().getVirtualFile());
 
-                PsiImportStatement psiImportStatement = elementFactory.findPsiImportStatement("import android.app.Activity;", Type.Button.name());
-                if(psiImportStatement != null) psiJavaFile.getImportList().add(psiImportStatement);
+                PsiImportStatement activityImport = elementFactory.findPsiImportStatement("import android.app", "Activity");
+                if(activityImport != null) psiJavaFile.getImportList().add(activityImport);
+                else Messages.showInfoMessage("Cannot find import file...","File Search");
+
+                PsiImportStatement bundleImport = elementFactory.findPsiImportStatement("import android.os", "Bundle");
+                if(bundleImport != null) psiJavaFile.getImportList().add(bundleImport);
                 else Messages.showInfoMessage("Cannot find import file...","File Search");
 
                 StringBuilder builder = new StringBuilder("@Override\n");
@@ -47,7 +51,7 @@ public class ActivityCreate {
 
                 psiclass.add(elementFactory.createPsiMethod(builder.toString(), psiclass));
 
-                File file = new File(psiclass.getProject().getBasePath()+ ConstantEtc.INTELLIJ_PATH +"/AndroidManifest.xml");
+                File file = new File(psiclass.getProject().getBasePath()+ ConstantEtc.PROJECT_XML_PATH +"/AndroidManifest.xml");
                 XmlFile xmlfile = (XmlFile) PsiManager.getInstance(SharedPreference.PROJECT.get()).findFile(LocalFileSystem.getInstance().findFileByIoFile(file));
                 xmlfile.getRootTag().findSubTags("application")[0].add(elementFactory.createActivityTag(CommandKey.ACTIVITY.getId()));
             }

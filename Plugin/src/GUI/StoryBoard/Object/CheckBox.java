@@ -32,6 +32,7 @@ public class CheckBox extends ObjectCustom {
     public CheckBox(String name_ , HashMap<String,  ObjectCustom> list, JSONObject obj, Point p) {
         long width, height, x, y ;
         String name, color;
+        typeObject= Type.CheckBox;
         panel1 = new ImagePanel1("/icon/radio.png");
         System.out.println(obj);
         name = "@+id/"+"CheckBox"+ name_;

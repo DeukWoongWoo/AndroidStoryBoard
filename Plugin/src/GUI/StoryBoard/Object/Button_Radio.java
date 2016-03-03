@@ -47,7 +47,7 @@ public class Button_Radio extends Button_Root {
     public Button_Radio(String name, HashMap<String, ObjectCustom> list, JSONObject obj, Point point) {
 
         super(name,list,obj);
-
+        typeObject= Type.RadioButton;
         content = new JLabel(getText());
         checkkey=list;
         setText("NEW RadioButton");
@@ -79,7 +79,7 @@ public class Button_Radio extends Button_Root {
 
         super(objectNew.name,objectNew.objectList,objectNew.jObject);
         typeObject= Type.RadioButton;
-
+        typeObject= Type.RadioButton;
         setText("NEW RadioButton");
         setId("@+id/"+"Radio button"+objectNew.name);
 
@@ -88,8 +88,8 @@ public class Button_Radio extends Button_Root {
 
         checkkey=objectNew.objectList;
         setPosition(objectNew.mousep);
-        objectNew.jObject.put("x", (long)objectNew.mousep.x*2);
-        objectNew.jObject.put("y", (long)objectNew.mousep.y*2);
+        objectNew.jObject.put("x", (long)objectNew.mousep.x);
+        objectNew.jObject.put("y", (long)objectNew.mousep.y);
         objectNew.jObject.put("type", "RadioButton");
 
         setLocation(isPosition().x, isPosition().y);
@@ -116,7 +116,7 @@ public class Button_Radio extends Button_Root {
 
     public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj) {
         super(list, obj);
-
+        typeObject= Type.RadioButton;
         init_text();
 
         add(content);
@@ -125,7 +125,7 @@ public class Button_Radio extends Button_Root {
     }
     public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist) {
         super(list, obj, nextlist);
-
+        typeObject= Type.RadioButton;
         init_text();
 
         add(content);
@@ -135,7 +135,7 @@ public class Button_Radio extends Button_Root {
 
     public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actlist) {
         super(list, obj, nextlist, actlist);
-
+        typeObject= Type.RadioButton;
         init_text();
 
         add(content);
@@ -144,7 +144,7 @@ public class Button_Radio extends Button_Root {
     }
     public Button_Radio(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actlist,    storyBoard stroy,    String ActivitName) {
         super(list, obj, nextlist, actlist,stroy, ActivitName);
-
+        typeObject= Type.RadioButton;
         init_text();
         circle.repaint();
         add(circle, BorderLayout.WEST);

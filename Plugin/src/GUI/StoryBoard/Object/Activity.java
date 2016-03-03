@@ -156,10 +156,9 @@ public class Activity extends JPanel {
         makeXml.makeActivityxml(temp);
 
 
-
         addDragListeners();
         activitylist =list;
-
+        storyboard.AndDraw();
     }
 
     public Activity(HashMap<String, Activity> list , JSONObject obj){
@@ -483,9 +482,14 @@ public class Activity extends JPanel {
 
         if(removeKey!=null) {
 
+            CommandManager deleteobject = CommandManager.getInstance();
+            deleteobject.deleteActivity(activitylist.get(removeKey).getId());
+
+
             activitylist.remove(removeKey);
         }
         setVisible(false);
+
 
 
 
@@ -574,7 +578,7 @@ public class Activity extends JPanel {
 
                 activityObject.put("x", (long)getActivity_position().x);
                 activityObject.put("y", (long)getActivity_position().y);
-                storyboard.setRootJObject();
+                storyboard.setRootJObject(storyboard.jobjRoot);
             }
 
             @Override
@@ -656,7 +660,7 @@ public class Activity extends JPanel {
 
                     removeActivity_json();
                     activityObject.clear();
-
+                    storyboard.AndDraw();
                 }
             });
 
@@ -732,7 +736,7 @@ public class Activity extends JPanel {
                     }
 
                     dispose();
-                    storyboard.setRootJObject();
+                    storyboard.setRootJObject(storyboard.jobjRoot);
                     storyboard.drawActivity();
                 }
             });

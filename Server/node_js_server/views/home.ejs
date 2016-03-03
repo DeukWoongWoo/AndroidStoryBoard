@@ -102,7 +102,8 @@
             </a>
         </div>
         <div class="container-center">
-            <button class="btn btn-warning" id="activity-location-test" style="display: none">save activity position</button>
+            <button class="btn btn-warning" id="activity-location-test" style="display: none">save activity position
+            </button>
         </div>
         <div class="main-body container-center" id="graphs">
             <div id="storyboard"></div>
@@ -274,8 +275,8 @@
             for (var i = 0; i < activities.length; i++) {
                 for (var j in storyboardData.activity) {
                     if (storyboardData.activity[j].name == activities[i].getAttribute('id')) {
-                        storyboardData.activity[j].x = activities[i].getAttribute('x');
-                        storyboardData.activity[j].y = activities[i].getAttribute('y');
+                        storyboardData.activity[j].x = activities[i].getAttribute('x') / 2;
+                        storyboardData.activity[j].y = activities[i].getAttribute('y') / 2;
                     }
                 }
             }
@@ -284,7 +285,7 @@
                 storyboard_data: JSON.stringify(storyboardData),
                 app_name: app_name
             }, function (err) {
-                if(err)console.log(err);
+                if (err)console.log(err);
             });
         });
     });
@@ -410,8 +411,12 @@
                     var objectNum = $(this).attr("object-num");
                     var objectName = $(this).attr("object-name");
 
+                    console.log("objectName");
+                    console.log(objectName);
+                    console.log("className");
+                    console.log(className);
                     highlightByClassName(objectName, className);
-                    popObjectInfoByClassName.call(this, className);
+                    popObjectInfoByClassName.call(this, objectName);
 
                     if (isDefined(searchTime)) {
                         getObjectInfo(objectNum, function (err) {
@@ -443,12 +448,11 @@
         $('.graph circle' + className + '#' + objectName).css("fill", "gold");
     }
 
-    function popObjectInfoByClassName(className) {
-        var useFrequency = $('#use-graph ' + className).attr("use-data");
-        var errFrequency = $('#err-graph ' + className).attr("err-data")
+    function popObjectInfoByClassName(objectName) {
+        var useFrequency = $('#use-graph #' + objectName).attr("use-data");
+        var errFrequency = $('#err-graph #' + objectName).attr("err-data");
 
         var rectInfo = $('.rect-info').children('div');
-        var objectName = $(this).attr("object-name");
         var activityName = $(this).attr("activity-name");
         var activityTime = $(this).attr("activity-time");
 

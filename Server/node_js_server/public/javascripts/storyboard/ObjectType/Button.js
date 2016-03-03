@@ -25,7 +25,8 @@ function Button() {
                 .attr("height", this.height())
                 .attr('x', this.x())
                 .attr('y', this.y())
-                .attr("preserveAspectRatio", "none").attr("object-name", this.name())
+                .attr("preserveAspectRatio", "none")
+                .attr("object-name", this.name())
                 .attr("class", this.activityName() + '-activity-name')
                 .attr("id", this.name());
             own.attr('fill', 'none');
@@ -46,7 +47,10 @@ function Button() {
                 .attr("width", this.width() - 20)
                 .attr("height", this.height() - 20)
                 .attr('x', this.x() + 10)
-                .attr('y', this.y() + 10);
+                .attr('y', this.y() + 10)
+                .attr("object-name", this.name())
+                .attr("class", this.activityName() + '-activity-name')
+                .attr("id", this.name());
 
             var textLine = this.getText().length / (this.width() / (this.textSize()));
             textLine = Math.round(textLine);
@@ -65,7 +69,7 @@ function Button() {
                 }
                 return d;
             });
-            btnText = textSvg.append('text').attr('fill', this.textColor()).attr('font-size', this.textSize());
+            btnText = textSvg.append('text').attr('fill', this.textColor()).attr('font-size', this.textSize() < 0 ? 0 : this.textSize());//.attr('font-size', this.textSize());
             btnText.append('textPath').attr('xlink:href', '#' + this.name() + '-text').text(this.getText());
         }
 

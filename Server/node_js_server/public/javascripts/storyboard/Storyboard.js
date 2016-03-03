@@ -21,14 +21,14 @@ function Storyboard() {
     }
 
     this.addBackBoard = function(){
-        document.getElementById(target.replace(/\#/g,'')).innerHTML = "<rect id='storyboard-background' x='-5000' y='-5000' width='10000' height='10000' style='fill: white; stroke: white;  stroke-width: 100px;' onmousedown='startDrag(event)'/>";
+        document.getElementById(target.replace(/\#/g,'')).innerHTML = "<rect id='storyboard-background' x='-50000' y='-50000' width='100000' height='100000' style='fill: white; stroke: white;  stroke-width: 100px;' onmousedown='startDrag(event)'/>";
     }
 
     this.addActivity = function () {
         var num = numOfActivities;
         activities[num] = new Activity();
         //768*1280
-        activities[num].width(768).height(1280);
+        activities[num].width(768*2).height(1280*2);
         activities[num].create(target);
         numOfActivities++;
 
@@ -56,17 +56,29 @@ function Storyboard() {
     this.drawActivityObject = function () {
         for (var i in storyboardData.activity) {
             var activityData = storyboardData.activity[i];
-            var activity = this.addActivity().activityName(activityData.name).x(activityData.x).y(activityData.y).update();
+            var activity = this.addActivity().activityName(activityData.name).x(activityData.x*2).y(activityData.y*2).width(activityData.width*2).height(activityData.height*2);
+            activity.color(activityData.color);
+            if(isDefined(activityData.image)){
+                activity.imageRoute('/image/' + userId + '/' +  appName + '/' );
+                activity.setImage(activityData.image);
+            }else
+                activity.setImage(null);
+
+            activity.update();
                 //.width(activityData.width).height(activityData.height).update();
             for (var j in storyboardData.activity[i].object) {
                 var objectData = storyboardData.activity[i].object[j];
-                if(!isDefined(objectData.color))
-                    objectData.color = 'grey';
-                var object = activity.addObject().type(objectData.type).name(objectData.name)
-                    .activityName(activityData.name).width(objectData.width).height(objectData.height)
-                    .x(objectData.x).y(objectData.y).color(objectData.color);
+                if(!isDefined(objectData.color)){
+                    if(objectData.type == "Button")
+                        objectData.color = 'grey';
+                    else objectData.color = 'none';
+                }
 
-                //console.log(objectData.image);
+                var object = activity.addObject().type(objectData.type)
+                    .activityName(activityData.name).width(objectData.width*2).height(objectData.height*2)
+                    .x(objectData.x*2).y(objectData.y*2).color(objectData.color);
+                object.name(objectData.name);
+
                 if(isDefined(objectData.image)){
                     object.imageRoute('/image/' + userId + '/' +  appName + '/' );
                     object.setImage(objectData.image);
@@ -75,7 +87,7 @@ function Storyboard() {
 
                 if(isDefined(objectData.text)){
                     object.textColor(objectData.textColor ? objectData.textColor : 'black');
-                    object.textSize(objectData.textSize ? objectData.textSize : 5);
+                    object.textSize(objectData.textSize ? objectData.textSize*2 : 5*2);
                     object.setText(objectData.text);
                 }else
                     object.setText(null);
@@ -135,13 +147,13 @@ function Storyboard() {
     this.drawNextActivityLine = function () {
         var activity = $('svg.activity');
         for (var i in line) {
-            for (var j = 0; j < activity.length; j++) {
+            for (var j = 0; j < activity.length; j++) {//(768*2).height(1280*2);
                 if (line[i]['start'] == activity[j].getAttribute('id')) {
-                    line[i]['startX'] = activity[j].getAttribute('x') * 1 + 150;
-                    line[i]['startY'] = activity[j].getAttribute('y') * 1 + 250;
+                    line[i]['startX'] = activity[j].getAttribute('x') * 1 + 768;
+                    line[i]['startY'] = activity[j].getAttribute('y') * 1 + 1280;
                 } else if (line[i]['end'] == activity[j].getAttribute('id')) {
-                    line[i]['endX'] = activity[j].getAttribute('x') * 1 + 150;
-                    line[i]['endY'] = activity[j].getAttribute('y') * 1 + 250;
+                    line[i]['endX'] = activity[j].getAttribute('x') * 1 + 768;
+                    line[i]['endY'] = activity[j].getAttribute('y') * 1 + 1280;
                 }
             }
         }

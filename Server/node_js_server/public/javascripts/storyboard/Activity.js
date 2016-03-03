@@ -16,11 +16,17 @@ function Activity() {
     var textColor = 'black';
     var textContent = '';
 
+    var backImage = null;
+
     this.create = function (target) {
         if (isDefined(target)) {
             this.svg = d3.select(target).append("svg").attr('class', 'activity');//.attr('x', 300).attr('y', 300);
             this.svg.attr('onmousedown', 'startDrag(event, this)');
             own = this.svg.append('rect');
+
+            //if (this.getImage())
+            //    backImage = this.svg.append('image');
+
             this.update();
 
             return this;
@@ -29,12 +35,29 @@ function Activity() {
 
     this.update = function () {
         this.svg.attr('x', x).attr('y', y).attr('id', activityName);
-        own.attr("width", width)
-            .attr("height", height)
+        own.attr("width", 768*2)
+            .attr("height", 1280*2)
             .attr('fill', color)
             .attr("stroke", "black")
             .attr('stroke-width', '5')
             .attr("activity-name", activityName);
+
+        if (this.getImage()) {
+            if(backImage == null){
+                this.svg.append('image').attr("xlink:href", this.imageRoute() + this.getImage())
+                    .attr("width", this.width())
+                    .attr("height", this.height())
+                    .attr("preserveAspectRatio", "none");;
+            }else{
+                backImage
+                    .attr("xlink:href", this.imageRoute() + this.getImage())
+                    .attr("width", this.width())
+                    .attr("height", this.height())
+                    .attr("preserveAspectRatio", "none");
+            }
+
+        }
+
         return this;
     }
 

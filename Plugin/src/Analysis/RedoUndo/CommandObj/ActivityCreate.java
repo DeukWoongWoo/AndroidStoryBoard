@@ -77,7 +77,6 @@ public class ActivityCreate {
         File file = new File(path);
         for(XmlTag xmlTag : xmlFile.getRootTag().findSubTags("application")[0].findSubTags("activity")){
             String str = xmlTag.getAttributeValue("android:name");
-            System.out.println("------ TagName : " + str);
             if(str.equals("."+activityName)){
                 new WriteCommandAction.Simple(xmlFile.getProject(), xmlFile.getContainingFile()) {
                     @Override

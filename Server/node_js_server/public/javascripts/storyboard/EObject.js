@@ -1,8 +1,9 @@
 document.write("<script src='javascripts/storyboard/ObjectType/Button.js'></script>");
 document.write("<script src='javascripts/storyboard/ObjectType/CheckBox.js'></script>");
 document.write("<script src='javascripts/storyboard/ObjectType/RadioButton.js'></script>");
-document.write("<script src='javascripts/storyboard/ObjectType/Text.js'></script>");
+document.write("<script src='javascripts/storyboard/ObjectType/TextView.js'></script>");
 document.write("<script src='javascripts/storyboard/ObjectType/Image.js'></script>");
+document.write("<script src='javascripts/storyboard/ObjectType/TextEdit.js'></script>");
 
 function EObject() {
     var text;
@@ -25,6 +26,9 @@ function EObject() {
         if (objectType == 'Button') {
             type = new Button();
             return this;
+        } else if (objectType == 'ImageButton') {
+            type = new Button();
+            return this;
         } else if (objectType == 'RadioButton') {
             type = new RadioButton();
             return this;
@@ -32,13 +36,19 @@ function EObject() {
             type = new CheckBox();
             return this;
         } else if (objectType == 'TextView') {
-            type = new Text();
+            type = new TextView();
             return this;
         }else if (objectType == 'ImageView') {
             type = new Image();
             return this;
-        }else if(objectType == 'TextEdit'){
+        }else if (objectType == 'RelativeLayout') {
             type = new Image();
+            return this;
+        }else if (objectType == 'LinearLayout') {
+            type = new Image();
+            return this;
+        }else if(objectType == 'TextEdit'){
+            type = new TextEdit();
             return this;
         }
         else return type;

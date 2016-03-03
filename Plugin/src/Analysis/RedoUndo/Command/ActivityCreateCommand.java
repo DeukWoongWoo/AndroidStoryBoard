@@ -6,7 +6,11 @@ import Analysis.RedoUndo.CommandObj.ActivityCreate;
  * Created by woong on 2016-02-22.
  */
 public class ActivityCreateCommand implements Command{
-    private final ActivityCreate activityCreate = new ActivityCreate();
+    private ActivityCreate activityCreate;
+
+    public ActivityCreateCommand(ActivityCreate activityCreate){
+        this.activityCreate = activityCreate;
+    }
 
     @Override
     public void execute() {

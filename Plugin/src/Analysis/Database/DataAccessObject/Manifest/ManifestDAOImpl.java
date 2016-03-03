@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class ManifestDAOImpl extends SQLiteOpenHelper implements ManifestDAO {
     private final String tableName = "Manifest";
 
-    private final ActivityDAO activityDAO = new ActivityDAOImpl();
+    private final ActivityDAOImpl activityDAO = new ActivityDAOImpl();
 
     private int currentManifestId;
 

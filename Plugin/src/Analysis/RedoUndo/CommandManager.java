@@ -13,8 +13,6 @@ import java.util.Stack;
 public class CommandManager{
     public volatile static CommandManager instance = null;
 
-    private HashMap<CommandKey, Command> commandMap = new HashMap<>();
-
     private Stack<Command> redo = new Stack<>();
     private Stack<Command> undo = new Stack<>();
     private Stack<Command> lib = new Stack<>();
@@ -26,13 +24,6 @@ public class CommandManager{
             }
         }
         return instance;
-    }
-
-    public CommandManager(){
-//        commandMap.put(CommandKey.LOCALBUTTON, new LocalComponentCreateCommand());
-//        commandMap.put(CommandKey.MEMBERBUTTON, new MemberComponentCreateCommand());
-//        commandMap.put(CommandKey.FUNCBUTTON, new FuncComponentCreateCommand());
-        commandMap.put(CommandKey.ACTIVITY, new ActivityCreateCommand());
     }
 
     public void addLibError(String id, String xml){
@@ -58,18 +49,19 @@ public class CommandManager{
     }
 
     public void linkActivity(String id, String from, String to){
-        commandMap.put(CommandKey.LINK, new ActivityLinkCommand(new ActivityLink(id, from, to)));
-        execute(CommandKey.LINK);
+        execute(new ActivityLinkCommand(new ActivityLink(id, from, to)));
     }
 
     public void deleteLinkActivity(String id, String from, String to){
-        commandMap.put(CommandKey.LINK, new ActivityLinkDeleteCommand(new ActivityLink(id, from, to)));
-        execute(CommandKey.LINK);
+        execute(new ActivityLinkDeleteCommand(new ActivityLink(id, from, to)));
     }
 
     public void createActivity(String className){
-        CommandKey.ACTIVITY.setId(className);
-        execute(CommandKey.ACTIVITY);
+        execute(new ActivityCreateCommand(new ActivityCreate(className)));
+    }
+
+    public void deleteActivity(String className){
+        execute(new ActivityDeleteCommand(new ActivityCreate(className)));
     }
 
     public void createLocalComponent(String id, String xml, Type type){
@@ -101,11 +93,6 @@ public class CommandManager{
 //        key.setId("R.id."+id);
 //        execute(key);
 //    }
-
-    private void execute(CommandKey key) {
-        System.out.println("Command Execute...");
-        execute(commandMap.get(key));
-    }
 
     private void execute(Command command){
         command.execute();

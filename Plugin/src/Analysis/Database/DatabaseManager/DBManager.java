@@ -1,7 +1,9 @@
 package Analysis.Database.DatabaseManager;
 
 import Analysis.Database.DataAccessObject.Java.JavaDAO;
+import Analysis.Database.DataAccessObject.Java.JavaDAOImpl;
 import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
+import Analysis.Database.DataAccessObject.Manifest.ManifestDAOImpl;
 import Analysis.Database.DtatTransferObject.DTO;
 import Analysis.Database.DtatTransferObject.JavaDTO;
 import Analysis.Database.DtatTransferObject.ManifestDTO;
@@ -16,9 +18,9 @@ import java.util.function.Supplier;
  */
 public interface DBManager {
     public void onCreateTable();
-    public ArrayList<ManifestDTO> selectToManifest(Function<ManifestDAO, ArrayList<ManifestDTO>> function);
-    public ArrayList<JavaDTO> selectToJava(Function<JavaDAO, ArrayList<JavaDTO>> function);
-    public void insertToManifest(Consumer<ManifestDAO> function);
-    public void insertToJava(Consumer<JavaDAO> action);
-    public void updateToJava(Consumer<JavaDAO> action);
+    public ArrayList<ManifestDTO> selectToManifest(Function<ManifestDAOImpl, ArrayList<ManifestDTO>> function);
+    public ArrayList<JavaDTO> selectToJava(Function<JavaDAOImpl, ArrayList<JavaDTO>> function);
+    public void insertToManifest(Consumer<ManifestDAOImpl> function);
+    public void insertToJava(Consumer<JavaDAOImpl> action);
+    public void updateToJava(Consumer<JavaDAOImpl> action);
 }

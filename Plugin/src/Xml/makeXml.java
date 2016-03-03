@@ -47,6 +47,28 @@ public class makeXml {
 
         }
     }
+    public static void makeUserId(String userIdXmlpath){
+        try{
+            File f = new File(userIdXmlpath);
+            if(f.isFile()) {
+                DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+                Document doc = documentBuilder.newDocument();
+                Element resources =  doc.createElement("resource");
+                doc.appendChild(resources);
+                Element userId = doc.createElement("userId");
+                resources.appendChild(userId);
+
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer = transformerFactory.newTransformer();
+                DOMSource source = new DOMSource(doc);
+                StreamResult result = new StreamResult(new File(userIdXmlpath));
+                transformer.transform(source,result);
+            }
+        }catch (Exception e){
+
+        }
+    }
     public static void makeActivityxml(String xmlName) {
         try{
 

@@ -3,7 +3,6 @@ package Xml;
 import Analysis.Main.ProjectAnalysis;
 import com.intellij.openapi.ui.Messages;
 import org.w3c.dom.*;
-import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
@@ -18,18 +17,18 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by cho on 2016-02-29.
  */
 public class UseLibraryParser {
-    private String Filepath;
+    private String LibFilepath;
+    private String userIdFilePath;
     private ArrayList<Attribution> activity;
     private ArrayList<Attribution> error;
     private ArrayList<Attribution> event;
+    private Attribution userId;
 
 
 
@@ -38,12 +37,13 @@ public class UseLibraryParser {
         error = new ArrayList<>();
         event = new ArrayList<>();
         ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
-        Filepath = projectAnalysis.makeAssetsPath("userLib.xml");
+        LibFilepath = projectAnalysis.makeAssetsPath("userLib.xml");
+        userIdFilePath = projectAnalysis.makeAssetsPath("userId.xml");
     }
 
     public void parse() {
         try {
-            File ff = new File(Filepath);
+            File ff = new File(LibFilepath);
             XmlPullParserFactory xppf = XmlPullParserFactory.newInstance();
             xppf.setNamespaceAware(true);
             XmlPullParser xpp = xppf.newPullParser();
@@ -135,7 +135,7 @@ public class UseLibraryParser {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(Filepath));
+            StreamResult result = new StreamResult(new File(LibFilepath));
             transformer.transform(source, result);
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
@@ -158,6 +158,39 @@ public class UseLibraryParser {
             event.add(tempAttr);
         makeXml();
 
+    }
+    public void userIdParse(){
+        try {
+            File ff = new File(userIdFilePath);
+            XmlPullParserFactory xppf = XmlPullParserFactory.newInstance();
+            xppf.setNamespaceAware(true);
+            XmlPullParser xpp = xppf.newPullParser();
+            FileInputStream fis = new FileInputStream(ff);
+            xpp.setInput(fis, null);
+
+            int type = xpp.getEventType();
+            while (type != XmlPullParser.END_DOCUMENT) {
+
+                if (type == XmlPullParser.START_TAG) {
+                    Attribution tempAttr = new Attribution();
+                    for (int i = 0; i < xpp.getAttributeCount(); i++) {
+                        tempAttr.setAttribute(xpp.getAttributeName(i));
+                        tempAttr.setValue(xpp.getAttributeValue(i));
+                    }
+                    if (xpp.getName().equals("userId")){
+                        userId.setAttribute(xpp.getName());
+                        userId.setValue(xpp.getText());
+                    }
+
+                } else if (type == XmlPullParser.END_TAG) {
+
+                }
+                type = xpp.next();
+            }
+        } catch (Exception e2) {
+            Messages.showInfoMessage("error1", "error1");
+
+        }
     }
     //delete
 

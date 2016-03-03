@@ -38,7 +38,7 @@ public class UseLibraryParser {
         event = new ArrayList<>();
         ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(null);
         LibFilepath = projectAnalysis.makeAssetsPath("userLib.xml");
-        userIdFilePath = projectAnalysis.makeAssetsPath("userId.xml");
+        userIdFilePath = projectAnalysis.makeAssetsPath("userInform.xml");
     }
 
     public void parse() {
@@ -135,7 +135,7 @@ public class UseLibraryParser {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(LibFilepath));
+            StreamResult result = new StreamResult(new File(userIdFilePath));
             transformer.transform(source, result);
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
@@ -159,38 +159,32 @@ public class UseLibraryParser {
         makeXml();
 
     }
-    public void userIdParse(){
+    public void appendUserInform() {
+
         try {
-            File ff = new File(userIdFilePath);
-            XmlPullParserFactory xppf = XmlPullParserFactory.newInstance();
-            xppf.setNamespaceAware(true);
-            XmlPullParser xpp = xppf.newPullParser();
-            FileInputStream fis = new FileInputStream(ff);
-            xpp.setInput(fis, null);
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document doc = documentBuilder.newDocument();
+            Element root = doc.createElement("resources");
+            doc.appendChild(root);
+            Element userId = doc.createElement("userId");
+            root.appendChild(userId);
+            Element appName = doc.createElement("appName");
+            root.appendChild(appName);
 
-            int type = xpp.getEventType();
-            while (type != XmlPullParser.END_DOCUMENT) {
-
-                if (type == XmlPullParser.START_TAG) {
-                    Attribution tempAttr = new Attribution();
-                    for (int i = 0; i < xpp.getAttributeCount(); i++) {
-                        tempAttr.setAttribute(xpp.getAttributeName(i));
-                        tempAttr.setValue(xpp.getAttributeValue(i));
-                    }
-                    if (xpp.getName().equals("userId")){
-                        userId.setAttribute(xpp.getName());
-                        userId.setValue(xpp.getText());
-                    }
-
-                } else if (type == XmlPullParser.END_TAG) {
-
-                }
-                type = xpp.next();
-            }
-        } catch (Exception e2) {
-            Messages.showInfoMessage("error1", "error1");
-
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(LibFilepath));
+            transformer.transform(source, result);
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
         }
+
     }
     //delete
 

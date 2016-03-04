@@ -16,7 +16,7 @@ public class CodeDriver {
 
 //        commandManager.createLocalComponent("textView1", "activity_main", Type.TextView);
         commandManager.createLocalComponent("button11", "activity_main", Type.Button);
-//        commandManager.deleteLocalComponent("button1", "activity_main", Type.Button);
+        commandManager.deleteLocalComponent("button11", "activity_main", Type.Button);
 
 //        commandManager.createMemberComponent("button1","activity_main", Type.Button);
 //        commandManager.deleteMemberComponent("button1","activity_main", Type.Button);

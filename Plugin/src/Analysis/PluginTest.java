@@ -1,83 +1,55 @@
 package Analysis;
 
-import com.intellij.ide.util.DefaultPsiElementCellRenderer;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiField;
-import com.intellij.ui.CollectionListModel;
-
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+
+import static java.awt.BorderLayout.*;
 
 /**
- * Created by woong on 2015-12-22.
+ * Created by woong on 2016-03-04.
  */
-public class PluginTest extends JFrame implements ActionListener {
-    private CollectionListModel<PsiField> myFields;
+public class PluginTest extends JFrame {
+    private JPanel container;
+    private JButton analysisButton;
+    private JButton redoButton;
+    private JButton undoButton;
+    private JSpinner spinner1;
+    private JTextField textField1;
+    private JPanel header;
+    private JPanel content;
+    private JPanel ComponentPanel;
 
-    private JPanel panel1;
-    private JButton button1;
-    private JList list1;
-    private JLabel label;
-    private JButton button2;
+    public PluginTest() {
+        setSize(new Dimension(1000, 500));
 
-    public PluginTest(AnActionEvent e){
-        super("Hello World");
-        setContentPane(panel1);
-        pack();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container = new JPanel();
+        container.setLayout(new BorderLayout());
 
-//        String AndroidPath = "/app/src/main/java";
-//        VirtualFile IntellijPathFile = e.get().getBaseDir().findFileByRelativePath(AndroidPath);
+        header = new JPanel();
+        header.setLayout(new FlowLayout());
 
-//        PsiDirectory psiDirectory = PsiManager.getInstance(e.get()).findDirectory(IntellijPathFile);
+        analysisButton = new JButton("Analysis");
+        header.add(analysisButton);
 
-        String str = "Project Path : "+e.getProject().getProjectFilePath() + "\n";
-        str += "GetProjectPackage Name : " + e.getProject().getClass().getPackage().getName() + " \n";
-        str += "GetClassPackage Name : " + e.getClass().getPackage().getName() + "\n";
+        redoButton = new JButton("Redo");
+        header.add(redoButton);
 
-        label.setText(str);
+        undoButton = new JButton("Undo");
+        header.add(undoButton);
 
-        System.out.println("getUIClassID : "+button1.getUIClassID());
-        System.out.println("getDisplayedMnemonicIndex : "+button1.getDisplayedMnemonicIndex());
-        System.out.println("getComponentCount : "+button1.getComponentCount());
-        System.out.println("getMnemonic : "+button1.getMnemonic());
+        content = new JPanel();
+        content.setLayout(new GridBagLayout());
 
-        button1.addActionListener(this);
- ;
+        container.add(header, NORTH);
+        container.add(content, CENTER);
+
+        ComponentPanel = new JPanel();
+        ComponentPanel.setLayout(new GridLayout(1, 4));
+
+        content.add(ComponentPanel);
+
+
+        add(container);
         setVisible(true);
-    }
-
-    public PluginTest(PsiClass psiClass){
-        super("Hello World");
-        setContentPane(panel1);
-        pack();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-        if(psiClass != null ) {
-//        System.out.println("Test : " + psiClass.getTextLength());
-            System.out.println("Test : " + psiClass.getAllFields().length);
-
-            myFields = new CollectionListModel<PsiField>(psiClass.getAllFields());
-            list1.setModel(myFields);
-            list1.setCellRenderer(new DefaultPsiElementCellRenderer());
-        }
-
-        button1.addActionListener(this);
-
-        setVisible(true);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        System.out.println("getActionCommand : "+e.getActionCommand());
-        System.out.println("Click GetId : "+e.getID());
-        System.out.println("getModifiers : "+e.getModifiers());
-        System.out.println("getSource : "+e.getSource());
-        if(e.getSource() == button1){
-            System.out.println("Here!!!");
-        }
     }
 }

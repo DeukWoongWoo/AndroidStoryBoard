@@ -551,19 +551,20 @@ public class ObjectCustom extends JPanel {
         String pathpath;
         pathpath= SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
 
-
-        JsonToXml jsonToXml = new JsonToXml();
-        jsonToXml.make(pathpath);
-
-        XmlToJson xmlToJson = new XmlToJson();
-        xmlToJson.make();
-
-
-
-        System.out.println("AfterObject :"+ objectJObject);
-        System.out.println("AfterObject :"+ storyboard.jobjRoot);
-
-        storyboard.drawActivity();
+//
+//        JsonToXml jsonToXml = new JsonToXml();
+//        jsonToXml.make(pathpath);
+//
+//        XmlToJson xmlToJson = new XmlToJson();
+//        xmlToJson.make();
+//
+//
+//
+//        System.out.println("AfterObject :"+ objectJObject);
+//        System.out.println("AfterObject :"+ storyboard.jobjRoot);
+//
+//        storyboard.drawActivity();
+        storyboard.saveAndDraw();
     }
     public void newObject(){
         storyboard.setRootJObject(storyboard.jobjRoot);

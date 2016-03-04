@@ -28,7 +28,7 @@ public class Activity extends JPanel {
     private int activity_width, activity_height;
     private Point activity_position;
     private String type = "activity";
-
+    public boolean dragging=false;
     public Point mouse_p;
     String activityname;
     JLabel nameLabel = new JLabel();
@@ -539,7 +539,7 @@ public class Activity extends JPanel {
                 Point parentOnScreen = getParent().getLocationOnScreen();
                 Point mouseOnScreen = e.getLocationOnScreen();
                 Point position = new Point(mouseOnScreen.x - parentOnScreen.x - anchorX, mouseOnScreen.y - parentOnScreen.y - anchorY);
-
+                dragging=true;
                 setLocation(position);
                 setActivity_position(position);
 
@@ -574,12 +574,13 @@ public class Activity extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
-
+                if(dragging==true)
+                storyboard.SaveActivity(storyboard.AobjRoot);
 
                 activityObject.put("x", (long)getActivity_position().x);
                 activityObject.put("y", (long)getActivity_position().y);
                 storyboard.setRootJObject(storyboard.jobjRoot);
+                dragging=false;
             }
 
             @Override

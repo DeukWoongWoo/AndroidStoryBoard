@@ -526,13 +526,14 @@ function calDuringTime(start, end) {
 function NumOfDate(date) {
     var piece = date.split(" ");
     var standardYears = 2015 * 60 * 30 * 12;
-    var years = piece[0].split("/")[0] * 60 * 24 * 30 * 12 - standardYears;
-    var month = piece[0].split("/")[1] * 60 * 24 * 30;
-    var days = piece[0].split("/")[2] * 60 * 24;
-    var hours = piece[1].split(":")[0] * 60;
-    var minutes = piece[1].split(":")[1];
+    var years = piece[0].split("/")[0] * 60 * 60 * 24 * 30 * 12 - standardYears;
+    var month = piece[0].split("/")[1] * 60 * 60 * 24 * 30;
+    var days = piece[0].split("/")[2] * 60 * 60 * 24;
+    var hours = piece[1].split(":")[0] * 60 * 60;
+    var minutes = piece[1].split(":")[1] * 60;
+    var seconds = piece[1].split(":")[2] * 1;
 
-    return years + month + days + hours + minutes;
+    return years + month + days + hours + minutes + seconds;
 }
 
 function throwError(error, result, fields) {

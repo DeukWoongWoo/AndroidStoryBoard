@@ -29,6 +29,7 @@ public class storyBoard extends JPanel {
     CustomJpanel jpan;
     JScrollPane scroll;
     public JSONObject jobjRoot;
+    public JSONObject AobjRoot;
     public Point mouse_p;
 
     JSONArray activityArrayData;
@@ -158,7 +159,7 @@ public class storyBoard extends JPanel {
         // 전부 그린다.
         add(parlPanel, "West");
 
-        drawActivity();
+        drawActivity_first();
     }
 
 
@@ -195,7 +196,7 @@ public class storyBoard extends JPanel {
             a.removeActivity();
         }
 
-        activity_list.clear();   // 현재까지 key 값들 모두 제거
+        activity_list.clear();   // 현재까지 key 값들 모두s 제거
     }
 
     // JSON 파일을 받은 것을 전부 그려준다.
@@ -206,6 +207,78 @@ public class storyBoard extends JPanel {
         pathpath = SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
 
         jobjRoot = parserJObject(pathpath);
+
+        System.out.println(jobjRoot);
+        setAppName((String) jobjRoot.get("appName"));
+        activityArrayData = (JSONArray) AobjRoot.get("activities");
+        xmlArrayData = (JSONArray) jobjRoot.get("xmls");
+
+        for (int i = 0; i < activityArrayData.size(); i++) {
+            JSONObject tempJsonObject;
+            tempJsonObject = (JSONObject) activityArrayData.get(i);
+            if (tempJsonObject.isEmpty()) {
+                activityArrayData.remove(i);
+                i = -1;
+            }
+        }
+
+        // 가지고 있는 액티비티를 만든다.
+        for (int i = 0; i < activityArrayData.size(); i++) {
+            JSONObject activity_jobj;
+            JSONArray activity_list;
+            String xmlname;
+            activity_jobj = (JSONObject) activityArrayData.get(i);
+
+            if (activity_jobj.containsKey("xmlName")) {
+                xmlname = (String) activity_jobj.get("xmlName");
+
+                // xml 이름이 있나 없나 탐색
+                for (int j = 0; j < xmlArrayData.size(); j++) {
+                    JSONObject xmltempJobj;
+                    xmltempJobj = (JSONObject) xmlArrayData.get(j);
+                    if (xmlname.equals(xmltempJobj.get("name"))) {
+
+                        Activity a = new Activity(this.activity_list, activity_jobj, parlPanel, this, xmltempJobj);
+
+                        this.activity_list.put((String) activity_jobj.get("name"), a);
+                        a.setOverbearing(true);
+                        jpan.add(a);
+                        break;
+
+                    } else {
+                        if (j == xmlArrayData.size() - 1) {
+                            activity_jobj.remove("xmlName");
+                            Activity a = new Activity(this.activity_list, activity_jobj, parlPanel, this);
+
+                            this.activity_list.put((String) activity_jobj.get("name"), a);
+                            a.setOverbearing(true);
+                            jpan.add(a);
+                        }
+                    }
+
+                }
+            } else {
+                Activity a = new Activity(this.activity_list, activity_jobj, parlPanel, this);
+
+                this.activity_list.put((String) activity_jobj.get("name"), a);
+                a.setOverbearing(true);
+                jpan.add(a);
+            }
+        }
+
+        revalidate();       // 무효화 선언된 화면을 알려줌
+        repaint();          // 다시 그려준다.
+    }
+    public void drawActivity_first() {
+        removeAllActivity();
+
+        String pathpath, pathpath2;
+        pathpath = SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
+
+        AobjRoot = parserJObject(pathpath);
+        jobjRoot = parserJObject(pathpath);
+
+        SaveActivity(AobjRoot);
 
         System.out.println(jobjRoot);
         setAppName((String) jobjRoot.get("appName"));
@@ -343,8 +416,10 @@ public class storyBoard extends JPanel {
             sendJSonData();
             repaint_window();
 
+            SaveActivity(jobjRoot);
             AndDraw();
             saveAndDraw();
+
         }
     }
 
@@ -783,7 +858,6 @@ public class storyBoard extends JPanel {
         String pathpath;
         pathpath = SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
 
-
         try {
             File file = new File(pathpath);
             file.delete();
@@ -794,6 +868,8 @@ public class storyBoard extends JPanel {
         } catch (IOException e) {
             System.out.println(e);
         }
+
+
     }
 
     class Remove_Xml extends JFrame {
@@ -927,7 +1003,30 @@ public class storyBoard extends JPanel {
 //            e.printStackTrace();
 //        }
 
-        drawActivity();
+        drawActivity_first();
+
+    }
+
+    public void SaveActivity(JSONObject obj) {
+        String pathpath;
+        pathpath = SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin2.txt";
+
+        File a = new File(pathpath);
+        a.delete();
+
+        String jsonString = obj.toJSONString();
+        System.out.println("save Object :" + AobjRoot);
+        try {
+            File file = new File(pathpath);
+            file.delete();
+
+            BufferedWriter out = new BufferedWriter(new FileWriter(pathpath));
+            out.write(jsonString);
+            out.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
 
     }
 }

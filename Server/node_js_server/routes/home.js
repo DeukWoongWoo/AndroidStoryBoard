@@ -154,13 +154,22 @@ function deleteFiles(dirName, callback) {
 router.get('/storyboard/:app_name', function (req, res) {
     //TODO: req.params.user_id -> session.user_id로 변경 해야함
     var fileUrl = './users/' + req.session.user_id + '/' + req.params.app_name + '/' + req.params.app_name + '.json';
+    console.log("debug");
+    console.log(fileUrl);
     fs.exists(fileUrl, function (exists) {
         if (exists) {
             fs.readFile(fileUrl, function (err, data) {
                 var obj;
+                //console.log(obj);
                 try {
-                    obj = JSON.parse(data);
-                    res.send(obj);
+                    console.log(data);
+                    //obj = JSON.parse(data);
+                    //console.log(obj.activity);
+                    //for(var i in obj.activity){
+                    //    console.log(obj.activity[i].object);
+                    //}
+                    //res.send(obj);
+                    res.send(data);
                 } catch (e) {
                     console.log(e);
                 }
@@ -446,9 +455,12 @@ function registerApp(req, res, callback) {
             ], function (err) {
                 if (err) {
                     fs.unlink(req.files.storyboard.path);
+
                     callback(err);
                 } else {
+                    console.error("registerStoryboardFile");
                     registerStoryboardFile(req, function (err) {
+                        console.error(err);
                         callback(err);
                     });
                 }
@@ -464,7 +476,10 @@ function registerStoryboardFile(req, callback) {
         function (callback) {
             fs.readFile(file, function (err, data) {
                 try {
-                    obj = JSON.parse(data);
+                    console.error(data);
+                    //obj = JSON.parse(data);
+                    obj = eval(data);
+                    console.error("json");
                     callback(null);
                 } catch (e) {
                     callback(e);
@@ -650,7 +665,6 @@ function uploadImages(req, callback) {
 
     function renameAndSaveFile(uploadFileName, tmpOfTarget, callback) {
         //locationOfTarget = './users/' + req.session.user_id + '/' + req.body.app_name + '/';
-
         target = locationOfTarget + deleteExtension(uploadFileName.split('.'));
         console.log(deleteExtension(uploadFileName.split('.')));
         console.log(target);
@@ -680,14 +694,38 @@ function saveFile(locationOfTarget, tmpOfTarget, target, callback) {
                 else callback(null);
             });
         }, function (callback) {
-            fs.rename(tmpOfTarget, target, function (err) {
-                if (err) callback(err);
-                else callback(null);
+            //var file = './users/' + req.session.user_id + '/' + req.body.app_name + '/' + req.body.app_name + '.json';
+            //var obj;
+            //async.series([
+            //    function (callback) {
+            //        fs.readFile(file, function (err, data) {
+            //            try {
+            //                obj = JSON.parse(data);
+            fs.readFile(tmpOfTarget, 'utf8', function(err, data){
+               if(err) callback(err);
+                else{
+                   console.log(data);
+                   fs.writeFile(target, data, 'utf8', function(err){
+                       if (err) callback(err);
+                       else {
+                           fs.unlink(tmpOfTarget, function(err){
+                               if(err) callback(err);
+                               else callback(null);
+                           });
+                       }
+                   });
+               }
             });
+
+            //fs.rename(tmpOfTarget, target, function (err) {
+            //    if (err) callback(err);
+            //    else callback(null);
+            //});
         }
     ], function (err) {
         if (err) callback(err);
         else callback(null);
+        console.error(err);
     });
 }
 

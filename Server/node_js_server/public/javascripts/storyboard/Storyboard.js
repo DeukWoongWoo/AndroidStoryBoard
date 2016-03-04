@@ -1,5 +1,4 @@
 document.write("<script src='javascripts/storyboard/Activity.js'></script>");
-
 function Storyboard() {
     var appName;
     var userId;
@@ -14,7 +13,6 @@ function Storyboard() {
     this.targetDiv = function (arg) {
         if (isDefined(arg)) {
             target = arg;
-
             return this;
         }
         else return target;

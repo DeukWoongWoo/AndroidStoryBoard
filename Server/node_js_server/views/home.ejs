@@ -3,7 +3,8 @@
 <head>
     <title>Android Storyboard</title>
 
-    <meta charset="utf-8">
+    <!--<meta charset="utf-8">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -29,7 +30,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript" src="javascripts/d3/d3.js"></script>
-    <script src="javascripts/storyboard/Storyboard.js"></script>
+    <script src="javascripts/storyboard/Storyboard.js" charset='utf-8'></script>
     <script src="javascripts/layer-popup.js"></script>
 
 </head>
@@ -232,7 +233,6 @@
     errLineGraph.setDataColor('#EA3556');
     //    useCircleGraph.setDataColor('#02779E');
 
-
     $('.app_name').click(function () {
         app_name = $(this).text();
         user_id = $('#user_id').text();
@@ -271,18 +271,19 @@
 
     $('#activity-location-test').click(function () {
         $.get("/storyboard/" + app_name, function (storyboardData) {
+            var temp = JSON.parse(storyboardData);
             var activities = $('svg.activity');
             for (var i = 0; i < activities.length; i++) {
-                for (var j in storyboardData.activity) {
-                    if (storyboardData.activity[j].name == activities[i].getAttribute('id')) {
-                        storyboardData.activity[j].x = activities[i].getAttribute('x') / 2;
-                        storyboardData.activity[j].y = activities[i].getAttribute('y') / 2;
+                for (var j in temp.activity) {
+                    if (temp.activity[j].name == activities[i].getAttribute('id')) {
+                        temp.activity[j].x = activities[i].getAttribute('x') / 2;
+                        temp.activity[j].y = activities[i].getAttribute('y') / 2;
                     }
                 }
             }
 
             $.post('/update/storyboard', {
-                storyboard_data: JSON.stringify(storyboardData),
+                storyboard_data: JSON.stringify(temp),
                 app_name: app_name
             }, function (err) {
                 if (err)console.log(err);
@@ -292,16 +293,16 @@
 
     function getUserAppStoryboard() {
         $('#storyboard-svg').css('border', 'solid grey');
-//    .css('border-width','1px')
 
         var storyboard = new Storyboard();
         storyboard.setUserIdAppName(user_id, app_name);
         storyboard.targetDiv('#storyboard-svg');
 
         $.get("/storyboard/" + app_name, function (storyboardData) {
+            var temp = JSON.parse(storyboardData);
             storyboard.removeStoryboard();
             storyboard.addBackBoard();
-            storyboard.storyboardData(storyboardData);
+            storyboard.storyboardData(temp);
 
             storyboard.drawActivityObject();
 
@@ -407,28 +408,43 @@
 
     function rectMouseOver() {
         $('.light').children('svg').children().mouseover(function () {
-                    var className = '.' + $(this).attr("class");
-                    var objectNum = $(this).attr("object-num");
-                    var objectName = $(this).attr("object-name");
+            var className = '.' + $(this).attr("class");
+            var objectName = $(this).attr("object-name");
+            var objectNum = $(this).attr("object-num");
+            var temp = $('.graph').children('svg').children('rect');
 
-                    console.log("objectName");
-                    console.log(objectName);
-                    console.log("className");
-                    console.log(className);
-                    highlightByClassName(objectName, className);
-                    popObjectInfoByClassName.call(this, objectName);
+            highlightByClassName(objectName, className);
+            popObjectInfoByClassName.call(this, objectName);
+            if(isDefined(objectNum)){
+                if (isDefined(searchTime)) {
+                    getObjectInfo(objectNum, function (err) {
+                        useLineGraph.graphData(searchTime).setEase("circle-out").update();
+                    });
 
-                    if (isDefined(searchTime)) {
-                        getObjectInfo(objectNum, function (err) {
-                            useLineGraph.graphData(searchTime).setEase("circle-out").update();
-                        });
+                    getErrorInfo(objectNum, function (err) {
+                        errLineGraph.graphData(searchTime).setEase("circle-out").update();
+                    });
+                }
+            }else{
+                for(var i=0; i < temp.length; i++){
+                    if(temp[i].getAttribute("object-name") == $(this).attr("object-name")){
+                        objectNum = temp[i].getAttribute("object-num");
+                        if (isDefined(searchTime)) {
+                            getObjectInfo(objectNum, function (err) {
+                                useLineGraph.graphData(searchTime).setEase("circle-out").update();
+                            });
 
-                        getErrorInfo(objectNum, function (err) {
-                            errLineGraph.graphData(searchTime).setEase("circle-out").update();
-                        });
+                            getErrorInfo(objectNum, function (err) {
+                                errLineGraph.graphData(searchTime).setEase("circle-out").update();
+                            });
+                            break;
+                        }
                     }
                 }
-        ).mouseout(function () {
+            }
+
+
+        }).mouseout(function () {
         });
     }
 
@@ -457,11 +473,20 @@
         var activityTime = $(this).attr("activity-time");
 
         $('.rect-info').css("visibility", "visible");
-        rectInfo.children('#rect-object-name').text(objectName);
-        rectInfo.children('#rect-use-frequency').text(useFrequency);
-        rectInfo.children('#rect-err-frequency').text(errFrequency);
+        rectInfo.children('#rect-object-name').text(objectName == undefined ? "" : objectName);
+        rectInfo.children('#rect-use-frequency').text(useFrequency == undefined ? "" : useFrequency);
+        rectInfo.children('#rect-err-frequency').text(errFrequency == undefined ? "" : errFrequency);
         rectInfo.children('#rect-activity-name').text(activityName);
-        rectInfo.children('#rect-activity-time').text(activityTime);
+        rectInfo.children('#rect-activity-time').text(activityTime == undefined ? 0 : activityTime);
+
+        var temp = $('.graph').children('svg').children('rect');
+        for(var i=0; i < temp.length; i++) {
+            if (temp[i].getAttribute("activity-name") == $(this).attr("activity-name")) {
+                activityTime = temp[i].getAttribute("activity-time");
+                rectInfo.children('#rect-activity-time').text(activityTime == undefined ? 0 : activityTime);
+                break;
+            }
+        }
     }
 
     function getObjectInfo(objectNum, callback) {

@@ -36,7 +36,8 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
         System.out.println("StoryBoard_Plugin...");
         refreshB = new JButton("Refresh");
         totalPanel = new JPanel();
-
+        totalPanel.setPreferredSize(new Dimension(600,800));
+        totalPanel.setSize(600,800);
         refreshB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

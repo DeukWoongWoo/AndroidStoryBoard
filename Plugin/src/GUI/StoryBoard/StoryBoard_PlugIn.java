@@ -27,28 +27,16 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
     private JPanel centerPanel;
     private JPanel eastPanel;
     private JPanel northPanel;
-    public JButton refreshB;
     private ToolWindow mainViewWindow;
 
     public static Project project;
 
     public StoryBoard_PlugIn() throws IOException {
         System.out.println("StoryBoard_Plugin...");
-        refreshB = new JButton("Refresh");
         totalPanel = new JPanel();
         totalPanel.setPreferredSize(new Dimension(600,800));
         totalPanel.setSize(600,800);
-        refreshB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    init();
 
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
     }
 
     @Override
@@ -89,6 +77,5 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
 
         totalPanel.add(centerPanel, "Center");
         totalPanel.add(northPanel, "North");
-        totalPanel.add(refreshB, "East");
     }
 }

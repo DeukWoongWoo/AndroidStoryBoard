@@ -150,15 +150,16 @@ public class Activity extends JPanel {
 
         obj.put("xmlName", temp+".xml");
 
+
+        makeXml.makeActivityxml(temp);
         CommandManager newobject = CommandManager.getInstance();
         newobject.createActivity(getId());
 
-        makeXml.makeActivityxml(temp);
+
 
 
         addDragListeners();
         activitylist =list;
-        storyboard.AndDraw();
     }
 
     public Activity(HashMap<String, Activity> list , JSONObject obj){

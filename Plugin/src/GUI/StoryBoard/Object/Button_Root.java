@@ -504,6 +504,8 @@ public class Button_Root extends ObjectCustom {
                         JSONObject tempObject= new JSONObject();
                         tempObject.put("fromxml", XmlName);
                         tempObject.put("toactivity", combo.getSelectedItem());
+
+                        CommandManager.getInstance().linkActivity(getId().split("/")[1], XmlName.split("\\.")[0], (String)combo.getSelectedItem());
                         objectJObject.put("next", tempObject);
                         fixObject(1);
                         //CommandManager commandManager = CommandManager.getInstance();

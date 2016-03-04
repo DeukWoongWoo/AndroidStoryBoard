@@ -15,6 +15,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
@@ -25,16 +27,27 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
     private JPanel centerPanel;
     private JPanel eastPanel;
     private JPanel northPanel;
-
+    public JButton refreshB;
     private ToolWindow mainViewWindow;
 
     public static Project project;
 
     public StoryBoard_PlugIn() throws IOException {
         System.out.println("StoryBoard_Plugin...");
+        refreshB = new JButton("Refresh");
         totalPanel = new JPanel();
 
+        refreshB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    init();
 
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -47,6 +60,7 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
         toolWindow.getContentManager().addContent(content);
 
         initProjectAnalysis(project);
+
         try {
             init();
         } catch (IOException e) {
@@ -66,12 +80,14 @@ public class StoryBoard_PlugIn implements ToolWindowFactory {
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 
+
         centerPanel = new storyBoard();
         northPanel = new menuPanel();
         totalPanel.setLayout(new BorderLayout());
-
+        centerPanel = new storyBoard();
 
         totalPanel.add(centerPanel, "Center");
         totalPanel.add(northPanel, "North");
+        totalPanel.add(refreshB, "East");
     }
 }

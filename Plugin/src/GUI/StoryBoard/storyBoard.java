@@ -5,6 +5,7 @@ import Analysis.Constant.SharedPreference;
 import GUI.StoryBoard.Object.Activity;
 import GUI.StoryBoard.Object.Xml;
 import GUI.StoryBoard.UI.palettePanel;
+import com.sun.org.apache.xpath.internal.operations.And;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,6 +18,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import Xml.*;
 
 
@@ -43,7 +45,6 @@ public class storyBoard extends JPanel {
 
     // 생성자----------------------------------------------------------------
     public storyBoard() throws IOException {
-
 
         jpan = new CustomJpanel();
         jpan.setLayout(null);
@@ -116,6 +117,9 @@ public class storyBoard extends JPanel {
                     scroll.revalidate();       // 무효화 선언된 화면을 알려줌
                     scroll.repaint();          // 다시 그려준다.
 
+                }
+                else if (e.getClickCount() == 2 && !e.isConsumed()) {
+                    AndDraw();
                 }
                 isActivity = false;
             }
@@ -330,7 +334,7 @@ public class storyBoard extends JPanel {
             System.out.println("present activitArrayData : " + activityArrayData);
             System.out.println("create Activity : " + obj);
 
-            activityArrayData.add(obj);
+            activityArrayData.add(xmlsarray);
 
             a.setOverbearing(true);
             list.put(resultStr, a);
@@ -339,8 +343,8 @@ public class storyBoard extends JPanel {
             sendJSonData();
             repaint_window();
 
-
-
+            AndDraw();
+            saveAndDraw();
         }
     }
 
@@ -908,10 +912,22 @@ public class storyBoard extends JPanel {
     }
 
     public void AndDraw() {
+        String pathpath;
+        pathpath = SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
+
+        File a = new File(pathpath);
+        a.delete();
 
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 
+//        try {
+//            Thread.sleep(10000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
         drawActivity();
+
     }
 }

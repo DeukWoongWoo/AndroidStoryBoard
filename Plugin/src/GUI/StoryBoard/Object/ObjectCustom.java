@@ -9,6 +9,7 @@ import GUI.StoryBoard.UI.palettePanel;
 import GUI.StoryBoard.storyBoard;
 import Xml.JsonToXml;
 import Xml.XmlToJson;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import sun.management.snmp.jvminstr.JvmOSImpl;
@@ -835,15 +836,45 @@ public class ObjectCustom extends JPanel {
             }
         }
         if(removeKey!=null) {
-            CommandManager deleteobject = CommandManager.getInstance();
-            deleteobject.deleteLocalComponent(getId().split("/")[1], XmlName.split("\\.")[0], typeObject);
 
             objectJObject.clear();
             checkkey.remove(removeKey);
         }
+        JSONArray tempArr =(JSONArray)storyboard.jobjRoot.get("xmls");
+        for(int j=0; j<tempArr.size(); j++){
+            JSONObject tempobj = (JSONObject)tempArr.get(j);
+            if(XmlName.equals(tempobj.get("name"))){
+                JSONArray objectobject = (JSONArray)tempobj.get("object");
+
+                JSONObject haha =(JSONObject)objectobject.get(0);
+                JSONArray arrayTemp = (JSONArray)haha.get("object");
+
+                for(int k=0; k<arrayTemp.size(); k++) {
+                    JSONObject lala = (JSONObject)arrayTemp.get(k);
+                    if(lala.isEmpty()) {
+                        arrayTemp.remove(k);
+                        break;
+                    }
+                }
+            }
+        }
 
 
-        saveAndDraw();
+        storyboard.setRootJObject(storyboard.jobjRoot);
+
+        String pathpath;
+        pathpath = SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
+        System.out.println(storyboard.jobjRoot);
+        JsonToXml jsonToXml = new JsonToXml();
+        jsonToXml.make(pathpath);
+
+        XmlToJson xmlToJson = new XmlToJson();
+        xmlToJson.make();
+        storyboard.setRootJObject(storyboard.jobjRoot);
+
+        CommandManager deleteobject = CommandManager.getInstance();
+        deleteobject.deleteLocalComponent(getId().split("/")[1], XmlName.split("\\.")[0], typeObject);
+
     }
 
     public void saveAndDraw(){

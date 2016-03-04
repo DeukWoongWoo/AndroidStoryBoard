@@ -31,7 +31,7 @@ public class FuncComponent {
 
     private boolean isImport;
     private boolean isMethod;
-    private boolean isFucn;
+    private boolean isFunc;
 
     private XmlDTO xmlDTO;
 
@@ -77,9 +77,9 @@ public class FuncComponent {
         PsiMethod createMethod = getPsiMethod("onCreate");
         if(createMethod != null){
             for(PsiStatement statement : createMethod.getBody().getStatements()) {
-                if(statement.getText().equals("initFind();")) isFucn = true;
+                if(statement.getText().equals("initFind();")) isFunc = true;
             }
-            if(!isFucn) addPsiStatement(createMethod, "initFind();");
+            if(!isFunc) addPsiStatement(createMethod, "initFind();");
         }
 
         insertIntoFind();
@@ -163,7 +163,7 @@ public class FuncComponent {
     private void findFunction(String componentName) {
         PsiMethod findMethod = getPsiMethod("initFind");
         if (findMethod != null) {
-            if(isMethod){
+            if(findMethod.getBody().getStatements().length == 1){
                 new WriteCommandAction.Simple(psiJavaFile.getProject(), psiJavaFile.getContainingFile()) {
                     @Override
                     protected void run() throws Throwable {

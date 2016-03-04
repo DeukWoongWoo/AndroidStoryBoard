@@ -1,17 +1,24 @@
 package Analysis.Play.Contents;
 
+import Analysis.RedoUndo.CommandManager;
 import org.jdesktop.swingx.JXComboBox;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by woong on 2016-03-04.
  */
 public class LibraryPanel extends JPanel {
+    private CommandManager commandManager;
+
+    private int type;
+
     public LibraryPanel(){
         setLayout(new GridLayout(4,1));
-
+        commandManager = CommandManager.getInstance();
         init();
     }
 
@@ -20,6 +27,13 @@ public class LibraryPanel extends JPanel {
         menu.addItem("Event");
         menu.addItem("Error");
         menu.addItem("Activity");
+
+        menu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                type = menu.getSelectedIndex();
+            }
+        });
 
         add(menu);
 
@@ -49,7 +63,26 @@ public class LibraryPanel extends JPanel {
         executePanel.setLayout(new FlowLayout());
 
         JButton create = new JButton("생성");
+        create.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(type==0){
+                    commandManager.addLibEvent(xmlID.getText(), layout.getText());
+                }else if(type == 1){
+                    commandManager.addLibError(xmlID.getText(), layout.getText());
+                }else if(type ==2){
+                    commandManager.addLibActivity(layout.getText());
+                }
+            }
+        });
+
         JButton delete = new JButton("삭제");
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                commandManager.deleteLib();
+            }
+        });
 
         executePanel.add(create);
         executePanel.add(delete);

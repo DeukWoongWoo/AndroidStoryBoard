@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class TestMainFrame extends JFrame {
     public TestMainFrame(){
-        setSize(new Dimension(900, 300));
+        setSize(new Dimension(900, 400));
 
         init();
 

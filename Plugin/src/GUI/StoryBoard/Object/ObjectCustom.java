@@ -9,12 +9,16 @@ import GUI.StoryBoard.UI.palettePanel;
 import GUI.StoryBoard.storyBoard;
 import Xml.JsonToXml;
 import Xml.XmlToJson;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import sun.management.snmp.jvminstr.JvmOSImpl;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,6 +44,7 @@ public class ObjectCustom extends JPanel {
     private String layout_width, layout_height, layout_alignParentStart, layout_marginStart, layout_alignParentTop;
     private String layout_alignParentLeft, layout_marginLeft, layout_marginTop , textAllCaps;
 
+    public int totalscale;
     private boolean overbearing = true;
     public storyBoard storyboard;
 
@@ -351,7 +356,8 @@ public class ObjectCustom extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
+                System.out.println("Send Data :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+                System.out.println(objectJObject);
                 if(fixedYN)
                     fixObject(2);
                 repaint();
@@ -532,34 +538,41 @@ public class ObjectCustom extends JPanel {
     }
 
     public void fixObject(int scale){
+        totalscale=scale;
         removeAttribue();
         setAttribue(objectJObject);
         setScale(scale);
 
-        sendData();
+        System.out.println("BeforeObject :"+ objectJObject);
+        System.out.println("BeforeObject :"+ storyboard.jobjRoot);
+
+        storyboard.setRootJObject(storyboard.jobjRoot);
 
         String pathpath;
-        pathpath= SharedPreference.PROJECT.get() + ConstantEtc.PROJECT_XML_PATH + "/assets";
+        pathpath= SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
 
 
         JsonToXml jsonToXml = new JsonToXml();
-        jsonToXml.make(pathpath+"/plugin.json");
+        jsonToXml.make(pathpath);
+
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 
 
-        storyboard.setRootJObject();
+
+        System.out.println("AfterObject :"+ objectJObject);
+        System.out.println("AfterObject :"+ storyboard.jobjRoot);
+
         storyboard.drawActivity();
     }
-
     public void newObject(){
-        storyboard.setRootJObject();
+        storyboard.setRootJObject(storyboard.jobjRoot);
 
         String pathpath;
-        pathpath= SharedPreference.PROJECT.get() + ConstantEtc.PROJECT_XML_PATH + "/assets";
+        pathpath= SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
 
         JsonToXml jsonToXml = new JsonToXml();
-        jsonToXml.make(pathpath+"/plugin.json");
+        jsonToXml.make(pathpath);
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 
@@ -580,18 +593,31 @@ public class ObjectCustom extends JPanel {
 
         int center_x,center_y, parent_w, parent_h;
 
+
         String top,bottom,right,left;
 
-        center_x=isPosition().x+getWidth()/2;
-        center_y=isPosition().y+getWidth()/2;
+
+        long isX , isY;
+        if(totalscale==1){
+            isX=(long)json.get("x")/2;
+            isY=(long)json.get("y")/2;
+        }else{
+            isX=(long)json.get("x");
+            isY=(long)json.get("y");
+        }
+        center_x=(int)isX+getWidth()/2;
+        center_y=(int)isY+getWidth()/2;
         parent_w=parentWidth;
         parent_h=parentHeight;
+        System.out.println(isX+ " , " +isY);
+        System.out.println(isPosition()+ "  "+ parent_h+"  "+parent_w);
 
-        top = String.valueOf((isPosition().y));
-        bottom = String.valueOf( (parentHeight-(isPosition().y+getObject_height())) );
-        right = String.valueOf( (parentWidth-(isPosition().x+getObject_width())) );
-        left = String.valueOf( (isPosition().x) );
+        top = String.valueOf(isY);
+        bottom = String.valueOf( (parentHeight-(isY+getObject_height())) );
+        right = String.valueOf( (parentWidth-(isX+getObject_width())) );
+        left = String.valueOf( (isX) );
 
+        System.out.println("top:"+top +"  bottom:"+bottom+ " right"+right+" left"+left);
         top+="dp";
         bottom+="dp";
         right+="dp";
@@ -614,6 +640,7 @@ public class ObjectCustom extends JPanel {
             attribute.put("layout_marginStart",left);
 
             attribute.put("layout_marginTop",top);
+            attribute.put("layout_alignParentTop","true");
 
         }
         //왼쪽 하단
@@ -625,6 +652,7 @@ public class ObjectCustom extends JPanel {
             attribute.put("layout_marginStart",left);
 
             attribute.put("layout_marginBottom",bottom);
+            attribute.put("layout_alignParentBottom","true");
         }
         //오른쪽 상단
         else if(center_x>parent_w && center_y<parent_h){
@@ -635,6 +663,8 @@ public class ObjectCustom extends JPanel {
             attribute.put("layout_marginEnd",right);
 
             attribute.put("layout_marginBottom",bottom);
+            attribute.put("layout_alignParentTop","true");
+
         }
         //오른쪽 하단
         else if(center_x<parent_w && center_y<parent_h){
@@ -645,6 +675,7 @@ public class ObjectCustom extends JPanel {
             attribute.put("layout_marginEnd",right);
 
             attribute.put("layout_marginBottom",bottom);
+            attribute.put("layout_alignParentBottom","true");
         }
         // 수평 수직
         else if(center_x==parent_w && center_y==parent_h){
@@ -656,10 +687,12 @@ public class ObjectCustom extends JPanel {
             if(center_x<parent_w){
                 attribute.put("layout_marginLeft",left);
                 attribute.put("layout_marginStart", left);
+                attribute.put("layout_alignParentTop","true");
             }
             else{
                 attribute.put("layout_marginRight",right);
                 attribute.put("layout_marginEnd",right);
+                attribute.put("layout_alignParentBottom","true");
             }
         }
         // 수직
@@ -803,16 +836,62 @@ public class ObjectCustom extends JPanel {
             }
         }
         if(removeKey!=null) {
+
             objectJObject.clear();
             checkkey.remove(removeKey);
         }
+        JSONArray tempArr =(JSONArray)storyboard.jobjRoot.get("xmls");
+        for(int j=0; j<tempArr.size(); j++){
+            JSONObject tempobj = (JSONObject)tempArr.get(j);
+            if(XmlName.equals(tempobj.get("name"))){
+                JSONArray objectobject = (JSONArray)tempobj.get("object");
+
+                JSONObject haha =(JSONObject)objectobject.get(0);
+                JSONArray arrayTemp = (JSONArray)haha.get("object");
+
+                for(int k=0; k<arrayTemp.size(); k++) {
+                    JSONObject lala = (JSONObject)arrayTemp.get(k);
+                    if(lala.isEmpty()) {
+                        arrayTemp.remove(k);
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        storyboard.setRootJObject(storyboard.jobjRoot);
+
+        String pathpath;
+        pathpath = SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
+        System.out.println(storyboard.jobjRoot);
+        JsonToXml jsonToXml = new JsonToXml();
+        jsonToXml.make(pathpath);
+
+        XmlToJson xmlToJson = new XmlToJson();
+        xmlToJson.make();
+        storyboard.setRootJObject(storyboard.jobjRoot);
 
         CommandManager deleteobject = CommandManager.getInstance();
-        deleteobject.deleteLocalComponent(getId(), XmlName, typeObject);
+        deleteobject.deleteLocalComponent(getId().split("/")[1], XmlName.split("\\.")[0], typeObject);
 
-        storyboard.setRootJObject();
-        storyboard.drawActivity();
     }
+
+    public void saveAndDraw(){
+        storyboard.setRootJObject(storyboard.jobjRoot);
+
+        String pathpath;
+        pathpath= SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
+
+        JsonToXml jsonToXml = new JsonToXml();
+        jsonToXml.make(pathpath);
+
+        XmlToJson xmlToJson = new XmlToJson();
+        xmlToJson.make();
+        storyboard.drawActivity();
+
+    }
+
 
 
 }

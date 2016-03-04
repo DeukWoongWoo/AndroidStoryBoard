@@ -212,9 +212,15 @@ public class JsonToXml {
                 if(component.getTagName().equals("RelativeLayout")){
                     currentlayout = doc.createElement(component.getTagName());
                     for(int j=0;j<component.getAttributeCount();j++){
-                        attr=doc.createAttributeNS("http://schemas.android.com/apk/res/android",component.getAttributes(j));
-                        attr.setValue(component.getAttributesValue(j));
-                        attr.setPrefix("android");
+                        if(!component.getAttributes(j).equals("context")){
+                            attr=doc.createAttributeNS("http://schemas.android.com/apk/res/android",component.getAttributes(j));
+                            attr.setValue(component.getAttributesValue(j));
+                            attr.setPrefix("android");
+                        }else{
+                            attr=doc.createAttributeNS("http://schemas.android.com/tools",component.getAttributes(j));
+                            attr.setValue(component.getAttributesValue(j));
+                            attr.setPrefix("tools");
+                        }
                         currentlayout.setAttributeNode(attr);
                     }
                     if(xmlTop == 0) {//root

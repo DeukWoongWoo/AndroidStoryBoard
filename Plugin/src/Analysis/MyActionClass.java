@@ -1,36 +1,21 @@
 package Analysis;
 
-import Analysis.Constant.ConstantEtc;
-import Analysis.Constant.SharedPreference;
-import Analysis.Database.DataAccessObject.Java.JavaDAO;
-import Analysis.Database.DataAccessObject.Manifest.ManifestDAO;
-import Analysis.Database.DatabaseManager.DatabaseManager;
-import Analysis.Database.DtatTransferObject.*;
-import Analysis.Main.ProjectAnalysis;
-import Analysis.RedoUndo.CodeDriver;
+import Analysis.Database.QueryBuilder.QueryBuilder;
+import Analysis.Play.TestMainFrame;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.psi.*;
-import com.intellij.psi.codeStyle.JavaCodeStyleManager;
-import com.intellij.psi.util.PsiTreeUtil;
-
-import java.util.ArrayList;
 
 
 /**
  * Created by woong on 2015-12-22.
  */
 public class MyActionClass extends AnAction {
-    public static AnActionEvent anActionEvent;
     @Override
     public void actionPerformed(AnActionEvent e) {
-        anActionEvent = e;
+//        new PluginTest();
+        new TestMainFrame();
+
+
 //        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(ConstantEtc.INTELLIJ_PATH);
 //        projectAnalysis.execute(ConstantEtc.INTELLIJ_PATH+"/Activity", ConstantEtc.JAVA_PATTERN);
 //        ProjectAnalysis projectAnalysis = ProjectAnalysis.getInstance(ConstantEtc.PROJECT_XML_PATH);
@@ -61,7 +46,7 @@ public class MyActionClass extends AnAction {
 //        Messages.showInfoMessage(DatabaseManager.getInstance().selectToJava(JavaDAO::selectAll).size()+"", "Test");
 
 
-        new CodeDriver();
+//        new CodeDriver();
 //        projectAnalysis.execute(intellijPath, ConstantEtc.XML_PATTERN);
 
 //        ManifestDTO manifestDTO = new ManifestDTO();
@@ -94,5 +79,11 @@ public class MyActionClass extends AnAction {
 //        projectAnalysis.execute(ConstantEtc.PROJECT_JAVA_PATH, ConstantEtc.JAVA_PATTERN);
 
 //        PluginTest test = new PluginTest(e);
+
+        QueryBuilder.selectAll().from("Java").build();
+        QueryBuilder.selectAll().from("Java").where("num=1");
+        QueryBuilder.insert().into("Component").columns("name","id").values("test","test").build();
+
+
     }
 }

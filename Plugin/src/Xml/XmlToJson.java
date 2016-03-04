@@ -35,7 +35,6 @@ public class XmlToJson {
         pluginJsonObject = new JSONObject();
         webJsonArray=new JSONArray();
         pluginJsonArray=new JSONArray();
-        Messages.showInfoMessage("Contructor!!","filePath");
 
         appName=SharedPreference.PROJECT.get().getName();
     }
@@ -112,14 +111,14 @@ public class XmlToJson {
         }
 
         String pathpath;
-        pathpath=SharedPreference.PROJECT.get() + ConstantEtc.PROJECT_XML_PATH + "/assets";
+        pathpath=SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets";
 
         makeFile(makeWebJsonObject(),pathpath+"/web.json");
-        makeFile(makePluginJsonObject(),pathpath+"/plugin.json");
+        makeFile(makePluginJsonObject(),pathpath+"/plugin.txt");
          //makeFile(makePluginJsonObject(), Constant.FILE_OUT);
 
-        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
-        makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
+//        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
+   //     makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
         // makeFile(makePluginJsonObject(), Constant.FILE_ROUTE);
 
 

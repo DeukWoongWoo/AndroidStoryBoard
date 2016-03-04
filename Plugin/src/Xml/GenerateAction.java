@@ -60,6 +60,11 @@ public class GenerateAction extends AnAction {
 
 
         //makeXml.makeActivityxml("c");
+        File dir = new File("C:/Users/cho/Desktop/TestApplication/app/src/main/assets");
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+
 
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();

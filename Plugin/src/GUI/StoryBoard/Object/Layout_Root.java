@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 public class Layout_Root extends ObjectCustom {
 
-    int buttonNum =1;
+    public static int buttonNum =1;
     int radiobuttonNum=1;
     int linearlayoutNum=1;
     int imageViewNum=1;
@@ -244,6 +244,7 @@ public class Layout_Root extends ObjectCustom {
             return b;
         }
         else if(type.equals("button")){
+
             Button_Click b = new Button_Click(objectList, jobj,nextActivitylist, activityList,  storyboard, XmlName);
             b.getStroyBoard(storyboard);
             return b;
@@ -338,12 +339,13 @@ public class Layout_Root extends ObjectCustom {
         sendfile.mousep=point;
         sendfile.parentHeight=getObject_height();
         sendfile.parentWidth=getObject_width();
+        // 만들어주는 덕웅이 코드
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("button"+sendfile.name, XmlName.split("\\.")[0], Type.Button);
+
         Button_Click b = new Button_Click(sendfile);
 
 
-        // 만들어주는 덕웅이 코드
-        CommandManager newobject = CommandManager.getInstance();
-        newobject.createLocalComponent("button"+sendfile.name, XmlName, Type.Button);
 
         tempArray.add(tempObj);
 
@@ -355,23 +357,6 @@ public class Layout_Root extends ObjectCustom {
 
         newObject();
 
-    }
-    //-----------새로운 Radio 버튼 생성---------
-    public void newRadioButton(){
-        JSONArray tempArray;
-        JSONObject tempObj;
-        tempArray = (JSONArray)objectJObject.get("object");
-        tempObj = new JSONObject();
-
-        Button_Radio b = new Button_Radio(""+radiobuttonNum, objectList,tempObj);
-
-        tempArray.add(tempObj);
-
-        add(b);
-
-        revalidate();       // 무효화 선언된 화면을 알려줌
-        repaint();          // 다시 그려준다.
-        radiobuttonNum++;
     }
     public void newRadioButton(Point point){
         JSONArray tempArray;
@@ -387,10 +372,11 @@ public class Layout_Root extends ObjectCustom {
         sendfile.parentHeight=getObject_height();
         sendfile.parentWidth=getObject_width();
 
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("Radio button"+sendfile.name, XmlName.split("\\.")[0], Type.RadioButton);
+
         Button_Radio b = new Button_Radio(sendfile);
 
-        CommandManager newobject = CommandManager.getInstance();
-        newobject.createLocalComponent("Radio button"+sendfile.name, XmlName, Type.RadioButton);
 
         tempArray.add(tempObj);
 
@@ -399,6 +385,7 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         radiobuttonNum++;
+
         newObject();
     }
     public void newImageView(Point point){
@@ -407,10 +394,11 @@ public class Layout_Root extends ObjectCustom {
         tempArray = (JSONArray)objectJObject.get("object");
         tempObj = new JSONObject();
 
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("imageView"+imageViewNum ,XmlName.split("\\.")[0], Type.ImageView);
+
         Image_View b = new Image_View(""+imageViewNum, objectList,tempObj, point);
 
-        CommandManager newobject = CommandManager.getInstance();
-        newobject.createLocalComponent("imageView"+imageViewNum, XmlName, Type.RadioButton);
 
         tempArray.add(tempObj);
 
@@ -426,12 +414,10 @@ public class Layout_Root extends ObjectCustom {
         JSONObject tempObj;
         tempArray = (JSONArray)objectJObject.get("object");
         tempObj = new JSONObject();
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("TextView"+imageViewNum ,XmlName.split("\\.")[0], Type.TextView);
 
         TextView t = new TextView(""+imageViewNum, objectList,tempObj, point);
-
-        CommandManager newobject = CommandManager.getInstance();
-        newobject.createLocalComponent("TextView"+imageViewNum, XmlName, Type.RadioButton);
-
 
         tempArray.add(tempObj);
 
@@ -455,11 +441,11 @@ public class Layout_Root extends ObjectCustom {
         sendfile.mousep=point;
         sendfile.parentHeight=getObject_height();
         sendfile.parentWidth=getObject_width();
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("CheckBox"+sendfile.name, XmlName.split("\\.")[0], Type.CheckBox);
 
         CheckBox t = new CheckBox(sendfile);
 
-        CommandManager newobject = CommandManager.getInstance();
-        newobject.createLocalComponent("CheckBox"+sendfile.name, XmlName, Type.RadioButton);
 
 
         tempArray.add(tempObj);
@@ -498,31 +484,37 @@ public class Layout_Root extends ObjectCustom {
 
                 }
                 else if(panel.getChoice()==Constant.BUTTON){
+                    CreateOption a = new CreateOption(e.getPoint());
                     newButton(e.getPoint());
                     panel.setChoice(0);
                     objectBooleanFalse();
                 }
                 else if(panel.getChoice()==Constant.RADIOBUTTON){
+                    CreateOption a = new CreateOption(e.getPoint());
                     newRadioButton(e.getPoint());
                     panel.setChoice(0);
                     objectBooleanFalse();
                 }
                 else if(panel.getChoice()==Constant.LINEARLAYOUT){
+                    CreateOption a = new CreateOption(e.getPoint());
                     newLInearLayout();
                     panel.setChoice(0);
                 }
                 else if(panel.getChoice()==Constant.IMAGEVIEW){
+                    CreateOption a = new CreateOption(e.getPoint());
                     newImageView(e.getPoint());
                     panel.setChoice(0);
                     objectBooleanFalse();
                 }
                 else if(panel.getChoice()==Constant.TEXTVIEW){
+                    CreateOption a = new CreateOption(e.getPoint());
                     newTextView(e.getPoint());
                     panel.setChoice(0);
                     objectBooleanFalse();
 
                 }
                 else if(panel.getChoice()==Constant.CHECKBOX){
+                    CreateOption a = new CreateOption(e.getPoint());
                     newCheckBox(e.getPoint());
                     panel.setChoice(0);
                     objectBooleanFalse();
@@ -723,6 +715,52 @@ public class Layout_Root extends ObjectCustom {
 
 
     }
+    class CreateOption extends JPopupMenu {
 
+        JMenuItem local;
+        JMenuItem member;
+        JMenuItem function;
+        JMenuItem none;
+
+        public CreateOption(Point p) {
+            setLocation(p.x,p.y);
+            local = new JMenuItem("Local");
+            member = new JMenuItem("Member");
+            function = new JMenuItem("Function");
+            none = new JMenuItem("None");
+
+
+            local.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+            member.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+            function.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+            none.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+            add(local);
+            add(member);
+            add(function);
+            add(none);
+        }
+
+    }
 
 }

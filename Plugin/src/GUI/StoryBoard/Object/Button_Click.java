@@ -62,8 +62,8 @@ public class Button_Click extends Button_Root {
         parentHeight=objectNew.parentHeight;
 
         setPosition(objectNew.mousep);
-        objectNew.jObject.put("x",(long)isPosition().x*2);
-        objectNew.jObject.put("y",(long)isPosition().y*2);
+        objectNew.jObject.put("x",(long)isPosition().x);
+        objectNew.jObject.put("y",(long)isPosition().y);
 
         setLocation(isPosition().x, isPosition().y);
         checkkey=objectNew.objectList;
@@ -100,6 +100,7 @@ public class Button_Click extends Button_Root {
     }
     public Button_Click(HashMap<String, ObjectCustom> list, JSONObject obj, ArrayList nextlist, HashMap<String, Activity> actList,    storyBoard stroy, String ActivitName) {
         super(list, obj,nextlist, actList,stroy, ActivitName);
+        typeObject= Type.Button;
         init_text();
         setLayout(new BorderLayout());
         add(content,BorderLayout.CENTER);

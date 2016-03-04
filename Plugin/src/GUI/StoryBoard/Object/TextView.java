@@ -31,6 +31,7 @@ public class TextView extends ObjectCustom {
     }
     public TextView(String name_ , HashMap<String,  ObjectCustom> list, JSONObject obj, Point p) {
         long width, height, x, y ;
+
         String name, color;
         typeObject= Type.TextView;
         System.out.println(obj);
@@ -83,7 +84,7 @@ public class TextView extends ObjectCustom {
         super(list,obj,nextlist,actList,stroy,ActivitName);
         long width, height, x, y;
         String name;
-
+        typeObject= Type.TextView;
 
         nextActivitylist = nextlist;
         objectJObject = obj;

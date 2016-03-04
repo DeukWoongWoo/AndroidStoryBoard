@@ -7,6 +7,7 @@ import Analysis.Database.DatabaseManager.DatabaseManager;
 import Analysis.Parser.JavaParser;
 import Analysis.Parser.FileParser;
 import Analysis.Parser.XmlParser;
+import Xml.makeXml;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
@@ -61,11 +62,13 @@ public class ProjectAnalysis {
     private void makeAssetsDirectory(){
         File file = new File(project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets");
         if(!file.exists()) file.mkdirs();
+        makeXml.makeUserLib(project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/userLib.xml");
+        makeXml.makeUserInform(project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/userInform.xml");
     }
 
     private void makeDirectory(String path, String name) {
         ProjectFileIndex fileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-        final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(currentDirectory(path).getVirtualFile());
+        final VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(project.getBaseDir().findFileByRelativePath(path));
         PackageWrapper packageWrapper = new PackageWrapper(PsiManager.getInstance(project).findFile(project.getProjectFile()).getManager(), name);
         new WriteCommandAction.Simple(project, PsiManager.getInstance(project).findFile(project.getProjectFile()).getContainingFile()) {
             @Override
@@ -73,6 +76,7 @@ public class ProjectAnalysis {
                 RefactoringUtil.createPackageDirectoryInSourceRoot(packageWrapper, sourceRootForFile);
             }
         }.execute();
+
     }
 
     public void executeAll() {
@@ -137,6 +141,7 @@ public class ProjectAnalysis {
 
     private void findFiles(String pattern, PsiDirectory psiDirectory) {
         PsiFile[] psiFiles = psiDirectory.getFiles();
+
         if (psiFiles.length != 0)
             checkFileType(psiFiles, pattern);
     }

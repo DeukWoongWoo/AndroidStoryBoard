@@ -1,17 +1,22 @@
 package Analysis.Play.Contents;
 
+import Analysis.RedoUndo.CommandManager;
 import org.jdesktop.swingx.JXComboBox;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by woong on 2016-03-04.
  */
 public class ActivityLinkPanel extends JPanel {
+    private CommandManager commandManager;
+
     public ActivityLinkPanel(){
         setLayout(new GridLayout(4,1));
-
+        commandManager = CommandManager.getInstance();
         init();
     }
 
@@ -53,7 +58,20 @@ public class ActivityLinkPanel extends JPanel {
         executePanel.setLayout(new FlowLayout());
 
         JButton create = new JButton("생성");
+        create.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                commandManager.linkActivity(xmlID.getText(), layout.getText(), activityName.getText());
+            }
+        });
+
         JButton delete = new JButton("삭제");
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                commandManager.deleteLinkActivity(xmlID.getText(), layout.getText(), activityName.getText());
+            }
+        });
 
         executePanel.add(create);
         executePanel.add(delete);

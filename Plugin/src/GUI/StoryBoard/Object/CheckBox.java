@@ -32,6 +32,7 @@ public class CheckBox extends ObjectCustom {
     public CheckBox(String name_ , HashMap<String,  ObjectCustom> list, JSONObject obj, Point p) {
         long width, height, x, y ;
         String name, color;
+        typeObject= Type.CheckBox;
         panel1 = new ImagePanel1("/icon/radio.png");
         System.out.println(obj);
         name = "@+id/"+"CheckBox"+ name_;
@@ -102,6 +103,8 @@ public class CheckBox extends ObjectCustom {
     public CheckBox(Constant.ObjectNew objectNew) {
         long width, height, x, y ;
         String name, color;
+
+
         typeObject= Type.CheckBox;
         panel1 = new ImagePanel1("/icon/radio.png");
         name = "@+id/"+"CheckBox"+ objectNew.name;
@@ -116,8 +119,8 @@ public class CheckBox extends ObjectCustom {
         height = Constant.buttonHeight;
 
 
-        x = objectNew.mousep.x;
-        y = objectNew.mousep.y;
+        x = (long)objectNew.mousep.x;
+        y = (long)objectNew.mousep.y;
 
         objectJObject=objectNew.jObject;
         checkkey=objectNew.objectList;
@@ -131,8 +134,8 @@ public class CheckBox extends ObjectCustom {
         this.setOpaque(false);
         setPosition(objectNew.mousep);
 
-        objectNew.jObject.put("x",(long)isPosition().x*2);
-        objectNew.jObject.put("y",(long)isPosition().y*2);
+        objectNew.jObject.put("x",(long)x);
+        objectNew.jObject.put("y",(long)y);
         objectNew.jObject.put("name",getObjectName());
         objectNew.jObject.put("width",width*2);
         objectNew.jObject.put("height",height*2);

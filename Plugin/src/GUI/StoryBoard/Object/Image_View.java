@@ -39,6 +39,7 @@ public class Image_View extends ObjectCustom {
     }
     public Image_View(String name_ , HashMap<String,  ObjectCustom> list, JSONObject obj, Point p) {
         long width, height, x, y ;
+
         String name, color;
         typeObject= Type.ImageView;
         System.out.println(obj);
@@ -65,8 +66,8 @@ public class Image_View extends ObjectCustom {
         this.setBackground(Color.WHITE);
 
         obj.put("name",getId());
-        obj.put("x",x*2);
-        obj.put("y",y*2);
+        obj.put("x",x);
+        obj.put("y",y);
         obj.put("width",width*2);
         obj.put("height",height*2);
         obj.put("color",color);
@@ -91,7 +92,7 @@ public class Image_View extends ObjectCustom {
         super(list,obj,nextlist,actList,stroy,ActivitName);
         long width, height, x, y;
         String name;
-
+        typeObject= Type.ImageView;
 
         nextActivitylist = nextlist;
         objectJObject = obj;

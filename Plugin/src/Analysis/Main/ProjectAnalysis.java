@@ -126,7 +126,7 @@ public class ProjectAnalysis {
 
     public String makeAssetsPath(String xmlName) {
         String xmlPath;
-        xmlPath = project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/java/assets/" + xmlName;
+        xmlPath = project.getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/" + xmlName;
         return xmlPath;
     }
 

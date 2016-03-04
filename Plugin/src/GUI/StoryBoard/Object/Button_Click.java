@@ -62,8 +62,8 @@ public class Button_Click extends Button_Root {
         parentHeight=objectNew.parentHeight;
 
         setPosition(objectNew.mousep);
-        objectNew.jObject.put("x",(long)isPosition().x*2);
-        objectNew.jObject.put("y",(long)isPosition().y*2);
+        objectNew.jObject.put("x",(long)isPosition().x);
+        objectNew.jObject.put("y",(long)isPosition().y);
 
         setLocation(isPosition().x, isPosition().y);
         checkkey=objectNew.objectList;

@@ -117,8 +117,8 @@ public class XmlToJson {
         makeFile(makePluginJsonObject(),pathpath+"/plugin.txt");
          //makeFile(makePluginJsonObject(), Constant.FILE_OUT);
 
-        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
-        makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
+//        makeFile(makeWebJsonObject(),"C:/Users/cho/Desktop/json/web.json");
+   //     makeFile(makePluginJsonObject(),"C:/Users/cho/Desktop/json/plugin.json");
         // makeFile(makePluginJsonObject(), Constant.FILE_ROUTE);
 
 

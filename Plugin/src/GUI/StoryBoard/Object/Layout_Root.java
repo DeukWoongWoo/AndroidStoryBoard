@@ -358,23 +358,6 @@ public class Layout_Root extends ObjectCustom {
         newObject();
 
     }
-    //-----------새로운 Radio 버튼 생성---------
-    public void newRadioButton(){
-        JSONArray tempArray;
-        JSONObject tempObj;
-        tempArray = (JSONArray)objectJObject.get("object");
-        tempObj = new JSONObject();
-
-        Button_Radio b = new Button_Radio(""+radiobuttonNum, objectList,tempObj);
-
-        tempArray.add(tempObj);
-
-        add(b);
-
-        revalidate();       // 무효화 선언된 화면을 알려줌
-        repaint();          // 다시 그려준다.
-        radiobuttonNum++;
-    }
     public void newRadioButton(Point point){
         JSONArray tempArray;
         JSONObject tempObj;
@@ -389,10 +372,11 @@ public class Layout_Root extends ObjectCustom {
         sendfile.parentHeight=getObject_height();
         sendfile.parentWidth=getObject_width();
 
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("Radio button"+sendfile.name, XmlName.split("\\.")[0], Type.RadioButton);
+
         Button_Radio b = new Button_Radio(sendfile);
 
-        CommandManager newobject = CommandManager.getInstance();
-        newobject.createLocalComponent("Radio button"+sendfile.name, XmlName, Type.RadioButton);
 
         tempArray.add(tempObj);
 
@@ -401,6 +385,7 @@ public class Layout_Root extends ObjectCustom {
         revalidate();       // 무효화 선언된 화면을 알려줌
         repaint();          // 다시 그려준다.
         radiobuttonNum++;
+
         newObject();
     }
     public void newImageView(Point point){
@@ -409,10 +394,11 @@ public class Layout_Root extends ObjectCustom {
         tempArray = (JSONArray)objectJObject.get("object");
         tempObj = new JSONObject();
 
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("imageView"+imageViewNum ,XmlName.split("\\.")[0], Type.ImageView);
+
         Image_View b = new Image_View(""+imageViewNum, objectList,tempObj, point);
 
-        CommandManager newobject = CommandManager.getInstance();
-        newobject.createLocalComponent("imageView"+imageViewNum, XmlName, Type.RadioButton);
 
         tempArray.add(tempObj);
 
@@ -428,12 +414,10 @@ public class Layout_Root extends ObjectCustom {
         JSONObject tempObj;
         tempArray = (JSONArray)objectJObject.get("object");
         tempObj = new JSONObject();
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("TextView"+imageViewNum ,XmlName.split("\\.")[0], Type.TextView);
 
         TextView t = new TextView(""+imageViewNum, objectList,tempObj, point);
-
-        CommandManager newobject = CommandManager.getInstance();
-        newobject.createLocalComponent("TextView"+imageViewNum, XmlName, Type.RadioButton);
-
 
         tempArray.add(tempObj);
 
@@ -457,11 +441,11 @@ public class Layout_Root extends ObjectCustom {
         sendfile.mousep=point;
         sendfile.parentHeight=getObject_height();
         sendfile.parentWidth=getObject_width();
+        CommandManager newobject = CommandManager.getInstance();
+        newobject.createLocalComponent("CheckBox"+sendfile.name, XmlName.split("\\.")[0], Type.CheckBox);
 
         CheckBox t = new CheckBox(sendfile);
 
-        CommandManager newobject = CommandManager.getInstance();
-        newobject.createLocalComponent("CheckBox"+sendfile.name, XmlName, Type.RadioButton);
 
 
         tempArray.add(tempObj);

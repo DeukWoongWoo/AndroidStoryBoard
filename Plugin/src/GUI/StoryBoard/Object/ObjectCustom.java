@@ -9,12 +9,16 @@ import GUI.StoryBoard.UI.palettePanel;
 import GUI.StoryBoard.storyBoard;
 import Xml.JsonToXml;
 import Xml.XmlToJson;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import sun.management.snmp.jvminstr.JvmOSImpl;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -541,7 +545,8 @@ public class ObjectCustom extends JPanel {
 
         System.out.println("BeforeObject :"+ objectJObject);
         System.out.println("BeforeObject :"+ storyboard.jobjRoot);
-        storyboard.setRootJObject();
+
+        storyboard.setRootJObject(storyboard.jobjRoot);
 
         String pathpath;
         pathpath= SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
@@ -550,20 +555,18 @@ public class ObjectCustom extends JPanel {
         JsonToXml jsonToXml = new JsonToXml();
         jsonToXml.make(pathpath);
 
-
         XmlToJson xmlToJson = new XmlToJson();
         xmlToJson.make();
 
-        storyboard.setRootJObject();
+
 
         System.out.println("AfterObject :"+ objectJObject);
         System.out.println("AfterObject :"+ storyboard.jobjRoot);
 
         storyboard.drawActivity();
     }
-
     public void newObject(){
-        storyboard.setRootJObject();
+        storyboard.setRootJObject(storyboard.jobjRoot);
 
         String pathpath;
         pathpath= SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
@@ -637,6 +640,7 @@ public class ObjectCustom extends JPanel {
             attribute.put("layout_marginStart",left);
 
             attribute.put("layout_marginTop",top);
+            attribute.put("layout_alignParentTop","true");
 
         }
         //왼쪽 하단
@@ -648,6 +652,7 @@ public class ObjectCustom extends JPanel {
             attribute.put("layout_marginStart",left);
 
             attribute.put("layout_marginBottom",bottom);
+            attribute.put("layout_alignParentBottom","true");
         }
         //오른쪽 상단
         else if(center_x>parent_w && center_y<parent_h){
@@ -658,6 +663,8 @@ public class ObjectCustom extends JPanel {
             attribute.put("layout_marginEnd",right);
 
             attribute.put("layout_marginBottom",bottom);
+            attribute.put("layout_alignParentTop","true");
+
         }
         //오른쪽 하단
         else if(center_x<parent_w && center_y<parent_h){
@@ -668,6 +675,7 @@ public class ObjectCustom extends JPanel {
             attribute.put("layout_marginEnd",right);
 
             attribute.put("layout_marginBottom",bottom);
+            attribute.put("layout_alignParentBottom","true");
         }
         // 수평 수직
         else if(center_x==parent_w && center_y==parent_h){
@@ -679,10 +687,12 @@ public class ObjectCustom extends JPanel {
             if(center_x<parent_w){
                 attribute.put("layout_marginLeft",left);
                 attribute.put("layout_marginStart", left);
+                attribute.put("layout_alignParentTop","true");
             }
             else{
                 attribute.put("layout_marginRight",right);
                 attribute.put("layout_marginEnd",right);
+                attribute.put("layout_alignParentBottom","true");
             }
         }
         // 수직
@@ -826,16 +836,62 @@ public class ObjectCustom extends JPanel {
             }
         }
         if(removeKey!=null) {
+
             objectJObject.clear();
             checkkey.remove(removeKey);
         }
+        JSONArray tempArr =(JSONArray)storyboard.jobjRoot.get("xmls");
+        for(int j=0; j<tempArr.size(); j++){
+            JSONObject tempobj = (JSONObject)tempArr.get(j);
+            if(XmlName.equals(tempobj.get("name"))){
+                JSONArray objectobject = (JSONArray)tempobj.get("object");
+
+                JSONObject haha =(JSONObject)objectobject.get(0);
+                JSONArray arrayTemp = (JSONArray)haha.get("object");
+
+                for(int k=0; k<arrayTemp.size(); k++) {
+                    JSONObject lala = (JSONObject)arrayTemp.get(k);
+                    if(lala.isEmpty()) {
+                        arrayTemp.remove(k);
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        storyboard.setRootJObject(storyboard.jobjRoot);
+
+        String pathpath;
+        pathpath = SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
+        System.out.println(storyboard.jobjRoot);
+        JsonToXml jsonToXml = new JsonToXml();
+        jsonToXml.make(pathpath);
+
+        XmlToJson xmlToJson = new XmlToJson();
+        xmlToJson.make();
+        storyboard.setRootJObject(storyboard.jobjRoot);
 
         CommandManager deleteobject = CommandManager.getInstance();
         deleteobject.deleteLocalComponent(getId().split("/")[1], XmlName.split("\\.")[0], typeObject);
 
-        storyboard.setRootJObject();
-        storyboard.drawActivity();
     }
+
+    public void saveAndDraw(){
+        storyboard.setRootJObject(storyboard.jobjRoot);
+
+        String pathpath;
+        pathpath= SharedPreference.PROJECT.get().getBasePath() + ConstantEtc.PROJECT_XML_PATH + "/assets/plugin.txt";
+
+        JsonToXml jsonToXml = new JsonToXml();
+        jsonToXml.make(pathpath);
+
+        XmlToJson xmlToJson = new XmlToJson();
+        xmlToJson.make();
+        storyboard.drawActivity();
+
+    }
+
 
 
 }
